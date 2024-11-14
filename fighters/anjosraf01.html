@@ -1,0 +1,5102 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Rafael Dos Anjos</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Rafael Dos Anjos</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_anjosraf01">Stat:</label>
+<select id="statSelector_anjosraf01" onchange="updateStat('anjosraf01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_anjosraf01">Start:</label>
+<input id="startDate_anjosraf01" onchange="applyFilters('anjosraf01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_anjosraf01">End:</label>
+<input id="endDate_anjosraf01" onchange="applyFilters('anjosraf01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_anjosraf01"></canvas>
+<div class="filter-buttons">
+<button id="L5_anjosraf01" onclick="showRecentGames('anjosraf01', 5)">L5</button>
+<button id="L10_anjosraf01" onclick="showRecentGames('anjosraf01', 10)">L10</button>
+<button id="L20_anjosraf01" onclick="showRecentGames('anjosraf01', 20)">L20</button>
+<button id="showAll_anjosraf01" onclick="showAllGames('anjosraf01')">All</button>
+<button id="fight_duration_anjosraf01" onclick="toggleFightDurationOverlay('anjosraf01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_anjosraf01" onclick="clearFilters('anjosraf01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_anjosraf01">Change Line:</label>
+<input id="lineSlider_anjosraf01" max="250" min="0" oninput="updateLine('anjosraf01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_anjosraf01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_anjosraf01" onclick="resetLine('anjosraf01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("anjosraf01", [{'date': '2008-11-15', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 2, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 7, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2008-11-15', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 12, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2008-11-15', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 6, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 4, 'SigStrAttAg': 15, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2009-04-01', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 54, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 29, 'SigStrAttAg': 90, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2009-04-01', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 46, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 20, 'SigStrAttAg': 67, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2009-04-01', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 20, 'SigStrAttAg': 56, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2009-09-19', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 56, 'takedown': 1, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 54, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2009-09-19', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 65, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 74, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2009-09-19', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 44, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2010-01-11', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 6, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2010-01-11', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 1, 'SigStrAg': 7, 'SigStrAttAg': 19, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2010-01-11', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 46, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 28, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2010-04-10', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 26, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 9, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2010-04-10', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 11, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 1}, {'date': '2010-08-07', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2010-08-07', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 35, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2010-08-07', 'SigStr': 2, 'knockdowns': 0, 'SigStrAtt': 7, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 2, 'SigStrAttAg': 19, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2011-07-02', 'SigStr': 2, 'knockdowns': 1, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 2, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2011-11-19', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 28, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2011-11-19', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 37, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2011-11-19', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 29, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2012-05-15', 'SigStr': 5, 'knockdowns': 1, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 2, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2012-07-11', 'SigStr': 24, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-11', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 23, 'takedown': 3, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 25, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-11', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 1, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-11-17', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 45, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2012-11-17', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 40, 'takedown': 3, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 15, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2012-11-17', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 49, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 20, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 1}, {'date': '2013-05-18', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 85, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 37, 'SigStrAttAg': 123, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2013-05-18', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 58, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 84, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2013-05-18', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 40, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 63, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2013-08-28', 'SigStr': 17, 'knockdowns': 1, 'SigStrAtt': 40, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-08-28', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 37, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 18, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2013-08-28', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 40, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-04-19', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 25, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2014-04-19', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 35, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2014-04-19', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 14, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 37, 'TDAg': 3, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2014-06-07', 'SigStr': 19, 'knockdowns': 1, 'SigStrAtt': 35, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 9, 'SigStrAttAg': 28, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2014-06-07', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 2, 'SigStrAg': 15, 'SigStrAttAg': 36, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2014-08-23', 'SigStr': 18, 'knockdowns': 1, 'SigStrAtt': 30, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2014-12-13', 'SigStr': 25, 'knockdowns': 0, 'SigStrAtt': 49, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 61, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-12-13', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 42, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 39, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-12-13', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 0, 'SigStrAttAg': 4, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-03-14', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 23, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-03-14', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2015-03-14', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 3, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 32, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-03-14', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-03-14', 'SigStr': 24, 'knockdowns': 0, 'SigStrAtt': 66, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 60, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-12-19', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 7, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2016-07-07', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 45, 'SigStrAttAg': 78, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2016-11-05', 'SigStr': 25, 'knockdowns': 0, 'SigStrAtt': 49, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 22, 'SigStrAttAg': 62, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-11-05', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 65, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 50, 'SigStrAttAg': 100, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-11-05', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 61, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 44, 'SigStrAttAg': 81, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-11-05', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 52, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 40, 'SigStrAttAg': 83, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2016-11-05', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 49, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 43, 'SigStrAttAg': 75, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-06-17', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 48, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 15, 'SigStrAttAg': 25, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-06-17', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 55, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 43, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-06-17', 'SigStr': 31, 'knockdowns': 0, 'SigStrAtt': 55, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-09-09', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 1, 'SigStrAttAg': 5, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-16', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 49, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 40, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-16', 'SigStr': 58, 'knockdowns': 0, 'SigStrAtt': 97, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 74, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-16', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-16', 'SigStr': 37, 'knockdowns': 0, 'SigStrAtt': 54, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 32, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-16', 'SigStr': 39, 'knockdowns': 0, 'SigStrAtt': 63, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 40, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-06-09', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 42, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 57, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2018-06-09', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 40, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 62, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2018-06-09', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 72, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2018-06-09', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 38, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 56, 'TDAg': 2, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2018-06-09', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 49, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2018-11-30', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 8, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 51, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2018-11-30', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 68, 'TDAg': 3, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2018-11-30', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 42, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 45, 'TDAg': 4, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2018-11-30', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 2, 'SigStrAg': 17, 'SigStrAttAg': 32, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2018-11-30', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 27, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2019-05-18', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 30, 'TDAg': 2, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2019-05-18', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 32, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2019-05-18', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 2, 'SigStrAttAg': 11, 'TDAg': 3, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2019-05-18', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 9, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2019-07-20', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 12, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 15, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-07-20', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 33, 'TDAg': 1, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2019-07-20', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 53, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 54, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2019-07-20', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 25, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 52, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2019-07-20', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 43, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 61, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2020-01-25', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 9, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 12, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2020-01-25', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 34, 'TDAg': 3, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2020-01-25', 'SigStr': 2, 'knockdowns': 0, 'SigStrAtt': 3, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 5, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2020-11-14', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 18, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 21, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-11-14', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 47, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 46, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-11-14', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 45, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2020-11-14', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 26, 'SigStrAttAg': 55, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2020-11-14', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 2, 'takedownAtt': 7, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 23, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-03-05', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 23, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2022-03-05', 'SigStr': 40, 'knockdowns': 1, 'SigStrAtt': 84, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 25, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-03-05', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 47, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-03-05', 'SigStr': 38, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 36, 'SigStrAttAg': 73, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-03-05', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 42, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-07-09', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 26, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 41, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-07-09', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 44, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-07-09', 'SigStr': 2, 'knockdowns': 0, 'SigStrAtt': 3, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 9, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-07-09', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 23, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-07-09', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 38, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-12-03', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 20, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 9, 'SigStrAttAg': 19, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-12-03', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 5, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 5, 'SigStrAttAg': 10, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 37, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 1, 'SigStrAg': 16, 'SigStrAttAg': 32, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 26, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 39, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 26, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 15, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 18, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-03-09', 'SigStr': 11, 'knockdowns': 1, 'SigStrAtt': 19, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 34, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2024-03-09', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 25, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 18, 'TDAg': 5, 'TDAttAg': 9, 'SubAttAg': 0}, {'date': '2024-03-09', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 28, 'SigStrAttAg': 50, 'TDAg': 4, 'TDAttAg': 6, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1090UFC.html" target="_blank">Rafael Dos Anjos vs Tyson Griffin</a></td>
+<td style="text-align:left"><a href="/ufc/players/grifftys01.html" target="_blank">Tyson Griffin</a></td>
+<td>4/1/2009</td>
+<td>Nashville, Tennessee, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>26</td>
+<td>134</td>
+<td>19.40%</td>
+<td>0.58</td>
+<td>29</td>
+<td>137</td>
+<td>18</td>
+<td>120</td>
+<td>4</td>
+<td>8</td>
+<td>4</td>
+<td>6</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>3</td>
+<td>1</td>
+<td>69</td>
+<td>213</td>
+<td>67.61%</td>
+<td>101</td>
+<td>245</td>
+<td>1</td>
+<td>4</td>
+<td>75.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1090UFC.html" target="_blank">Rafael Dos Anjos vs Tyson Griffin</a></td>
+<td style="text-align:left"><a href="/ufc/players/grifftys01.html" target="_blank">Tyson Griffin</a></td>
+<td>4/1/2009</td>
+<td>Nashville, Tennessee, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>26</td>
+<td>134</td>
+<td>19.40%</td>
+<td>0.58</td>
+<td>29</td>
+<td>137</td>
+<td>18</td>
+<td>120</td>
+<td>4</td>
+<td>8</td>
+<td>4</td>
+<td>6</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>3</td>
+<td>1</td>
+<td>69</td>
+<td>213</td>
+<td>67.61%</td>
+<td>101</td>
+<td>245</td>
+<td>1</td>
+<td>4</td>
+<td>75.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1090UFC.html" target="_blank">Rafael Dos Anjos vs Tyson Griffin</a></td>
+<td style="text-align:left"><a href="/ufc/players/grifftys01.html" target="_blank">Tyson Griffin</a></td>
+<td>4/1/2009</td>
+<td>Nashville, Tennessee, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>26</td>
+<td>134</td>
+<td>19.40%</td>
+<td>0.58</td>
+<td>29</td>
+<td>137</td>
+<td>18</td>
+<td>120</td>
+<td>4</td>
+<td>8</td>
+<td>4</td>
+<td>6</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>3</td>
+<td>1</td>
+<td>69</td>
+<td>213</td>
+<td>67.61%</td>
+<td>101</td>
+<td>245</td>
+<td>1</td>
+<td>4</td>
+<td>75.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">UFC Fight Night: Maynard vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1271UFC.html" target="_blank">Rafael Dos Anjos vs Kyle Bradley</a></td>
+<td style="text-align:left"><a href="/ufc/players/bradlkyl01.html" target="_blank">Kyle Bradley</a></td>
+<td>1/11/2010</td>
+<td>Fairfax, Virginia, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>42</td>
+<td>112</td>
+<td>37.50%</td>
+<td>0.93</td>
+<td>99</td>
+<td>183</td>
+<td>37</td>
+<td>100</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>10</td>
+<td>2</td>
+<td>2</td>
+<td>25</td>
+<td>52</td>
+<td>5</td>
+<td>8</td>
+<td>62.50%</td>
+<td>2</td>
+<td>0</td>
+<td>21</td>
+<td>53</td>
+<td>60.38%</td>
+<td>31</td>
+<td>64</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">UFC Fight Night: Maynard vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1271UFC.html" target="_blank">Rafael Dos Anjos vs Kyle Bradley</a></td>
+<td style="text-align:left"><a href="/ufc/players/bradlkyl01.html" target="_blank">Kyle Bradley</a></td>
+<td>1/11/2010</td>
+<td>Fairfax, Virginia, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>42</td>
+<td>112</td>
+<td>37.50%</td>
+<td>0.93</td>
+<td>99</td>
+<td>183</td>
+<td>37</td>
+<td>100</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>10</td>
+<td>2</td>
+<td>2</td>
+<td>25</td>
+<td>52</td>
+<td>5</td>
+<td>8</td>
+<td>62.50%</td>
+<td>2</td>
+<td>0</td>
+<td>21</td>
+<td>53</td>
+<td>60.38%</td>
+<td>31</td>
+<td>64</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">UFC Fight Night: Maynard vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1271UFC.html" target="_blank">Rafael Dos Anjos vs Kyle Bradley</a></td>
+<td style="text-align:left"><a href="/ufc/players/bradlkyl01.html" target="_blank">Kyle Bradley</a></td>
+<td>1/11/2010</td>
+<td>Fairfax, Virginia, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>42</td>
+<td>112</td>
+<td>37.50%</td>
+<td>0.93</td>
+<td>99</td>
+<td>183</td>
+<td>37</td>
+<td>100</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>10</td>
+<td>2</td>
+<td>2</td>
+<td>25</td>
+<td>52</td>
+<td>5</td>
+<td>8</td>
+<td>62.50%</td>
+<td>2</td>
+<td>0</td>
+<td>21</td>
+<td>53</td>
+<td>60.38%</td>
+<td>31</td>
+<td>64</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0029TUF.html" target="_blank">UFC - TUF 28 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4847UFC.html" target="_blank">Rafael Dos Anjos vs Kamaru Usman</a></td>
+<td style="text-align:left"><a href="/ufc/players/usmankam01.html" target="_blank">Kamaru Usman</a></td>
+<td>11/30/2018</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>62</td>
+<td>112</td>
+<td>55.36%</td>
+<td>0.50</td>
+<td>84</td>
+<td>138</td>
+<td>27</td>
+<td>74</td>
+<td>19</td>
+<td>20</td>
+<td>16</td>
+<td>18</td>
+<td>22</td>
+<td>24</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>2</td>
+<td>1</td>
+<td>130</td>
+<td>223</td>
+<td>41.70%</td>
+<td>227</td>
+<td>334</td>
+<td>12</td>
+<td>18</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0029TUF.html" target="_blank">UFC - TUF 28 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4847UFC.html" target="_blank">Rafael Dos Anjos vs Kamaru Usman</a></td>
+<td style="text-align:left"><a href="/ufc/players/usmankam01.html" target="_blank">Kamaru Usman</a></td>
+<td>11/30/2018</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>62</td>
+<td>112</td>
+<td>55.36%</td>
+<td>0.50</td>
+<td>84</td>
+<td>138</td>
+<td>27</td>
+<td>74</td>
+<td>19</td>
+<td>20</td>
+<td>16</td>
+<td>18</td>
+<td>22</td>
+<td>24</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>2</td>
+<td>1</td>
+<td>130</td>
+<td>223</td>
+<td>41.70%</td>
+<td>227</td>
+<td>334</td>
+<td>12</td>
+<td>18</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0029TUF.html" target="_blank">UFC - TUF 28 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4847UFC.html" target="_blank">Rafael Dos Anjos vs Kamaru Usman</a></td>
+<td style="text-align:left"><a href="/ufc/players/usmankam01.html" target="_blank">Kamaru Usman</a></td>
+<td>11/30/2018</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>62</td>
+<td>112</td>
+<td>55.36%</td>
+<td>0.50</td>
+<td>84</td>
+<td>138</td>
+<td>27</td>
+<td>74</td>
+<td>19</td>
+<td>20</td>
+<td>16</td>
+<td>18</td>
+<td>22</td>
+<td>24</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>2</td>
+<td>1</td>
+<td>130</td>
+<td>223</td>
+<td>41.70%</td>
+<td>227</td>
+<td>334</td>
+<td>12</td>
+<td>18</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0029TUF.html" target="_blank">UFC - TUF 28 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4847UFC.html" target="_blank">Rafael Dos Anjos vs Kamaru Usman</a></td>
+<td style="text-align:left"><a href="/ufc/players/usmankam01.html" target="_blank">Kamaru Usman</a></td>
+<td>11/30/2018</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>62</td>
+<td>112</td>
+<td>55.36%</td>
+<td>0.50</td>
+<td>84</td>
+<td>138</td>
+<td>27</td>
+<td>74</td>
+<td>19</td>
+<td>20</td>
+<td>16</td>
+<td>18</td>
+<td>22</td>
+<td>24</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>2</td>
+<td>1</td>
+<td>130</td>
+<td>223</td>
+<td>41.70%</td>
+<td>227</td>
+<td>334</td>
+<td>12</td>
+<td>18</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0029TUF.html" target="_blank">UFC - TUF 28 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4847UFC.html" target="_blank">Rafael Dos Anjos vs Kamaru Usman</a></td>
+<td style="text-align:left"><a href="/ufc/players/usmankam01.html" target="_blank">Kamaru Usman</a></td>
+<td>11/30/2018</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>62</td>
+<td>112</td>
+<td>55.36%</td>
+<td>0.50</td>
+<td>84</td>
+<td>138</td>
+<td>27</td>
+<td>74</td>
+<td>19</td>
+<td>20</td>
+<td>16</td>
+<td>18</td>
+<td>22</td>
+<td>24</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>2</td>
+<td>1</td>
+<td>130</td>
+<td>223</td>
+<td>41.70%</td>
+<td>227</td>
+<td>334</td>
+<td>12</td>
+<td>18</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0040FNI.html" target="_blank">UFC on FUEL TV: Korean Zombie vs Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1923UFC.html" target="_blank">Rafael Dos Anjos vs Kamal Shalorus</a></td>
+<td style="text-align:left"><a href="/ufc/players/shalokam01.html" target="_blank">Kamal Shalorus</a></td>
+<td>5/15/2012</td>
+<td>Fairfax, Virginia, USA</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>1.67</td>
+<td>1</td>
+<td>5</td>
+<td>10</td>
+<td>50.00%</td>
+<td>2.99</td>
+<td>11</td>
+<td>17</td>
+<td>4</td>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>12</td>
+<td>83.33%</td>
+<td>2</td>
+<td>12</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0043FNI.html" target="_blank">UFC on FUEL TV: Munoz vs Weidman</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2000UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Njokuani</a></td>
+<td style="text-align:left"><a href="/ufc/players/njokuant01.html" target="_blank">Anthony Njokuani</a></td>
+<td>7/11/2012</td>
+<td>San Jose, California, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>85</td>
+<td>60.00%</td>
+<td>1.13</td>
+<td>68</td>
+<td>108</td>
+<td>19</td>
+<td>48</td>
+<td>0</td>
+<td>0</td>
+<td>32</td>
+<td>37</td>
+<td>21</td>
+<td>26</td>
+<td>5</td>
+<td>6</td>
+<td>6</td>
+<td>17</td>
+<td>35.29%</td>
+<td>0</td>
+<td>0</td>
+<td>32</td>
+<td>87</td>
+<td>63.22%</td>
+<td>37</td>
+<td>92</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0043FNI.html" target="_blank">UFC on FUEL TV: Munoz vs Weidman</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2000UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Njokuani</a></td>
+<td style="text-align:left"><a href="/ufc/players/njokuant01.html" target="_blank">Anthony Njokuani</a></td>
+<td>7/11/2012</td>
+<td>San Jose, California, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>85</td>
+<td>60.00%</td>
+<td>1.13</td>
+<td>68</td>
+<td>108</td>
+<td>19</td>
+<td>48</td>
+<td>0</td>
+<td>0</td>
+<td>32</td>
+<td>37</td>
+<td>21</td>
+<td>26</td>
+<td>5</td>
+<td>6</td>
+<td>6</td>
+<td>17</td>
+<td>35.29%</td>
+<td>0</td>
+<td>0</td>
+<td>32</td>
+<td>87</td>
+<td>63.22%</td>
+<td>37</td>
+<td>92</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0043FNI.html" target="_blank">UFC on FUEL TV: Munoz vs Weidman</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2000UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Njokuani</a></td>
+<td style="text-align:left"><a href="/ufc/players/njokuant01.html" target="_blank">Anthony Njokuani</a></td>
+<td>7/11/2012</td>
+<td>San Jose, California, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>85</td>
+<td>60.00%</td>
+<td>1.13</td>
+<td>68</td>
+<td>108</td>
+<td>19</td>
+<td>48</td>
+<td>0</td>
+<td>0</td>
+<td>32</td>
+<td>37</td>
+<td>21</td>
+<td>26</td>
+<td>5</td>
+<td>6</td>
+<td>6</td>
+<td>17</td>
+<td>35.29%</td>
+<td>0</td>
+<td>0</td>
+<td>32</td>
+<td>87</td>
+<td>63.22%</td>
+<td>37</td>
+<td>92</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2277UFC.html" target="_blank">Rafael Dos Anjos vs Evan Dunham</a></td>
+<td style="text-align:left"><a href="/ufc/players/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
+<td>5/18/2013</td>
+<td>Jaragua do Sul, Santa Catarina, Brazil</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>183</td>
+<td>36.07%</td>
+<td>1.47</td>
+<td>86</td>
+<td>204</td>
+<td>35</td>
+<td>137</td>
+<td>15</td>
+<td>26</td>
+<td>16</td>
+<td>20</td>
+<td>10</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>68</td>
+<td>270</td>
+<td>74.81%</td>
+<td>90</td>
+<td>295</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2277UFC.html" target="_blank">Rafael Dos Anjos vs Evan Dunham</a></td>
+<td style="text-align:left"><a href="/ufc/players/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
+<td>5/18/2013</td>
+<td>Jaragua do Sul, Santa Catarina, Brazil</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>183</td>
+<td>36.07%</td>
+<td>1.47</td>
+<td>86</td>
+<td>204</td>
+<td>35</td>
+<td>137</td>
+<td>15</td>
+<td>26</td>
+<td>16</td>
+<td>20</td>
+<td>10</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>68</td>
+<td>270</td>
+<td>74.81%</td>
+<td>90</td>
+<td>295</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2277UFC.html" target="_blank">Rafael Dos Anjos vs Evan Dunham</a></td>
+<td style="text-align:left"><a href="/ufc/players/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
+<td>5/18/2013</td>
+<td>Jaragua do Sul, Santa Catarina, Brazil</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>183</td>
+<td>36.07%</td>
+<td>1.47</td>
+<td>86</td>
+<td>204</td>
+<td>35</td>
+<td>137</td>
+<td>15</td>
+<td>26</td>
+<td>16</td>
+<td>20</td>
+<td>10</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>68</td>
+<td>270</td>
+<td>74.81%</td>
+<td>90</td>
+<td>295</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2371UFC.html" target="_blank">Rafael Dos Anjos vs Donald Cerrone</a></td>
+<td style="text-align:left"><a href="/ufc/players/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
+<td>8/28/2013</td>
+<td>Indianapolis, Indiana, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>39</td>
+<td>109</td>
+<td>35.78%</td>
+<td>0.87</td>
+<td>58</td>
+<td>128</td>
+<td>21</td>
+<td>78</td>
+<td>14</td>
+<td>25</td>
+<td>4</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>8</td>
+<td>17</td>
+<td>2</td>
+<td>6</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>80</td>
+<td>50.00%</td>
+<td>43</td>
+<td>83</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2371UFC.html" target="_blank">Rafael Dos Anjos vs Donald Cerrone</a></td>
+<td style="text-align:left"><a href="/ufc/players/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
+<td>8/28/2013</td>
+<td>Indianapolis, Indiana, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>39</td>
+<td>109</td>
+<td>35.78%</td>
+<td>0.87</td>
+<td>58</td>
+<td>128</td>
+<td>21</td>
+<td>78</td>
+<td>14</td>
+<td>25</td>
+<td>4</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>8</td>
+<td>17</td>
+<td>2</td>
+<td>6</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>80</td>
+<td>50.00%</td>
+<td>43</td>
+<td>83</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2371UFC.html" target="_blank">Rafael Dos Anjos vs Donald Cerrone</a></td>
+<td style="text-align:left"><a href="/ufc/players/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
+<td>8/28/2013</td>
+<td>Indianapolis, Indiana, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>39</td>
+<td>109</td>
+<td>35.78%</td>
+<td>0.87</td>
+<td>58</td>
+<td>128</td>
+<td>21</td>
+<td>78</td>
+<td>14</td>
+<td>25</td>
+<td>4</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>8</td>
+<td>17</td>
+<td>2</td>
+<td>6</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>80</td>
+<td>50.00%</td>
+<td>43</td>
+<td>83</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2667UFC.html" target="_blank">Rafael Dos Anjos vs Khabib Nurmagomedov</a></td>
+<td style="text-align:left"><a href="/ufc/players/nurmakha01.html" target="_blank">Khabib Nurmagomedov</a></td>
+<td>4/19/2014</td>
+<td>Orlando, Florida, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>20</td>
+<td>56</td>
+<td>35.71%</td>
+<td>0.44</td>
+<td>40</td>
+<td>76</td>
+<td>11</td>
+<td>39</td>
+<td>7</td>
+<td>14</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>36</td>
+<td>97</td>
+<td>62.89%</td>
+<td>72</td>
+<td>135</td>
+<td>6</td>
+<td>12</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2667UFC.html" target="_blank">Rafael Dos Anjos vs Khabib Nurmagomedov</a></td>
+<td style="text-align:left"><a href="/ufc/players/nurmakha01.html" target="_blank">Khabib Nurmagomedov</a></td>
+<td>4/19/2014</td>
+<td>Orlando, Florida, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>20</td>
+<td>56</td>
+<td>35.71%</td>
+<td>0.44</td>
+<td>40</td>
+<td>76</td>
+<td>11</td>
+<td>39</td>
+<td>7</td>
+<td>14</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>36</td>
+<td>97</td>
+<td>62.89%</td>
+<td>72</td>
+<td>135</td>
+<td>6</td>
+<td>12</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2667UFC.html" target="_blank">Rafael Dos Anjos vs Khabib Nurmagomedov</a></td>
+<td style="text-align:left"><a href="/ufc/players/nurmakha01.html" target="_blank">Khabib Nurmagomedov</a></td>
+<td>4/19/2014</td>
+<td>Orlando, Florida, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>20</td>
+<td>56</td>
+<td>35.71%</td>
+<td>0.44</td>
+<td>40</td>
+<td>76</td>
+<td>11</td>
+<td>39</td>
+<td>7</td>
+<td>14</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>36</td>
+<td>97</td>
+<td>62.89%</td>
+<td>72</td>
+<td>135</td>
+<td>6</td>
+<td>12</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">UFC Fight Night: Henderson vs Khabilov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2735UFC.html" target="_blank">Rafael Dos Anjos vs Jason High</a></td>
+<td style="text-align:left"><a href="/ufc/players/highjas01.html" target="_blank">Jason High</a></td>
+<td>6/7/2014</td>
+<td>Albuquerque, New Mexico, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>8.6</td>
+<td>1</td>
+<td>36</td>
+<td>68</td>
+<td>52.94%</td>
+<td>2.09</td>
+<td>53</td>
+<td>85</td>
+<td>24</td>
+<td>52</td>
+<td>11</td>
+<td>15</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>9</td>
+<td>10</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>3</td>
+<td>0</td>
+<td>24</td>
+<td>64</td>
+<td>62.50%</td>
+<td>26</td>
+<td>67</td>
+<td>3</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">UFC Fight Night: Henderson vs Khabilov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2735UFC.html" target="_blank">Rafael Dos Anjos vs Jason High</a></td>
+<td style="text-align:left"><a href="/ufc/players/highjas01.html" target="_blank">Jason High</a></td>
+<td>6/7/2014</td>
+<td>Albuquerque, New Mexico, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>8.6</td>
+<td>1</td>
+<td>36</td>
+<td>68</td>
+<td>52.94%</td>
+<td>2.09</td>
+<td>53</td>
+<td>85</td>
+<td>24</td>
+<td>52</td>
+<td>11</td>
+<td>15</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>9</td>
+<td>10</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>3</td>
+<td>0</td>
+<td>24</td>
+<td>64</td>
+<td>62.50%</td>
+<td>26</td>
+<td>67</td>
+<td>3</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2840UFC.html" target="_blank">Rafael Dos Anjos vs Benson Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/players/hendeben01.html" target="_blank">Benson Henderson</a></td>
+<td>8/23/2014</td>
+<td>Tulsa, Oklahoma, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>5</td>
+<td>2.52</td>
+<td>1</td>
+<td>18</td>
+<td>30</td>
+<td>60.00%</td>
+<td>7.14</td>
+<td>18</td>
+<td>30</td>
+<td>11</td>
+<td>22</td>
+<td>4</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>27</td>
+<td>62.96%</td>
+<td>10</td>
+<td>27</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0096UFC.html" target="_blank">UFC 91: Couture vs Lesnar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1005UFC.html" target="_blank">Rafael Dos Anjos vs Jeremy Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/players/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
+<td>11/15/2008</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>10.65</td>
+<td>0</td>
+<td>9</td>
+<td>18</td>
+<td>50.00%</td>
+<td>0.28</td>
+<td>37</td>
+<td>48</td>
+<td>4</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>2</td>
+<td>0</td>
+<td>22</td>
+<td>46</td>
+<td>52.17%</td>
+<td>33</td>
+<td>60</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0096UFC.html" target="_blank">UFC 91: Couture vs Lesnar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1005UFC.html" target="_blank">Rafael Dos Anjos vs Jeremy Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/players/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
+<td>11/15/2008</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>10.65</td>
+<td>0</td>
+<td>9</td>
+<td>18</td>
+<td>50.00%</td>
+<td>0.28</td>
+<td>37</td>
+<td>48</td>
+<td>4</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>2</td>
+<td>0</td>
+<td>22</td>
+<td>46</td>
+<td>52.17%</td>
+<td>33</td>
+<td>60</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0096UFC.html" target="_blank">UFC 91: Couture vs Lesnar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1005UFC.html" target="_blank">Rafael Dos Anjos vs Jeremy Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/players/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
+<td>11/15/2008</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>10.65</td>
+<td>0</td>
+<td>9</td>
+<td>18</td>
+<td>50.00%</td>
+<td>0.28</td>
+<td>37</td>
+<td>48</td>
+<td>4</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>2</td>
+<td>0</td>
+<td>22</td>
+<td>46</td>
+<td>52.17%</td>
+<td>33</td>
+<td>60</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7862UFC.html" target="_blank">Rafael Dos Anjos vs Nate Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/players/diaznat01.html" target="_blank">Nate Diaz</a></td>
+<td>12/13/2014</td>
+<td>Phoenix, Arizona, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>77</td>
+<td>119</td>
+<td>64.71%</td>
+<td>1.71</td>
+<td>129</td>
+<td>175</td>
+<td>46</td>
+<td>81</td>
+<td>5</td>
+<td>9</td>
+<td>26</td>
+<td>29</td>
+<td>1</td>
+<td>2</td>
+<td>39</td>
+<td>51</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>13</td>
+<td>104</td>
+<td>87.50%</td>
+<td>51</td>
+<td>145</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7862UFC.html" target="_blank">Rafael Dos Anjos vs Nate Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/players/diaznat01.html" target="_blank">Nate Diaz</a></td>
+<td>12/13/2014</td>
+<td>Phoenix, Arizona, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>77</td>
+<td>119</td>
+<td>64.71%</td>
+<td>1.71</td>
+<td>129</td>
+<td>175</td>
+<td>46</td>
+<td>81</td>
+<td>5</td>
+<td>9</td>
+<td>26</td>
+<td>29</td>
+<td>1</td>
+<td>2</td>
+<td>39</td>
+<td>51</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>13</td>
+<td>104</td>
+<td>87.50%</td>
+<td>51</td>
+<td>145</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7862UFC.html" target="_blank">Rafael Dos Anjos vs Nate Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/players/diaznat01.html" target="_blank">Nate Diaz</a></td>
+<td>12/13/2014</td>
+<td>Phoenix, Arizona, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>77</td>
+<td>119</td>
+<td>64.71%</td>
+<td>1.71</td>
+<td>129</td>
+<td>175</td>
+<td>46</td>
+<td>81</td>
+<td>5</td>
+<td>9</td>
+<td>26</td>
+<td>29</td>
+<td>1</td>
+<td>2</td>
+<td>39</td>
+<td>51</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>13</td>
+<td>104</td>
+<td>87.50%</td>
+<td>51</td>
+<td>145</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108UFC.html" target="_blank">UFC 103: Franklin vs Belfort</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1199UFC.html" target="_blank">Rafael Dos Anjos vs Rob Emerson</a></td>
+<td style="text-align:left"><a href="/ufc/players/emersrob01.html" target="_blank">Rob Emerson</a></td>
+<td>9/19/2009</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>52</td>
+<td>165</td>
+<td>31.52%</td>
+<td>1.16</td>
+<td>85</td>
+<td>201</td>
+<td>21</td>
+<td>125</td>
+<td>3</td>
+<td>8</td>
+<td>28</td>
+<td>32</td>
+<td>4</td>
+<td>10</td>
+<td>5</td>
+<td>18</td>
+<td>2</td>
+<td>12</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>27</td>
+<td>172</td>
+<td>84.30%</td>
+<td>34</td>
+<td>181</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108UFC.html" target="_blank">UFC 103: Franklin vs Belfort</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1199UFC.html" target="_blank">Rafael Dos Anjos vs Rob Emerson</a></td>
+<td style="text-align:left"><a href="/ufc/players/emersrob01.html" target="_blank">Rob Emerson</a></td>
+<td>9/19/2009</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>52</td>
+<td>165</td>
+<td>31.52%</td>
+<td>1.16</td>
+<td>85</td>
+<td>201</td>
+<td>21</td>
+<td>125</td>
+<td>3</td>
+<td>8</td>
+<td>28</td>
+<td>32</td>
+<td>4</td>
+<td>10</td>
+<td>5</td>
+<td>18</td>
+<td>2</td>
+<td>12</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>27</td>
+<td>172</td>
+<td>84.30%</td>
+<td>34</td>
+<td>181</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108UFC.html" target="_blank">UFC 103: Franklin vs Belfort</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1199UFC.html" target="_blank">Rafael Dos Anjos vs Rob Emerson</a></td>
+<td style="text-align:left"><a href="/ufc/players/emersrob01.html" target="_blank">Rob Emerson</a></td>
+<td>9/19/2009</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>52</td>
+<td>165</td>
+<td>31.52%</td>
+<td>1.16</td>
+<td>85</td>
+<td>201</td>
+<td>21</td>
+<td>125</td>
+<td>3</td>
+<td>8</td>
+<td>28</td>
+<td>32</td>
+<td>4</td>
+<td>10</td>
+<td>5</td>
+<td>18</td>
+<td>2</td>
+<td>12</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>27</td>
+<td>172</td>
+<td>84.30%</td>
+<td>34</td>
+<td>181</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0117UFC.html" target="_blank">UFC 112: Invincible</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1329UFC.html" target="_blank">Rafael Dos Anjos vs Terry Etim</a></td>
+<td style="text-align:left"><a href="/ufc/players/etimterr01.html" target="_blank">Terry Etim</a></td>
+<td>4/10/2010</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>9.5</td>
+<td>0</td>
+<td>25</td>
+<td>45</td>
+<td>55.56%</td>
+<td>1.32</td>
+<td>45</td>
+<td>69</td>
+<td>16</td>
+<td>34</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>8</td>
+<td>5</td>
+<td>5</td>
+<td>18</td>
+<td>23</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>0</td>
+<td>7</td>
+<td>20</td>
+<td>65.00%</td>
+<td>11</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0117UFC.html" target="_blank">UFC 112: Invincible</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1329UFC.html" target="_blank">Rafael Dos Anjos vs Terry Etim</a></td>
+<td style="text-align:left"><a href="/ufc/players/etimterr01.html" target="_blank">Terry Etim</a></td>
+<td>4/10/2010</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>9.5</td>
+<td>0</td>
+<td>25</td>
+<td>45</td>
+<td>55.56%</td>
+<td>1.32</td>
+<td>45</td>
+<td>69</td>
+<td>16</td>
+<td>34</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>8</td>
+<td>5</td>
+<td>5</td>
+<td>18</td>
+<td>23</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>0</td>
+<td>7</td>
+<td>20</td>
+<td>65.00%</td>
+<td>11</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0122UFC.html" target="_blank">UFC 117: Silva vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1402UFC.html" target="_blank">Rafael Dos Anjos vs Clay Guida</a></td>
+<td style="text-align:left"><a href="/ufc/players/guidacla01.html" target="_blank">Clay Guida</a></td>
+<td>8/7/2010</td>
+<td>Oakland, California, USA</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>11.85</td>
+<td>0</td>
+<td>17</td>
+<td>64</td>
+<td>26.56%</td>
+<td>0.48</td>
+<td>29</td>
+<td>76</td>
+<td>11</td>
+<td>51</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+<td>90</td>
+<td>78.89%</td>
+<td>47</td>
+<td>123</td>
+<td>2</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0122UFC.html" target="_blank">UFC 117: Silva vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1402UFC.html" target="_blank">Rafael Dos Anjos vs Clay Guida</a></td>
+<td style="text-align:left"><a href="/ufc/players/guidacla01.html" target="_blank">Clay Guida</a></td>
+<td>8/7/2010</td>
+<td>Oakland, California, USA</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>11.85</td>
+<td>0</td>
+<td>17</td>
+<td>64</td>
+<td>26.56%</td>
+<td>0.48</td>
+<td>29</td>
+<td>76</td>
+<td>11</td>
+<td>51</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+<td>90</td>
+<td>78.89%</td>
+<td>47</td>
+<td>123</td>
+<td>2</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0122UFC.html" target="_blank">UFC 117: Silva vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1402UFC.html" target="_blank">Rafael Dos Anjos vs Clay Guida</a></td>
+<td style="text-align:left"><a href="/ufc/players/guidacla01.html" target="_blank">Clay Guida</a></td>
+<td>8/7/2010</td>
+<td>Oakland, California, USA</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>11.85</td>
+<td>0</td>
+<td>17</td>
+<td>64</td>
+<td>26.56%</td>
+<td>0.48</td>
+<td>29</td>
+<td>76</td>
+<td>11</td>
+<td>51</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+<td>90</td>
+<td>78.89%</td>
+<td>47</td>
+<td>123</td>
+<td>2</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">UFC on FOX: Dos Anjos vs. Cowboy 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3484UFC.html" target="_blank">Rafael Dos Anjos vs Donald Cerrone</a></td>
+<td style="text-align:left"><a href="/ufc/players/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
+<td>12/19/2015</td>
+<td>Orlando, Florida, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>5</td>
+<td>1.1</td>
+<td>0</td>
+<td>26</td>
+<td>44</td>
+<td>59.09%</td>
+<td>23.64</td>
+<td>26</td>
+<td>44</td>
+<td>21</td>
+<td>39</td>
+<td>4</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>7</td>
+<td>42.86%</td>
+<td>4</td>
+<td>7</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Alvarez</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3685UFC.html" target="_blank">Eddie Alvarez vs Rafael Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/players/alvaredd01.html" target="_blank">Eddie Alvarez</a></td>
+<td>7/7/2016</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>3.82</td>
+<td>0</td>
+<td>12</td>
+<td>41</td>
+<td>29.27%</td>
+<td>3.14</td>
+<td>12</td>
+<td>41</td>
+<td>9</td>
+<td>38</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>45</td>
+<td>78</td>
+<td>42.31%</td>
+<td>49</td>
+<td>83</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0137UFC.html" target="_blank">UFC 132: Cruz vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1648UFC.html" target="_blank">Rafael Dos Anjos vs George Sotiropoulos</a></td>
+<td style="text-align:left"><a href="/ufc/players/sotirgeo01.html" target="_blank">George Sotiropoulos</a></td>
+<td>7/2/2011</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>0.98</td>
+<td>1</td>
+<td>2</td>
+<td>10</td>
+<td>20.00%</td>
+<td>2.04</td>
+<td>2</td>
+<td>10</td>
+<td>1</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>24</td>
+<td>91.67%</td>
+<td>2</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0144UFC.html" target="_blank">UFC 139: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1770UFC.html" target="_blank">Rafael Dos Anjos vs Gleison Tibau</a></td>
+<td style="text-align:left"><a href="/ufc/players/tibaugle01.html" target="_blank">Gleison Tibau</a></td>
+<td>11/19/2011</td>
+<td>San Jose, California, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>25</td>
+<td>96</td>
+<td>26.04%</td>
+<td>0.56</td>
+<td>39</td>
+<td>110</td>
+<td>13</td>
+<td>77</td>
+<td>6</td>
+<td>9</td>
+<td>6</td>
+<td>10</td>
+<td>7</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>128</td>
+<td>56.25%</td>
+<td>64</td>
+<td>136</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0144UFC.html" target="_blank">UFC 139: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1770UFC.html" target="_blank">Rafael Dos Anjos vs Gleison Tibau</a></td>
+<td style="text-align:left"><a href="/ufc/players/tibaugle01.html" target="_blank">Gleison Tibau</a></td>
+<td>11/19/2011</td>
+<td>San Jose, California, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>25</td>
+<td>96</td>
+<td>26.04%</td>
+<td>0.56</td>
+<td>39</td>
+<td>110</td>
+<td>13</td>
+<td>77</td>
+<td>6</td>
+<td>9</td>
+<td>6</td>
+<td>10</td>
+<td>7</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>128</td>
+<td>56.25%</td>
+<td>64</td>
+<td>136</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0144UFC.html" target="_blank">UFC 139: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1770UFC.html" target="_blank">Rafael Dos Anjos vs Gleison Tibau</a></td>
+<td style="text-align:left"><a href="/ufc/players/tibaugle01.html" target="_blank">Gleison Tibau</a></td>
+<td>11/19/2011</td>
+<td>San Jose, California, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>25</td>
+<td>96</td>
+<td>26.04%</td>
+<td>0.56</td>
+<td>39</td>
+<td>110</td>
+<td>13</td>
+<td>77</td>
+<td>6</td>
+<td>9</td>
+<td>6</td>
+<td>10</td>
+<td>7</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>128</td>
+<td>56.25%</td>
+<td>64</td>
+<td>136</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3858UFC.html" target="_blank">Rafael Dos Anjos vs Tony Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferguton01.html" target="_blank">Tony Ferguson</a></td>
+<td>11/5/2016</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>121</td>
+<td>276</td>
+<td>43.84%</td>
+<td>0.97</td>
+<td>126</td>
+<td>281</td>
+<td>84</td>
+<td>223</td>
+<td>18</td>
+<td>33</td>
+<td>19</td>
+<td>20</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>199</td>
+<td>401</td>
+<td>50.37%</td>
+<td>200</td>
+<td>402</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3858UFC.html" target="_blank">Rafael Dos Anjos vs Tony Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferguton01.html" target="_blank">Tony Ferguson</a></td>
+<td>11/5/2016</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>121</td>
+<td>276</td>
+<td>43.84%</td>
+<td>0.97</td>
+<td>126</td>
+<td>281</td>
+<td>84</td>
+<td>223</td>
+<td>18</td>
+<td>33</td>
+<td>19</td>
+<td>20</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>199</td>
+<td>401</td>
+<td>50.37%</td>
+<td>200</td>
+<td>402</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3858UFC.html" target="_blank">Rafael Dos Anjos vs Tony Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferguton01.html" target="_blank">Tony Ferguson</a></td>
+<td>11/5/2016</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>121</td>
+<td>276</td>
+<td>43.84%</td>
+<td>0.97</td>
+<td>126</td>
+<td>281</td>
+<td>84</td>
+<td>223</td>
+<td>18</td>
+<td>33</td>
+<td>19</td>
+<td>20</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>199</td>
+<td>401</td>
+<td>50.37%</td>
+<td>200</td>
+<td>402</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3858UFC.html" target="_blank">Rafael Dos Anjos vs Tony Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferguton01.html" target="_blank">Tony Ferguson</a></td>
+<td>11/5/2016</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>121</td>
+<td>276</td>
+<td>43.84%</td>
+<td>0.97</td>
+<td>126</td>
+<td>281</td>
+<td>84</td>
+<td>223</td>
+<td>18</td>
+<td>33</td>
+<td>19</td>
+<td>20</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>199</td>
+<td>401</td>
+<td>50.37%</td>
+<td>200</td>
+<td>402</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3858UFC.html" target="_blank">Rafael Dos Anjos vs Tony Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferguton01.html" target="_blank">Tony Ferguson</a></td>
+<td>11/5/2016</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>121</td>
+<td>276</td>
+<td>43.84%</td>
+<td>0.97</td>
+<td>126</td>
+<td>281</td>
+<td>84</td>
+<td>223</td>
+<td>18</td>
+<td>33</td>
+<td>19</td>
+<td>20</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>199</td>
+<td>401</td>
+<td>50.37%</td>
+<td>200</td>
+<td>402</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0158UFC.html" target="_blank">UFC 154: St-Pierre vs Condit</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2094UFC.html" target="_blank">Rafael Dos Anjos vs Mark Bocek</a></td>
+<td style="text-align:left"><a href="/ufc/players/bocekmar01.html" target="_blank">Mark Bocek</a></td>
+<td>11/17/2012</td>
+<td>Montreal, Quebec, Canada</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>134</td>
+<td>40.30%</td>
+<td>1.20</td>
+<td>90</td>
+<td>172</td>
+<td>33</td>
+<td>103</td>
+<td>14</td>
+<td>21</td>
+<td>7</td>
+<td>10</td>
+<td>20</td>
+<td>30</td>
+<td>8</td>
+<td>14</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+<td>59</td>
+<td>67.80%</td>
+<td>33</td>
+<td>73</td>
+<td>0</td>
+<td>11</td>
+<td>100.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0158UFC.html" target="_blank">UFC 154: St-Pierre vs Condit</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2094UFC.html" target="_blank">Rafael Dos Anjos vs Mark Bocek</a></td>
+<td style="text-align:left"><a href="/ufc/players/bocekmar01.html" target="_blank">Mark Bocek</a></td>
+<td>11/17/2012</td>
+<td>Montreal, Quebec, Canada</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>134</td>
+<td>40.30%</td>
+<td>1.20</td>
+<td>90</td>
+<td>172</td>
+<td>33</td>
+<td>103</td>
+<td>14</td>
+<td>21</td>
+<td>7</td>
+<td>10</td>
+<td>20</td>
+<td>30</td>
+<td>8</td>
+<td>14</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+<td>59</td>
+<td>67.80%</td>
+<td>33</td>
+<td>73</td>
+<td>0</td>
+<td>11</td>
+<td>100.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0158UFC.html" target="_blank">UFC 154: St-Pierre vs Condit</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2094UFC.html" target="_blank">Rafael Dos Anjos vs Mark Bocek</a></td>
+<td style="text-align:left"><a href="/ufc/players/bocekmar01.html" target="_blank">Mark Bocek</a></td>
+<td>11/17/2012</td>
+<td>Montreal, Quebec, Canada</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>134</td>
+<td>40.30%</td>
+<td>1.20</td>
+<td>90</td>
+<td>172</td>
+<td>33</td>
+<td>103</td>
+<td>14</td>
+<td>21</td>
+<td>7</td>
+<td>10</td>
+<td>20</td>
+<td>30</td>
+<td>8</td>
+<td>14</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>0</td>
+<td>0</td>
+<td>19</td>
+<td>59</td>
+<td>67.80%</td>
+<td>33</td>
+<td>73</td>
+<td>0</td>
+<td>11</td>
+<td>100.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4159UFC.html" target="_blank">Rafael Dos Anjos vs Tarec Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/players/saffitar01.html" target="_blank">Tarec Saffiedine</a></td>
+<td>6/17/2017</td>
+<td>Kallang, Singapore</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>81</td>
+<td>158</td>
+<td>51.27%</td>
+<td>1.80</td>
+<td>91</td>
+<td>169</td>
+<td>35</td>
+<td>99</td>
+<td>37</td>
+<td>49</td>
+<td>9</td>
+<td>10</td>
+<td>20</td>
+<td>26</td>
+<td>5</td>
+<td>7</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>1</td>
+<td>0</td>
+<td>60</td>
+<td>139</td>
+<td>56.83%</td>
+<td>71</td>
+<td>151</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4159UFC.html" target="_blank">Rafael Dos Anjos vs Tarec Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/players/saffitar01.html" target="_blank">Tarec Saffiedine</a></td>
+<td>6/17/2017</td>
+<td>Kallang, Singapore</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>81</td>
+<td>158</td>
+<td>51.27%</td>
+<td>1.80</td>
+<td>91</td>
+<td>169</td>
+<td>35</td>
+<td>99</td>
+<td>37</td>
+<td>49</td>
+<td>9</td>
+<td>10</td>
+<td>20</td>
+<td>26</td>
+<td>5</td>
+<td>7</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>1</td>
+<td>0</td>
+<td>60</td>
+<td>139</td>
+<td>56.83%</td>
+<td>71</td>
+<td>151</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4159UFC.html" target="_blank">Rafael Dos Anjos vs Tarec Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/players/saffitar01.html" target="_blank">Tarec Saffiedine</a></td>
+<td>6/17/2017</td>
+<td>Kallang, Singapore</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>81</td>
+<td>158</td>
+<td>51.27%</td>
+<td>1.80</td>
+<td>91</td>
+<td>169</td>
+<td>35</td>
+<td>99</td>
+<td>37</td>
+<td>49</td>
+<td>9</td>
+<td>10</td>
+<td>20</td>
+<td>26</td>
+<td>5</td>
+<td>7</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>1</td>
+<td>0</td>
+<td>60</td>
+<td>139</td>
+<td>56.83%</td>
+<td>71</td>
+<td>151</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4415UFC.html" target="_blank">Rafael Dos Anjos vs Robbie Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/players/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
+<td>12/16/2017</td>
+<td>Winnipeg, Manitoba, Canada</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>172</td>
+<td>291</td>
+<td>59.11%</td>
+<td>1.38</td>
+<td>219</td>
+<td>343</td>
+<td>100</td>
+<td>199</td>
+<td>48</td>
+<td>64</td>
+<td>24</td>
+<td>28</td>
+<td>58</td>
+<td>78</td>
+<td>10</td>
+<td>10</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>0</td>
+<td>0</td>
+<td>86</td>
+<td>212</td>
+<td>59.43%</td>
+<td>137</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4415UFC.html" target="_blank">Rafael Dos Anjos vs Robbie Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/players/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
+<td>12/16/2017</td>
+<td>Winnipeg, Manitoba, Canada</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>172</td>
+<td>291</td>
+<td>59.11%</td>
+<td>1.38</td>
+<td>219</td>
+<td>343</td>
+<td>100</td>
+<td>199</td>
+<td>48</td>
+<td>64</td>
+<td>24</td>
+<td>28</td>
+<td>58</td>
+<td>78</td>
+<td>10</td>
+<td>10</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>0</td>
+<td>0</td>
+<td>86</td>
+<td>212</td>
+<td>59.43%</td>
+<td>137</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4415UFC.html" target="_blank">Rafael Dos Anjos vs Robbie Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/players/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
+<td>12/16/2017</td>
+<td>Winnipeg, Manitoba, Canada</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>172</td>
+<td>291</td>
+<td>59.11%</td>
+<td>1.38</td>
+<td>219</td>
+<td>343</td>
+<td>100</td>
+<td>199</td>
+<td>48</td>
+<td>64</td>
+<td>24</td>
+<td>28</td>
+<td>58</td>
+<td>78</td>
+<td>10</td>
+<td>10</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>0</td>
+<td>0</td>
+<td>86</td>
+<td>212</td>
+<td>59.43%</td>
+<td>137</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4415UFC.html" target="_blank">Rafael Dos Anjos vs Robbie Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/players/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
+<td>12/16/2017</td>
+<td>Winnipeg, Manitoba, Canada</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>172</td>
+<td>291</td>
+<td>59.11%</td>
+<td>1.38</td>
+<td>219</td>
+<td>343</td>
+<td>100</td>
+<td>199</td>
+<td>48</td>
+<td>64</td>
+<td>24</td>
+<td>28</td>
+<td>58</td>
+<td>78</td>
+<td>10</td>
+<td>10</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>0</td>
+<td>0</td>
+<td>86</td>
+<td>212</td>
+<td>59.43%</td>
+<td>137</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4415UFC.html" target="_blank">Rafael Dos Anjos vs Robbie Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/players/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
+<td>12/16/2017</td>
+<td>Winnipeg, Manitoba, Canada</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>172</td>
+<td>291</td>
+<td>59.11%</td>
+<td>1.38</td>
+<td>219</td>
+<td>343</td>
+<td>100</td>
+<td>199</td>
+<td>48</td>
+<td>64</td>
+<td>24</td>
+<td>28</td>
+<td>58</td>
+<td>78</td>
+<td>10</td>
+<td>10</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>0</td>
+<td>0</td>
+<td>86</td>
+<td>212</td>
+<td>59.43%</td>
+<td>137</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0188UFC.html" target="_blank">UFC 185: Pettis vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3102UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/players/pettiant01.html" target="_blank">Anthony Pettis</a></td>
+<td>3/14/2015</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>90</td>
+<td>171</td>
+<td>52.63%</td>
+<td>0.72</td>
+<td>144</td>
+<td>233</td>
+<td>44</td>
+<td>113</td>
+<td>27</td>
+<td>37</td>
+<td>19</td>
+<td>21</td>
+<td>11</td>
+<td>17</td>
+<td>21</td>
+<td>30</td>
+<td>9</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>162</td>
+<td>66.67%</td>
+<td>96</td>
+<td>205</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0188UFC.html" target="_blank">UFC 185: Pettis vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3102UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/players/pettiant01.html" target="_blank">Anthony Pettis</a></td>
+<td>3/14/2015</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>90</td>
+<td>171</td>
+<td>52.63%</td>
+<td>0.72</td>
+<td>144</td>
+<td>233</td>
+<td>44</td>
+<td>113</td>
+<td>27</td>
+<td>37</td>
+<td>19</td>
+<td>21</td>
+<td>11</td>
+<td>17</td>
+<td>21</td>
+<td>30</td>
+<td>9</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>162</td>
+<td>66.67%</td>
+<td>96</td>
+<td>205</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0188UFC.html" target="_blank">UFC 185: Pettis vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3102UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/players/pettiant01.html" target="_blank">Anthony Pettis</a></td>
+<td>3/14/2015</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>90</td>
+<td>171</td>
+<td>52.63%</td>
+<td>0.72</td>
+<td>144</td>
+<td>233</td>
+<td>44</td>
+<td>113</td>
+<td>27</td>
+<td>37</td>
+<td>19</td>
+<td>21</td>
+<td>11</td>
+<td>17</td>
+<td>21</td>
+<td>30</td>
+<td>9</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>162</td>
+<td>66.67%</td>
+<td>96</td>
+<td>205</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0188UFC.html" target="_blank">UFC 185: Pettis vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3102UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/players/pettiant01.html" target="_blank">Anthony Pettis</a></td>
+<td>3/14/2015</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>90</td>
+<td>171</td>
+<td>52.63%</td>
+<td>0.72</td>
+<td>144</td>
+<td>233</td>
+<td>44</td>
+<td>113</td>
+<td>27</td>
+<td>37</td>
+<td>19</td>
+<td>21</td>
+<td>11</td>
+<td>17</td>
+<td>21</td>
+<td>30</td>
+<td>9</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>162</td>
+<td>66.67%</td>
+<td>96</td>
+<td>205</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0188UFC.html" target="_blank">UFC 185: Pettis vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3102UFC.html" target="_blank">Rafael Dos Anjos vs Anthony Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/players/pettiant01.html" target="_blank">Anthony Pettis</a></td>
+<td>3/14/2015</td>
+<td>Dallas, Texas, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>90</td>
+<td>171</td>
+<td>52.63%</td>
+<td>0.72</td>
+<td>144</td>
+<td>233</td>
+<td>44</td>
+<td>113</td>
+<td>27</td>
+<td>37</td>
+<td>19</td>
+<td>21</td>
+<td>11</td>
+<td>17</td>
+<td>21</td>
+<td>30</td>
+<td>9</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>162</td>
+<td>66.67%</td>
+<td>96</td>
+<td>205</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5107UFC.html" target="_blank">Rafael Dos Anjos vs Kevin Lee</a></td>
+<td style="text-align:left"><a href="/ufc/players/leekev01.html" target="_blank">Kevin Lee</a></td>
+<td>5/18/2019</td>
+<td>Rochester, New York, USA</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.78</td>
+<td>0</td>
+<td>60</td>
+<td>111</td>
+<td>54.05%</td>
+<td>0.80</td>
+<td>75</td>
+<td>126</td>
+<td>36</td>
+<td>83</td>
+<td>17</td>
+<td>21</td>
+<td>7</td>
+<td>7</td>
+<td>18</td>
+<td>20</td>
+<td>9</td>
+<td>11</td>
+<td>4</td>
+<td>7</td>
+<td>57.14%</td>
+<td>1</td>
+<td>1</td>
+<td>35</td>
+<td>97</td>
+<td>63.92%</td>
+<td>40</td>
+<td>102</td>
+<td>6</td>
+<td>16</td>
+<td>62.50%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5107UFC.html" target="_blank">Rafael Dos Anjos vs Kevin Lee</a></td>
+<td style="text-align:left"><a href="/ufc/players/leekev01.html" target="_blank">Kevin Lee</a></td>
+<td>5/18/2019</td>
+<td>Rochester, New York, USA</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.78</td>
+<td>0</td>
+<td>60</td>
+<td>111</td>
+<td>54.05%</td>
+<td>0.80</td>
+<td>75</td>
+<td>126</td>
+<td>36</td>
+<td>83</td>
+<td>17</td>
+<td>21</td>
+<td>7</td>
+<td>7</td>
+<td>18</td>
+<td>20</td>
+<td>9</td>
+<td>11</td>
+<td>4</td>
+<td>7</td>
+<td>57.14%</td>
+<td>1</td>
+<td>1</td>
+<td>35</td>
+<td>97</td>
+<td>63.92%</td>
+<td>40</td>
+<td>102</td>
+<td>6</td>
+<td>16</td>
+<td>62.50%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5107UFC.html" target="_blank">Rafael Dos Anjos vs Kevin Lee</a></td>
+<td style="text-align:left"><a href="/ufc/players/leekev01.html" target="_blank">Kevin Lee</a></td>
+<td>5/18/2019</td>
+<td>Rochester, New York, USA</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.78</td>
+<td>0</td>
+<td>60</td>
+<td>111</td>
+<td>54.05%</td>
+<td>0.80</td>
+<td>75</td>
+<td>126</td>
+<td>36</td>
+<td>83</td>
+<td>17</td>
+<td>21</td>
+<td>7</td>
+<td>7</td>
+<td>18</td>
+<td>20</td>
+<td>9</td>
+<td>11</td>
+<td>4</td>
+<td>7</td>
+<td>57.14%</td>
+<td>1</td>
+<td>1</td>
+<td>35</td>
+<td>97</td>
+<td>63.92%</td>
+<td>40</td>
+<td>102</td>
+<td>6</td>
+<td>16</td>
+<td>62.50%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5107UFC.html" target="_blank">Rafael Dos Anjos vs Kevin Lee</a></td>
+<td style="text-align:left"><a href="/ufc/players/leekev01.html" target="_blank">Kevin Lee</a></td>
+<td>5/18/2019</td>
+<td>Rochester, New York, USA</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.78</td>
+<td>0</td>
+<td>60</td>
+<td>111</td>
+<td>54.05%</td>
+<td>0.80</td>
+<td>75</td>
+<td>126</td>
+<td>36</td>
+<td>83</td>
+<td>17</td>
+<td>21</td>
+<td>7</td>
+<td>7</td>
+<td>18</td>
+<td>20</td>
+<td>9</td>
+<td>11</td>
+<td>4</td>
+<td>7</td>
+<td>57.14%</td>
+<td>1</td>
+<td>1</td>
+<td>35</td>
+<td>97</td>
+<td>63.92%</td>
+<td>40</td>
+<td>102</td>
+<td>6</td>
+<td>16</td>
+<td>62.50%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5180UFC.html" target="_blank">Rafael Dos Anjos vs Leon Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarleo01.html" target="_blank">Leon Edwards</a></td>
+<td>7/20/2019</td>
+<td>San Antonio, Texas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>81</td>
+<td>169</td>
+<td>47.93%</td>
+<td>0.65</td>
+<td>129</td>
+<td>219</td>
+<td>41</td>
+<td>115</td>
+<td>17</td>
+<td>25</td>
+<td>23</td>
+<td>29</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>215</td>
+<td>57.21%</td>
+<td>113</td>
+<td>244</td>
+<td>3</td>
+<td>10</td>
+<td>70.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5180UFC.html" target="_blank">Rafael Dos Anjos vs Leon Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarleo01.html" target="_blank">Leon Edwards</a></td>
+<td>7/20/2019</td>
+<td>San Antonio, Texas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>81</td>
+<td>169</td>
+<td>47.93%</td>
+<td>0.65</td>
+<td>129</td>
+<td>219</td>
+<td>41</td>
+<td>115</td>
+<td>17</td>
+<td>25</td>
+<td>23</td>
+<td>29</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>215</td>
+<td>57.21%</td>
+<td>113</td>
+<td>244</td>
+<td>3</td>
+<td>10</td>
+<td>70.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5180UFC.html" target="_blank">Rafael Dos Anjos vs Leon Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarleo01.html" target="_blank">Leon Edwards</a></td>
+<td>7/20/2019</td>
+<td>San Antonio, Texas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>81</td>
+<td>169</td>
+<td>47.93%</td>
+<td>0.65</td>
+<td>129</td>
+<td>219</td>
+<td>41</td>
+<td>115</td>
+<td>17</td>
+<td>25</td>
+<td>23</td>
+<td>29</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>215</td>
+<td>57.21%</td>
+<td>113</td>
+<td>244</td>
+<td>3</td>
+<td>10</td>
+<td>70.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5180UFC.html" target="_blank">Rafael Dos Anjos vs Leon Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarleo01.html" target="_blank">Leon Edwards</a></td>
+<td>7/20/2019</td>
+<td>San Antonio, Texas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>81</td>
+<td>169</td>
+<td>47.93%</td>
+<td>0.65</td>
+<td>129</td>
+<td>219</td>
+<td>41</td>
+<td>115</td>
+<td>17</td>
+<td>25</td>
+<td>23</td>
+<td>29</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>215</td>
+<td>57.21%</td>
+<td>113</td>
+<td>244</td>
+<td>3</td>
+<td>10</td>
+<td>70.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5180UFC.html" target="_blank">Rafael Dos Anjos vs Leon Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarleo01.html" target="_blank">Leon Edwards</a></td>
+<td>7/20/2019</td>
+<td>San Antonio, Texas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>81</td>
+<td>169</td>
+<td>47.93%</td>
+<td>0.65</td>
+<td>129</td>
+<td>219</td>
+<td>41</td>
+<td>115</td>
+<td>17</td>
+<td>25</td>
+<td>23</td>
+<td>29</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>215</td>
+<td>57.21%</td>
+<td>113</td>
+<td>244</td>
+<td>3</td>
+<td>10</td>
+<td>70.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0218UFC.html" target="_blank">UFC 215: Nunes vs Shevchenko 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4265UFC.html" target="_blank">Rafael Dos Anjos vs Neil Magny</a></td>
+<td style="text-align:left"><a href="/ufc/players/magnynei01.html" target="_blank">Neil Magny</a></td>
+<td>9/9/2017</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>3.72</td>
+<td>0</td>
+<td>13</td>
+<td>16</td>
+<td>81.25%</td>
+<td>3.49</td>
+<td>17</td>
+<td>21</td>
+<td>11</td>
+<td>14</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>12</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>80.00%</td>
+<td>5</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0228UFC.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4623UFC.html" target="_blank">Rafael Dos Anjos vs Colby Covington</a></td>
+<td style="text-align:left"><a href="/ufc/players/covincol01.html" target="_blank">Colby Covington</a></td>
+<td>6/9/2018</td>
+<td>Chicago, Illinois, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>105</td>
+<td>198</td>
+<td>53.03%</td>
+<td>0.84</td>
+<td>130</td>
+<td>223</td>
+<td>54</td>
+<td>139</td>
+<td>37</td>
+<td>45</td>
+<td>14</td>
+<td>14</td>
+<td>32</td>
+<td>32</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>99</td>
+<td>296</td>
+<td>66.55%</td>
+<td>142</td>
+<td>346</td>
+<td>7</td>
+<td>18</td>
+<td>61.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0228UFC.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4623UFC.html" target="_blank">Rafael Dos Anjos vs Colby Covington</a></td>
+<td style="text-align:left"><a href="/ufc/players/covincol01.html" target="_blank">Colby Covington</a></td>
+<td>6/9/2018</td>
+<td>Chicago, Illinois, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>105</td>
+<td>198</td>
+<td>53.03%</td>
+<td>0.84</td>
+<td>130</td>
+<td>223</td>
+<td>54</td>
+<td>139</td>
+<td>37</td>
+<td>45</td>
+<td>14</td>
+<td>14</td>
+<td>32</td>
+<td>32</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>99</td>
+<td>296</td>
+<td>66.55%</td>
+<td>142</td>
+<td>346</td>
+<td>7</td>
+<td>18</td>
+<td>61.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0228UFC.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4623UFC.html" target="_blank">Rafael Dos Anjos vs Colby Covington</a></td>
+<td style="text-align:left"><a href="/ufc/players/covincol01.html" target="_blank">Colby Covington</a></td>
+<td>6/9/2018</td>
+<td>Chicago, Illinois, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>105</td>
+<td>198</td>
+<td>53.03%</td>
+<td>0.84</td>
+<td>130</td>
+<td>223</td>
+<td>54</td>
+<td>139</td>
+<td>37</td>
+<td>45</td>
+<td>14</td>
+<td>14</td>
+<td>32</td>
+<td>32</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>99</td>
+<td>296</td>
+<td>66.55%</td>
+<td>142</td>
+<td>346</td>
+<td>7</td>
+<td>18</td>
+<td>61.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0228UFC.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4623UFC.html" target="_blank">Rafael Dos Anjos vs Colby Covington</a></td>
+<td style="text-align:left"><a href="/ufc/players/covincol01.html" target="_blank">Colby Covington</a></td>
+<td>6/9/2018</td>
+<td>Chicago, Illinois, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>105</td>
+<td>198</td>
+<td>53.03%</td>
+<td>0.84</td>
+<td>130</td>
+<td>223</td>
+<td>54</td>
+<td>139</td>
+<td>37</td>
+<td>45</td>
+<td>14</td>
+<td>14</td>
+<td>32</td>
+<td>32</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>99</td>
+<td>296</td>
+<td>66.55%</td>
+<td>142</td>
+<td>346</td>
+<td>7</td>
+<td>18</td>
+<td>61.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0228UFC.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4623UFC.html" target="_blank">Rafael Dos Anjos vs Colby Covington</a></td>
+<td style="text-align:left"><a href="/ufc/players/covincol01.html" target="_blank">Colby Covington</a></td>
+<td>6/9/2018</td>
+<td>Chicago, Illinois, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>105</td>
+<td>198</td>
+<td>53.03%</td>
+<td>0.84</td>
+<td>130</td>
+<td>223</td>
+<td>54</td>
+<td>139</td>
+<td>37</td>
+<td>45</td>
+<td>14</td>
+<td>14</td>
+<td>32</td>
+<td>32</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>99</td>
+<td>296</td>
+<td>66.55%</td>
+<td>142</td>
+<td>346</td>
+<td>7</td>
+<td>18</td>
+<td>61.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5438UFC.html" target="_blank">Rafael Dos Anjos vs Michael Chiesa</a></td>
+<td style="text-align:left"><a href="/ufc/players/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
+<td>1/25/2020</td>
+<td>Raleigh, North Carolina, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>14</td>
+<td>36</td>
+<td>38.89%</td>
+<td>0.31</td>
+<td>23</td>
+<td>52</td>
+<td>2</td>
+<td>23</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>51</td>
+<td>82.35%</td>
+<td>54</td>
+<td>107</td>
+<td>6</td>
+<td>8</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5438UFC.html" target="_blank">Rafael Dos Anjos vs Michael Chiesa</a></td>
+<td style="text-align:left"><a href="/ufc/players/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
+<td>1/25/2020</td>
+<td>Raleigh, North Carolina, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>14</td>
+<td>36</td>
+<td>38.89%</td>
+<td>0.31</td>
+<td>23</td>
+<td>52</td>
+<td>2</td>
+<td>23</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>51</td>
+<td>82.35%</td>
+<td>54</td>
+<td>107</td>
+<td>6</td>
+<td>8</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5438UFC.html" target="_blank">Rafael Dos Anjos vs Michael Chiesa</a></td>
+<td style="text-align:left"><a href="/ufc/players/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
+<td>1/25/2020</td>
+<td>Raleigh, North Carolina, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>14</td>
+<td>36</td>
+<td>38.89%</td>
+<td>0.31</td>
+<td>23</td>
+<td>52</td>
+<td>2</td>
+<td>23</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>51</td>
+<td>82.35%</td>
+<td>54</td>
+<td>107</td>
+<td>6</td>
+<td>8</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">UFC Fight Night: Felder vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5821UFC.html" target="_blank">Rafael Dos Anjos vs Paul Felder</a></td>
+<td style="text-align:left"><a href="/ufc/players/feldepau01.html" target="_blank">Paul Felder</a></td>
+<td>11/14/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>92</td>
+<td>162</td>
+<td>56.79%</td>
+<td>0.74</td>
+<td>155</td>
+<td>231</td>
+<td>53</td>
+<td>113</td>
+<td>35</td>
+<td>45</td>
+<td>4</td>
+<td>4</td>
+<td>26</td>
+<td>29</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+<td>22</td>
+<td>27.27%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>190</td>
+<td>48.42%</td>
+<td>134</td>
+<td>226</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">UFC Fight Night: Felder vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5821UFC.html" target="_blank">Rafael Dos Anjos vs Paul Felder</a></td>
+<td style="text-align:left"><a href="/ufc/players/feldepau01.html" target="_blank">Paul Felder</a></td>
+<td>11/14/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>92</td>
+<td>162</td>
+<td>56.79%</td>
+<td>0.74</td>
+<td>155</td>
+<td>231</td>
+<td>53</td>
+<td>113</td>
+<td>35</td>
+<td>45</td>
+<td>4</td>
+<td>4</td>
+<td>26</td>
+<td>29</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+<td>22</td>
+<td>27.27%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>190</td>
+<td>48.42%</td>
+<td>134</td>
+<td>226</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">UFC Fight Night: Felder vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5821UFC.html" target="_blank">Rafael Dos Anjos vs Paul Felder</a></td>
+<td style="text-align:left"><a href="/ufc/players/feldepau01.html" target="_blank">Paul Felder</a></td>
+<td>11/14/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>92</td>
+<td>162</td>
+<td>56.79%</td>
+<td>0.74</td>
+<td>155</td>
+<td>231</td>
+<td>53</td>
+<td>113</td>
+<td>35</td>
+<td>45</td>
+<td>4</td>
+<td>4</td>
+<td>26</td>
+<td>29</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+<td>22</td>
+<td>27.27%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>190</td>
+<td>48.42%</td>
+<td>134</td>
+<td>226</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">UFC Fight Night: Felder vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5821UFC.html" target="_blank">Rafael Dos Anjos vs Paul Felder</a></td>
+<td style="text-align:left"><a href="/ufc/players/feldepau01.html" target="_blank">Paul Felder</a></td>
+<td>11/14/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>92</td>
+<td>162</td>
+<td>56.79%</td>
+<td>0.74</td>
+<td>155</td>
+<td>231</td>
+<td>53</td>
+<td>113</td>
+<td>35</td>
+<td>45</td>
+<td>4</td>
+<td>4</td>
+<td>26</td>
+<td>29</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+<td>22</td>
+<td>27.27%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>190</td>
+<td>48.42%</td>
+<td>134</td>
+<td>226</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">UFC Fight Night: Felder vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5821UFC.html" target="_blank">Rafael Dos Anjos vs Paul Felder</a></td>
+<td style="text-align:left"><a href="/ufc/players/feldepau01.html" target="_blank">Paul Felder</a></td>
+<td>11/14/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>92</td>
+<td>162</td>
+<td>56.79%</td>
+<td>0.74</td>
+<td>155</td>
+<td>231</td>
+<td>53</td>
+<td>113</td>
+<td>35</td>
+<td>45</td>
+<td>4</td>
+<td>4</td>
+<td>26</td>
+<td>29</td>
+<td>5</td>
+<td>8</td>
+<td>6</td>
+<td>22</td>
+<td>27.27%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>190</td>
+<td>48.42%</td>
+<td>134</td>
+<td>226</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0274UFC.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6463UFC.html" target="_blank">Rafael Dos Anjos vs Renato Moicano</a></td>
+<td style="text-align:left"><a href="/ufc/players/moicaren01.html" target="_blank">Renato Moicano</a></td>
+<td>3/5/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Catch Weight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>1</td>
+<td>149</td>
+<td>286</td>
+<td>52.10%</td>
+<td>1.19</td>
+<td>179</td>
+<td>318</td>
+<td>119</td>
+<td>255</td>
+<td>23</td>
+<td>24</td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+<td>8</td>
+<td>58</td>
+<td>80</td>
+<td>5</td>
+<td>15</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>88</td>
+<td>172</td>
+<td>48.84%</td>
+<td>99</td>
+<td>185</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0274UFC.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6463UFC.html" target="_blank">Rafael Dos Anjos vs Renato Moicano</a></td>
+<td style="text-align:left"><a href="/ufc/players/moicaren01.html" target="_blank">Renato Moicano</a></td>
+<td>3/5/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Catch Weight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>1</td>
+<td>149</td>
+<td>286</td>
+<td>52.10%</td>
+<td>1.19</td>
+<td>179</td>
+<td>318</td>
+<td>119</td>
+<td>255</td>
+<td>23</td>
+<td>24</td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+<td>8</td>
+<td>58</td>
+<td>80</td>
+<td>5</td>
+<td>15</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>88</td>
+<td>172</td>
+<td>48.84%</td>
+<td>99</td>
+<td>185</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0274UFC.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6463UFC.html" target="_blank">Rafael Dos Anjos vs Renato Moicano</a></td>
+<td style="text-align:left"><a href="/ufc/players/moicaren01.html" target="_blank">Renato Moicano</a></td>
+<td>3/5/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Catch Weight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>1</td>
+<td>149</td>
+<td>286</td>
+<td>52.10%</td>
+<td>1.19</td>
+<td>179</td>
+<td>318</td>
+<td>119</td>
+<td>255</td>
+<td>23</td>
+<td>24</td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+<td>8</td>
+<td>58</td>
+<td>80</td>
+<td>5</td>
+<td>15</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>88</td>
+<td>172</td>
+<td>48.84%</td>
+<td>99</td>
+<td>185</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0274UFC.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6463UFC.html" target="_blank">Rafael Dos Anjos vs Renato Moicano</a></td>
+<td style="text-align:left"><a href="/ufc/players/moicaren01.html" target="_blank">Renato Moicano</a></td>
+<td>3/5/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Catch Weight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>1</td>
+<td>149</td>
+<td>286</td>
+<td>52.10%</td>
+<td>1.19</td>
+<td>179</td>
+<td>318</td>
+<td>119</td>
+<td>255</td>
+<td>23</td>
+<td>24</td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+<td>8</td>
+<td>58</td>
+<td>80</td>
+<td>5</td>
+<td>15</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>88</td>
+<td>172</td>
+<td>48.84%</td>
+<td>99</td>
+<td>185</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0274UFC.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6463UFC.html" target="_blank">Rafael Dos Anjos vs Renato Moicano</a></td>
+<td style="text-align:left"><a href="/ufc/players/moicaren01.html" target="_blank">Renato Moicano</a></td>
+<td>3/5/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Catch Weight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>5</td>
+<td>25.0</td>
+<td>1</td>
+<td>149</td>
+<td>286</td>
+<td>52.10%</td>
+<td>1.19</td>
+<td>179</td>
+<td>318</td>
+<td>119</td>
+<td>255</td>
+<td>23</td>
+<td>24</td>
+<td>7</td>
+<td>7</td>
+<td>7</td>
+<td>8</td>
+<td>58</td>
+<td>80</td>
+<td>5</td>
+<td>15</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>88</td>
+<td>172</td>
+<td>48.84%</td>
+<td>99</td>
+<td>185</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0301UFC.html" target="_blank">UFC 299: O'Malley vs. Vera 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7514UFC.html" target="_blank">Rafael Dos Anjos vs Mateusz Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/players/gamromat01.html" target="_blank">Mateusz Gamrot</a></td>
+<td>3/9/2024</td>
+<td>Miami, Florida, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>36</td>
+<td>78</td>
+<td>46.15%</td>
+<td>0.80</td>
+<td>39</td>
+<td>82</td>
+<td>24</td>
+<td>61</td>
+<td>5</td>
+<td>9</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>57</td>
+<td>102</td>
+<td>44.12%</td>
+<td>111</td>
+<td>163</td>
+<td>11</td>
+<td>19</td>
+<td>42.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0301UFC.html" target="_blank">UFC 299: O'Malley vs. Vera 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7514UFC.html" target="_blank">Rafael Dos Anjos vs Mateusz Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/players/gamromat01.html" target="_blank">Mateusz Gamrot</a></td>
+<td>3/9/2024</td>
+<td>Miami, Florida, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>36</td>
+<td>78</td>
+<td>46.15%</td>
+<td>0.80</td>
+<td>39</td>
+<td>82</td>
+<td>24</td>
+<td>61</td>
+<td>5</td>
+<td>9</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>57</td>
+<td>102</td>
+<td>44.12%</td>
+<td>111</td>
+<td>163</td>
+<td>11</td>
+<td>19</td>
+<td>42.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0301UFC.html" target="_blank">UFC 299: O'Malley vs. Vera 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7514UFC.html" target="_blank">Rafael Dos Anjos vs Mateusz Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/players/gamromat01.html" target="_blank">Mateusz Gamrot</a></td>
+<td>3/9/2024</td>
+<td>Miami, Florida, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>36</td>
+<td>78</td>
+<td>46.15%</td>
+<td>0.80</td>
+<td>39</td>
+<td>82</td>
+<td>24</td>
+<td>61</td>
+<td>5</td>
+<td>9</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>57</td>
+<td>102</td>
+<td>44.12%</td>
+<td>111</td>
+<td>163</td>
+<td>11</td>
+<td>19</td>
+<td>42.11%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6659UFC.html" target="_blank">Rafael Dos Anjos vs Rafael Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/players/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
+<td>7/9/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>20.3</td>
+<td>0</td>
+<td>54</td>
+<td>110</td>
+<td>49.09%</td>
+<td>0.53</td>
+<td>90</td>
+<td>162</td>
+<td>31</td>
+<td>80</td>
+<td>12</td>
+<td>14</td>
+<td>11</td>
+<td>16</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>16</td>
+<td>12.50%</td>
+<td>0</td>
+<td>0</td>
+<td>64</td>
+<td>159</td>
+<td>59.75%</td>
+<td>92</td>
+<td>192</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6659UFC.html" target="_blank">Rafael Dos Anjos vs Rafael Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/players/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
+<td>7/9/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>20.3</td>
+<td>0</td>
+<td>54</td>
+<td>110</td>
+<td>49.09%</td>
+<td>0.53</td>
+<td>90</td>
+<td>162</td>
+<td>31</td>
+<td>80</td>
+<td>12</td>
+<td>14</td>
+<td>11</td>
+<td>16</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>16</td>
+<td>12.50%</td>
+<td>0</td>
+<td>0</td>
+<td>64</td>
+<td>159</td>
+<td>59.75%</td>
+<td>92</td>
+<td>192</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6659UFC.html" target="_blank">Rafael Dos Anjos vs Rafael Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/players/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
+<td>7/9/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>20.3</td>
+<td>0</td>
+<td>54</td>
+<td>110</td>
+<td>49.09%</td>
+<td>0.53</td>
+<td>90</td>
+<td>162</td>
+<td>31</td>
+<td>80</td>
+<td>12</td>
+<td>14</td>
+<td>11</td>
+<td>16</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>16</td>
+<td>12.50%</td>
+<td>0</td>
+<td>0</td>
+<td>64</td>
+<td>159</td>
+<td>59.75%</td>
+<td>92</td>
+<td>192</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6659UFC.html" target="_blank">Rafael Dos Anjos vs Rafael Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/players/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
+<td>7/9/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>20.3</td>
+<td>0</td>
+<td>54</td>
+<td>110</td>
+<td>49.09%</td>
+<td>0.53</td>
+<td>90</td>
+<td>162</td>
+<td>31</td>
+<td>80</td>
+<td>12</td>
+<td>14</td>
+<td>11</td>
+<td>16</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>16</td>
+<td>12.50%</td>
+<td>0</td>
+<td>0</td>
+<td>64</td>
+<td>159</td>
+<td>59.75%</td>
+<td>92</td>
+<td>192</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6659UFC.html" target="_blank">Rafael Dos Anjos vs Rafael Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/players/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
+<td>7/9/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>20.3</td>
+<td>0</td>
+<td>54</td>
+<td>110</td>
+<td>49.09%</td>
+<td>0.53</td>
+<td>90</td>
+<td>162</td>
+<td>31</td>
+<td>80</td>
+<td>12</td>
+<td>14</td>
+<td>11</td>
+<td>16</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>16</td>
+<td>12.50%</td>
+<td>0</td>
+<td>0</td>
+<td>64</td>
+<td>159</td>
+<td>59.75%</td>
+<td>92</td>
+<td>192</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0317FNI.html" target="_blank">UFC Fight Night: Thompson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6864UFC.html" target="_blank">Rafael Dos Anjos vs Bryan Barberena</a></td>
+<td style="text-align:left"><a href="/ufc/players/barbebry01.html" target="_blank">Bryan Barberena</a></td>
+<td>12/3/2022</td>
+<td>Orlando, Florida, USA</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.33</td>
+<td>0</td>
+<td>20</td>
+<td>25</td>
+<td>80.00%</td>
+<td>1.20</td>
+<td>36</td>
+<td>41</td>
+<td>3</td>
+<td>8</td>
+<td>17</td>
+<td>17</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>3</td>
+<td>14</td>
+<td>14</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>2</td>
+<td>0</td>
+<td>14</td>
+<td>29</td>
+<td>51.72%</td>
+<td>61</td>
+<td>79</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0317FNI.html" target="_blank">UFC Fight Night: Thompson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6864UFC.html" target="_blank">Rafael Dos Anjos vs Bryan Barberena</a></td>
+<td style="text-align:left"><a href="/ufc/players/barbebry01.html" target="_blank">Bryan Barberena</a></td>
+<td>12/3/2022</td>
+<td>Orlando, Florida, USA</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.33</td>
+<td>0</td>
+<td>20</td>
+<td>25</td>
+<td>80.00%</td>
+<td>1.20</td>
+<td>36</td>
+<td>41</td>
+<td>3</td>
+<td>8</td>
+<td>17</td>
+<td>17</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>3</td>
+<td>14</td>
+<td>14</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>2</td>
+<td>0</td>
+<td>14</td>
+<td>29</td>
+<td>51.72%</td>
+<td>61</td>
+<td>79</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7233UFC.html" target="_blank">Rafael Dos Anjos vs Vicente Luque</a></td>
+<td style="text-align:left"><a href="/ufc/players/luquevic01.html" target="_blank">Vicente Luque</a></td>
+<td>8/12/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>48.53%</td>
+<td>0.53</td>
+<td>94</td>
+<td>170</td>
+<td>42</td>
+<td>108</td>
+<td>19</td>
+<td>23</td>
+<td>5</td>
+<td>5</td>
+<td>26</td>
+<td>27</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>141</td>
+<td>48.94%</td>
+<td>138</td>
+<td>221</td>
+<td>8</td>
+<td>11</td>
+<td>27.27%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7233UFC.html" target="_blank">Rafael Dos Anjos vs Vicente Luque</a></td>
+<td style="text-align:left"><a href="/ufc/players/luquevic01.html" target="_blank">Vicente Luque</a></td>
+<td>8/12/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>48.53%</td>
+<td>0.53</td>
+<td>94</td>
+<td>170</td>
+<td>42</td>
+<td>108</td>
+<td>19</td>
+<td>23</td>
+<td>5</td>
+<td>5</td>
+<td>26</td>
+<td>27</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>141</td>
+<td>48.94%</td>
+<td>138</td>
+<td>221</td>
+<td>8</td>
+<td>11</td>
+<td>27.27%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7233UFC.html" target="_blank">Rafael Dos Anjos vs Vicente Luque</a></td>
+<td style="text-align:left"><a href="/ufc/players/luquevic01.html" target="_blank">Vicente Luque</a></td>
+<td>8/12/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>48.53%</td>
+<td>0.53</td>
+<td>94</td>
+<td>170</td>
+<td>42</td>
+<td>108</td>
+<td>19</td>
+<td>23</td>
+<td>5</td>
+<td>5</td>
+<td>26</td>
+<td>27</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>141</td>
+<td>48.94%</td>
+<td>138</td>
+<td>221</td>
+<td>8</td>
+<td>11</td>
+<td>27.27%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7233UFC.html" target="_blank">Rafael Dos Anjos vs Vicente Luque</a></td>
+<td style="text-align:left"><a href="/ufc/players/luquevic01.html" target="_blank">Vicente Luque</a></td>
+<td>8/12/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>48.53%</td>
+<td>0.53</td>
+<td>94</td>
+<td>170</td>
+<td>42</td>
+<td>108</td>
+<td>19</td>
+<td>23</td>
+<td>5</td>
+<td>5</td>
+<td>26</td>
+<td>27</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>141</td>
+<td>48.94%</td>
+<td>138</td>
+<td>221</td>
+<td>8</td>
+<td>11</td>
+<td>27.27%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7233UFC.html" target="_blank">Rafael Dos Anjos vs Vicente Luque</a></td>
+<td style="text-align:left"><a href="/ufc/players/luquevic01.html" target="_blank">Vicente Luque</a></td>
+<td>8/12/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>48.53%</td>
+<td>0.53</td>
+<td>94</td>
+<td>170</td>
+<td>42</td>
+<td>108</td>
+<td>19</td>
+<td>23</td>
+<td>5</td>
+<td>5</td>
+<td>26</td>
+<td>27</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>7</td>
+<td>28.57%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>141</td>
+<td>48.94%</td>
+<td>138</td>
+<td>221</td>
+<td>8</td>
+<td>11</td>
+<td>27.27%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

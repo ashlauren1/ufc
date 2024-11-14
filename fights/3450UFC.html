@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rose Namajunas vs Paige VanZant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylesheet.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        const searchBar = document.getElementById("search-bar");
+        const searchResults = document.getElementById("search-results");
+
+        let fighterLinks = {};
+        let eventLinks = {};
+
+        // Load JSON files
+        async function loadLinks() {
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
+        }
+
+        await loadLinks();
+
+        // Filter data and show suggestions based on input
+        function updateSuggestions() {
+            const query = searchBar.value.trim().toLowerCase();
+            searchResults.innerHTML = ""; // Clear previous results
+
+            if (query === "") return;
+
+            const combinedLinks = { ...fighterLinks, ...eventLinks };
+            const matchingEntries = Object.entries(combinedLinks)
+                .filter(([name]) => name.includes(query))
+                .slice(0, 5); // Limit to top 5
+
+            matchingEntries.forEach(([name, url]) => {
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("suggestion");
+
+                // Proper case for names
+                resultItem.textContent = name.split(" ")
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ");
+
+                resultItem.addEventListener("click", () => {
+                    window.open(url, "_self");
+                });
+                searchResults.appendChild(resultItem);
+            });
+
+            if (matchingEntries.length > 0) {
+                searchResults.style.display = "block";
+            } else {
+                const noResultItem = document.createElement("div");
+                noResultItem.classList.add("no-result");
+                noResultItem.textContent = "No results found.";
+                searchResults.appendChild(noResultItem);
+                searchResults.style.display = "block";
+            }
+        }
+        
+        document.addEventListener("click", function(event) {
+            if (!searchContainer.contains(event.target)) {
+                searchResults.style.display = "none";
+            }
+        });
+
+        // Add event listener to search bar
+        searchBar.addEventListener("input", updateSuggestions);
+});
+</script>
+</head>
+<body>
+    <div class="topnav">
+        <a href="/ufc/">Projections</a>
+        <a href="/ufc/fighters/">Fighters</a>
+        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/stats/">Stats</a>
+        <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+        <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-bar" placeholder="Search for a fighter or event...">
+        <button id="search-button">Search</button>
+        <div id="search-results"></div>
+    </div>
+    <div class="header">
+        <h1>Rose Namajunas vs Paige VanZant</h1>
+        <h2>UFC Fight Night: Hernandez vs. Pereira - 12/10/2015</h2>
+        <h2>Las Vegas, Nevada, USA</h2>
+    </div>
+    <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+    <div id="boxscore-container">
+    
+    <div class="subhead">
+        <h3>Weight Class: Women's Strawweight</h3>
+        <h3>Scheduled Rounds: 5</h3>
+        <h3>Fight Duration: 22.42</h3>
+    </div>
+        
+    <div id="table-container">
+        
+        <span class="caption">Rose Namajunas</span>
+        <table id="home-boxscore">
+        <thead>
+            <tr>
+                <td class="multiColHeaders" colspan="6"></td>
+                <td class="multiColHeaders" colspan="17">Striking - Offense</td>
+                <td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+                <td class="multiColHeaders" colspan="5">Striking - Defense</td>
+                <td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+            </tr>
+            <tr>
+                <th>Fighter</th>
+                <th></th>
+                <th>Result</th>
+                <th>Fight Duration</th>
+                <th>Rd</th>
+                <th>Rd Duration</th>
+                <th>KD</th>
+                <th>Sig. Str.</th>
+                <th>Sig. Str. Att.</th>
+                <th>Sig. Str. Acc.</th>
+                <th>SSLPM</th>
+                <th>Total Str.</th>
+                <th>Total Str. Att.</th>
+                <th>Sig. Head Str.</th>
+                <th>Sig. Head Str. Att.</th>
+                <th>Sig. Body Str.</th>
+                <th>Sig. Body Str. Att.</th>
+                <th>Sig. Leg Str.</th>
+                <th>Sig. Leg Str. Att.</th>
+                <th>Clinch Str.</th>
+                <th>Clinch Str. Att.</th>
+                <th>Ground Str.</th>
+                <th>Ground Str. Att.</th>
+                <th>TD</th>
+                <th>TD Att</th>
+                <th>TD Acc.</th>
+                <th>Sub. Att.</th>
+                <th>Reversal</th>
+                <th>Sig. Str. Agst</th>
+                <th>Sig. Str. Att. Agst</th>
+                <th>Sig. Str. Def</th>
+                <th>Total Str. Agst</th>
+                <th>Total Str. Att. Agst</th>
+                <th>TD Agst</th>
+                <th>TD Att. Agst</th>
+                <th>TD Def</th>
+                <th>Sub. Att. Agst</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
+                <td>W</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>1</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>20</td>
+                <td>40</td>
+                <td>50.00%</td>
+                <td>4.00</td>
+                <td>28</td>
+                <td>53</td>
+                <td>16</td>
+                <td>35</td>
+                <td>4</td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                <td>4</td>
+                <td>5</td>
+                <td>7</td>
+                <td>14</td>
+                <td>2</td>
+                <td>2</td>
+                <td>100.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+                <td>14</td>
+                <td>85.71%</td>
+                <td>13</td>
+                <td>26</td>               
+                <td>0</td>
+                <td>1</td>
+                <td>100.00%</td>
+                <td>0</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
+                <td>W</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>2</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>10</td>
+                <td>18</td>
+                <td>55.56%</td>
+                <td>2.00</td>
+                <td>20</td>
+                <td>28</td>
+                <td>7</td>
+                <td>13</td>
+                <td>2</td>
+                <td>4</td>
+                <td>1</td>
+                <td>1</td>
+                <td>3</td>
+                <td>6</td>
+                <td>3</td>
+                <td>6</td>
+                <td>1</td>
+                <td>3</td>
+                <td>33.33%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>5</td>
+                <td>80.00%</td>
+                <td>11</td>
+                <td>17</td>               
+                <td>0</td>
+                <td>1</td>
+                <td>100.00%</td>
+                <td>0</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
+                <td>W</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>3</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>17</td>
+                <td>30</td>
+                <td>56.67%</td>
+                <td>3.40</td>
+                <td>28</td>
+                <td>45</td>
+                <td>13</td>
+                <td>25</td>
+                <td>3</td>
+                <td>4</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>7</td>
+                <td>10</td>
+                <td>2</td>
+                <td>2</td>
+                <td>100.00%</td>
+                <td>1</td>
+                <td>0</td>
+                <td>3</td>
+                <td>21</td>
+                <td>85.71%</td>
+                <td>14</td>
+                <td>33</td>               
+                <td>0</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
+                <td>W</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>4</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>7</td>
+                <td>7</td>
+                <td>100.00%</td>
+                <td>1.40</td>
+                <td>23</td>
+                <td>23</td>
+                <td>4</td>
+                <td>4</td>
+                <td>3</td>
+                <td>3</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>4</td>
+                <td>4</td>
+                <td>2</td>
+                <td>2</td>
+                <td>100.00%</td>
+                <td>2</td>
+                <td>0</td>
+                <td>1</td>
+                <td>3</td>
+                <td>66.67%</td>
+                <td>8</td>
+                <td>10</td>               
+                <td>0</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
+                <td>W</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>5</td>
+                <td>2.42</td>
+                <td>0</td>
+                <td>3</td>
+                <td>5</td>
+                <td>60.00%</td>
+                <td>1.24</td>
+                <td>5</td>
+                <td>9</td>
+                <td>3</td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>100.00%</td>
+                <td>1</td>
+                <td>0</td>
+                <td>3</td>
+                <td>7</td>
+                <td>57.14%</td>
+                <td>7</td>
+                <td>11</td>               
+                <td>0</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0</td>
+            </tr>
+                
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6"><strong>Total</strong></td>
+                <td>0</td>
+                <td>57</td>
+                <td>100</td>
+                <td>57.00%</td>
+                <td>2.54</td>
+                <td>104</td>
+                <td>158</td>
+                <td>43</td>
+                <td>82</td>
+                <td>12</td>
+                <td>16</td>
+                <td>2</td>
+                <td>2</td>
+                <td>9</td>
+                <td>13</td>
+                <td>21</td>
+                <td>34</td>
+                <td>8</td>
+                <td>10</td>
+                <td>80.00%</td>
+                <td>4</td>
+                <td>0</td>
+                <td>10</td>
+                <td>50</td>
+                <td>80.00%</td>
+                <td>53</td>
+                <td>97</td>               
+                <td>0</td>
+                <td>2</td>
+                <td>100.00%</td>
+                <td>0</td>
+            </tr>
+        </tfoot>
+        </table>
+            
+        <span class="caption">Paige VanZant</span>
+        <table id="away-boxscore">
+        <thead>
+            <tr>
+                <td class="multiColHeaders" colspan="6"></td>
+                <td class="multiColHeaders" colspan="17">Striking - Offense</td>
+                <td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+                <td class="multiColHeaders" colspan="5">Striking - Defense</td>
+                <td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+            </tr>
+            <tr>
+                <th>Fighter</th>
+                <th></th>
+                <th>Result</th>
+                <th>Fight Duration</th>
+                <th>Rd</th>
+                <th>Rd Duration</th>
+                <th>KD</th>
+                <th>Sig. Str.</th>
+                <th>Sig. Str. Att.</th>
+                <th>Sig. Str. Acc.</th>
+                <th>SSLPM</th>
+                <th>Total Str.</th>
+                <th>Total Str. Att.</th>
+                <th>Sig. Head Str.</th>
+                <th>Sig. Head Str. Att.</th>
+                <th>Sig. Body Str.</th>
+                <th>Sig. Body Str. Att.</th>
+                <th>Sig. Leg Str.</th>
+                <th>Sig. Leg Str. Att.</th>
+                <th>Clinch Str.</th>
+                <th>Clinch Str. Att.</th>
+                <th>Ground Str.</th>
+                <th>Ground Str. Att.</th>
+                <th>TD</th>
+                <th>TD Att</th>
+                <th>TD Acc.</th>
+                <th>Sub. Att.</th>
+                <th>Reversal</th>
+                <th>Sig. Str. Agst</th>
+                <th>Sig. Str. Att. Agst</th>
+                <th>Sig. Str. Def</th>
+                <th>Total Str. Agst</th>
+                <th>Total Str. Att. Agst</th>
+                <th>TD Agst</th>
+                <th>TD Att. Agst</th>
+                <th>TD Def</th>
+                <th>Sub. Att. Agst</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+                <td>L</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>1</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>2</td>
+                <td>14</td>
+                <td>14.29%</td>
+                <td>0.40</td>
+                <td>13</td>
+                <td>26</td>
+                <td>0</td>
+                <td>8</td>
+                <td>0</td>
+                <td>3</td>
+                <td>2</td>
+                <td>3</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>20</td>
+                <td>40</td>
+                <td>50.00%</td>
+                <td>28</td>
+                <td>53</td>               
+                <td>2</td>
+                <td>2</td>
+                <td>0.00%</td>
+                <td>0</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+                <td>L</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>2</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>5</td>
+                <td>20.00%</td>
+                <td>0.20</td>
+                <td>11</td>
+                <td>17</td>
+                <td>0</td>
+                <td>3</td>
+                <td>1</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>10</td>
+                <td>18</td>
+                <td>44.44%</td>
+                <td>20</td>
+                <td>28</td>               
+                <td>1</td>
+                <td>3</td>
+                <td>66.67%</td>
+                <td>0</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+                <td>L</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>3</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>3</td>
+                <td>21</td>
+                <td>14.29%</td>
+                <td>0.60</td>
+                <td>14</td>
+                <td>33</td>
+                <td>0</td>
+                <td>13</td>
+                <td>2</td>
+                <td>7</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>17</td>
+                <td>30</td>
+                <td>43.33%</td>
+                <td>28</td>
+                <td>45</td>               
+                <td>2</td>
+                <td>2</td>
+                <td>0.00%</td>
+                <td>1</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+                <td>L</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>4</td>
+                <td>5.0</td>
+                <td>0</td>
+                <td>1</td>
+                <td>3</td>
+                <td>33.33%</td>
+                <td>0.20</td>
+                <td>8</td>
+                <td>10</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>7</td>
+                <td>7</td>
+                <td>0.00%</td>
+                <td>23</td>
+                <td>23</td>               
+                <td>2</td>
+                <td>2</td>
+                <td>0.00%</td>
+                <td>2</td>
+            </tr>
+                
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fighters/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+                <td>L</td>
+                <td>Submission</td>
+                <td>22.42</td>
+                <td>5</td>
+                <td>2.42</td>
+                <td>0</td>
+                <td>3</td>
+                <td>7</td>
+                <td>42.86%</td>
+                <td>1.24</td>
+                <td>7</td>
+                <td>11</td>
+                <td>1</td>
+                <td>5</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>3</td>
+                <td>5</td>
+                <td>40.00%</td>
+                <td>5</td>
+                <td>9</td>               
+                <td>1</td>
+                <td>1</td>
+                <td>0.00%</td>
+                <td>1</td>
+            </tr>
+                
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6"><strong>Total</strong></td>
+                <td>0</td>
+                <td>10</td>
+                <td>50</td>
+                <td>20.00%</td>
+                <td>0.45</td>
+                <td>53</td>
+                <td>97</td>
+                <td>2</td>
+                <td>30</td>
+                <td>4</td>
+                <td>15</td>
+                <td>4</td>
+                <td>5</td>
+                <td>2</td>
+                <td>4</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0</td>
+                <td>57</td>
+                <td>100</td>
+                <td>43.00%</td>
+                <td>104</td>
+                <td>158</td>               
+                <td>8</td>
+                <td>10</td>
+                <td>20.00%</td>
+                <td>4</td>
+            </tr>
+        </tfoot>
+        </table>
+            
+    </div>
+    </div>
+    <div class="footer"></div>
+</body>
+</html>
+        

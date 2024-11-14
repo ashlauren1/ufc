@@ -1,0 +1,1189 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Neil Seery</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Neil Seery</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_seerynei01">Stat:</label>
+<select id="statSelector_seerynei01" onchange="updateStat('seerynei01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_seerynei01">Start:</label>
+<input id="startDate_seerynei01" onchange="applyFilters('seerynei01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_seerynei01">End:</label>
+<input id="endDate_seerynei01" onchange="applyFilters('seerynei01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_seerynei01"></canvas>
+<div class="filter-buttons">
+<button id="L5_seerynei01" onclick="showRecentGames('seerynei01', 5)">L5</button>
+<button id="L10_seerynei01" onclick="showRecentGames('seerynei01', 10)">L10</button>
+<button id="L20_seerynei01" onclick="showRecentGames('seerynei01', 20)">L20</button>
+<button id="showAll_seerynei01" onclick="showAllGames('seerynei01')">All</button>
+<button id="fight_duration_seerynei01" onclick="toggleFightDurationOverlay('seerynei01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_seerynei01" onclick="clearFilters('seerynei01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_seerynei01">Change Line:</label>
+<input id="lineSlider_seerynei01" max="250" min="0" oninput="updateLine('seerynei01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_seerynei01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_seerynei01" onclick="resetLine('seerynei01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("seerynei01", [{'date': '2014-03-08', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 54, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2014-03-08', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 32, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2014-03-08', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 51, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 55, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2014-07-19', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 64, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 53, 'TDAg': 0, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2014-07-19', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 45, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 37, 'TDAg': 2, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2014-07-19', 'SigStr': 19, 'knockdowns': 1, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2015-01-24', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 55, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 46, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2015-01-24', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 30, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 4, 'SigStrAg': 9, 'SigStrAttAg': 34, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-01-24', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 67, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 55, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2015-07-11', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 6, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 4, 'SigStrAttAg': 10, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 1}, {'date': '2015-07-11', 'SigStr': 13, 'knockdowns': 1, 'SigStrAtt': 19, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 11, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 2}, {'date': '2015-07-11', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 18, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 8, 'SigStrAttAg': 13, 'TDAg': 5, 'TDAttAg': 7, 'SubAttAg': 2}, {'date': '2015-10-24', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 68, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 49, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2015-10-24', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 2, 'SigStrAg': 13, 'SigStrAttAg': 25, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2016-05-08', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 42, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 47, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2016-05-08', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 20, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 25, 'SigStrAttAg': 52, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2016-05-08', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 46, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2017-07-16', 'SigStr': 29, 'knockdowns': 0, 'SigStrAtt': 78, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 45, 'SigStrAttAg': 99, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-07-16', 'SigStr': 47, 'knockdowns': 0, 'SigStrAtt': 90, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 67, 'SigStrAttAg': 113, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-07-16', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 15, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 15, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 1}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Manuwa</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2611UFC.html" target="_blank">Brad Pickett vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/pickebra01.html" target="_blank">Brad Pickett</a></td>
+<td>3/8/2014</td>
+<td>London, England, United Kingdom</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>47</td>
+<td>114</td>
+<td>41.23%</td>
+<td>1.04</td>
+<td>54</td>
+<td>122</td>
+<td>41</td>
+<td>100</td>
+<td>6</td>
+<td>14</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>49</td>
+<td>141</td>
+<td>65.25%</td>
+<td>88</td>
+<td>186</td>
+<td>4</td>
+<td>8</td>
+<td>50.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Manuwa</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2611UFC.html" target="_blank">Brad Pickett vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/pickebra01.html" target="_blank">Brad Pickett</a></td>
+<td>3/8/2014</td>
+<td>London, England, United Kingdom</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>47</td>
+<td>114</td>
+<td>41.23%</td>
+<td>1.04</td>
+<td>54</td>
+<td>122</td>
+<td>41</td>
+<td>100</td>
+<td>6</td>
+<td>14</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>49</td>
+<td>141</td>
+<td>65.25%</td>
+<td>88</td>
+<td>186</td>
+<td>4</td>
+<td>8</td>
+<td>50.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Manuwa</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2611UFC.html" target="_blank">Brad Pickett vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/pickebra01.html" target="_blank">Brad Pickett</a></td>
+<td>3/8/2014</td>
+<td>London, England, United Kingdom</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>47</td>
+<td>114</td>
+<td>41.23%</td>
+<td>1.04</td>
+<td>54</td>
+<td>122</td>
+<td>41</td>
+<td>100</td>
+<td>6</td>
+<td>14</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>49</td>
+<td>141</td>
+<td>65.25%</td>
+<td>88</td>
+<td>186</td>
+<td>4</td>
+<td>8</td>
+<td>50.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">UFC Fight Night: McGregor vs Brandao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2813UFC.html" target="_blank">Phil Harris vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/harriphi01.html" target="_blank">Phil Harris</a></td>
+<td>7/19/2014</td>
+<td>Dublin, Leinster, Ireland</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>60</td>
+<td>148</td>
+<td>40.54%</td>
+<td>1.33</td>
+<td>63</td>
+<td>151</td>
+<td>42</td>
+<td>119</td>
+<td>5</td>
+<td>9</td>
+<td>13</td>
+<td>20</td>
+<td>3</td>
+<td>9</td>
+<td>15</td>
+<td>25</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>126</td>
+<td>68.25%</td>
+<td>52</td>
+<td>139</td>
+<td>2</td>
+<td>17</td>
+<td>88.24%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">UFC Fight Night: McGregor vs Brandao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2813UFC.html" target="_blank">Phil Harris vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/harriphi01.html" target="_blank">Phil Harris</a></td>
+<td>7/19/2014</td>
+<td>Dublin, Leinster, Ireland</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>60</td>
+<td>148</td>
+<td>40.54%</td>
+<td>1.33</td>
+<td>63</td>
+<td>151</td>
+<td>42</td>
+<td>119</td>
+<td>5</td>
+<td>9</td>
+<td>13</td>
+<td>20</td>
+<td>3</td>
+<td>9</td>
+<td>15</td>
+<td>25</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>126</td>
+<td>68.25%</td>
+<td>52</td>
+<td>139</td>
+<td>2</td>
+<td>17</td>
+<td>88.24%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">UFC Fight Night: McGregor vs Brandao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2813UFC.html" target="_blank">Phil Harris vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/harriphi01.html" target="_blank">Phil Harris</a></td>
+<td>7/19/2014</td>
+<td>Dublin, Leinster, Ireland</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>60</td>
+<td>148</td>
+<td>40.54%</td>
+<td>1.33</td>
+<td>63</td>
+<td>151</td>
+<td>42</td>
+<td>119</td>
+<td>5</td>
+<td>9</td>
+<td>13</td>
+<td>20</td>
+<td>3</td>
+<td>9</td>
+<td>15</td>
+<td>25</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>126</td>
+<td>68.25%</td>
+<td>52</td>
+<td>139</td>
+<td>2</td>
+<td>17</td>
+<td>88.24%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3058UFC.html" target="_blank">Chris Beal vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/bealchri01.html" target="_blank">Chris Beal</a></td>
+<td>1/24/2015</td>
+<td>Stockholm, Sweden</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>56</td>
+<td>152</td>
+<td>36.84%</td>
+<td>1.24</td>
+<td>106</td>
+<td>204</td>
+<td>50</td>
+<td>137</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>10</td>
+<td>8</td>
+<td>11</td>
+<td>14</td>
+<td>16</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>4</td>
+<td>2</td>
+<td>39</td>
+<td>135</td>
+<td>71.11%</td>
+<td>61</td>
+<td>160</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3058UFC.html" target="_blank">Chris Beal vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/bealchri01.html" target="_blank">Chris Beal</a></td>
+<td>1/24/2015</td>
+<td>Stockholm, Sweden</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>56</td>
+<td>152</td>
+<td>36.84%</td>
+<td>1.24</td>
+<td>106</td>
+<td>204</td>
+<td>50</td>
+<td>137</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>10</td>
+<td>8</td>
+<td>11</td>
+<td>14</td>
+<td>16</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>4</td>
+<td>2</td>
+<td>39</td>
+<td>135</td>
+<td>71.11%</td>
+<td>61</td>
+<td>160</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3058UFC.html" target="_blank">Chris Beal vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/bealchri01.html" target="_blank">Chris Beal</a></td>
+<td>1/24/2015</td>
+<td>Stockholm, Sweden</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>56</td>
+<td>152</td>
+<td>36.84%</td>
+<td>1.24</td>
+<td>106</td>
+<td>204</td>
+<td>50</td>
+<td>137</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>10</td>
+<td>8</td>
+<td>11</td>
+<td>14</td>
+<td>16</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>4</td>
+<td>2</td>
+<td>39</td>
+<td>135</td>
+<td>71.11%</td>
+<td>61</td>
+<td>160</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3393UFC.html" target="_blank">Jon Delos Reyes vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/reyesjon01.html" target="_blank">Jon Delos Reyes</a></td>
+<td>10/24/2015</td>
+<td>Dublin, Leinster, Ireland</td>
+<td>Flyweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>9.2</td>
+<td>0</td>
+<td>38</td>
+<td>95</td>
+<td>40.00%</td>
+<td>2.07</td>
+<td>47</td>
+<td>105</td>
+<td>32</td>
+<td>88</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>8</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>40.00%</td>
+<td>2</td>
+<td>1</td>
+<td>25</td>
+<td>74</td>
+<td>66.22%</td>
+<td>26</td>
+<td>75</td>
+<td>3</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3393UFC.html" target="_blank">Jon Delos Reyes vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/reyesjon01.html" target="_blank">Jon Delos Reyes</a></td>
+<td>10/24/2015</td>
+<td>Dublin, Leinster, Ireland</td>
+<td>Flyweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>9.2</td>
+<td>0</td>
+<td>38</td>
+<td>95</td>
+<td>40.00%</td>
+<td>2.07</td>
+<td>47</td>
+<td>105</td>
+<td>32</td>
+<td>88</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>8</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>40.00%</td>
+<td>2</td>
+<td>1</td>
+<td>25</td>
+<td>74</td>
+<td>66.22%</td>
+<td>26</td>
+<td>75</td>
+<td>3</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC Fight Night: Overeem vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3632UFC.html" target="_blank">Kyoji Horiguchi vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/horigkyo01.html" target="_blank">Kyoji Horiguchi</a></td>
+<td>5/8/2016</td>
+<td>Rotterdam, Zuid-Holland, Netherlands</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>40</td>
+<td>101</td>
+<td>39.60%</td>
+<td>0.89</td>
+<td>51</td>
+<td>112</td>
+<td>36</td>
+<td>91</td>
+<td>2</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>145</td>
+<td>50.34%</td>
+<td>83</td>
+<td>158</td>
+<td>6</td>
+<td>8</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC Fight Night: Overeem vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3632UFC.html" target="_blank">Kyoji Horiguchi vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/horigkyo01.html" target="_blank">Kyoji Horiguchi</a></td>
+<td>5/8/2016</td>
+<td>Rotterdam, Zuid-Holland, Netherlands</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>40</td>
+<td>101</td>
+<td>39.60%</td>
+<td>0.89</td>
+<td>51</td>
+<td>112</td>
+<td>36</td>
+<td>91</td>
+<td>2</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>145</td>
+<td>50.34%</td>
+<td>83</td>
+<td>158</td>
+<td>6</td>
+<td>8</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC Fight Night: Overeem vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3632UFC.html" target="_blank">Kyoji Horiguchi vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/horigkyo01.html" target="_blank">Kyoji Horiguchi</a></td>
+<td>5/8/2016</td>
+<td>Rotterdam, Zuid-Holland, Netherlands</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>40</td>
+<td>101</td>
+<td>39.60%</td>
+<td>0.89</td>
+<td>51</td>
+<td>112</td>
+<td>36</td>
+<td>91</td>
+<td>2</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>72</td>
+<td>145</td>
+<td>50.34%</td>
+<td>83</td>
+<td>158</td>
+<td>6</td>
+<td>8</td>
+<td>25.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4210UFC.html" target="_blank">Alexandre Pantoja vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/pantoale01.html" target="_blank">Alexandre Pantoja</a></td>
+<td>7/16/2017</td>
+<td>Glasgow, Scotland, United Kingdom</td>
+<td>Flyweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>12.52</td>
+<td>0</td>
+<td>82</td>
+<td>183</td>
+<td>44.81%</td>
+<td>2.18</td>
+<td>90</td>
+<td>192</td>
+<td>72</td>
+<td>170</td>
+<td>7</td>
+<td>9</td>
+<td>3</td>
+<td>4</td>
+<td>12</td>
+<td>19</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>119</td>
+<td>227</td>
+<td>47.58%</td>
+<td>131</td>
+<td>239</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4210UFC.html" target="_blank">Alexandre Pantoja vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/pantoale01.html" target="_blank">Alexandre Pantoja</a></td>
+<td>7/16/2017</td>
+<td>Glasgow, Scotland, United Kingdom</td>
+<td>Flyweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>12.52</td>
+<td>0</td>
+<td>82</td>
+<td>183</td>
+<td>44.81%</td>
+<td>2.18</td>
+<td>90</td>
+<td>192</td>
+<td>72</td>
+<td>170</td>
+<td>7</td>
+<td>9</td>
+<td>3</td>
+<td>4</td>
+<td>12</td>
+<td>19</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>119</td>
+<td>227</td>
+<td>47.58%</td>
+<td>131</td>
+<td>239</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4210UFC.html" target="_blank">Alexandre Pantoja vs Neil Seery</a></td>
+<td style="text-align:left"><a href="/ufc/players/pantoale01.html" target="_blank">Alexandre Pantoja</a></td>
+<td>7/16/2017</td>
+<td>Glasgow, Scotland, United Kingdom</td>
+<td>Flyweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>12.52</td>
+<td>0</td>
+<td>82</td>
+<td>183</td>
+<td>44.81%</td>
+<td>2.18</td>
+<td>90</td>
+<td>192</td>
+<td>72</td>
+<td>170</td>
+<td>7</td>
+<td>9</td>
+<td>3</td>
+<td>4</td>
+<td>12</td>
+<td>19</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>119</td>
+<td>227</td>
+<td>47.58%</td>
+<td>131</td>
+<td>239</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0192UFC.html" target="_blank">UFC 189: Mendes vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3270UFC.html" target="_blank">Neil Seery vs Louis Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/players/smolklou01.html" target="_blank">Louis Smolka</a></td>
+<td>7/11/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>21</td>
+<td>43</td>
+<td>48.84%</td>
+<td>0.47</td>
+<td>92</td>
+<td>121</td>
+<td>19</td>
+<td>41</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>3</td>
+<td>0</td>
+<td>23</td>
+<td>45</td>
+<td>48.89%</td>
+<td>36</td>
+<td>58</td>
+<td>6</td>
+<td>10</td>
+<td>40.00%</td>
+<td>5</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0192UFC.html" target="_blank">UFC 189: Mendes vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3270UFC.html" target="_blank">Neil Seery vs Louis Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/players/smolklou01.html" target="_blank">Louis Smolka</a></td>
+<td>7/11/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>21</td>
+<td>43</td>
+<td>48.84%</td>
+<td>0.47</td>
+<td>92</td>
+<td>121</td>
+<td>19</td>
+<td>41</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>3</td>
+<td>0</td>
+<td>23</td>
+<td>45</td>
+<td>48.89%</td>
+<td>36</td>
+<td>58</td>
+<td>6</td>
+<td>10</td>
+<td>40.00%</td>
+<td>5</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0192UFC.html" target="_blank">UFC 189: Mendes vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3270UFC.html" target="_blank">Neil Seery vs Louis Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/players/smolklou01.html" target="_blank">Louis Smolka</a></td>
+<td>7/11/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>21</td>
+<td>43</td>
+<td>48.84%</td>
+<td>0.47</td>
+<td>92</td>
+<td>121</td>
+<td>19</td>
+<td>41</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>8</td>
+<td>7</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>3</td>
+<td>0</td>
+<td>23</td>
+<td>45</td>
+<td>48.89%</td>
+<td>36</td>
+<td>58</td>
+<td>6</td>
+<td>10</td>
+<td>40.00%</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

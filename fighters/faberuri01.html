@@ -1,0 +1,2651 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Urijah Faber</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Urijah Faber</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_faberuri01">Stat:</label>
+<select id="statSelector_faberuri01" onchange="updateStat('faberuri01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_faberuri01">Start:</label>
+<input id="startDate_faberuri01" onchange="applyFilters('faberuri01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_faberuri01">End:</label>
+<input id="endDate_faberuri01" onchange="applyFilters('faberuri01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_faberuri01"></canvas>
+<div class="filter-buttons">
+<button id="L5_faberuri01" onclick="showRecentGames('faberuri01', 5)">L5</button>
+<button id="L10_faberuri01" onclick="showRecentGames('faberuri01', 10)">L10</button>
+<button id="L20_faberuri01" onclick="showRecentGames('faberuri01', 20)">L20</button>
+<button id="showAll_faberuri01" onclick="showAllGames('faberuri01')">All</button>
+<button id="fight_duration_faberuri01" onclick="toggleFightDurationOverlay('faberuri01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_faberuri01" onclick="clearFilters('faberuri01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_faberuri01">Change Line:</label>
+<input id="lineSlider_faberuri01" max="250" min="0" oninput="updateLine('faberuri01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_faberuri01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_faberuri01" onclick="resetLine('faberuri01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("faberuri01", [{'date': '2011-03-19', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 26, 'takedown': 0, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 23, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2011-03-19', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 0, 'SigStrAttAg': 18, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2011-03-19', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 43, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2011-07-02', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 40, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 46, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2011-07-02', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 42, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 53, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2011-07-02', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 31, 'TDAg': 3, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2011-07-02', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 51, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2011-07-02', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 57, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2011-11-19', 'SigStr': 19, 'knockdowns': 1, 'SigStrAtt': 25, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 0, 'SigStrAttAg': 7, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2011-11-19', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 61, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-21', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 42, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-21', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 22, 'SigStrAttAg': 65, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-21', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 46, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 67, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-21', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 66, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-07-21', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 50, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-02-23', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 7, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2013-04-13', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 2, 'SigStrAg': 5, 'SigStrAttAg': 7, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2013-04-13', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 56, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 48, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2013-04-13', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 50, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 31, 'SigStrAttAg': 66, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-04-13', 'SigStr': 24, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 17, 'SigStrAttAg': 47, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2013-08-17', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 8, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-08-17', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 2, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-08-17', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 13, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 1}, {'date': '2013-12-14', 'SigStr': 16, 'knockdowns': 1, 'SigStrAtt': 27, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 6, 'SigStrAttAg': 19, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-12-14', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 8, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-02-01', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 46, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-07-05', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 7, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 5, 'SigStrAttAg': 10, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-07-05', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 18, 'takedown': 3, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-07-05', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 1, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 11, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-12-06', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 42, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-12-06', 'SigStr': 8, 'knockdowns': 1, 'SigStrAtt': 16, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 2, 'SigStrAttAg': 14, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-05-16', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 29, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 44, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2015-05-16', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 38, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 54, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-05-16', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 45, 'TDAg': 3, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2015-05-16', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 53, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2015-05-16', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 62, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2015-12-12', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 52, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2015-12-12', 'SigStr': 25, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 48, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-12-12', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-06-04', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 57, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2016-06-04', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-06-04', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 40, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 65, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2016-06-04', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 29, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 58, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-06-04', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 24, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2016-09-10', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 54, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-09-10', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 40, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 46, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-09-10', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 60, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-12-17', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 3, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 14, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-12-17', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 10, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-12-17', 'SigStr': 33, 'knockdowns': 1, 'SigStrAtt': 51, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 22, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2019-07-13', 'SigStr': 11, 'knockdowns': 1, 'SigStrAtt': 15, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 8, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-12-14', 'SigStr': 0, 'knockdowns': 0, 'SigStrAtt': 5, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 10, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-12-14', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 33, 'SigStrAttAg': 64, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-12-14', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 34, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">The Ultimate Fighter 17 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2251UFC.html" target="_blank">Urijah Faber vs Scott Jorgensen</a></td>
+<td style="text-align:left"><a href="/ufc/players/jorgesco01.html" target="_blank">Scott Jorgensen</a></td>
+<td>4/13/2013</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.27</td>
+<td>0</td>
+<td>93</td>
+<td>163</td>
+<td>57.06%</td>
+<td>1.27</td>
+<td>119</td>
+<td>200</td>
+<td>57</td>
+<td>123</td>
+<td>32</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>3</td>
+<td>0</td>
+<td>73</td>
+<td>168</td>
+<td>56.55%</td>
+<td>76</td>
+<td>173</td>
+<td>1</td>
+<td>6</td>
+<td>83.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">The Ultimate Fighter 17 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2251UFC.html" target="_blank">Urijah Faber vs Scott Jorgensen</a></td>
+<td style="text-align:left"><a href="/ufc/players/jorgesco01.html" target="_blank">Scott Jorgensen</a></td>
+<td>4/13/2013</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.27</td>
+<td>0</td>
+<td>93</td>
+<td>163</td>
+<td>57.06%</td>
+<td>1.27</td>
+<td>119</td>
+<td>200</td>
+<td>57</td>
+<td>123</td>
+<td>32</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>3</td>
+<td>0</td>
+<td>73</td>
+<td>168</td>
+<td>56.55%</td>
+<td>76</td>
+<td>173</td>
+<td>1</td>
+<td>6</td>
+<td>83.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">The Ultimate Fighter 17 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2251UFC.html" target="_blank">Urijah Faber vs Scott Jorgensen</a></td>
+<td style="text-align:left"><a href="/ufc/players/jorgesco01.html" target="_blank">Scott Jorgensen</a></td>
+<td>4/13/2013</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.27</td>
+<td>0</td>
+<td>93</td>
+<td>163</td>
+<td>57.06%</td>
+<td>1.27</td>
+<td>119</td>
+<td>200</td>
+<td>57</td>
+<td>123</td>
+<td>32</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>3</td>
+<td>0</td>
+<td>73</td>
+<td>168</td>
+<td>56.55%</td>
+<td>76</td>
+<td>173</td>
+<td>1</td>
+<td>6</td>
+<td>83.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">The Ultimate Fighter 17 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2251UFC.html" target="_blank">Urijah Faber vs Scott Jorgensen</a></td>
+<td style="text-align:left"><a href="/ufc/players/jorgesco01.html" target="_blank">Scott Jorgensen</a></td>
+<td>4/13/2013</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>5</td>
+<td>18.27</td>
+<td>0</td>
+<td>93</td>
+<td>163</td>
+<td>57.06%</td>
+<td>1.27</td>
+<td>119</td>
+<td>200</td>
+<td>57</td>
+<td>123</td>
+<td>32</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>3</td>
+<td>0</td>
+<td>73</td>
+<td>168</td>
+<td>56.55%</td>
+<td>76</td>
+<td>173</td>
+<td>1</td>
+<td>6</td>
+<td>83.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2360UFC.html" target="_blank">Iuri Alcantara vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
+<td>8/17/2013</td>
+<td>Boston, Massachusetts, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>79</td>
+<td>68.35%</td>
+<td>1.20</td>
+<td>127</td>
+<td>155</td>
+<td>53</td>
+<td>77</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>51</td>
+<td>72</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>23</td>
+<td>65.22%</td>
+<td>25</td>
+<td>43</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2360UFC.html" target="_blank">Iuri Alcantara vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
+<td>8/17/2013</td>
+<td>Boston, Massachusetts, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>79</td>
+<td>68.35%</td>
+<td>1.20</td>
+<td>127</td>
+<td>155</td>
+<td>53</td>
+<td>77</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>51</td>
+<td>72</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>23</td>
+<td>65.22%</td>
+<td>25</td>
+<td>43</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2360UFC.html" target="_blank">Iuri Alcantara vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
+<td>8/17/2013</td>
+<td>Boston, Massachusetts, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>79</td>
+<td>68.35%</td>
+<td>1.20</td>
+<td>127</td>
+<td>155</td>
+<td>53</td>
+<td>77</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>51</td>
+<td>72</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>23</td>
+<td>65.22%</td>
+<td>25</td>
+<td>43</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox: Johnson vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2512UFC.html" target="_blank">Urijah Faber vs Michael McDonald</a></td>
+<td style="text-align:left"><a href="/ufc/players/mcdonmic01.html" target="_blank">Michael McDonald</a></td>
+<td>12/14/2013</td>
+<td>Sacramento, California, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.37</td>
+<td>1</td>
+<td>29</td>
+<td>46</td>
+<td>63.04%</td>
+<td>1.73</td>
+<td>59</td>
+<td>79</td>
+<td>20</td>
+<td>35</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>7</td>
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>1</td>
+<td>0</td>
+<td>9</td>
+<td>27</td>
+<td>66.67%</td>
+<td>11</td>
+<td>29</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox: Johnson vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2512UFC.html" target="_blank">Urijah Faber vs Michael McDonald</a></td>
+<td style="text-align:left"><a href="/ufc/players/mcdonmic01.html" target="_blank">Michael McDonald</a></td>
+<td>12/14/2013</td>
+<td>Sacramento, California, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.37</td>
+<td>1</td>
+<td>29</td>
+<td>46</td>
+<td>63.04%</td>
+<td>1.73</td>
+<td>59</td>
+<td>79</td>
+<td>20</td>
+<td>35</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>7</td>
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>1</td>
+<td>0</td>
+<td>9</td>
+<td>27</td>
+<td>66.67%</td>
+<td>11</td>
+<td>29</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3183UFC.html" target="_blank">Frankie Edgar vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
+<td>5/16/2015</td>
+<td>Manila, Philippines</td>
+<td>Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>48</td>
+<td>147</td>
+<td>32.65%</td>
+<td>0.38</td>
+<td>50</td>
+<td>149</td>
+<td>34</td>
+<td>125</td>
+<td>11</td>
+<td>19</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>83</td>
+<td>258</td>
+<td>67.83%</td>
+<td>91</td>
+<td>266</td>
+<td>5</td>
+<td>13</td>
+<td>61.54%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3183UFC.html" target="_blank">Frankie Edgar vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
+<td>5/16/2015</td>
+<td>Manila, Philippines</td>
+<td>Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>48</td>
+<td>147</td>
+<td>32.65%</td>
+<td>0.38</td>
+<td>50</td>
+<td>149</td>
+<td>34</td>
+<td>125</td>
+<td>11</td>
+<td>19</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>83</td>
+<td>258</td>
+<td>67.83%</td>
+<td>91</td>
+<td>266</td>
+<td>5</td>
+<td>13</td>
+<td>61.54%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3183UFC.html" target="_blank">Frankie Edgar vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
+<td>5/16/2015</td>
+<td>Manila, Philippines</td>
+<td>Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>48</td>
+<td>147</td>
+<td>32.65%</td>
+<td>0.38</td>
+<td>50</td>
+<td>149</td>
+<td>34</td>
+<td>125</td>
+<td>11</td>
+<td>19</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>83</td>
+<td>258</td>
+<td>67.83%</td>
+<td>91</td>
+<td>266</td>
+<td>5</td>
+<td>13</td>
+<td>61.54%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3183UFC.html" target="_blank">Frankie Edgar vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
+<td>5/16/2015</td>
+<td>Manila, Philippines</td>
+<td>Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>48</td>
+<td>147</td>
+<td>32.65%</td>
+<td>0.38</td>
+<td>50</td>
+<td>149</td>
+<td>34</td>
+<td>125</td>
+<td>11</td>
+<td>19</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>83</td>
+<td>258</td>
+<td>67.83%</td>
+<td>91</td>
+<td>266</td>
+<td>5</td>
+<td>13</td>
+<td>61.54%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3183UFC.html" target="_blank">Frankie Edgar vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
+<td>5/16/2015</td>
+<td>Manila, Philippines</td>
+<td>Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>48</td>
+<td>147</td>
+<td>32.65%</td>
+<td>0.38</td>
+<td>50</td>
+<td>149</td>
+<td>34</td>
+<td>125</td>
+<td>11</td>
+<td>19</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>83</td>
+<td>258</td>
+<td>67.83%</td>
+<td>91</td>
+<td>266</td>
+<td>5</td>
+<td>13</td>
+<td>61.54%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133UFC.html" target="_blank">UFC 128: Shogun vs Jones</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1563UFC.html" target="_blank">Urijah Faber vs Eddie Wineland</a></td>
+<td style="text-align:left"><a href="/ufc/players/wineledd01.html" target="_blank">Eddie Wineland</a></td>
+<td>3/19/2011</td>
+<td>Newark, New Jersey, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>49</td>
+<td>110</td>
+<td>44.55%</td>
+<td>1.09</td>
+<td>61</td>
+<td>122</td>
+<td>36</td>
+<td>89</td>
+<td>12</td>
+<td>19</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>6</td>
+<td>19</td>
+<td>48</td>
+<td>2</td>
+<td>11</td>
+<td>18.18%</td>
+<td>0</td>
+<td>0</td>
+<td>11</td>
+<td>71</td>
+<td>84.51%</td>
+<td>21</td>
+<td>81</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133UFC.html" target="_blank">UFC 128: Shogun vs Jones</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1563UFC.html" target="_blank">Urijah Faber vs Eddie Wineland</a></td>
+<td style="text-align:left"><a href="/ufc/players/wineledd01.html" target="_blank">Eddie Wineland</a></td>
+<td>3/19/2011</td>
+<td>Newark, New Jersey, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>49</td>
+<td>110</td>
+<td>44.55%</td>
+<td>1.09</td>
+<td>61</td>
+<td>122</td>
+<td>36</td>
+<td>89</td>
+<td>12</td>
+<td>19</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>6</td>
+<td>19</td>
+<td>48</td>
+<td>2</td>
+<td>11</td>
+<td>18.18%</td>
+<td>0</td>
+<td>0</td>
+<td>11</td>
+<td>71</td>
+<td>84.51%</td>
+<td>21</td>
+<td>81</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133UFC.html" target="_blank">UFC 128: Shogun vs Jones</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1563UFC.html" target="_blank">Urijah Faber vs Eddie Wineland</a></td>
+<td style="text-align:left"><a href="/ufc/players/wineledd01.html" target="_blank">Eddie Wineland</a></td>
+<td>3/19/2011</td>
+<td>Newark, New Jersey, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>49</td>
+<td>110</td>
+<td>44.55%</td>
+<td>1.09</td>
+<td>61</td>
+<td>122</td>
+<td>36</td>
+<td>89</td>
+<td>12</td>
+<td>19</td>
+<td>1</td>
+<td>2</td>
+<td>6</td>
+<td>6</td>
+<td>19</td>
+<td>48</td>
+<td>2</td>
+<td>11</td>
+<td>18.18%</td>
+<td>0</td>
+<td>0</td>
+<td>11</td>
+<td>71</td>
+<td>84.51%</td>
+<td>21</td>
+<td>81</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0137UFC.html" target="_blank">UFC 132: Cruz vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1642UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>7/2/2011</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>50</td>
+<td>170</td>
+<td>29.41%</td>
+<td>0.40</td>
+<td>58</td>
+<td>181</td>
+<td>31</td>
+<td>131</td>
+<td>12</td>
+<td>26</td>
+<td>7</td>
+<td>13</td>
+<td>14</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>238</td>
+<td>62.18%</td>
+<td>97</td>
+<td>246</td>
+<td>4</td>
+<td>13</td>
+<td>69.23%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0137UFC.html" target="_blank">UFC 132: Cruz vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1642UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>7/2/2011</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>50</td>
+<td>170</td>
+<td>29.41%</td>
+<td>0.40</td>
+<td>58</td>
+<td>181</td>
+<td>31</td>
+<td>131</td>
+<td>12</td>
+<td>26</td>
+<td>7</td>
+<td>13</td>
+<td>14</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>238</td>
+<td>62.18%</td>
+<td>97</td>
+<td>246</td>
+<td>4</td>
+<td>13</td>
+<td>69.23%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0137UFC.html" target="_blank">UFC 132: Cruz vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1642UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>7/2/2011</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>50</td>
+<td>170</td>
+<td>29.41%</td>
+<td>0.40</td>
+<td>58</td>
+<td>181</td>
+<td>31</td>
+<td>131</td>
+<td>12</td>
+<td>26</td>
+<td>7</td>
+<td>13</td>
+<td>14</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>238</td>
+<td>62.18%</td>
+<td>97</td>
+<td>246</td>
+<td>4</td>
+<td>13</td>
+<td>69.23%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0137UFC.html" target="_blank">UFC 132: Cruz vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1642UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>7/2/2011</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>50</td>
+<td>170</td>
+<td>29.41%</td>
+<td>0.40</td>
+<td>58</td>
+<td>181</td>
+<td>31</td>
+<td>131</td>
+<td>12</td>
+<td>26</td>
+<td>7</td>
+<td>13</td>
+<td>14</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>238</td>
+<td>62.18%</td>
+<td>97</td>
+<td>246</td>
+<td>4</td>
+<td>13</td>
+<td>69.23%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0137UFC.html" target="_blank">UFC 132: Cruz vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1642UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>7/2/2011</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>50</td>
+<td>170</td>
+<td>29.41%</td>
+<td>0.40</td>
+<td>58</td>
+<td>181</td>
+<td>31</td>
+<td>131</td>
+<td>12</td>
+<td>26</td>
+<td>7</td>
+<td>13</td>
+<td>14</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>238</td>
+<td>62.18%</td>
+<td>97</td>
+<td>246</td>
+<td>4</td>
+<td>13</td>
+<td>69.23%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0144UFC.html" target="_blank">UFC 139: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1764UFC.html" target="_blank">Brian Bowles vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/bowlebri01.html" target="_blank">Brian Bowles</a></td>
+<td>11/19/2011</td>
+<td>San Jose, California, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>6.45</td>
+<td>1</td>
+<td>36</td>
+<td>61</td>
+<td>59.02%</td>
+<td>2.79</td>
+<td>44</td>
+<td>69</td>
+<td>31</td>
+<td>54</td>
+<td>3</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>18</td>
+<td>24</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>1</td>
+<td>1</td>
+<td>13</td>
+<td>68</td>
+<td>80.88%</td>
+<td>14</td>
+<td>69</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0144UFC.html" target="_blank">UFC 139: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1764UFC.html" target="_blank">Brian Bowles vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/bowlebri01.html" target="_blank">Brian Bowles</a></td>
+<td>11/19/2011</td>
+<td>San Jose, California, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>6.45</td>
+<td>1</td>
+<td>36</td>
+<td>61</td>
+<td>59.02%</td>
+<td>2.79</td>
+<td>44</td>
+<td>69</td>
+<td>31</td>
+<td>54</td>
+<td>3</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>18</td>
+<td>24</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>1</td>
+<td>1</td>
+<td>13</td>
+<td>68</td>
+<td>80.88%</td>
+<td>14</td>
+<td>69</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3958UFC.html" target="_blank">Urijah Faber vs Brad Pickett</a></td>
+<td style="text-align:left"><a href="/ufc/players/pickebra01.html" target="_blank">Brad Pickett</a></td>
+<td>12/17/2016</td>
+<td>Sacramento, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>70</td>
+<td>126</td>
+<td>55.56%</td>
+<td>1.56</td>
+<td>89</td>
+<td>151</td>
+<td>61</td>
+<td>114</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>5</td>
+<td>2</td>
+<td>4</td>
+<td>39</td>
+<td>47</td>
+<td>5</td>
+<td>10</td>
+<td>50.00%</td>
+<td>1</td>
+<td>0</td>
+<td>18</td>
+<td>65</td>
+<td>72.31%</td>
+<td>20</td>
+<td>67</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3958UFC.html" target="_blank">Urijah Faber vs Brad Pickett</a></td>
+<td style="text-align:left"><a href="/ufc/players/pickebra01.html" target="_blank">Brad Pickett</a></td>
+<td>12/17/2016</td>
+<td>Sacramento, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>70</td>
+<td>126</td>
+<td>55.56%</td>
+<td>1.56</td>
+<td>89</td>
+<td>151</td>
+<td>61</td>
+<td>114</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>5</td>
+<td>2</td>
+<td>4</td>
+<td>39</td>
+<td>47</td>
+<td>5</td>
+<td>10</td>
+<td>50.00%</td>
+<td>1</td>
+<td>0</td>
+<td>18</td>
+<td>65</td>
+<td>72.31%</td>
+<td>20</td>
+<td>67</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3958UFC.html" target="_blank">Urijah Faber vs Brad Pickett</a></td>
+<td style="text-align:left"><a href="/ufc/players/pickebra01.html" target="_blank">Brad Pickett</a></td>
+<td>12/17/2016</td>
+<td>Sacramento, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>70</td>
+<td>126</td>
+<td>55.56%</td>
+<td>1.56</td>
+<td>89</td>
+<td>151</td>
+<td>61</td>
+<td>114</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>5</td>
+<td>2</td>
+<td>4</td>
+<td>39</td>
+<td>47</td>
+<td>5</td>
+<td>10</td>
+<td>50.00%</td>
+<td>1</td>
+<td>0</td>
+<td>18</td>
+<td>65</td>
+<td>72.31%</td>
+<td>20</td>
+<td>67</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0154UFC.html" target="_blank">UFC 149: Faber vs Barao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2006UFC.html" target="_blank">Renan Barao vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/baraoren01.html" target="_blank">Renan Barao</a></td>
+<td>7/21/2012</td>
+<td>Calgary, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>60</td>
+<td>178</td>
+<td>33.71%</td>
+<td>0.48</td>
+<td>62</td>
+<td>180</td>
+<td>38</td>
+<td>141</td>
+<td>12</td>
+<td>26</td>
+<td>10</td>
+<td>11</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>85</td>
+<td>290</td>
+<td>70.69%</td>
+<td>85</td>
+<td>290</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0154UFC.html" target="_blank">UFC 149: Faber vs Barao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2006UFC.html" target="_blank">Renan Barao vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/baraoren01.html" target="_blank">Renan Barao</a></td>
+<td>7/21/2012</td>
+<td>Calgary, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>60</td>
+<td>178</td>
+<td>33.71%</td>
+<td>0.48</td>
+<td>62</td>
+<td>180</td>
+<td>38</td>
+<td>141</td>
+<td>12</td>
+<td>26</td>
+<td>10</td>
+<td>11</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>85</td>
+<td>290</td>
+<td>70.69%</td>
+<td>85</td>
+<td>290</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0154UFC.html" target="_blank">UFC 149: Faber vs Barao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2006UFC.html" target="_blank">Renan Barao vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/baraoren01.html" target="_blank">Renan Barao</a></td>
+<td>7/21/2012</td>
+<td>Calgary, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>60</td>
+<td>178</td>
+<td>33.71%</td>
+<td>0.48</td>
+<td>62</td>
+<td>180</td>
+<td>38</td>
+<td>141</td>
+<td>12</td>
+<td>26</td>
+<td>10</td>
+<td>11</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>85</td>
+<td>290</td>
+<td>70.69%</td>
+<td>85</td>
+<td>290</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0154UFC.html" target="_blank">UFC 149: Faber vs Barao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2006UFC.html" target="_blank">Renan Barao vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/baraoren01.html" target="_blank">Renan Barao</a></td>
+<td>7/21/2012</td>
+<td>Calgary, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>60</td>
+<td>178</td>
+<td>33.71%</td>
+<td>0.48</td>
+<td>62</td>
+<td>180</td>
+<td>38</td>
+<td>141</td>
+<td>12</td>
+<td>26</td>
+<td>10</td>
+<td>11</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>85</td>
+<td>290</td>
+<td>70.69%</td>
+<td>85</td>
+<td>290</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0154UFC.html" target="_blank">UFC 149: Faber vs Barao</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2006UFC.html" target="_blank">Renan Barao vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/baraoren01.html" target="_blank">Renan Barao</a></td>
+<td>7/21/2012</td>
+<td>Calgary, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>60</td>
+<td>178</td>
+<td>33.71%</td>
+<td>0.48</td>
+<td>62</td>
+<td>180</td>
+<td>38</td>
+<td>141</td>
+<td>12</td>
+<td>26</td>
+<td>10</td>
+<td>11</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>85</td>
+<td>290</td>
+<td>70.69%</td>
+<td>85</td>
+<td>290</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0161UFC.html" target="_blank">UFC 157: Rousey vs Carmouche</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2194UFC.html" target="_blank">Urijah Faber vs Ivan Menjivar</a></td>
+<td style="text-align:left"><a href="/ufc/players/menjiiva01.html" target="_blank">Ivan Menjivar</a></td>
+<td>2/23/2013</td>
+<td>Anaheim, California, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>4.57</td>
+<td>0</td>
+<td>17</td>
+<td>24</td>
+<td>70.83%</td>
+<td>3.72</td>
+<td>29</td>
+<td>36</td>
+<td>16</td>
+<td>23</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>15</td>
+<td>20</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>19</td>
+<td>23</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0173UFC.html" target="_blank">UFC 169: Barao vs Faber 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2566UFC.html" target="_blank">Renan Barao vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/baraoren01.html" target="_blank">Renan Barao</a></td>
+<td>2/1/2014</td>
+<td>Newark, New Jersey, USA</td>
+<td>Bantamweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>5</td>
+<td>3.7</td>
+<td>0</td>
+<td>8</td>
+<td>31</td>
+<td>25.81%</td>
+<td>2.16</td>
+<td>9</td>
+<td>32</td>
+<td>3</td>
+<td>22</td>
+<td>3</td>
+<td>6</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>17</td>
+<td>46</td>
+<td>63.04%</td>
+<td>37</td>
+<td>70</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0179UFC.html" target="_blank">UFC 175: Weidman vs Machida</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2780UFC.html" target="_blank">Alex Caceres vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cacerale01.html" target="_blank">Alex Caceres</a></td>
+<td>7/5/2014</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>11.15</td>
+<td>0</td>
+<td>20</td>
+<td>38</td>
+<td>52.63%</td>
+<td>0.60</td>
+<td>41</td>
+<td>62</td>
+<td>16</td>
+<td>31</td>
+<td>3</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>9</td>
+<td>8</td>
+<td>10</td>
+<td>5</td>
+<td>12</td>
+<td>41.67%</td>
+<td>1</td>
+<td>0</td>
+<td>20</td>
+<td>45</td>
+<td>55.56%</td>
+<td>35</td>
+<td>62</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0179UFC.html" target="_blank">UFC 175: Weidman vs Machida</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2780UFC.html" target="_blank">Alex Caceres vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cacerale01.html" target="_blank">Alex Caceres</a></td>
+<td>7/5/2014</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>11.15</td>
+<td>0</td>
+<td>20</td>
+<td>38</td>
+<td>52.63%</td>
+<td>0.60</td>
+<td>41</td>
+<td>62</td>
+<td>16</td>
+<td>31</td>
+<td>3</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>9</td>
+<td>8</td>
+<td>10</td>
+<td>5</td>
+<td>12</td>
+<td>41.67%</td>
+<td>1</td>
+<td>0</td>
+<td>20</td>
+<td>45</td>
+<td>55.56%</td>
+<td>35</td>
+<td>62</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0179UFC.html" target="_blank">UFC 175: Weidman vs Machida</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2780UFC.html" target="_blank">Alex Caceres vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cacerale01.html" target="_blank">Alex Caceres</a></td>
+<td>7/5/2014</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>11.15</td>
+<td>0</td>
+<td>20</td>
+<td>38</td>
+<td>52.63%</td>
+<td>0.60</td>
+<td>41</td>
+<td>62</td>
+<td>16</td>
+<td>31</td>
+<td>3</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>9</td>
+<td>8</td>
+<td>10</td>
+<td>5</td>
+<td>12</td>
+<td>41.67%</td>
+<td>1</td>
+<td>0</td>
+<td>20</td>
+<td>45</td>
+<td>55.56%</td>
+<td>35</td>
+<td>62</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0184UFC.html" target="_blank">UFC 181: Hendricks vs Lawler II</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2995UFC.html" target="_blank">Urijah Faber vs Francisco Rivera</a></td>
+<td style="text-align:left"><a href="/ufc/players/riverfra01.html" target="_blank">Francisco Rivera</a></td>
+<td>12/6/2014</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>6.57</td>
+<td>1</td>
+<td>19</td>
+<td>52</td>
+<td>36.54%</td>
+<td>1.45</td>
+<td>19</td>
+<td>52</td>
+<td>15</td>
+<td>42</td>
+<td>3</td>
+<td>7</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>15</td>
+<td>56</td>
+<td>73.21%</td>
+<td>15</td>
+<td>56</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0184UFC.html" target="_blank">UFC 181: Hendricks vs Lawler II</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2995UFC.html" target="_blank">Urijah Faber vs Francisco Rivera</a></td>
+<td style="text-align:left"><a href="/ufc/players/riverfra01.html" target="_blank">Francisco Rivera</a></td>
+<td>12/6/2014</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>6.57</td>
+<td>1</td>
+<td>19</td>
+<td>52</td>
+<td>36.54%</td>
+<td>1.45</td>
+<td>19</td>
+<td>52</td>
+<td>15</td>
+<td>42</td>
+<td>3</td>
+<td>7</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>15</td>
+<td>56</td>
+<td>73.21%</td>
+<td>15</td>
+<td>56</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0197UFC.html" target="_blank">UFC 194: Aldo vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3476UFC.html" target="_blank">Urijah Faber vs Frankie Saenz</a></td>
+<td style="text-align:left"><a href="/ufc/players/saenzfra01.html" target="_blank">Frankie Saenz</a></td>
+<td>12/12/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>75</td>
+<td>111</td>
+<td>67.57%</td>
+<td>1.67</td>
+<td>80</td>
+<td>116</td>
+<td>53</td>
+<td>87</td>
+<td>20</td>
+<td>22</td>
+<td>2</td>
+<td>2</td>
+<td>40</td>
+<td>48</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>13</td>
+<td>15.38%</td>
+<td>0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>51.47%</td>
+<td>72</td>
+<td>143</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0197UFC.html" target="_blank">UFC 194: Aldo vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3476UFC.html" target="_blank">Urijah Faber vs Frankie Saenz</a></td>
+<td style="text-align:left"><a href="/ufc/players/saenzfra01.html" target="_blank">Frankie Saenz</a></td>
+<td>12/12/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>75</td>
+<td>111</td>
+<td>67.57%</td>
+<td>1.67</td>
+<td>80</td>
+<td>116</td>
+<td>53</td>
+<td>87</td>
+<td>20</td>
+<td>22</td>
+<td>2</td>
+<td>2</td>
+<td>40</td>
+<td>48</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>13</td>
+<td>15.38%</td>
+<td>0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>51.47%</td>
+<td>72</td>
+<td>143</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0197UFC.html" target="_blank">UFC 194: Aldo vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3476UFC.html" target="_blank">Urijah Faber vs Frankie Saenz</a></td>
+<td style="text-align:left"><a href="/ufc/players/saenzfra01.html" target="_blank">Frankie Saenz</a></td>
+<td>12/12/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>75</td>
+<td>111</td>
+<td>67.57%</td>
+<td>1.67</td>
+<td>80</td>
+<td>116</td>
+<td>53</td>
+<td>87</td>
+<td>20</td>
+<td>22</td>
+<td>2</td>
+<td>2</td>
+<td>40</td>
+<td>48</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>13</td>
+<td>15.38%</td>
+<td>0</td>
+<td>0</td>
+<td>66</td>
+<td>136</td>
+<td>51.47%</td>
+<td>72</td>
+<td>143</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0202UFC.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3660UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>6/4/2016</td>
+<td>Los Angeles, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>34</td>
+<td>159</td>
+<td>21.38%</td>
+<td>0.27</td>
+<td>49</td>
+<td>174</td>
+<td>26</td>
+<td>142</td>
+<td>6</td>
+<td>15</td>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>87</td>
+<td>261</td>
+<td>66.67%</td>
+<td>99</td>
+<td>275</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0202UFC.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3660UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>6/4/2016</td>
+<td>Los Angeles, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>34</td>
+<td>159</td>
+<td>21.38%</td>
+<td>0.27</td>
+<td>49</td>
+<td>174</td>
+<td>26</td>
+<td>142</td>
+<td>6</td>
+<td>15</td>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>87</td>
+<td>261</td>
+<td>66.67%</td>
+<td>99</td>
+<td>275</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0202UFC.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3660UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>6/4/2016</td>
+<td>Los Angeles, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>34</td>
+<td>159</td>
+<td>21.38%</td>
+<td>0.27</td>
+<td>49</td>
+<td>174</td>
+<td>26</td>
+<td>142</td>
+<td>6</td>
+<td>15</td>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>87</td>
+<td>261</td>
+<td>66.67%</td>
+<td>99</td>
+<td>275</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0202UFC.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3660UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>6/4/2016</td>
+<td>Los Angeles, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>34</td>
+<td>159</td>
+<td>21.38%</td>
+<td>0.27</td>
+<td>49</td>
+<td>174</td>
+<td>26</td>
+<td>142</td>
+<td>6</td>
+<td>15</td>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>87</td>
+<td>261</td>
+<td>66.67%</td>
+<td>99</td>
+<td>275</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0202UFC.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3660UFC.html" target="_blank">Dominick Cruz vs Urijah Faber</a></td>
+<td style="text-align:left"><a href="/ufc/players/cruzdom01.html" target="_blank">Dominick Cruz</a></td>
+<td>6/4/2016</td>
+<td>Los Angeles, California, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>34</td>
+<td>159</td>
+<td>21.38%</td>
+<td>0.27</td>
+<td>49</td>
+<td>174</td>
+<td>26</td>
+<td>142</td>
+<td>6</td>
+<td>15</td>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>87</td>
+<td>261</td>
+<td>66.67%</td>
+<td>99</td>
+<td>275</td>
+<td>3</td>
+<td>7</td>
+<td>57.14%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0206UFC.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3803UFC.html" target="_blank">Urijah Faber vs Jimmie Rivera</a></td>
+<td style="text-align:left"><a href="/ufc/players/riverjim01.html" target="_blank">Jimmie Rivera</a></td>
+<td>9/10/2016</td>
+<td>Cleveland, Ohio, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>22</td>
+<td>112</td>
+<td>19.64%</td>
+<td>0.49</td>
+<td>23</td>
+<td>113</td>
+<td>11</td>
+<td>94</td>
+<td>5</td>
+<td>9</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>160</td>
+<td>66.25%</td>
+<td>55</td>
+<td>162</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0206UFC.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3803UFC.html" target="_blank">Urijah Faber vs Jimmie Rivera</a></td>
+<td style="text-align:left"><a href="/ufc/players/riverjim01.html" target="_blank">Jimmie Rivera</a></td>
+<td>9/10/2016</td>
+<td>Cleveland, Ohio, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>22</td>
+<td>112</td>
+<td>19.64%</td>
+<td>0.49</td>
+<td>23</td>
+<td>113</td>
+<td>11</td>
+<td>94</td>
+<td>5</td>
+<td>9</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>160</td>
+<td>66.25%</td>
+<td>55</td>
+<td>162</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0206UFC.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3803UFC.html" target="_blank">Urijah Faber vs Jimmie Rivera</a></td>
+<td style="text-align:left"><a href="/ufc/players/riverjim01.html" target="_blank">Jimmie Rivera</a></td>
+<td>9/10/2016</td>
+<td>Cleveland, Ohio, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>22</td>
+<td>112</td>
+<td>19.64%</td>
+<td>0.49</td>
+<td>23</td>
+<td>113</td>
+<td>11</td>
+<td>94</td>
+<td>5</td>
+<td>9</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>160</td>
+<td>66.25%</td>
+<td>55</td>
+<td>162</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0215FNI.html" target="_blank">UFC Fight Night: De Randamie vs. Ladd</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5169UFC.html" target="_blank">Urijah Faber vs Ricky Simon</a></td>
+<td style="text-align:left"><a href="/ufc/players/simonric01.html" target="_blank">Ricky Simon</a></td>
+<td>7/13/2019</td>
+<td>Sacramento, California, USA</td>
+<td>Bantamweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>0.77</td>
+<td>1</td>
+<td>11</td>
+<td>15</td>
+<td>73.33%</td>
+<td>14.29</td>
+<td>11</td>
+<td>15</td>
+<td>9</td>
+<td>13</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>8</td>
+<td>50.00%</td>
+<td>4</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0247UFC.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5404UFC.html" target="_blank">Urijah Faber vs Petr Yan</a></td>
+<td style="text-align:left"><a href="/ufc/players/yanpet01.html" target="_blank">Petr Yan</a></td>
+<td>12/14/2019</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>10.72</td>
+<td>0</td>
+<td>18</td>
+<td>76</td>
+<td>23.68%</td>
+<td>0.56</td>
+<td>28</td>
+<td>86</td>
+<td>14</td>
+<td>64</td>
+<td>2</td>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>108</td>
+<td>50.00%</td>
+<td>62</td>
+<td>116</td>
+<td>2</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0247UFC.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5404UFC.html" target="_blank">Urijah Faber vs Petr Yan</a></td>
+<td style="text-align:left"><a href="/ufc/players/yanpet01.html" target="_blank">Petr Yan</a></td>
+<td>12/14/2019</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>10.72</td>
+<td>0</td>
+<td>18</td>
+<td>76</td>
+<td>23.68%</td>
+<td>0.56</td>
+<td>28</td>
+<td>86</td>
+<td>14</td>
+<td>64</td>
+<td>2</td>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>108</td>
+<td>50.00%</td>
+<td>62</td>
+<td>116</td>
+<td>2</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0247UFC.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5404UFC.html" target="_blank">Urijah Faber vs Petr Yan</a></td>
+<td style="text-align:left"><a href="/ufc/players/yanpet01.html" target="_blank">Petr Yan</a></td>
+<td>12/14/2019</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Bantamweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>10.72</td>
+<td>0</td>
+<td>18</td>
+<td>76</td>
+<td>23.68%</td>
+<td>0.56</td>
+<td>28</td>
+<td>86</td>
+<td>14</td>
+<td>64</td>
+<td>2</td>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>108</td>
+<td>50.00%</td>
+<td>62</td>
+<td>116</td>
+<td>2</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

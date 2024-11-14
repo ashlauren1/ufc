@@ -1,0 +1,1318 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Jessica-Rose Clark</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Jessica-Rose Clark</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_clarkjes01">Stat:</label>
+<select id="statSelector_clarkjes01" onchange="updateStat('clarkjes01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_clarkjes01">Start:</label>
+<input id="startDate_clarkjes01" onchange="applyFilters('clarkjes01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_clarkjes01">End:</label>
+<input id="endDate_clarkjes01" onchange="applyFilters('clarkjes01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_clarkjes01"></canvas>
+<div class="filter-buttons">
+<button id="L5_clarkjes01" onclick="showRecentGames('clarkjes01', 5)">L5</button>
+<button id="L10_clarkjes01" onclick="showRecentGames('clarkjes01', 10)">L10</button>
+<button id="L20_clarkjes01" onclick="showRecentGames('clarkjes01', 20)">L20</button>
+<button id="showAll_clarkjes01" onclick="showAllGames('clarkjes01')">All</button>
+<button id="fight_duration_clarkjes01" onclick="toggleFightDurationOverlay('clarkjes01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_clarkjes01" onclick="clearFilters('clarkjes01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_clarkjes01">Change Line:</label>
+<input id="lineSlider_clarkjes01" max="250" min="0" oninput="updateLine('clarkjes01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_clarkjes01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_clarkjes01" onclick="resetLine('clarkjes01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("clarkjes01", [{'date': '2017-11-18', 'SigStr': 46, 'knockdowns': 0, 'SigStrAtt': 82, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 33, 'SigStrAttAg': 64, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-11-18', 'SigStr': 29, 'knockdowns': 0, 'SigStrAtt': 54, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 56, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 1}, {'date': '2017-11-18', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 38, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 11, 'SigStrAttAg': 25, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2018-01-14', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 25, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2018-01-14', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 19, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2018-01-14', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 51, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 28, 'SigStrAttAg': 73, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-06-23', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 27, 'SigStrAttAg': 66, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2018-06-23', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 46, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-06-23', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 58, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 88, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-11-09', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 50, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 74, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-11-09', 'SigStr': 24, 'knockdowns': 0, 'SigStrAtt': 54, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 35, 'SigStrAttAg': 79, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-11-09', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 53, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 39, 'SigStrAttAg': 85, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2020-09-19', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 7, 'TDAg': 0, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2020-09-19', 'SigStr': 32, 'knockdowns': 0, 'SigStrAtt': 45, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 10, 'TDAg': 1, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2020-09-19', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 13, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2021-10-23', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 6, 'takedown': 2, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 19, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-10-23', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 8, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 13, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-10-23', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-02-19', 'SigStr': 2, 'knockdowns': 0, 'SigStrAtt': 4, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 10, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2022-07-02', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 9, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 1}, {'date': '2023-05-13', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 20, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 20, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-05-13', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 51, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-05-13', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 9, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 1}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4354UFC.html" target="_blank">Jessica-Rose Clark vs Bec Rawlings</a></td>
+<td style="text-align:left"><a href="/ufc/players/rawlibec01.html" target="_blank">Bec Rawlings</a></td>
+<td>11/18/2017</td>
+<td>Sydney, New South Wales, Australia</td>
+<td>Women's Flyweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>101</td>
+<td>174</td>
+<td>58.05%</td>
+<td>2.24</td>
+<td>108</td>
+<td>181</td>
+<td>61</td>
+<td>126</td>
+<td>16</td>
+<td>22</td>
+<td>24</td>
+<td>26</td>
+<td>8</td>
+<td>9</td>
+<td>7</td>
+<td>7</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>1</td>
+<td>65</td>
+<td>145</td>
+<td>55.17%</td>
+<td>81</td>
+<td>162</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4354UFC.html" target="_blank">Jessica-Rose Clark vs Bec Rawlings</a></td>
+<td style="text-align:left"><a href="/ufc/players/rawlibec01.html" target="_blank">Bec Rawlings</a></td>
+<td>11/18/2017</td>
+<td>Sydney, New South Wales, Australia</td>
+<td>Women's Flyweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>101</td>
+<td>174</td>
+<td>58.05%</td>
+<td>2.24</td>
+<td>108</td>
+<td>181</td>
+<td>61</td>
+<td>126</td>
+<td>16</td>
+<td>22</td>
+<td>24</td>
+<td>26</td>
+<td>8</td>
+<td>9</td>
+<td>7</td>
+<td>7</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>1</td>
+<td>65</td>
+<td>145</td>
+<td>55.17%</td>
+<td>81</td>
+<td>162</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4354UFC.html" target="_blank">Jessica-Rose Clark vs Bec Rawlings</a></td>
+<td style="text-align:left"><a href="/ufc/players/rawlibec01.html" target="_blank">Bec Rawlings</a></td>
+<td>11/18/2017</td>
+<td>Sydney, New South Wales, Australia</td>
+<td>Women's Flyweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>101</td>
+<td>174</td>
+<td>58.05%</td>
+<td>2.24</td>
+<td>108</td>
+<td>181</td>
+<td>61</td>
+<td>126</td>
+<td>16</td>
+<td>22</td>
+<td>24</td>
+<td>26</td>
+<td>8</td>
+<td>9</td>
+<td>7</td>
+<td>7</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>1</td>
+<td>65</td>
+<td>145</td>
+<td>55.17%</td>
+<td>81</td>
+<td>162</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC Fight Night: Stephens vs. Choi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4437UFC.html" target="_blank">Jessica-Rose Clark vs Paige VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/players/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+<td>1/14/2018</td>
+<td>St. Louis, Missouri, USA</td>
+<td>Women's Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>55</td>
+<td>98</td>
+<td>56.12%</td>
+<td>1.22</td>
+<td>78</td>
+<td>122</td>
+<td>36</td>
+<td>71</td>
+<td>12</td>
+<td>19</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+<td>11</td>
+<td>16</td>
+<td>20</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>1</td>
+<td>54</td>
+<td>118</td>
+<td>54.24%</td>
+<td>96</td>
+<td>162</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC Fight Night: Stephens vs. Choi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4437UFC.html" target="_blank">Jessica-Rose Clark vs Paige VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/players/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+<td>1/14/2018</td>
+<td>St. Louis, Missouri, USA</td>
+<td>Women's Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>55</td>
+<td>98</td>
+<td>56.12%</td>
+<td>1.22</td>
+<td>78</td>
+<td>122</td>
+<td>36</td>
+<td>71</td>
+<td>12</td>
+<td>19</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+<td>11</td>
+<td>16</td>
+<td>20</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>1</td>
+<td>54</td>
+<td>118</td>
+<td>54.24%</td>
+<td>96</td>
+<td>162</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC Fight Night: Stephens vs. Choi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4437UFC.html" target="_blank">Jessica-Rose Clark vs Paige VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/players/vanzapai01.html" target="_blank">Paige VanZant</a></td>
+<td>1/14/2018</td>
+<td>St. Louis, Missouri, USA</td>
+<td>Women's Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>55</td>
+<td>98</td>
+<td>56.12%</td>
+<td>1.22</td>
+<td>78</td>
+<td>122</td>
+<td>36</td>
+<td>71</td>
+<td>12</td>
+<td>19</td>
+<td>7</td>
+<td>8</td>
+<td>7</td>
+<td>11</td>
+<td>16</td>
+<td>20</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>1</td>
+<td>1</td>
+<td>54</td>
+<td>118</td>
+<td>54.24%</td>
+<td>96</td>
+<td>162</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4637UFC.html" target="_blank">Jessica-Rose Clark vs Jessica Eye</a></td>
+<td style="text-align:left"><a href="/ufc/players/eyejes01.html" target="_blank">Jessica Eye</a></td>
+<td>6/23/2018</td>
+<td>Kallang, Singapore</td>
+<td>Women's Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>139</td>
+<td>36.69%</td>
+<td>1.13</td>
+<td>51</td>
+<td>139</td>
+<td>30</td>
+<td>111</td>
+<td>13</td>
+<td>18</td>
+<td>8</td>
+<td>10</td>
+<td>4</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>67</td>
+<td>225</td>
+<td>70.22%</td>
+<td>74</td>
+<td>232</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4637UFC.html" target="_blank">Jessica-Rose Clark vs Jessica Eye</a></td>
+<td style="text-align:left"><a href="/ufc/players/eyejes01.html" target="_blank">Jessica Eye</a></td>
+<td>6/23/2018</td>
+<td>Kallang, Singapore</td>
+<td>Women's Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>139</td>
+<td>36.69%</td>
+<td>1.13</td>
+<td>51</td>
+<td>139</td>
+<td>30</td>
+<td>111</td>
+<td>13</td>
+<td>18</td>
+<td>8</td>
+<td>10</td>
+<td>4</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>67</td>
+<td>225</td>
+<td>70.22%</td>
+<td>74</td>
+<td>232</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4637UFC.html" target="_blank">Jessica-Rose Clark vs Jessica Eye</a></td>
+<td style="text-align:left"><a href="/ufc/players/eyejes01.html" target="_blank">Jessica Eye</a></td>
+<td>6/23/2018</td>
+<td>Kallang, Singapore</td>
+<td>Women's Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>139</td>
+<td>36.69%</td>
+<td>1.13</td>
+<td>51</td>
+<td>139</td>
+<td>30</td>
+<td>111</td>
+<td>13</td>
+<td>18</td>
+<td>8</td>
+<td>10</td>
+<td>4</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>67</td>
+<td>225</td>
+<td>70.22%</td>
+<td>74</td>
+<td>232</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5374UFC.html" target="_blank">Jessica-Rose Clark vs Pannie Kianzad</a></td>
+<td style="text-align:left"><a href="/ufc/players/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
+<td>11/9/2019</td>
+<td>Moscow, Moscow, Russia</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>65</td>
+<td>157</td>
+<td>41.40%</td>
+<td>1.44</td>
+<td>71</td>
+<td>163</td>
+<td>37</td>
+<td>117</td>
+<td>6</td>
+<td>16</td>
+<td>22</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>238</td>
+<td>58.82%</td>
+<td>103</td>
+<td>243</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5374UFC.html" target="_blank">Jessica-Rose Clark vs Pannie Kianzad</a></td>
+<td style="text-align:left"><a href="/ufc/players/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
+<td>11/9/2019</td>
+<td>Moscow, Moscow, Russia</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>65</td>
+<td>157</td>
+<td>41.40%</td>
+<td>1.44</td>
+<td>71</td>
+<td>163</td>
+<td>37</td>
+<td>117</td>
+<td>6</td>
+<td>16</td>
+<td>22</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>238</td>
+<td>58.82%</td>
+<td>103</td>
+<td>243</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5374UFC.html" target="_blank">Jessica-Rose Clark vs Pannie Kianzad</a></td>
+<td style="text-align:left"><a href="/ufc/players/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
+<td>11/9/2019</td>
+<td>Moscow, Moscow, Russia</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>65</td>
+<td>157</td>
+<td>41.40%</td>
+<td>1.44</td>
+<td>71</td>
+<td>163</td>
+<td>37</td>
+<td>117</td>
+<td>6</td>
+<td>16</td>
+<td>22</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>98</td>
+<td>238</td>
+<td>58.82%</td>
+<td>103</td>
+<td>243</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5737UFC.html" target="_blank">Sarah Alpar vs Jessica-Rose Clark</a></td>
+<td style="text-align:left"><a href="/ufc/players/alparsar01.html" target="_blank">Sarah Alpar</a></td>
+<td>9/19/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>14.35</td>
+<td>0</td>
+<td>76</td>
+<td>106</td>
+<td>71.70%</td>
+<td>1.77</td>
+<td>124</td>
+<td>175</td>
+<td>66</td>
+<td>95</td>
+<td>9</td>
+<td>10</td>
+<td>1</td>
+<td>1</td>
+<td>25</td>
+<td>29</td>
+<td>36</td>
+<td>47</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>12</td>
+<td>30</td>
+<td>60.00%</td>
+<td>26</td>
+<td>44</td>
+<td>2</td>
+<td>11</td>
+<td>81.82%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5737UFC.html" target="_blank">Sarah Alpar vs Jessica-Rose Clark</a></td>
+<td style="text-align:left"><a href="/ufc/players/alparsar01.html" target="_blank">Sarah Alpar</a></td>
+<td>9/19/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>14.35</td>
+<td>0</td>
+<td>76</td>
+<td>106</td>
+<td>71.70%</td>
+<td>1.77</td>
+<td>124</td>
+<td>175</td>
+<td>66</td>
+<td>95</td>
+<td>9</td>
+<td>10</td>
+<td>1</td>
+<td>1</td>
+<td>25</td>
+<td>29</td>
+<td>36</td>
+<td>47</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>12</td>
+<td>30</td>
+<td>60.00%</td>
+<td>26</td>
+<td>44</td>
+<td>2</td>
+<td>11</td>
+<td>81.82%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5737UFC.html" target="_blank">Sarah Alpar vs Jessica-Rose Clark</a></td>
+<td style="text-align:left"><a href="/ufc/players/alparsar01.html" target="_blank">Sarah Alpar</a></td>
+<td>9/19/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>14.35</td>
+<td>0</td>
+<td>76</td>
+<td>106</td>
+<td>71.70%</td>
+<td>1.77</td>
+<td>124</td>
+<td>175</td>
+<td>66</td>
+<td>95</td>
+<td>9</td>
+<td>10</td>
+<td>1</td>
+<td>1</td>
+<td>25</td>
+<td>29</td>
+<td>36</td>
+<td>47</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>12</td>
+<td>30</td>
+<td>60.00%</td>
+<td>26</td>
+<td>44</td>
+<td>2</td>
+<td>11</td>
+<td>81.82%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0278UFC.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6658UFC.html" target="_blank">Jessica-Rose Clark vs Julija Stoliarenko</a></td>
+<td style="text-align:left"><a href="/ufc/players/stolijul01.html" target="_blank">Julija Stoliarenko</a></td>
+<td>7/2/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>0.7</td>
+<td>0</td>
+<td>9</td>
+<td>16</td>
+<td>56.25%</td>
+<td>12.86</td>
+<td>9</td>
+<td>16</td>
+<td>6</td>
+<td>13</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>9</td>
+<td>33.33%</td>
+<td>6</td>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6289UFC.html" target="_blank">Jessica-Rose Clark vs Joselyne Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
+<td>10/23/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>18</td>
+<td>27</td>
+<td>66.67%</td>
+<td>0.40</td>
+<td>54</td>
+<td>74</td>
+<td>9</td>
+<td>17</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>11</td>
+<td>45.45%</td>
+<td>0</td>
+<td>0</td>
+<td>30</td>
+<td>48</td>
+<td>37.50%</td>
+<td>72</td>
+<td>94</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6289UFC.html" target="_blank">Jessica-Rose Clark vs Joselyne Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
+<td>10/23/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>18</td>
+<td>27</td>
+<td>66.67%</td>
+<td>0.40</td>
+<td>54</td>
+<td>74</td>
+<td>9</td>
+<td>17</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>11</td>
+<td>45.45%</td>
+<td>0</td>
+<td>0</td>
+<td>30</td>
+<td>48</td>
+<td>37.50%</td>
+<td>72</td>
+<td>94</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6289UFC.html" target="_blank">Jessica-Rose Clark vs Joselyne Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
+<td>10/23/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>18</td>
+<td>27</td>
+<td>66.67%</td>
+<td>0.40</td>
+<td>54</td>
+<td>74</td>
+<td>9</td>
+<td>17</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>11</td>
+<td>45.45%</td>
+<td>0</td>
+<td>0</td>
+<td>30</td>
+<td>48</td>
+<td>37.50%</td>
+<td>72</td>
+<td>94</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">UFC Fight Night: Walker vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6445UFC.html" target="_blank">Jessica-Rose Clark vs Stephanie Egger</a></td>
+<td style="text-align:left"><a href="/ufc/players/eggerste01.html" target="_blank">Stephanie Egger</a></td>
+<td>2/19/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>3.73</td>
+<td>0</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0.54</td>
+<td>10</td>
+<td>13</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>10</td>
+<td>50.00%</td>
+<td>29</td>
+<td>34</td>
+<td>2</td>
+<td>2</td>
+<td>0.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7095UFC.html" target="_blank">Jessica-Rose Clark vs Tainara Lisboa</a></td>
+<td style="text-align:left"><a href="/ufc/players/lisbotai01.html" target="_blank">Tainara Lisboa</a></td>
+<td>5/13/2023</td>
+<td>Charlotte, North Carolina, USA</td>
+<td>Women's Bantamweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>14.33</td>
+<td>0</td>
+<td>26</td>
+<td>60</td>
+<td>43.33%</td>
+<td>0.60</td>
+<td>28</td>
+<td>66</td>
+<td>20</td>
+<td>51</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>14.29%</td>
+<td>0</td>
+<td>0</td>
+<td>42</td>
+<td>83</td>
+<td>49.40%</td>
+<td>97</td>
+<td>145</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7095UFC.html" target="_blank">Jessica-Rose Clark vs Tainara Lisboa</a></td>
+<td style="text-align:left"><a href="/ufc/players/lisbotai01.html" target="_blank">Tainara Lisboa</a></td>
+<td>5/13/2023</td>
+<td>Charlotte, North Carolina, USA</td>
+<td>Women's Bantamweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>14.33</td>
+<td>0</td>
+<td>26</td>
+<td>60</td>
+<td>43.33%</td>
+<td>0.60</td>
+<td>28</td>
+<td>66</td>
+<td>20</td>
+<td>51</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>14.29%</td>
+<td>0</td>
+<td>0</td>
+<td>42</td>
+<td>83</td>
+<td>49.40%</td>
+<td>97</td>
+<td>145</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7095UFC.html" target="_blank">Jessica-Rose Clark vs Tainara Lisboa</a></td>
+<td style="text-align:left"><a href="/ufc/players/lisbotai01.html" target="_blank">Tainara Lisboa</a></td>
+<td>5/13/2023</td>
+<td>Charlotte, North Carolina, USA</td>
+<td>Women's Bantamweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>14.33</td>
+<td>0</td>
+<td>26</td>
+<td>60</td>
+<td>43.33%</td>
+<td>0.60</td>
+<td>28</td>
+<td>66</td>
+<td>20</td>
+<td>51</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>2</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>7</td>
+<td>14.29%</td>
+<td>0</td>
+<td>0</td>
+<td>42</td>
+<td>83</td>
+<td>49.40%</td>
+<td>97</td>
+<td>145</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

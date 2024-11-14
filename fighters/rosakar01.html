@@ -1,0 +1,1619 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Karol Rosa</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Karol Rosa</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_rosakar01">Stat:</label>
+<select id="statSelector_rosakar01" onchange="updateStat('rosakar01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_rosakar01">Start:</label>
+<input id="startDate_rosakar01" onchange="applyFilters('rosakar01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_rosakar01">End:</label>
+<input id="endDate_rosakar01" onchange="applyFilters('rosakar01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_rosakar01"></canvas>
+<div class="filter-buttons">
+<button id="L5_rosakar01" onclick="showRecentGames('rosakar01', 5)">L5</button>
+<button id="L10_rosakar01" onclick="showRecentGames('rosakar01', 10)">L10</button>
+<button id="L20_rosakar01" onclick="showRecentGames('rosakar01', 20)">L20</button>
+<button id="showAll_rosakar01" onclick="showAllGames('rosakar01')">All</button>
+<button id="fight_duration_rosakar01" onclick="toggleFightDurationOverlay('rosakar01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_rosakar01" onclick="clearFilters('rosakar01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_rosakar01">Change Line:</label>
+<input id="lineSlider_rosakar01" max="250" min="0" oninput="updateLine('rosakar01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_rosakar01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_rosakar01" onclick="resetLine('rosakar01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("rosakar01", [{'date': '2019-08-31', 'SigStr': 55, 'knockdowns': 1, 'SigStrAtt': 110, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 45, 'SigStrAttAg': 77, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-08-31', 'SigStr': 59, 'knockdowns': 0, 'SigStrAtt': 113, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 54, 'SigStrAttAg': 101, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2019-08-31', 'SigStr': 57, 'knockdowns': 0, 'SigStrAtt': 128, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 66, 'SigStrAttAg': 112, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2020-07-11', 'SigStr': 40, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 52, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-07-11', 'SigStr': 47, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 17, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2020-07-11', 'SigStr': 33, 'knockdowns': 0, 'SigStrAtt': 70, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 27, 'SigStrAttAg': 66, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-02-06', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 14, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-02-06', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-02-06', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 18, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-10-02', 'SigStr': 47, 'knockdowns': 0, 'SigStrAtt': 77, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 26, 'SigStrAttAg': 60, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2021-10-02', 'SigStr': 48, 'knockdowns': 0, 'SigStrAtt': 71, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 44, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-10-02', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 51, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 43, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-03-26', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 11, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 15, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-03-26', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 12, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 13, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2022-03-26', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 20, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 13, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2022-10-22', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 10, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-10-22', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-10-22', 'SigStr': 33, 'knockdowns': 0, 'SigStrAtt': 48, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 38, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-04-22', 'SigStr': 18, 'knockdowns': 1, 'SigStrAtt': 31, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 33, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-04-22', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 18, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 28, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-04-22', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-07-01', 'SigStr': 34, 'knockdowns': 0, 'SigStrAtt': 60, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 33, 'SigStrAttAg': 58, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-07-01', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 26, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 33, 'SigStrAttAg': 54, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-07-01', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 44, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-12-16', 'SigStr': 92, 'knockdowns': 0, 'SigStrAtt': 153, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 61, 'SigStrAttAg': 111, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-12-16', 'SigStr': 45, 'knockdowns': 0, 'SigStrAtt': 89, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 30, 'SigStrAttAg': 88, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-12-16', 'SigStr': 67, 'knockdowns': 0, 'SigStrAtt': 108, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 54, 'SigStrAttAg': 109, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-08-10', 'SigStr': 42, 'knockdowns': 0, 'SigStrAtt': 74, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 40, 'SigStrAttAg': 80, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-08-10', 'SigStr': 52, 'knockdowns': 0, 'SigStrAtt': 84, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 43, 'SigStrAttAg': 78, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-08-10', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5251UFC.html" target="_blank">Lara Procopio vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/procolar01.html" target="_blank">Lara Procopio</a></td>
+<td>8/31/2019</td>
+<td>Shenzhen, Guangdong, China</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>171</td>
+<td>351</td>
+<td>48.72%</td>
+<td>3.80</td>
+<td>177</td>
+<td>358</td>
+<td>108</td>
+<td>266</td>
+<td>11</td>
+<td>16</td>
+<td>52</td>
+<td>69</td>
+<td>7</td>
+<td>11</td>
+<td>5</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>165</td>
+<td>290</td>
+<td>43.10%</td>
+<td>169</td>
+<td>294</td>
+<td>0</td>
+<td>5</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5251UFC.html" target="_blank">Lara Procopio vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/procolar01.html" target="_blank">Lara Procopio</a></td>
+<td>8/31/2019</td>
+<td>Shenzhen, Guangdong, China</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>171</td>
+<td>351</td>
+<td>48.72%</td>
+<td>3.80</td>
+<td>177</td>
+<td>358</td>
+<td>108</td>
+<td>266</td>
+<td>11</td>
+<td>16</td>
+<td>52</td>
+<td>69</td>
+<td>7</td>
+<td>11</td>
+<td>5</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>165</td>
+<td>290</td>
+<td>43.10%</td>
+<td>169</td>
+<td>294</td>
+<td>0</td>
+<td>5</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5251UFC.html" target="_blank">Lara Procopio vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/procolar01.html" target="_blank">Lara Procopio</a></td>
+<td>8/31/2019</td>
+<td>Shenzhen, Guangdong, China</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>171</td>
+<td>351</td>
+<td>48.72%</td>
+<td>3.80</td>
+<td>177</td>
+<td>358</td>
+<td>108</td>
+<td>266</td>
+<td>11</td>
+<td>16</td>
+<td>52</td>
+<td>69</td>
+<td>7</td>
+<td>11</td>
+<td>5</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>165</td>
+<td>290</td>
+<td>43.10%</td>
+<td>169</td>
+<td>294</td>
+<td>0</td>
+<td>5</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0253UFC.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5619UFC.html" target="_blank">Vanessa Melo vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/melovan01.html" target="_blank">Vanessa Melo</a></td>
+<td>7/11/2020</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>120</td>
+<td>228</td>
+<td>52.63%</td>
+<td>2.67</td>
+<td>177</td>
+<td>289</td>
+<td>82</td>
+<td>180</td>
+<td>11</td>
+<td>16</td>
+<td>27</td>
+<td>32</td>
+<td>1</td>
+<td>1</td>
+<td>32</td>
+<td>49</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>45</td>
+<td>135</td>
+<td>66.67%</td>
+<td>78</td>
+<td>168</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0253UFC.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5619UFC.html" target="_blank">Vanessa Melo vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/melovan01.html" target="_blank">Vanessa Melo</a></td>
+<td>7/11/2020</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>120</td>
+<td>228</td>
+<td>52.63%</td>
+<td>2.67</td>
+<td>177</td>
+<td>289</td>
+<td>82</td>
+<td>180</td>
+<td>11</td>
+<td>16</td>
+<td>27</td>
+<td>32</td>
+<td>1</td>
+<td>1</td>
+<td>32</td>
+<td>49</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>45</td>
+<td>135</td>
+<td>66.67%</td>
+<td>78</td>
+<td>168</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0253UFC.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5619UFC.html" target="_blank">Vanessa Melo vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/melovan01.html" target="_blank">Vanessa Melo</a></td>
+<td>7/11/2020</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>120</td>
+<td>228</td>
+<td>52.63%</td>
+<td>2.67</td>
+<td>177</td>
+<td>289</td>
+<td>82</td>
+<td>180</td>
+<td>11</td>
+<td>16</td>
+<td>27</td>
+<td>32</td>
+<td>1</td>
+<td>1</td>
+<td>32</td>
+<td>49</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>45</td>
+<td>135</td>
+<td>66.67%</td>
+<td>78</td>
+<td>168</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5924UFC.html" target="_blank">Joselyne Edwards vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
+<td>2/6/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>57</td>
+<td>84</td>
+<td>67.86%</td>
+<td>1.27</td>
+<td>135</td>
+<td>175</td>
+<td>33</td>
+<td>55</td>
+<td>9</td>
+<td>10</td>
+<td>15</td>
+<td>19</td>
+<td>11</td>
+<td>14</td>
+<td>19</td>
+<td>24</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>59</td>
+<td>35.59%</td>
+<td>70</td>
+<td>97</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5924UFC.html" target="_blank">Joselyne Edwards vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
+<td>2/6/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>57</td>
+<td>84</td>
+<td>67.86%</td>
+<td>1.27</td>
+<td>135</td>
+<td>175</td>
+<td>33</td>
+<td>55</td>
+<td>9</td>
+<td>10</td>
+<td>15</td>
+<td>19</td>
+<td>11</td>
+<td>14</td>
+<td>19</td>
+<td>24</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>59</td>
+<td>35.59%</td>
+<td>70</td>
+<td>97</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5924UFC.html" target="_blank">Joselyne Edwards vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
+<td>2/6/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>57</td>
+<td>84</td>
+<td>67.86%</td>
+<td>1.27</td>
+<td>135</td>
+<td>175</td>
+<td>33</td>
+<td>55</td>
+<td>9</td>
+<td>10</td>
+<td>15</td>
+<td>19</td>
+<td>11</td>
+<td>14</td>
+<td>19</td>
+<td>24</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>59</td>
+<td>35.59%</td>
+<td>70</td>
+<td>97</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6263UFC.html" target="_blank">Bethe Correia vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/correbet01.html" target="_blank">Bethe Correia</a></td>
+<td>10/2/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>125</td>
+<td>199</td>
+<td>62.81%</td>
+<td>2.78</td>
+<td>145</td>
+<td>219</td>
+<td>70</td>
+<td>142</td>
+<td>35</td>
+<td>35</td>
+<td>20</td>
+<td>22</td>
+<td>22</td>
+<td>26</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>62</td>
+<td>147</td>
+<td>57.82%</td>
+<td>85</td>
+<td>171</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6263UFC.html" target="_blank">Bethe Correia vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/correbet01.html" target="_blank">Bethe Correia</a></td>
+<td>10/2/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>125</td>
+<td>199</td>
+<td>62.81%</td>
+<td>2.78</td>
+<td>145</td>
+<td>219</td>
+<td>70</td>
+<td>142</td>
+<td>35</td>
+<td>35</td>
+<td>20</td>
+<td>22</td>
+<td>22</td>
+<td>26</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>62</td>
+<td>147</td>
+<td>57.82%</td>
+<td>85</td>
+<td>171</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6263UFC.html" target="_blank">Bethe Correia vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/correbet01.html" target="_blank">Bethe Correia</a></td>
+<td>10/2/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>125</td>
+<td>199</td>
+<td>62.81%</td>
+<td>2.78</td>
+<td>145</td>
+<td>219</td>
+<td>70</td>
+<td>142</td>
+<td>35</td>
+<td>35</td>
+<td>20</td>
+<td>22</td>
+<td>22</td>
+<td>26</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>62</td>
+<td>147</td>
+<td>57.82%</td>
+<td>85</td>
+<td>171</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0282UFC.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6815UFC.html" target="_blank">Lina Lansberg vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/lansblin01.html" target="_blank">Lina Lansberg</a></td>
+<td>10/22/2022</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>74</td>
+<td>72.97%</td>
+<td>1.20</td>
+<td>160</td>
+<td>190</td>
+<td>31</td>
+<td>46</td>
+<td>13</td>
+<td>16</td>
+<td>10</td>
+<td>12</td>
+<td>15</td>
+<td>20</td>
+<td>15</td>
+<td>16</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>36</td>
+<td>60</td>
+<td>40.00%</td>
+<td>100</td>
+<td>132</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0282UFC.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6815UFC.html" target="_blank">Lina Lansberg vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/lansblin01.html" target="_blank">Lina Lansberg</a></td>
+<td>10/22/2022</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>74</td>
+<td>72.97%</td>
+<td>1.20</td>
+<td>160</td>
+<td>190</td>
+<td>31</td>
+<td>46</td>
+<td>13</td>
+<td>16</td>
+<td>10</td>
+<td>12</td>
+<td>15</td>
+<td>20</td>
+<td>15</td>
+<td>16</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>36</td>
+<td>60</td>
+<td>40.00%</td>
+<td>100</td>
+<td>132</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0282UFC.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6815UFC.html" target="_blank">Lina Lansberg vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/lansblin01.html" target="_blank">Lina Lansberg</a></td>
+<td>10/22/2022</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>74</td>
+<td>72.97%</td>
+<td>1.20</td>
+<td>160</td>
+<td>190</td>
+<td>31</td>
+<td>46</td>
+<td>13</td>
+<td>16</td>
+<td>10</td>
+<td>12</td>
+<td>15</td>
+<td>20</td>
+<td>15</td>
+<td>16</td>
+<td>3</td>
+<td>6</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>36</td>
+<td>60</td>
+<td>40.00%</td>
+<td>100</td>
+<td>132</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6507UFC.html" target="_blank">Sara McMann vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/mcmansar01.html" target="_blank">Sara McMann</a></td>
+<td>3/26/2022</td>
+<td>Columbus, Ohio, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>26</td>
+<td>43</td>
+<td>60.47%</td>
+<td>0.58</td>
+<td>92</td>
+<td>120</td>
+<td>20</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>11</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>1</td>
+<td>24</td>
+<td>41</td>
+<td>41.46%</td>
+<td>73</td>
+<td>100</td>
+<td>4</td>
+<td>6</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6507UFC.html" target="_blank">Sara McMann vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/mcmansar01.html" target="_blank">Sara McMann</a></td>
+<td>3/26/2022</td>
+<td>Columbus, Ohio, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>26</td>
+<td>43</td>
+<td>60.47%</td>
+<td>0.58</td>
+<td>92</td>
+<td>120</td>
+<td>20</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>11</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>1</td>
+<td>24</td>
+<td>41</td>
+<td>41.46%</td>
+<td>73</td>
+<td>100</td>
+<td>4</td>
+<td>6</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6507UFC.html" target="_blank">Sara McMann vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/mcmansar01.html" target="_blank">Sara McMann</a></td>
+<td>3/26/2022</td>
+<td>Columbus, Ohio, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>26</td>
+<td>43</td>
+<td>60.47%</td>
+<td>0.58</td>
+<td>92</td>
+<td>120</td>
+<td>20</td>
+<td>36</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>11</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>1</td>
+<td>24</td>
+<td>41</td>
+<td>41.46%</td>
+<td>73</td>
+<td>100</td>
+<td>4</td>
+<td>6</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0298UFC.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7416UFC.html" target="_blank">Irene Aldana vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/aldanire01.html" target="_blank">Irene Aldana</a></td>
+<td>12/16/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>204</td>
+<td>350</td>
+<td>58.29%</td>
+<td>4.53</td>
+<td>204</td>
+<td>350</td>
+<td>103</td>
+<td>237</td>
+<td>6</td>
+<td>11</td>
+<td>95</td>
+<td>102</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>145</td>
+<td>308</td>
+<td>52.92%</td>
+<td>145</td>
+<td>308</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0298UFC.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7416UFC.html" target="_blank">Irene Aldana vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/aldanire01.html" target="_blank">Irene Aldana</a></td>
+<td>12/16/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>204</td>
+<td>350</td>
+<td>58.29%</td>
+<td>4.53</td>
+<td>204</td>
+<td>350</td>
+<td>103</td>
+<td>237</td>
+<td>6</td>
+<td>11</td>
+<td>95</td>
+<td>102</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>145</td>
+<td>308</td>
+<td>52.92%</td>
+<td>145</td>
+<td>308</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0298UFC.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7416UFC.html" target="_blank">Irene Aldana vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/aldanire01.html" target="_blank">Irene Aldana</a></td>
+<td>12/16/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>204</td>
+<td>350</td>
+<td>58.29%</td>
+<td>4.53</td>
+<td>204</td>
+<td>350</td>
+<td>103</td>
+<td>237</td>
+<td>6</td>
+<td>11</td>
+<td>95</td>
+<td>102</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>145</td>
+<td>308</td>
+<td>52.92%</td>
+<td>145</td>
+<td>308</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">UFC Fight Night: Pavlovich vs. Blaydes</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7058UFC.html" target="_blank">Norma Dumont vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/dumonnor01.html" target="_blank">Norma Dumont</a></td>
+<td>4/22/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>33</td>
+<td>68</td>
+<td>48.53%</td>
+<td>0.73</td>
+<td>144</td>
+<td>194</td>
+<td>19</td>
+<td>43</td>
+<td>8</td>
+<td>11</td>
+<td>6</td>
+<td>14</td>
+<td>13</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>87</td>
+<td>59.77%</td>
+<td>63</td>
+<td>129</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">UFC Fight Night: Pavlovich vs. Blaydes</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7058UFC.html" target="_blank">Norma Dumont vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/dumonnor01.html" target="_blank">Norma Dumont</a></td>
+<td>4/22/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>33</td>
+<td>68</td>
+<td>48.53%</td>
+<td>0.73</td>
+<td>144</td>
+<td>194</td>
+<td>19</td>
+<td>43</td>
+<td>8</td>
+<td>11</td>
+<td>6</td>
+<td>14</td>
+<td>13</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>87</td>
+<td>59.77%</td>
+<td>63</td>
+<td>129</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">UFC Fight Night: Pavlovich vs. Blaydes</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7058UFC.html" target="_blank">Norma Dumont vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/dumonnor01.html" target="_blank">Norma Dumont</a></td>
+<td>4/22/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Featherweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>33</td>
+<td>68</td>
+<td>48.53%</td>
+<td>0.73</td>
+<td>144</td>
+<td>194</td>
+<td>19</td>
+<td>43</td>
+<td>8</td>
+<td>11</td>
+<td>6</td>
+<td>14</td>
+<td>13</td>
+<td>15</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>87</td>
+<td>59.77%</td>
+<td>63</td>
+<td>129</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC Fight Night: Strickland vs. Magomedov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7165UFC.html" target="_blank">Karol Rosa vs Yana Santos</a></td>
+<td style="text-align:left"><a href="/ufc/players/santoyan01.html" target="_blank">Yana Santos</a></td>
+<td>7/1/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Featherweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>130</td>
+<td>50.77%</td>
+<td>1.47</td>
+<td>117</td>
+<td>181</td>
+<td>38</td>
+<td>95</td>
+<td>18</td>
+<td>21</td>
+<td>10</td>
+<td>14</td>
+<td>12</td>
+<td>14</td>
+<td>6</td>
+<td>10</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>95</td>
+<td>156</td>
+<td>39.10%</td>
+<td>151</td>
+<td>213</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC Fight Night: Strickland vs. Magomedov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7165UFC.html" target="_blank">Karol Rosa vs Yana Santos</a></td>
+<td style="text-align:left"><a href="/ufc/players/santoyan01.html" target="_blank">Yana Santos</a></td>
+<td>7/1/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Featherweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>130</td>
+<td>50.77%</td>
+<td>1.47</td>
+<td>117</td>
+<td>181</td>
+<td>38</td>
+<td>95</td>
+<td>18</td>
+<td>21</td>
+<td>10</td>
+<td>14</td>
+<td>12</td>
+<td>14</td>
+<td>6</td>
+<td>10</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>95</td>
+<td>156</td>
+<td>39.10%</td>
+<td>151</td>
+<td>213</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC Fight Night: Strickland vs. Magomedov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7165UFC.html" target="_blank">Karol Rosa vs Yana Santos</a></td>
+<td style="text-align:left"><a href="/ufc/players/santoyan01.html" target="_blank">Yana Santos</a></td>
+<td>7/1/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Featherweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>130</td>
+<td>50.77%</td>
+<td>1.47</td>
+<td>117</td>
+<td>181</td>
+<td>38</td>
+<td>95</td>
+<td>18</td>
+<td>21</td>
+<td>10</td>
+<td>14</td>
+<td>12</td>
+<td>14</td>
+<td>6</td>
+<td>10</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>95</td>
+<td>156</td>
+<td>39.10%</td>
+<td>151</td>
+<td>213</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC Fight Night: Tybura vs. Spivac 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7752UFC.html" target="_blank">Pannie Kianzad vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
+<td>8/10/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>117</td>
+<td>194</td>
+<td>60.31%</td>
+<td>2.60</td>
+<td>140</td>
+<td>223</td>
+<td>70</td>
+<td>132</td>
+<td>8</td>
+<td>9</td>
+<td>39</td>
+<td>53</td>
+<td>16</td>
+<td>23</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>182</td>
+<td>49.45%</td>
+<td>138</td>
+<td>229</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC Fight Night: Tybura vs. Spivac 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7752UFC.html" target="_blank">Pannie Kianzad vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
+<td>8/10/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>117</td>
+<td>194</td>
+<td>60.31%</td>
+<td>2.60</td>
+<td>140</td>
+<td>223</td>
+<td>70</td>
+<td>132</td>
+<td>8</td>
+<td>9</td>
+<td>39</td>
+<td>53</td>
+<td>16</td>
+<td>23</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>182</td>
+<td>49.45%</td>
+<td>138</td>
+<td>229</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC Fight Night: Tybura vs. Spivac 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7752UFC.html" target="_blank">Pannie Kianzad vs Karol Rosa</a></td>
+<td style="text-align:left"><a href="/ufc/players/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
+<td>8/10/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>117</td>
+<td>194</td>
+<td>60.31%</td>
+<td>2.60</td>
+<td>140</td>
+<td>223</td>
+<td>70</td>
+<td>132</td>
+<td>8</td>
+<td>9</td>
+<td>39</td>
+<td>53</td>
+<td>16</td>
+<td>23</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>182</td>
+<td>49.45%</td>
+<td>138</td>
+<td>229</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

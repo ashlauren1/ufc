@@ -1,0 +1,931 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Daniel Zellhuber</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Daniel Zellhuber</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_zellhdan01">Stat:</label>
+<select id="statSelector_zellhdan01" onchange="updateStat('zellhdan01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_zellhdan01">Start:</label>
+<input id="startDate_zellhdan01" onchange="applyFilters('zellhdan01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_zellhdan01">End:</label>
+<input id="endDate_zellhdan01" onchange="applyFilters('zellhdan01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_zellhdan01"></canvas>
+<div class="filter-buttons">
+<button id="L5_zellhdan01" onclick="showRecentGames('zellhdan01', 5)">L5</button>
+<button id="L10_zellhdan01" onclick="showRecentGames('zellhdan01', 10)">L10</button>
+<button id="L20_zellhdan01" onclick="showRecentGames('zellhdan01', 20)">L20</button>
+<button id="showAll_zellhdan01" onclick="showAllGames('zellhdan01')">All</button>
+<button id="fight_duration_zellhdan01" onclick="toggleFightDurationOverlay('zellhdan01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_zellhdan01" onclick="clearFilters('zellhdan01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_zellhdan01">Change Line:</label>
+<input id="lineSlider_zellhdan01" max="250" min="0" oninput="updateLine('zellhdan01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_zellhdan01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_zellhdan01" onclick="resetLine('zellhdan01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("zellhdan01", [{'date': '2022-09-17', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 47, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-09-17', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 78, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 64, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-09-17', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 64, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 26, 'SigStrAttAg': 57, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2023-04-15', 'SigStr': 22, 'knockdowns': 0, 'SigStrAtt': 55, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 22, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2023-04-15', 'SigStr': 40, 'knockdowns': 1, 'SigStrAtt': 91, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 23, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-04-15', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 61, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 32, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-09-16', 'SigStr': 24, 'knockdowns': 0, 'SigStrAtt': 51, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 12, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2023-09-16', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 50, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 26, 'SigStrAttAg': 52, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-02-24', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 60, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 73, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-02-24', 'SigStr': 50, 'knockdowns': 0, 'SigStrAtt': 110, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 32, 'SigStrAttAg': 88, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-02-24', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 102, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 85, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-09-14', 'SigStr': 43, 'knockdowns': 1, 'SigStrAtt': 116, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 92, 'SigStrAttAg': 191, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-09-14', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 76, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 65, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-09-14', 'SigStr': 51, 'knockdowns': 0, 'SigStrAtt': 116, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 40, 'SigStrAttAg': 89, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0308UFC.html" target="_blank">UFC 306: Riyadh Season Noche UFC</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7794UFC.html" target="_blank">Esteban Ribovics vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/ribovest01.html" target="_blank">Esteban Ribovics</a></td>
+<td>9/14/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>121</td>
+<td>308</td>
+<td>39.29%</td>
+<td>2.69</td>
+<td>121</td>
+<td>308</td>
+<td>83</td>
+<td>255</td>
+<td>33</td>
+<td>48</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>156</td>
+<td>345</td>
+<td>54.78%</td>
+<td>156</td>
+<td>345</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0308UFC.html" target="_blank">UFC 306: Riyadh Season Noche UFC</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7794UFC.html" target="_blank">Esteban Ribovics vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/ribovest01.html" target="_blank">Esteban Ribovics</a></td>
+<td>9/14/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>121</td>
+<td>308</td>
+<td>39.29%</td>
+<td>2.69</td>
+<td>121</td>
+<td>308</td>
+<td>83</td>
+<td>255</td>
+<td>33</td>
+<td>48</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>156</td>
+<td>345</td>
+<td>54.78%</td>
+<td>156</td>
+<td>345</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0308UFC.html" target="_blank">UFC 306: Riyadh Season Noche UFC</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7794UFC.html" target="_blank">Esteban Ribovics vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/ribovest01.html" target="_blank">Esteban Ribovics</a></td>
+<td>9/14/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>121</td>
+<td>308</td>
+<td>39.29%</td>
+<td>2.69</td>
+<td>121</td>
+<td>308</td>
+<td>83</td>
+<td>255</td>
+<td>33</td>
+<td>48</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>156</td>
+<td>345</td>
+<td>54.78%</td>
+<td>156</td>
+<td>345</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Song</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6778UFC.html" target="_blank">Trey Ogden vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/ogdentre01.html" target="_blank">Trey Ogden</a></td>
+<td>9/17/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>52</td>
+<td>178</td>
+<td>29.21%</td>
+<td>1.16</td>
+<td>52</td>
+<td>178</td>
+<td>19</td>
+<td>125</td>
+<td>21</td>
+<td>40</td>
+<td>12</td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>71</td>
+<td>168</td>
+<td>57.74%</td>
+<td>72</td>
+<td>169</td>
+<td>1</td>
+<td>9</td>
+<td>88.89%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Song</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6778UFC.html" target="_blank">Trey Ogden vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/ogdentre01.html" target="_blank">Trey Ogden</a></td>
+<td>9/17/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>52</td>
+<td>178</td>
+<td>29.21%</td>
+<td>1.16</td>
+<td>52</td>
+<td>178</td>
+<td>19</td>
+<td>125</td>
+<td>21</td>
+<td>40</td>
+<td>12</td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>71</td>
+<td>168</td>
+<td>57.74%</td>
+<td>72</td>
+<td>169</td>
+<td>1</td>
+<td>9</td>
+<td>88.89%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Song</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6778UFC.html" target="_blank">Trey Ogden vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/ogdentre01.html" target="_blank">Trey Ogden</a></td>
+<td>9/17/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>52</td>
+<td>178</td>
+<td>29.21%</td>
+<td>1.16</td>
+<td>52</td>
+<td>178</td>
+<td>19</td>
+<td>125</td>
+<td>21</td>
+<td>40</td>
+<td>12</td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>71</td>
+<td>168</td>
+<td>57.74%</td>
+<td>72</td>
+<td>169</td>
+<td>1</td>
+<td>9</td>
+<td>88.89%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">UFC Fight Night: Holloway vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7047UFC.html" target="_blank">Lando Vannata vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/vannalan01.html" target="_blank">Lando Vannata</a></td>
+<td>4/15/2023</td>
+<td>Kansas City, Missouri, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>78</td>
+<td>207</td>
+<td>37.68%</td>
+<td>1.73</td>
+<td>84</td>
+<td>225</td>
+<td>67</td>
+<td>181</td>
+<td>7</td>
+<td>21</td>
+<td>4</td>
+<td>5</td>
+<td>7</td>
+<td>7</td>
+<td>22</td>
+<td>51</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>51</td>
+<td>91</td>
+<td>43.96%</td>
+<td>51</td>
+<td>91</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">UFC Fight Night: Holloway vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7047UFC.html" target="_blank">Lando Vannata vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/vannalan01.html" target="_blank">Lando Vannata</a></td>
+<td>4/15/2023</td>
+<td>Kansas City, Missouri, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>78</td>
+<td>207</td>
+<td>37.68%</td>
+<td>1.73</td>
+<td>84</td>
+<td>225</td>
+<td>67</td>
+<td>181</td>
+<td>7</td>
+<td>21</td>
+<td>4</td>
+<td>5</td>
+<td>7</td>
+<td>7</td>
+<td>22</td>
+<td>51</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>51</td>
+<td>91</td>
+<td>43.96%</td>
+<td>51</td>
+<td>91</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">UFC Fight Night: Holloway vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7047UFC.html" target="_blank">Lando Vannata vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/vannalan01.html" target="_blank">Lando Vannata</a></td>
+<td>4/15/2023</td>
+<td>Kansas City, Missouri, USA</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>78</td>
+<td>207</td>
+<td>37.68%</td>
+<td>1.73</td>
+<td>84</td>
+<td>225</td>
+<td>67</td>
+<td>181</td>
+<td>7</td>
+<td>21</td>
+<td>4</td>
+<td>5</td>
+<td>7</td>
+<td>7</td>
+<td>22</td>
+<td>51</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>51</td>
+<td>91</td>
+<td>43.96%</td>
+<td>51</td>
+<td>91</td>
+<td>0</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0340FNI.html" target="_blank">UFC Fight Night: Grasso vs. Shevchenko 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7297UFC.html" target="_blank">Christos Giagos vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/giagochr01.html" target="_blank">Christos Giagos</a></td>
+<td>9/16/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.43</td>
+<td>0</td>
+<td>36</td>
+<td>101</td>
+<td>35.64%</td>
+<td>2.14</td>
+<td>36</td>
+<td>101</td>
+<td>18</td>
+<td>75</td>
+<td>11</td>
+<td>19</td>
+<td>7</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>38</td>
+<td>82</td>
+<td>53.66%</td>
+<td>38</td>
+<td>82</td>
+<td>0</td>
+<td>6</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0340FNI.html" target="_blank">UFC Fight Night: Grasso vs. Shevchenko 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7297UFC.html" target="_blank">Christos Giagos vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/giagochr01.html" target="_blank">Christos Giagos</a></td>
+<td>9/16/2023</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Lightweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.43</td>
+<td>0</td>
+<td>36</td>
+<td>101</td>
+<td>35.64%</td>
+<td>2.14</td>
+<td>36</td>
+<td>101</td>
+<td>18</td>
+<td>75</td>
+<td>11</td>
+<td>19</td>
+<td>7</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>38</td>
+<td>82</td>
+<td>53.66%</td>
+<td>38</td>
+<td>82</td>
+<td>0</td>
+<td>6</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0351FNI.html" target="_blank">UFC Fight Night: Moreno vs. Royval 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7486UFC.html" target="_blank">Francisco Prado vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/pradofra01.html" target="_blank">Francisco Prado</a></td>
+<td>2/24/2024</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>120</td>
+<td>272</td>
+<td>44.12%</td>
+<td>2.67</td>
+<td>120</td>
+<td>272</td>
+<td>87</td>
+<td>228</td>
+<td>25</td>
+<td>36</td>
+<td>8</td>
+<td>8</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>246</td>
+<td>63.41%</td>
+<td>91</td>
+<td>249</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0351FNI.html" target="_blank">UFC Fight Night: Moreno vs. Royval 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7486UFC.html" target="_blank">Francisco Prado vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/pradofra01.html" target="_blank">Francisco Prado</a></td>
+<td>2/24/2024</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>120</td>
+<td>272</td>
+<td>44.12%</td>
+<td>2.67</td>
+<td>120</td>
+<td>272</td>
+<td>87</td>
+<td>228</td>
+<td>25</td>
+<td>36</td>
+<td>8</td>
+<td>8</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>246</td>
+<td>63.41%</td>
+<td>91</td>
+<td>249</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0351FNI.html" target="_blank">UFC Fight Night: Moreno vs. Royval 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7486UFC.html" target="_blank">Francisco Prado vs Daniel Zellhuber</a></td>
+<td style="text-align:left"><a href="/ufc/players/pradofra01.html" target="_blank">Francisco Prado</a></td>
+<td>2/24/2024</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Lightweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>120</td>
+<td>272</td>
+<td>44.12%</td>
+<td>2.67</td>
+<td>120</td>
+<td>272</td>
+<td>87</td>
+<td>228</td>
+<td>25</td>
+<td>36</td>
+<td>8</td>
+<td>8</td>
+<td>3</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>90</td>
+<td>246</td>
+<td>63.41%</td>
+<td>91</td>
+<td>249</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

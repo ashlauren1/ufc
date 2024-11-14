@@ -1,0 +1,1060 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Zhalgas Zhumagulov</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Zhalgas Zhumagulov</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_zhumazha01">Stat:</label>
+<select id="statSelector_zhumazha01" onchange="updateStat('zhumazha01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_zhumazha01">Start:</label>
+<input id="startDate_zhumazha01" onchange="applyFilters('zhumazha01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_zhumazha01">End:</label>
+<input id="endDate_zhumazha01" onchange="applyFilters('zhumazha01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_zhumazha01"></canvas>
+<div class="filter-buttons">
+<button id="L5_zhumazha01" onclick="showRecentGames('zhumazha01', 5)">L5</button>
+<button id="L10_zhumazha01" onclick="showRecentGames('zhumazha01', 10)">L10</button>
+<button id="L20_zhumazha01" onclick="showRecentGames('zhumazha01', 20)">L20</button>
+<button id="showAll_zhumazha01" onclick="showAllGames('zhumazha01')">All</button>
+<button id="fight_duration_zhumazha01" onclick="toggleFightDurationOverlay('zhumazha01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_zhumazha01" onclick="clearFilters('zhumazha01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_zhumazha01">Change Line:</label>
+<input id="lineSlider_zhumazha01" max="250" min="0" oninput="updateLine('zhumazha01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_zhumazha01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_zhumazha01" onclick="resetLine('zhumazha01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("zhumazha01", [{'date': '2020-07-11', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 0, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 34, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-07-11', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 40, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-07-11', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 47, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-01-23', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 58, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-01-23', 'SigStr': 25, 'knockdowns': 0, 'SigStrAtt': 56, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 31, 'SigStrAttAg': 69, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-01-23', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 37, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 42, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2021-07-10', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 11, 'SigStrAttAg': 40, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-12-04', 'SigStr': 31, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 53, 'SigStrAttAg': 72, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-06-04', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 55, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 80, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-06-04', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 25, 'takedown': 2, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 33, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-06-04', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 35, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-11-19', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 80, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 50, 'SigStrAttAg': 93, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-11-19', 'SigStr': 46, 'knockdowns': 0, 'SigStrAtt': 77, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 33, 'SigStrAttAg': 56, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-11-19', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 77, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 32, 'SigStrAttAg': 60, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-06-24', 'SigStr': 39, 'knockdowns': 0, 'SigStrAtt': 116, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 44, 'SigStrAttAg': 86, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2023-06-24', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 77, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 48, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-06-24', 'SigStr': 38, 'knockdowns': 0, 'SigStrAtt': 94, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 51, 'SigStrAttAg': 100, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0253UFC.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5618UFC.html" target="_blank">Raulian Paiva vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/paivarau01.html" target="_blank">Raulian Paiva</a></td>
+<td>7/11/2020</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>119</td>
+<td>55.46%</td>
+<td>1.47</td>
+<td>73</td>
+<td>126</td>
+<td>19</td>
+<td>61</td>
+<td>17</td>
+<td>25</td>
+<td>30</td>
+<td>33</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>11</td>
+<td>18.18%</td>
+<td>0</td>
+<td>0</td>
+<td>52</td>
+<td>121</td>
+<td>57.02%</td>
+<td>56</td>
+<td>125</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0253UFC.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5618UFC.html" target="_blank">Raulian Paiva vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/paivarau01.html" target="_blank">Raulian Paiva</a></td>
+<td>7/11/2020</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>119</td>
+<td>55.46%</td>
+<td>1.47</td>
+<td>73</td>
+<td>126</td>
+<td>19</td>
+<td>61</td>
+<td>17</td>
+<td>25</td>
+<td>30</td>
+<td>33</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>11</td>
+<td>18.18%</td>
+<td>0</td>
+<td>0</td>
+<td>52</td>
+<td>121</td>
+<td>57.02%</td>
+<td>56</td>
+<td>125</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0253UFC.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5618UFC.html" target="_blank">Raulian Paiva vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/paivarau01.html" target="_blank">Raulian Paiva</a></td>
+<td>7/11/2020</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>66</td>
+<td>119</td>
+<td>55.46%</td>
+<td>1.47</td>
+<td>73</td>
+<td>126</td>
+<td>19</td>
+<td>61</td>
+<td>17</td>
+<td>25</td>
+<td>30</td>
+<td>33</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>11</td>
+<td>18.18%</td>
+<td>0</td>
+<td>0</td>
+<td>52</td>
+<td>121</td>
+<td>57.02%</td>
+<td>56</td>
+<td>125</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0259UFC.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5916UFC.html" target="_blank">Amir Albazi vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/albazami01.html" target="_blank">Amir Albazi</a></td>
+<td>1/23/2021</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>59</td>
+<td>132</td>
+<td>44.70%</td>
+<td>1.31</td>
+<td>74</td>
+<td>150</td>
+<td>22</td>
+<td>84</td>
+<td>31</td>
+<td>41</td>
+<td>6</td>
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>68</td>
+<td>169</td>
+<td>59.76%</td>
+<td>94</td>
+<td>200</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0259UFC.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5916UFC.html" target="_blank">Amir Albazi vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/albazami01.html" target="_blank">Amir Albazi</a></td>
+<td>1/23/2021</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>59</td>
+<td>132</td>
+<td>44.70%</td>
+<td>1.31</td>
+<td>74</td>
+<td>150</td>
+<td>22</td>
+<td>84</td>
+<td>31</td>
+<td>41</td>
+<td>6</td>
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>68</td>
+<td>169</td>
+<td>59.76%</td>
+<td>94</td>
+<td>200</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0259UFC.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5916UFC.html" target="_blank">Amir Albazi vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/albazami01.html" target="_blank">Amir Albazi</a></td>
+<td>1/23/2021</td>
+<td>Abu Dhabi, Abu Dhabi, United Arab Emirates</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>59</td>
+<td>132</td>
+<td>44.70%</td>
+<td>1.31</td>
+<td>74</td>
+<td>150</td>
+<td>22</td>
+<td>84</td>
+<td>31</td>
+<td>41</td>
+<td>6</td>
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>68</td>
+<td>169</td>
+<td>59.76%</td>
+<td>94</td>
+<td>200</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0266UFC.html" target="_blank">UFC 264: Poirier vs. McGregor 3</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6151UFC.html" target="_blank">Jerome Rivera vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/riverjer01.html" target="_blank">Jerome Rivera</a></td>
+<td>7/10/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>2.03</td>
+<td>0</td>
+<td>10</td>
+<td>24</td>
+<td>41.67%</td>
+<td>4.93</td>
+<td>10</td>
+<td>24</td>
+<td>4</td>
+<td>15</td>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>11</td>
+<td>40</td>
+<td>72.50%</td>
+<td>11</td>
+<td>40</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">UFC Fight Night: Font vs. Aldo</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6358UFC.html" target="_blank">Manel Kape vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/kapeman01.html" target="_blank">Manel Kape</a></td>
+<td>12/4/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>4.03</td>
+<td>0</td>
+<td>31</td>
+<td>79</td>
+<td>39.24%</td>
+<td>7.69</td>
+<td>31</td>
+<td>79</td>
+<td>19</td>
+<td>61</td>
+<td>6</td>
+<td>11</td>
+<td>6</td>
+<td>7</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>53</td>
+<td>72</td>
+<td>26.39%</td>
+<td>54</td>
+<td>73</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6608UFC.html" target="_blank">Jeff Molina vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/molinjef01.html" target="_blank">Jeff Molina</a></td>
+<td>6/4/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>37</td>
+<td>112</td>
+<td>33.04%</td>
+<td>0.82</td>
+<td>68</td>
+<td>146</td>
+<td>10</td>
+<td>74</td>
+<td>17</td>
+<td>26</td>
+<td>10</td>
+<td>12</td>
+<td>9</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>13</td>
+<td>15.38%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>148</td>
+<td>62.16%</td>
+<td>129</td>
+<td>226</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6608UFC.html" target="_blank">Jeff Molina vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/molinjef01.html" target="_blank">Jeff Molina</a></td>
+<td>6/4/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>37</td>
+<td>112</td>
+<td>33.04%</td>
+<td>0.82</td>
+<td>68</td>
+<td>146</td>
+<td>10</td>
+<td>74</td>
+<td>17</td>
+<td>26</td>
+<td>10</td>
+<td>12</td>
+<td>9</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>13</td>
+<td>15.38%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>148</td>
+<td>62.16%</td>
+<td>129</td>
+<td>226</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6608UFC.html" target="_blank">Jeff Molina vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/molinjef01.html" target="_blank">Jeff Molina</a></td>
+<td>6/4/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>37</td>
+<td>112</td>
+<td>33.04%</td>
+<td>0.82</td>
+<td>68</td>
+<td>146</td>
+<td>10</td>
+<td>74</td>
+<td>17</td>
+<td>26</td>
+<td>10</td>
+<td>12</td>
+<td>9</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>13</td>
+<td>15.38%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>148</td>
+<td>62.16%</td>
+<td>129</td>
+<td>226</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">UFC Fight Night: Nzechukwu vs. Cutelaba</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6856UFC.html" target="_blank">Charles Johnson vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/johnscha01.html" target="_blank">Charles Johnson</a></td>
+<td>11/19/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>119</td>
+<td>234</td>
+<td>50.85%</td>
+<td>2.64</td>
+<td>141</td>
+<td>258</td>
+<td>36</td>
+<td>119</td>
+<td>34</td>
+<td>62</td>
+<td>49</td>
+<td>53</td>
+<td>6</td>
+<td>8</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>115</td>
+<td>209</td>
+<td>44.98%</td>
+<td>141</td>
+<td>237</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">UFC Fight Night: Nzechukwu vs. Cutelaba</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6856UFC.html" target="_blank">Charles Johnson vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/johnscha01.html" target="_blank">Charles Johnson</a></td>
+<td>11/19/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>119</td>
+<td>234</td>
+<td>50.85%</td>
+<td>2.64</td>
+<td>141</td>
+<td>258</td>
+<td>36</td>
+<td>119</td>
+<td>34</td>
+<td>62</td>
+<td>49</td>
+<td>53</td>
+<td>6</td>
+<td>8</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>115</td>
+<td>209</td>
+<td>44.98%</td>
+<td>141</td>
+<td>237</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">UFC Fight Night: Nzechukwu vs. Cutelaba</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6856UFC.html" target="_blank">Charles Johnson vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/johnscha01.html" target="_blank">Charles Johnson</a></td>
+<td>11/19/2022</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>119</td>
+<td>234</td>
+<td>50.85%</td>
+<td>2.64</td>
+<td>141</td>
+<td>258</td>
+<td>36</td>
+<td>119</td>
+<td>34</td>
+<td>62</td>
+<td>49</td>
+<td>53</td>
+<td>6</td>
+<td>8</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>115</td>
+<td>209</td>
+<td>44.98%</td>
+<td>141</td>
+<td>237</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7153UFC.html" target="_blank">Joshua Van vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/vanjos01.html" target="_blank">Joshua Van</a></td>
+<td>6/24/2023</td>
+<td>Jacksonville, Florida, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>103</td>
+<td>287</td>
+<td>35.89%</td>
+<td>2.29</td>
+<td>104</td>
+<td>291</td>
+<td>45</td>
+<td>201</td>
+<td>28</td>
+<td>48</td>
+<td>30</td>
+<td>38</td>
+<td>2</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>120</td>
+<td>234</td>
+<td>48.72%</td>
+<td>131</td>
+<td>245</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7153UFC.html" target="_blank">Joshua Van vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/vanjos01.html" target="_blank">Joshua Van</a></td>
+<td>6/24/2023</td>
+<td>Jacksonville, Florida, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>103</td>
+<td>287</td>
+<td>35.89%</td>
+<td>2.29</td>
+<td>104</td>
+<td>291</td>
+<td>45</td>
+<td>201</td>
+<td>28</td>
+<td>48</td>
+<td>30</td>
+<td>38</td>
+<td>2</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>120</td>
+<td>234</td>
+<td>48.72%</td>
+<td>131</td>
+<td>245</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7153UFC.html" target="_blank">Joshua Van vs Zhalgas Zhumagulov</a></td>
+<td style="text-align:left"><a href="/ufc/players/vanjos01.html" target="_blank">Joshua Van</a></td>
+<td>6/24/2023</td>
+<td>Jacksonville, Florida, USA</td>
+<td>Flyweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>103</td>
+<td>287</td>
+<td>35.89%</td>
+<td>2.29</td>
+<td>104</td>
+<td>291</td>
+<td>45</td>
+<td>201</td>
+<td>28</td>
+<td>48</td>
+<td>30</td>
+<td>38</td>
+<td>2</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>20.00%</td>
+<td>0</td>
+<td>0</td>
+<td>120</td>
+<td>234</td>
+<td>48.72%</td>
+<td>131</td>
+<td>245</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

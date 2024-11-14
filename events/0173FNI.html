@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>UFC Fight Night: Bisping vs. Gastelum</title>
+<link rel="stylesheet" href="stylesheet.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("event-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+    <div class="topnav">
+        <a href="/ufc/">Projections</a>
+        <a href="/ufc/fighters/">Fighters</a>
+        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/events/">Events</a>
+        <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+        <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-bar" placeholder="Search for fighters or events...">
+        <button id="search-button">Search</button>
+        <div id="search-results"></div>
+    </div>
+    <div class="header">
+        <h1>UFC Fight Night: Bisping vs. Gastelum</h1>
+        <h2>Fight Night</h2>
+        <h2>Shanghai, Hebei, China - 11/25/2017</h2>
+    </div>
+    <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+    
+    <div id="event-container">
+    <table id="event-table">
+        <thead>
+            <tr>
+                <th>Fight</th>
+                <th>Weight Class</th>
+                <th>Fight Duration</th>
+                <th>Scheduled Rounds</th>
+                <th>Result</th>
+                <th>Fighter</th>
+                <th></th>
+                <th>Significant Strikes</th>
+                <th>Strike Accuracy</th>
+                <th>SSLPM</th>
+                <th>Strike Defense</th>
+                <th>Takedowns</th>
+                <th>Takedown Accuracy</th>
+                <th>Takedown Defense</th>
+                <th>Fighter</th>
+                <th></th>
+                <th>Significant Strikes</th>
+                <th>Strike Accuracy</th>
+                <th>SSLPM</th>
+                <th>Strike Defense</th>
+                <th>Takedowns</th>
+                <th>Takedown Accuracy</th>
+                <th>Takedown Defense</th>
+            </tr>
+            <tr id="filter-row"></tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4366UFC.html" target="_blank">Michael Bisping vs Kelvin Gastelum</a></td>
+                <td style="text-align:left">Middleweight</td>
+                <td style="text-align:left">2.5</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
+                <td>W</td>
+                <td>14</td>
+                <td>51.85%</td>
+                <td>5.60</td>
+                <td>70.83%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/bispimic01.html" target="_blank">Michael Bisping</a></td>
+                <td>L</td>
+                <td>7</td>
+                <td>29.17%</td>
+                <td>2.80</td>
+                <td>48.15%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4367UFC.html" target="_blank">Jingliang Li vs Zak Ottow</a></td>
+                <td style="text-align:left">Welterweight</td>
+                <td style="text-align:left">2.95</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/lijing01.html" target="_blank">Jingliang Li</a></td>
+                <td>W</td>
+                <td>26</td>
+                <td>52.00%</td>
+                <td>8.81</td>
+                <td>70.59%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/ottowzak01.html" target="_blank">Zak Ottow</a></td>
+                <td>L</td>
+                <td>5</td>
+                <td>29.41%</td>
+                <td>1.69</td>
+                <td>48.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4368UFC.html" target="_blank">Alex Caceres vs Wang Guan</a></td>
+                <td style="text-align:left">Featherweight</td>
+                <td style="text-align:left">15.0</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Decision - Split</td>
+                <td style="text-align:left"><a href="/ufc/fighters/guanwang01.html" target="_blank">Wang Guan</a></td>
+                <td>W</td>
+                <td>71</td>
+                <td>43.29%</td>
+                <td>4.73</td>
+                <td>60.16%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/cacerale01.html" target="_blank">Alex Caceres</a></td>
+                <td>L</td>
+                <td>49</td>
+                <td>39.84%</td>
+                <td>3.27</td>
+                <td>56.71%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4369UFC.html" target="_blank">Alex Garcia vs Muslim Salikhov</a></td>
+                <td style="text-align:left">Welterweight</td>
+                <td style="text-align:left">8.37</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/garciale01.html" target="_blank">Alex Garcia</a></td>
+                <td>W</td>
+                <td>6</td>
+                <td>25.00%</td>
+                <td>0.72</td>
+                <td>62.96%</td>
+                <td>3</td>
+                <td>42.86%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/salikmus01.html" target="_blank">Muslim Salikhov</a></td>
+                <td>L</td>
+                <td>10</td>
+                <td>37.04%</td>
+                <td>1.19</td>
+                <td>75.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>57.14%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4370UFC.html" target="_blank">Zabit Magomedsharipov vs Sheymon Moraes</a></td>
+                <td style="text-align:left">Featherweight</td>
+                <td style="text-align:left">14.5</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/magomzab01.html" target="_blank">Zabit Magomedsharipov</a></td>
+                <td>W</td>
+                <td>34</td>
+                <td>48.57%</td>
+                <td>2.34</td>
+                <td>41.94%</td>
+                <td>11</td>
+                <td>73.33%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/moraeshe01.html" target="_blank">Sheymon Moraes</a></td>
+                <td>L</td>
+                <td>18</td>
+                <td>58.06%</td>
+                <td>1.24</td>
+                <td>51.43%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>26.67%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4371UFC.html" target="_blank">Bobby Nash vs Kenan Song</a></td>
+                <td style="text-align:left">Welterweight</td>
+                <td style="text-align:left">0.25</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/songkena01.html" target="_blank">Kenan Song</a></td>
+                <td>W</td>
+                <td>14</td>
+                <td>100.00%</td>
+                <td>56.00</td>
+                <td>66.67%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/nashbob01.html" target="_blank">Bobby Nash</a></td>
+                <td>L</td>
+                <td>1</td>
+                <td>33.33%</td>
+                <td>4.00</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4372UFC.html" target="_blank">Kailin Curran vs Xiaonan Yan</a></td>
+                <td style="text-align:left">Women's Strawweight</td>
+                <td style="text-align:left">15.0</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Decision - Unanimous</td>
+                <td style="text-align:left"><a href="/ufc/fighters/yanxia01.html" target="_blank">Xiaonan Yan</a></td>
+                <td>W</td>
+                <td>96</td>
+                <td>45.50%</td>
+                <td>6.40</td>
+                <td>61.19%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>66.67%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/currakai01.html" target="_blank">Kailin Curran</a></td>
+                <td>L</td>
+                <td>52</td>
+                <td>38.81%</td>
+                <td>3.47</td>
+                <td>54.50%</td>
+                <td>2</td>
+                <td>33.33%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4373UFC.html" target="_blank">Bharat Kandare vs Song Yadong</a></td>
+                <td style="text-align:left">Featherweight</td>
+                <td style="text-align:left">4.27</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/yadonson01.html" target="_blank">Song Yadong</a></td>
+                <td>W</td>
+                <td>8</td>
+                <td>27.59%</td>
+                <td>1.87</td>
+                <td>90.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/kandabha01.html" target="_blank">Bharat Kandare</a></td>
+                <td>L</td>
+                <td>3</td>
+                <td>10.00%</td>
+                <td>0.70</td>
+                <td>72.41%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4374UFC.html" target="_blank">Shamil Abdurakhimov vs Chase Sherman</a></td>
+                <td style="text-align:left">Heavyweight</td>
+                <td style="text-align:left">1.4</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/abdursha01.html" target="_blank">Shamil Abdurakhimov</a></td>
+                <td>W</td>
+                <td>6</td>
+                <td>60.00%</td>
+                <td>4.29</td>
+                <td>61.54%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/shermcha01.html" target="_blank">Chase Sherman</a></td>
+                <td>L</td>
+                <td>5</td>
+                <td>38.46%</td>
+                <td>3.57</td>
+                <td>40.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4375UFC.html" target="_blank">Gina Mazany vs Yanan Wu</a></td>
+                <td style="text-align:left">Women's Bantamweight</td>
+                <td style="text-align:left">15.0</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Decision - Unanimous</td>
+                <td style="text-align:left"><a href="/ufc/fighters/mazangin01.html" target="_blank">Gina Mazany</a></td>
+                <td>W</td>
+                <td>38</td>
+                <td>58.46%</td>
+                <td>2.53</td>
+                <td>56.86%</td>
+                <td>5</td>
+                <td>71.43%</td>
+                <td>50.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/wuyana01.html" target="_blank">Yanan Wu</a></td>
+                <td>L</td>
+                <td>22</td>
+                <td>43.14%</td>
+                <td>1.47</td>
+                <td>41.54%</td>
+                <td>1</td>
+                <td>50.00%</td>
+                <td>28.57%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4376UFC.html" target="_blank">Wuliji Buren vs Rolando Dy</a></td>
+                <td style="text-align:left">Featherweight</td>
+                <td style="text-align:left">15.0</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Decision - Unanimous</td>
+                <td style="text-align:left"><a href="/ufc/fighters/dyrol01.html" target="_blank">Rolando Dy</a></td>
+                <td>W</td>
+                <td>26</td>
+                <td>26.26%</td>
+                <td>1.73</td>
+                <td>71.67%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>63.64%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/burenwul01.html" target="_blank">Wuliji Buren</a></td>
+                <td>L</td>
+                <td>17</td>
+                <td>28.33%</td>
+                <td>1.13</td>
+                <td>73.74%</td>
+                <td>4</td>
+                <td>36.36%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/4377UFC.html" target="_blank">Cyril Asker vs Hu Yaozong</a></td>
+                <td style="text-align:left">Heavyweight</td>
+                <td style="text-align:left">7.55</td>
+                <td style="text-align:left">5</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/askercyr01.html" target="_blank">Cyril Asker</a></td>
+                <td>W</td>
+                <td>20</td>
+                <td>57.14%</td>
+                <td>2.65</td>
+                <td>55.56%</td>
+                <td>4</td>
+                <td>100.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/yaozohu01.html" target="_blank">Hu Yaozong</a></td>
+                <td>L</td>
+                <td>8</td>
+                <td>44.44%</td>
+                <td>1.06</td>
+                <td>42.86%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+            </tr>
+            
+                </tbody>
+            </table>
+            </div>
+        </body>
+        </html>
+        

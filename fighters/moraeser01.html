@@ -1,0 +1,1920 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Sergio Moraes</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Sergio Moraes</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_moraeser01">Stat:</label>
+<select id="statSelector_moraeser01" onchange="updateStat('moraeser01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_moraeser01">Start:</label>
+<input id="startDate_moraeser01" onchange="applyFilters('moraeser01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_moraeser01">End:</label>
+<input id="endDate_moraeser01" onchange="applyFilters('moraeser01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_moraeser01"></canvas>
+<div class="filter-buttons">
+<button id="L5_moraeser01" onclick="showRecentGames('moraeser01', 5)">L5</button>
+<button id="L10_moraeser01" onclick="showRecentGames('moraeser01', 10)">L10</button>
+<button id="L20_moraeser01" onclick="showRecentGames('moraeser01', 20)">L20</button>
+<button id="showAll_moraeser01" onclick="showAllGames('moraeser01')">All</button>
+<button id="fight_duration_moraeser01" onclick="toggleFightDurationOverlay('moraeser01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_moraeser01" onclick="clearFilters('moraeser01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_moraeser01">Change Line:</label>
+<input id="lineSlider_moraeser01" max="250" min="0" oninput="updateLine('moraeser01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_moraeser01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_moraeser01" onclick="resetLine('moraeser01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("moraeser01", [{'date': '2012-06-23', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 33, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 22, 'SigStrAttAg': 45, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-06-23', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 12, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-06-23', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-10-13', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-10-13', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 14, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 7, 'SigStrAttAg': 19, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2012-10-13', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 33, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2013-08-03', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 20, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 7, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-04-11', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 37, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-04-11', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 21, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-04-11', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 53, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-12-10', 'SigStr': 8, 'knockdowns': 1, 'SigStrAtt': 24, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-12-10', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 50, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2015-12-10', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 23, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 37, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-05-14', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 11, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 13, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2016-05-14', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 29, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 21, 'SigStrAttAg': 51, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-05-14', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 14, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 51, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-11-19', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 15, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2016-11-19', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 67, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2016-11-19', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 32, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 62, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-03-11', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 34, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-03-11', 'SigStr': 19, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 52, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-03-11', 'SigStr': 7, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-09-16', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 27, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 48, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-02-03', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 51, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 28, 'SigStrAttAg': 66, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-02-03', 'SigStr': 29, 'knockdowns': 0, 'SigStrAtt': 62, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 43, 'SigStrAttAg': 87, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-02-03', 'SigStr': 38, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 58, 'SigStrAttAg': 121, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-09-22', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 2, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 0, 'SigStrAttAg': 1, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-09-22', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 1, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 1, 'SigStrAttAg': 1, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-03-09', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 52, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-03-09', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-03-09', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 45, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-05-11', 'SigStr': 9, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 31, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-05-11', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 20, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-05-11', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 38, 'SigStrAttAg': 69, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-11-16', 'SigStr': 20, 'knockdowns': 0, 'SigStrAtt': 56, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 45, 'SigStrAttAg': 81, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-11-16', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 35, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 47, 'SigStrAttAg': 79, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-11-16', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 8, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 14, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3142UFC.html" target="_blank">Mickael Lebout vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/leboumic01.html" target="_blank">Mickael Lebout</a></td>
+<td>4/11/2015</td>
+<td>Krakow, Poland</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>82</td>
+<td>62.20%</td>
+<td>1.13</td>
+<td>51</td>
+<td>82</td>
+<td>40</td>
+<td>69</td>
+<td>8</td>
+<td>8</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>47</td>
+<td>111</td>
+<td>57.66%</td>
+<td>50</td>
+<td>114</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3142UFC.html" target="_blank">Mickael Lebout vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/leboumic01.html" target="_blank">Mickael Lebout</a></td>
+<td>4/11/2015</td>
+<td>Krakow, Poland</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>82</td>
+<td>62.20%</td>
+<td>1.13</td>
+<td>51</td>
+<td>82</td>
+<td>40</td>
+<td>69</td>
+<td>8</td>
+<td>8</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>47</td>
+<td>111</td>
+<td>57.66%</td>
+<td>50</td>
+<td>114</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3142UFC.html" target="_blank">Mickael Lebout vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/leboumic01.html" target="_blank">Mickael Lebout</a></td>
+<td>4/11/2015</td>
+<td>Krakow, Poland</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>51</td>
+<td>82</td>
+<td>62.20%</td>
+<td>1.13</td>
+<td>51</td>
+<td>82</td>
+<td>40</td>
+<td>69</td>
+<td>8</td>
+<td>8</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>47</td>
+<td>111</td>
+<td>57.66%</td>
+<td>50</td>
+<td>114</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3455UFC.html" target="_blank">Omari Akhmedov vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/akhmeoma01.html" target="_blank">Omari Akhmedov</a></td>
+<td>12/10/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>12.3</td>
+<td>1</td>
+<td>21</td>
+<td>69</td>
+<td>30.43%</td>
+<td>0.57</td>
+<td>22</td>
+<td>70</td>
+<td>17</td>
+<td>57</td>
+<td>2</td>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>117</td>
+<td>70.09%</td>
+<td>38</td>
+<td>120</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3455UFC.html" target="_blank">Omari Akhmedov vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/akhmeoma01.html" target="_blank">Omari Akhmedov</a></td>
+<td>12/10/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>12.3</td>
+<td>1</td>
+<td>21</td>
+<td>69</td>
+<td>30.43%</td>
+<td>0.57</td>
+<td>22</td>
+<td>70</td>
+<td>17</td>
+<td>57</td>
+<td>2</td>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>117</td>
+<td>70.09%</td>
+<td>38</td>
+<td>120</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3455UFC.html" target="_blank">Omari Akhmedov vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/akhmeoma01.html" target="_blank">Omari Akhmedov</a></td>
+<td>12/10/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>12.3</td>
+<td>1</td>
+<td>21</td>
+<td>69</td>
+<td>30.43%</td>
+<td>0.57</td>
+<td>22</td>
+<td>70</td>
+<td>17</td>
+<td>57</td>
+<td>2</td>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>117</td>
+<td>70.09%</td>
+<td>38</td>
+<td>120</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3887UFC.html" target="_blank">Sergio Moraes vs Zak Ottow</a></td>
+<td style="text-align:left"><a href="/ufc/players/ottowzak01.html" target="_blank">Zak Ottow</a></td>
+<td>11/19/2016</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>35</td>
+<td>91</td>
+<td>38.46%</td>
+<td>0.78</td>
+<td>53</td>
+<td>109</td>
+<td>29</td>
+<td>80</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>11</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>44</td>
+<td>141</td>
+<td>68.79%</td>
+<td>50</td>
+<td>147</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3887UFC.html" target="_blank">Sergio Moraes vs Zak Ottow</a></td>
+<td style="text-align:left"><a href="/ufc/players/ottowzak01.html" target="_blank">Zak Ottow</a></td>
+<td>11/19/2016</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>35</td>
+<td>91</td>
+<td>38.46%</td>
+<td>0.78</td>
+<td>53</td>
+<td>109</td>
+<td>29</td>
+<td>80</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>11</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>44</td>
+<td>141</td>
+<td>68.79%</td>
+<td>50</td>
+<td>147</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3887UFC.html" target="_blank">Sergio Moraes vs Zak Ottow</a></td>
+<td style="text-align:left"><a href="/ufc/players/ottowzak01.html" target="_blank">Zak Ottow</a></td>
+<td>11/19/2016</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>35</td>
+<td>91</td>
+<td>38.46%</td>
+<td>0.78</td>
+<td>53</td>
+<td>109</td>
+<td>29</td>
+<td>80</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>11</td>
+<td>1</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+<td>0</td>
+<td>44</td>
+<td>141</td>
+<td>68.79%</td>
+<td>50</td>
+<td>147</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0152UFC.html" target="_blank">UFC 147: Silva vs Franklin 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1974UFC.html" target="_blank">Cezar Ferreira vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferrecez01.html" target="_blank">Cezar Ferreira</a></td>
+<td>6/23/2012</td>
+<td>Belo Horizonte, Minas Gerais, Brazil</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>38</td>
+<td>73</td>
+<td>52.05%</td>
+<td>0.84</td>
+<td>39</td>
+<td>74</td>
+<td>25</td>
+<td>60</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>42</td>
+<td>111</td>
+<td>62.16%</td>
+<td>46</td>
+<td>124</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0152UFC.html" target="_blank">UFC 147: Silva vs Franklin 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1974UFC.html" target="_blank">Cezar Ferreira vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferrecez01.html" target="_blank">Cezar Ferreira</a></td>
+<td>6/23/2012</td>
+<td>Belo Horizonte, Minas Gerais, Brazil</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>38</td>
+<td>73</td>
+<td>52.05%</td>
+<td>0.84</td>
+<td>39</td>
+<td>74</td>
+<td>25</td>
+<td>60</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>42</td>
+<td>111</td>
+<td>62.16%</td>
+<td>46</td>
+<td>124</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0152UFC.html" target="_blank">UFC 147: Silva vs Franklin 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/1974UFC.html" target="_blank">Cezar Ferreira vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/ferrecez01.html" target="_blank">Cezar Ferreira</a></td>
+<td>6/23/2012</td>
+<td>Belo Horizonte, Minas Gerais, Brazil</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>38</td>
+<td>73</td>
+<td>52.05%</td>
+<td>0.84</td>
+<td>39</td>
+<td>74</td>
+<td>25</td>
+<td>60</td>
+<td>6</td>
+<td>6</td>
+<td>7</td>
+<td>7</td>
+<td>6</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>42</td>
+<td>111</td>
+<td>62.16%</td>
+<td>46</td>
+<td>124</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4054UFC.html" target="_blank">Sergio Moraes vs Davi Ramos</a></td>
+<td style="text-align:left"><a href="/ufc/players/ramosdav01.html" target="_blank">Davi Ramos</a></td>
+<td>3/11/2017</td>
+<td>Fortaleza, Ceara, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>39</td>
+<td>93</td>
+<td>41.94%</td>
+<td>0.87</td>
+<td>39</td>
+<td>93</td>
+<td>24</td>
+<td>71</td>
+<td>13</td>
+<td>20</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>122</td>
+<td>71.31%</td>
+<td>35</td>
+<td>122</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4054UFC.html" target="_blank">Sergio Moraes vs Davi Ramos</a></td>
+<td style="text-align:left"><a href="/ufc/players/ramosdav01.html" target="_blank">Davi Ramos</a></td>
+<td>3/11/2017</td>
+<td>Fortaleza, Ceara, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>39</td>
+<td>93</td>
+<td>41.94%</td>
+<td>0.87</td>
+<td>39</td>
+<td>93</td>
+<td>24</td>
+<td>71</td>
+<td>13</td>
+<td>20</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>122</td>
+<td>71.31%</td>
+<td>35</td>
+<td>122</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4054UFC.html" target="_blank">Sergio Moraes vs Davi Ramos</a></td>
+<td style="text-align:left"><a href="/ufc/players/ramosdav01.html" target="_blank">Davi Ramos</a></td>
+<td>3/11/2017</td>
+<td>Fortaleza, Ceara, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>39</td>
+<td>93</td>
+<td>41.94%</td>
+<td>0.87</td>
+<td>39</td>
+<td>93</td>
+<td>24</td>
+<td>71</td>
+<td>13</td>
+<td>20</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>35</td>
+<td>122</td>
+<td>71.31%</td>
+<td>35</td>
+<td>122</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0157UFC.html" target="_blank">UFC 153: Silva vs Bonnar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2079UFC.html" target="_blank">Renee Forte vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/forteren01.html" target="_blank">Renee Forte</a></td>
+<td>10/13/2012</td>
+<td>Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>13.17</td>
+<td>0</td>
+<td>16</td>
+<td>45</td>
+<td>35.56%</td>
+<td>0.40</td>
+<td>27</td>
+<td>58</td>
+<td>13</td>
+<td>36</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>11</td>
+<td>36.36%</td>
+<td>1</td>
+<td>0</td>
+<td>26</td>
+<td>76</td>
+<td>65.79%</td>
+<td>38</td>
+<td>88</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0157UFC.html" target="_blank">UFC 153: Silva vs Bonnar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2079UFC.html" target="_blank">Renee Forte vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/forteren01.html" target="_blank">Renee Forte</a></td>
+<td>10/13/2012</td>
+<td>Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>13.17</td>
+<td>0</td>
+<td>16</td>
+<td>45</td>
+<td>35.56%</td>
+<td>0.40</td>
+<td>27</td>
+<td>58</td>
+<td>13</td>
+<td>36</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>11</td>
+<td>36.36%</td>
+<td>1</td>
+<td>0</td>
+<td>26</td>
+<td>76</td>
+<td>65.79%</td>
+<td>38</td>
+<td>88</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0157UFC.html" target="_blank">UFC 153: Silva vs Bonnar</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2079UFC.html" target="_blank">Renee Forte vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/forteren01.html" target="_blank">Renee Forte</a></td>
+<td>10/13/2012</td>
+<td>Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>13.17</td>
+<td>0</td>
+<td>16</td>
+<td>45</td>
+<td>35.56%</td>
+<td>0.40</td>
+<td>27</td>
+<td>58</td>
+<td>13</td>
+<td>36</td>
+<td>3</td>
+<td>8</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+<td>11</td>
+<td>36.36%</td>
+<td>1</td>
+<td>0</td>
+<td>26</td>
+<td>76</td>
+<td>65.79%</td>
+<td>38</td>
+<td>88</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">UFC Fight Night: Rockhold vs. Branch</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4279UFC.html" target="_blank">Sergio Moraes vs Kamaru Usman</a></td>
+<td style="text-align:left"><a href="/ufc/players/usmankam01.html" target="_blank">Kamaru Usman</a></td>
+<td>9/16/2017</td>
+<td>Pittsburgh, Pennsylvania, USA</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>2.8</td>
+<td>0</td>
+<td>13</td>
+<td>27</td>
+<td>48.15%</td>
+<td>4.64</td>
+<td>13</td>
+<td>27</td>
+<td>10</td>
+<td>23</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>16</td>
+<td>48</td>
+<td>66.67%</td>
+<td>16</td>
+<td>48</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0167UFC.html" target="_blank">UFC 163: Aldo vs Jung</a></td>
+<td style="text-align:left"><a href="/ufc/fights/2352UFC.html" target="_blank">Neil Magny vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/magnynei01.html" target="_blank">Neil Magny</a></td>
+<td>8/3/2013</td>
+<td>Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>3.22</td>
+<td>0</td>
+<td>13</td>
+<td>20</td>
+<td>65.00%</td>
+<td>4.04</td>
+<td>13</td>
+<td>20</td>
+<td>12</td>
+<td>19</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>9</td>
+<td>11</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>1</td>
+<td>0</td>
+<td>7</td>
+<td>29</td>
+<td>75.86%</td>
+<td>9</td>
+<td>31</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC Fight Night: Machida vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4476UFC.html" target="_blank">Tim Means vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/meanstim01.html" target="_blank">Tim Means</a></td>
+<td>2/3/2018</td>
+<td>Belem, Para, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>87</td>
+<td>192</td>
+<td>45.31%</td>
+<td>1.93</td>
+<td>89</td>
+<td>195</td>
+<td>70</td>
+<td>168</td>
+<td>15</td>
+<td>22</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>129</td>
+<td>274</td>
+<td>52.92%</td>
+<td>136</td>
+<td>282</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC Fight Night: Machida vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4476UFC.html" target="_blank">Tim Means vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/meanstim01.html" target="_blank">Tim Means</a></td>
+<td>2/3/2018</td>
+<td>Belem, Para, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>87</td>
+<td>192</td>
+<td>45.31%</td>
+<td>1.93</td>
+<td>89</td>
+<td>195</td>
+<td>70</td>
+<td>168</td>
+<td>15</td>
+<td>22</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>129</td>
+<td>274</td>
+<td>52.92%</td>
+<td>136</td>
+<td>282</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC Fight Night: Machida vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4476UFC.html" target="_blank">Tim Means vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/meanstim01.html" target="_blank">Tim Means</a></td>
+<td>2/3/2018</td>
+<td>Belem, Para, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>87</td>
+<td>192</td>
+<td>45.31%</td>
+<td>1.93</td>
+<td>89</td>
+<td>195</td>
+<td>70</td>
+<td>168</td>
+<td>15</td>
+<td>22</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>129</td>
+<td>274</td>
+<td>52.92%</td>
+<td>136</td>
+<td>282</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4769UFC.html" target="_blank">Sergio Moraes vs Ben Saunders</a></td>
+<td style="text-align:left"><a href="/ufc/players/saundben01.html" target="_blank">Ben Saunders</a></td>
+<td>9/22/2018</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>9.7</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0.10</td>
+<td>17</td>
+<td>20</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>55</td>
+<td>56</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4769UFC.html" target="_blank">Sergio Moraes vs Ben Saunders</a></td>
+<td style="text-align:left"><a href="/ufc/players/saundben01.html" target="_blank">Ben Saunders</a></td>
+<td>9/22/2018</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>9.7</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0.10</td>
+<td>17</td>
+<td>20</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>55</td>
+<td>56</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0201UFC.html" target="_blank">UFC 198: Werdum vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3645UFC.html" target="_blank">Luan Chagas vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/chagalua01.html" target="_blank">Luan Chagas</a></td>
+<td>5/14/2016</td>
+<td>Curitiba, Parana, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>D</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>28</td>
+<td>54</td>
+<td>51.85%</td>
+<td>0.62</td>
+<td>56</td>
+<td>84</td>
+<td>21</td>
+<td>44</td>
+<td>5</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>6</td>
+<td>7</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>46</td>
+<td>115</td>
+<td>60.00%</td>
+<td>58</td>
+<td>128</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0201UFC.html" target="_blank">UFC 198: Werdum vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3645UFC.html" target="_blank">Luan Chagas vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/chagalua01.html" target="_blank">Luan Chagas</a></td>
+<td>5/14/2016</td>
+<td>Curitiba, Parana, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>D</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>28</td>
+<td>54</td>
+<td>51.85%</td>
+<td>0.62</td>
+<td>56</td>
+<td>84</td>
+<td>21</td>
+<td>44</td>
+<td>5</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>6</td>
+<td>7</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>46</td>
+<td>115</td>
+<td>60.00%</td>
+<td>58</td>
+<td>128</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0201UFC.html" target="_blank">UFC 198: Werdum vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3645UFC.html" target="_blank">Luan Chagas vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/chagalua01.html" target="_blank">Luan Chagas</a></td>
+<td>5/14/2016</td>
+<td>Curitiba, Parana, Brazil</td>
+<td>Welterweight</td>
+<td>Decision - Split</td>
+<td>D</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>28</td>
+<td>54</td>
+<td>51.85%</td>
+<td>0.62</td>
+<td>56</td>
+<td>84</td>
+<td>21</td>
+<td>44</td>
+<td>5</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>6</td>
+<td>7</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>46</td>
+<td>115</td>
+<td>60.00%</td>
+<td>58</td>
+<td>128</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4990UFC.html" target="_blank">Anthony Rocco Martin vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/martiant01.html" target="_blank">Anthony Rocco Martin</a></td>
+<td>3/9/2019</td>
+<td>Wichita, Kansas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>19</td>
+<td>83</td>
+<td>22.89%</td>
+<td>0.42</td>
+<td>24</td>
+<td>88</td>
+<td>13</td>
+<td>75</td>
+<td>5</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+<td>152</td>
+<td>67.11%</td>
+<td>70</td>
+<td>172</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4990UFC.html" target="_blank">Anthony Rocco Martin vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/martiant01.html" target="_blank">Anthony Rocco Martin</a></td>
+<td>3/9/2019</td>
+<td>Wichita, Kansas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>19</td>
+<td>83</td>
+<td>22.89%</td>
+<td>0.42</td>
+<td>24</td>
+<td>88</td>
+<td>13</td>
+<td>75</td>
+<td>5</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+<td>152</td>
+<td>67.11%</td>
+<td>70</td>
+<td>172</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4990UFC.html" target="_blank">Anthony Rocco Martin vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/martiant01.html" target="_blank">Anthony Rocco Martin</a></td>
+<td>3/9/2019</td>
+<td>Wichita, Kansas, USA</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>19</td>
+<td>83</td>
+<td>22.89%</td>
+<td>0.42</td>
+<td>24</td>
+<td>88</td>
+<td>13</td>
+<td>75</td>
+<td>5</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+<td>152</td>
+<td>67.11%</td>
+<td>70</td>
+<td>172</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5381UFC.html" target="_blank">James Krause vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/krausjam01.html" target="_blank">James Krause</a></td>
+<td>11/16/2019</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>14.32</td>
+<td>0</td>
+<td>41</td>
+<td>99</td>
+<td>41.41%</td>
+<td>0.95</td>
+<td>42</td>
+<td>100</td>
+<td>36</td>
+<td>91</td>
+<td>3</td>
+<td>6</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>102</td>
+<td>174</td>
+<td>41.38%</td>
+<td>125</td>
+<td>200</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5381UFC.html" target="_blank">James Krause vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/krausjam01.html" target="_blank">James Krause</a></td>
+<td>11/16/2019</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>14.32</td>
+<td>0</td>
+<td>41</td>
+<td>99</td>
+<td>41.41%</td>
+<td>0.95</td>
+<td>42</td>
+<td>100</td>
+<td>36</td>
+<td>91</td>
+<td>3</td>
+<td>6</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>102</td>
+<td>174</td>
+<td>41.38%</td>
+<td>125</td>
+<td>200</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5381UFC.html" target="_blank">James Krause vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/krausjam01.html" target="_blank">James Krause</a></td>
+<td>11/16/2019</td>
+<td>Sao Paulo, Sao Paulo, Brazil</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>14.32</td>
+<td>0</td>
+<td>41</td>
+<td>99</td>
+<td>41.41%</td>
+<td>0.95</td>
+<td>42</td>
+<td>100</td>
+<td>36</td>
+<td>91</td>
+<td>3</td>
+<td>6</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>102</td>
+<td>174</td>
+<td>41.38%</td>
+<td>125</td>
+<td>200</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0239UFC.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5090UFC.html" target="_blank">Warlley Alves vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/alveswar01.html" target="_blank">Warlley Alves</a></td>
+<td>5/11/2019</td>
+<td>Rio de Janeiro, Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>14.22</td>
+<td>0</td>
+<td>20</td>
+<td>62</td>
+<td>32.26%</td>
+<td>0.47</td>
+<td>20</td>
+<td>62</td>
+<td>12</td>
+<td>52</td>
+<td>7</td>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>72</td>
+<td>157</td>
+<td>54.14%</td>
+<td>72</td>
+<td>157</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0239UFC.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5090UFC.html" target="_blank">Warlley Alves vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/alveswar01.html" target="_blank">Warlley Alves</a></td>
+<td>5/11/2019</td>
+<td>Rio de Janeiro, Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>14.22</td>
+<td>0</td>
+<td>20</td>
+<td>62</td>
+<td>32.26%</td>
+<td>0.47</td>
+<td>20</td>
+<td>62</td>
+<td>12</td>
+<td>52</td>
+<td>7</td>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>72</td>
+<td>157</td>
+<td>54.14%</td>
+<td>72</td>
+<td>157</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0239UFC.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5090UFC.html" target="_blank">Warlley Alves vs Sergio Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/players/alveswar01.html" target="_blank">Warlley Alves</a></td>
+<td>5/11/2019</td>
+<td>Rio de Janeiro, Rio de Janeiro, Brazil</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>14.22</td>
+<td>0</td>
+<td>20</td>
+<td>62</td>
+<td>32.26%</td>
+<td>0.47</td>
+<td>20</td>
+<td>62</td>
+<td>12</td>
+<td>52</td>
+<td>7</td>
+<td>9</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>72</td>
+<td>157</td>
+<td>54.14%</td>
+<td>72</td>
+<td>157</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Tecia Pennington</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Tecia Pennington</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_pennitec01">Stat:</label>
+<select id="statSelector_pennitec01" onchange="updateStat('pennitec01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_pennitec01">Start:</label>
+<input id="startDate_pennitec01" onchange="applyFilters('pennitec01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_pennitec01">End:</label>
+<input id="endDate_pennitec01" onchange="applyFilters('pennitec01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_pennitec01"></canvas>
+<div class="filter-buttons">
+<button id="L5_pennitec01" onclick="showRecentGames('pennitec01', 5)">L5</button>
+<button id="L10_pennitec01" onclick="showRecentGames('pennitec01', 10)">L10</button>
+<button id="L20_pennitec01" onclick="showRecentGames('pennitec01', 20)">L20</button>
+<button id="showAll_pennitec01" onclick="showAllGames('pennitec01')">All</button>
+<button id="fight_duration_pennitec01" onclick="toggleFightDurationOverlay('pennitec01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_pennitec01" onclick="clearFilters('pennitec01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_pennitec01">Change Line:</label>
+<input id="lineSlider_pennitec01" max="250" min="0" oninput="updateLine('pennitec01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_pennitec01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_pennitec01" onclick="resetLine('pennitec01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("pennitec01", [{'date': '2024-05-11', 'SigStr': 42, 'knockdowns': 0, 'SigStrAtt': 107, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 76, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2024-05-11', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 47, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2024-05-11', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 65, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 19, 'SigStrAttAg': 40, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-10-05', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 38, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 26, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2024-10-05', 'SigStr': 31, 'knockdowns': 0, 'SigStrAtt': 55, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 43, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2024-10-05', 'SigStr': 36, 'knockdowns': 0, 'SigStrAtt': 57, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 54, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0309UFC.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7825UFC.html" target="_blank">Carla Esparza vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/players/esparcar01.html" target="_blank">Carla Esparza</a></td>
+<td>10/5/2024</td>
+<td>Salt Lake City, Utah, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>80</td>
+<td>150</td>
+<td>53.33%</td>
+<td>1.78</td>
+<td>94</td>
+<td>166</td>
+<td>28</td>
+<td>92</td>
+<td>11</td>
+<td>12</td>
+<td>41</td>
+<td>46</td>
+<td>5</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>39</td>
+<td>123</td>
+<td>68.29%</td>
+<td>116</td>
+<td>215</td>
+<td>4</td>
+<td>7</td>
+<td>42.86%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0309UFC.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7825UFC.html" target="_blank">Carla Esparza vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/players/esparcar01.html" target="_blank">Carla Esparza</a></td>
+<td>10/5/2024</td>
+<td>Salt Lake City, Utah, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>80</td>
+<td>150</td>
+<td>53.33%</td>
+<td>1.78</td>
+<td>94</td>
+<td>166</td>
+<td>28</td>
+<td>92</td>
+<td>11</td>
+<td>12</td>
+<td>41</td>
+<td>46</td>
+<td>5</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>39</td>
+<td>123</td>
+<td>68.29%</td>
+<td>116</td>
+<td>215</td>
+<td>4</td>
+<td>7</td>
+<td>42.86%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0309UFC.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7825UFC.html" target="_blank">Carla Esparza vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/players/esparcar01.html" target="_blank">Carla Esparza</a></td>
+<td>10/5/2024</td>
+<td>Salt Lake City, Utah, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>80</td>
+<td>150</td>
+<td>53.33%</td>
+<td>1.78</td>
+<td>94</td>
+<td>166</td>
+<td>28</td>
+<td>92</td>
+<td>11</td>
+<td>12</td>
+<td>41</td>
+<td>46</td>
+<td>5</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>39</td>
+<td>123</td>
+<td>68.29%</td>
+<td>116</td>
+<td>215</td>
+<td>4</td>
+<td>7</td>
+<td>42.86%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7619UFC.html" target="_blank">Tecia Pennington vs Tabatha Ricci</a></td>
+<td style="text-align:left"><a href="/ufc/players/riccitab01.html" target="_blank">Tabatha Ricci</a></td>
+<td>5/11/2024</td>
+<td>St. Louis, Missouri, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>80</td>
+<td>219</td>
+<td>36.53%</td>
+<td>1.78</td>
+<td>92</td>
+<td>231</td>
+<td>64</td>
+<td>194</td>
+<td>6</td>
+<td>14</td>
+<td>10</td>
+<td>11</td>
+<td>10</td>
+<td>26</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>143</td>
+<td>62.24%</td>
+<td>94</td>
+<td>186</td>
+<td>1</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7619UFC.html" target="_blank">Tecia Pennington vs Tabatha Ricci</a></td>
+<td style="text-align:left"><a href="/ufc/players/riccitab01.html" target="_blank">Tabatha Ricci</a></td>
+<td>5/11/2024</td>
+<td>St. Louis, Missouri, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>80</td>
+<td>219</td>
+<td>36.53%</td>
+<td>1.78</td>
+<td>92</td>
+<td>231</td>
+<td>64</td>
+<td>194</td>
+<td>6</td>
+<td>14</td>
+<td>10</td>
+<td>11</td>
+<td>10</td>
+<td>26</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>143</td>
+<td>62.24%</td>
+<td>94</td>
+<td>186</td>
+<td>1</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7619UFC.html" target="_blank">Tecia Pennington vs Tabatha Ricci</a></td>
+<td style="text-align:left"><a href="/ufc/players/riccitab01.html" target="_blank">Tabatha Ricci</a></td>
+<td>5/11/2024</td>
+<td>St. Louis, Missouri, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>80</td>
+<td>219</td>
+<td>36.53%</td>
+<td>1.78</td>
+<td>92</td>
+<td>231</td>
+<td>64</td>
+<td>194</td>
+<td>6</td>
+<td>14</td>
+<td>10</td>
+<td>11</td>
+<td>10</td>
+<td>26</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>54</td>
+<td>143</td>
+<td>62.24%</td>
+<td>94</td>
+<td>186</td>
+<td>1</td>
+<td>10</td>
+<td>90.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>

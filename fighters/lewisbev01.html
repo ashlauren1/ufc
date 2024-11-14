@@ -1,0 +1,845 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Bevon Lewis</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="stylesheet.css" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("fighter-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let playerLinks = {};
+    let teamLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        playerLinks = await fetch('players.json').then(response => response.json());
+        teamLinks = await fetch('teams.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...playerLinks, ...teamLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+<div class="topnav">
+<a href="/ufc/">Projections</a>
+<a href="/ufc/fighters/">Fighters</a>
+<a href="/ufc/fights/">Fight Results</a>
+<a href="/ufc/events/">Events</a>
+<a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+<a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+</div>
+<div id="search-container">
+<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<button id="search-button">Search</button>
+<div id="search-results"></div>
+</div>
+<div class="header">
+<h1>Bevon Lewis</h1>
+</div>
+<div class="info-box">
+</div>
+<button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+<div id="fighter-container">
+
+<div class="player-chart-container">
+<!-- Stat Selection Dropdown -->
+<div class="barChart-filters">
+<div class="barChartFilter">
+<label for="statSelector_lewisbev01">Stat:</label>
+<select id="statSelector_lewisbev01" onchange="updateStat('lewisbev01', this.value)">
+<option value="SigStr">Significant Strikes</option>
+<option value="knockdowns">Knockdowns</option>
+<option value="SigStrAtt">Significant Strike Attempts</option>
+<option value="takedown">Takedowns</option>
+<option value="takedownAtt">Takedown Attempts</option>
+<option value="subAtt">Submission Attempts</option>
+<option value="SigStrAg">Significant Strikes Against</option>
+<option value="SigStrAttAg">Significant Strike Attempts Against</option>
+<option value="TDAg">Takedowns Against</option>
+<option value="TDAttAg">Takedown Attempts Against</option>
+<option value="SubAttAg">Submission Attempts Against</option>
+</select>
+</div>
+<div class="barChartFilter">
+<label for="startDate_lewisbev01">Start:</label>
+<input id="startDate_lewisbev01" onchange="applyFilters('lewisbev01')" type="date"/>
+</div>
+<div class="barChartFilter">
+<label for="endDate_lewisbev01">End:</label>
+<input id="endDate_lewisbev01" onchange="applyFilters('lewisbev01')" type="date"/>
+</div>
+</div>
+<canvas class="player-barChart" id="chart_lewisbev01"></canvas>
+<div class="filter-buttons">
+<button id="L5_lewisbev01" onclick="showRecentGames('lewisbev01', 5)">L5</button>
+<button id="L10_lewisbev01" onclick="showRecentGames('lewisbev01', 10)">L10</button>
+<button id="L20_lewisbev01" onclick="showRecentGames('lewisbev01', 20)">L20</button>
+<button id="showAll_lewisbev01" onclick="showAllGames('lewisbev01')">All</button>
+<button id="fight_duration_lewisbev01" onclick="toggleFightDurationOverlay('lewisbev01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_lewisbev01" onclick="clearFilters('lewisbev01')">Clear Filters</button>
+</div>
+<div class="slider-container">
+<div id="line-slider">
+<label for="lineSlider_lewisbev01">Change Line:</label>
+<input id="lineSlider_lewisbev01" max="250" min="0" oninput="updateLine('lewisbev01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_lewisbev01">25.5</span>
+</div>
+<div class="chartButtons">
+<button class="reset-line-btn" id="reset-line-btn_lewisbev01" onclick="resetLine('lewisbev01', 25.5)">Reset Line</button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
+<script src="chartScript.js"></script>
+<script>
+    // Initialize the chart with player-specific data by calling a function from chart_logic.js
+    initializeChart("lewisbev01", [{'date': '2018-12-29', 'SigStr': 35, 'knockdowns': 0, 'SigStrAtt': 76, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 39, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-12-29', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 65, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-12-29', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 13, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-06-08', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-06-08', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 9, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-06-08', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-01-25', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-01-25', 'SigStr': 2, 'knockdowns': 0, 'SigStrAtt': 12, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 15, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-01-25', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 39, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 28, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-11-07', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 12, 'SigStrAttAg': 21, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2020-11-07', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 43, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-11-07', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+</script>
+<div id="table-container">
+<span class="table-button-container">
+<span class="caption">Fight History</span>
+<button id="toggle-selection-btn">Show Selected Only</button>
+<button id="clear-filters-btn">Remove Filters</button>
+<button id="clear-all-btn">Clear All</button>
+</span>
+<table id="fighter-table">
+<thead>
+<tr>
+<td class="multiColHeaders" colspan="10"></td>
+<td class="multiColHeaders" colspan="17">Striking - Offense</td>
+<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
+<td class="multiColHeaders" colspan="5">Striking - Defense</td>
+<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
+</tr>
+<tr>
+<th>Event</th>
+<th>Fight</th>
+<th>Opp</th>
+<th>Date</th>
+<th>Location</th>
+<th>Weight Class</th>
+<th>Result</th>
+<th></th>
+<th>Scheduled Rounds</th>
+<th>Fight Duration</th>
+<th>KD</th>
+<th>Sig. Str.</th>
+<th>Sig. Str. Att.</th>
+<th>Sig. Str. Acc.</th>
+<th>SSLPM</th>
+<th>Total Str.</th>
+<th>Total Str. Att.</th>
+<th>Sig. Head Str.</th>
+<th>Sig. Head Str. Att.</th>
+<th>Sig. Body Str.</th>
+<th>Sig. Body Str. Att.</th>
+<th>Sig. Leg Str.</th>
+<th>Sig. Leg Str. Att.</th>
+<th>Clinch Str.</th>
+<th>Clinch Str. Att.</th>
+<th>Ground Str.</th>
+<th>Ground Str. Att.</th>
+<th>TD</th>
+<th>TD Att</th>
+<th>TD Acc.</th>
+<th>Sub. Att.</th>
+<th>Reversal</th>
+<th>Sig. Str. Agst</th>
+<th>Sig. Str. Att. Agst</th>
+<th>Sig. Str. Def</th>
+<th>Total Str. Agst</th>
+<th>Total Str. Att. Agst</th>
+<th>TD Agst</th>
+<th>TD Att. Agst</th>
+<th>TD Def</th>
+<th>Sub. Att. Agst</th>
+</tr>
+<tr id="filter-row"></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5442UFC.html" target="_blank">Bevon Lewis vs Dequan Townsend</a></td>
+<td style="text-align:left"><a href="/ufc/players/townsdeq01.html" target="_blank">Dequan Townsend</a></td>
+<td>1/25/2020</td>
+<td>Raleigh, North Carolina, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>36</td>
+<td>82</td>
+<td>43.90%</td>
+<td>0.80</td>
+<td>94</td>
+<td>146</td>
+<td>16</td>
+<td>56</td>
+<td>14</td>
+<td>20</td>
+<td>6</td>
+<td>6</td>
+<td>14</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>28</td>
+<td>65</td>
+<td>56.92%</td>
+<td>55</td>
+<td>99</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5442UFC.html" target="_blank">Bevon Lewis vs Dequan Townsend</a></td>
+<td style="text-align:left"><a href="/ufc/players/townsdeq01.html" target="_blank">Dequan Townsend</a></td>
+<td>1/25/2020</td>
+<td>Raleigh, North Carolina, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>36</td>
+<td>82</td>
+<td>43.90%</td>
+<td>0.80</td>
+<td>94</td>
+<td>146</td>
+<td>16</td>
+<td>56</td>
+<td>14</td>
+<td>20</td>
+<td>6</td>
+<td>6</td>
+<td>14</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>28</td>
+<td>65</td>
+<td>56.92%</td>
+<td>55</td>
+<td>99</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5442UFC.html" target="_blank">Bevon Lewis vs Dequan Townsend</a></td>
+<td style="text-align:left"><a href="/ufc/players/townsdeq01.html" target="_blank">Dequan Townsend</a></td>
+<td>1/25/2020</td>
+<td>Raleigh, North Carolina, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>36</td>
+<td>82</td>
+<td>43.90%</td>
+<td>0.80</td>
+<td>94</td>
+<td>146</td>
+<td>16</td>
+<td>56</td>
+<td>14</td>
+<td>20</td>
+<td>6</td>
+<td>6</td>
+<td>14</td>
+<td>24</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>28</td>
+<td>65</td>
+<td>56.92%</td>
+<td>55</td>
+<td>99</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0235UFC.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4907UFC.html" target="_blank">Uriah Hall vs Bevon Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/players/halluri01.html" target="_blank">Uriah Hall</a></td>
+<td>12/29/2018</td>
+<td>Los Angeles, California, USA</td>
+<td>Middleweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>11.53</td>
+<td>0</td>
+<td>68</td>
+<td>157</td>
+<td>43.31%</td>
+<td>1.97</td>
+<td>77</td>
+<td>168</td>
+<td>27</td>
+<td>100</td>
+<td>4</td>
+<td>9</td>
+<td>37</td>
+<td>48</td>
+<td>12</td>
+<td>18</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>39</td>
+<td>88</td>
+<td>55.68%</td>
+<td>42</td>
+<td>91</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0235UFC.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4907UFC.html" target="_blank">Uriah Hall vs Bevon Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/players/halluri01.html" target="_blank">Uriah Hall</a></td>
+<td>12/29/2018</td>
+<td>Los Angeles, California, USA</td>
+<td>Middleweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>11.53</td>
+<td>0</td>
+<td>68</td>
+<td>157</td>
+<td>43.31%</td>
+<td>1.97</td>
+<td>77</td>
+<td>168</td>
+<td>27</td>
+<td>100</td>
+<td>4</td>
+<td>9</td>
+<td>37</td>
+<td>48</td>
+<td>12</td>
+<td>18</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>39</td>
+<td>88</td>
+<td>55.68%</td>
+<td>42</td>
+<td>91</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0235UFC.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4907UFC.html" target="_blank">Uriah Hall vs Bevon Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/players/halluri01.html" target="_blank">Uriah Hall</a></td>
+<td>12/29/2018</td>
+<td>Los Angeles, California, USA</td>
+<td>Middleweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>11.53</td>
+<td>0</td>
+<td>68</td>
+<td>157</td>
+<td>43.31%</td>
+<td>1.97</td>
+<td>77</td>
+<td>168</td>
+<td>27</td>
+<td>100</td>
+<td>4</td>
+<td>9</td>
+<td>37</td>
+<td>48</td>
+<td>12</td>
+<td>18</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>39</td>
+<td>88</td>
+<td>55.68%</td>
+<td>42</td>
+<td>91</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0240UFC.html" target="_blank">UFC 238: Cejudo vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5130UFC.html" target="_blank">Bevon Lewis vs Darren Stewart</a></td>
+<td style="text-align:left"><a href="/ufc/players/stewadar01.html" target="_blank">Darren Stewart</a></td>
+<td>6/8/2019</td>
+<td>Chicago, Illinois, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>31</td>
+<td>84</td>
+<td>36.90%</td>
+<td>0.69</td>
+<td>45</td>
+<td>98</td>
+<td>13</td>
+<td>49</td>
+<td>12</td>
+<td>23</td>
+<td>6</td>
+<td>12</td>
+<td>16</td>
+<td>22</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>30</td>
+<td>73</td>
+<td>58.90%</td>
+<td>40</td>
+<td>84</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0240UFC.html" target="_blank">UFC 238: Cejudo vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5130UFC.html" target="_blank">Bevon Lewis vs Darren Stewart</a></td>
+<td style="text-align:left"><a href="/ufc/players/stewadar01.html" target="_blank">Darren Stewart</a></td>
+<td>6/8/2019</td>
+<td>Chicago, Illinois, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>31</td>
+<td>84</td>
+<td>36.90%</td>
+<td>0.69</td>
+<td>45</td>
+<td>98</td>
+<td>13</td>
+<td>49</td>
+<td>12</td>
+<td>23</td>
+<td>6</td>
+<td>12</td>
+<td>16</td>
+<td>22</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>30</td>
+<td>73</td>
+<td>58.90%</td>
+<td>40</td>
+<td>84</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0240UFC.html" target="_blank">UFC 238: Cejudo vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5130UFC.html" target="_blank">Bevon Lewis vs Darren Stewart</a></td>
+<td style="text-align:left"><a href="/ufc/players/stewadar01.html" target="_blank">Darren Stewart</a></td>
+<td>6/8/2019</td>
+<td>Chicago, Illinois, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>31</td>
+<td>84</td>
+<td>36.90%</td>
+<td>0.69</td>
+<td>45</td>
+<td>98</td>
+<td>13</td>
+<td>49</td>
+<td>12</td>
+<td>23</td>
+<td>6</td>
+<td>12</td>
+<td>16</td>
+<td>22</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>30</td>
+<td>73</td>
+<td>58.90%</td>
+<td>40</td>
+<td>84</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">UFC Fight Night: Santos vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5820UFC.html" target="_blank">Trevin Giles vs Bevon Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/players/gilestre01.html" target="_blank">Trevin Giles</a></td>
+<td>11/7/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Middleweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>11.43</td>
+<td>0</td>
+<td>26</td>
+<td>75</td>
+<td>34.67%</td>
+<td>0.76</td>
+<td>60</td>
+<td>113</td>
+<td>15</td>
+<td>59</td>
+<td>6</td>
+<td>9</td>
+<td>5</td>
+<td>7</td>
+<td>5</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>59</td>
+<td>35.59%</td>
+<td>51</td>
+<td>73</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">UFC Fight Night: Santos vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5820UFC.html" target="_blank">Trevin Giles vs Bevon Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/players/gilestre01.html" target="_blank">Trevin Giles</a></td>
+<td>11/7/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Middleweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>11.43</td>
+<td>0</td>
+<td>26</td>
+<td>75</td>
+<td>34.67%</td>
+<td>0.76</td>
+<td>60</td>
+<td>113</td>
+<td>15</td>
+<td>59</td>
+<td>6</td>
+<td>9</td>
+<td>5</td>
+<td>7</td>
+<td>5</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>59</td>
+<td>35.59%</td>
+<td>51</td>
+<td>73</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">UFC Fight Night: Santos vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5820UFC.html" target="_blank">Trevin Giles vs Bevon Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/players/gilestre01.html" target="_blank">Trevin Giles</a></td>
+<td>11/7/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Middleweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>11.43</td>
+<td>0</td>
+<td>26</td>
+<td>75</td>
+<td>34.67%</td>
+<td>0.76</td>
+<td>60</td>
+<td>113</td>
+<td>15</td>
+<td>59</td>
+<td>6</td>
+<td>9</td>
+<td>5</td>
+<td>7</td>
+<td>5</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>38</td>
+<td>59</td>
+<td>35.59%</td>
+<td>51</td>
+<td>73</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>
