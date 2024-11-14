@@ -18,6 +18,13 @@ all_stats = ['SigStr', 'knockdowns', 'SigStrAtt', 'takedown', 'takedownAtt', 'su
 default_betting_line = 25.5
 default_stat = "SigStr"
 
+# Aggregate stats by fightID and fighterID to get totals for each fight
+fight_totals_df = gamelogs_df.groupby(['fightID', 'fighterID']).agg({
+    'date': 'first',  # Use the date of the first round entry
+    **{stat: 'sum' for stat in all_stats}  # Sum up each stat for the entire fight
+}).reset_index()
+
+
 # Updated HTML template with an external JS file
 chart_html_template = """
 <div class="player-chart-container">
@@ -85,10 +92,10 @@ for filename in os.listdir(html_dir):
             print(f"No player table found in {filename}. Skipping.")
             continue
 
-        # Filter gamelogs for the player
-        player_gamelogs = gamelogs_df[gamelogs_df['fighterID'] == fighter_id]
-        if player_gamelogs.empty:
-            print(f"No gamelog data found for player {fighter_id} in {filename}")
+        # Filter fight totals for the player
+        player_fight_totals = fight_totals_df[fight_totals_df['fighterID'] == fighter_id]
+        if player_fight_totals.empty:
+            print(f"No fight total data found for player {fighter_id} in {filename}")
             continue
 
         chart_data = [
@@ -96,7 +103,7 @@ for filename in os.listdir(html_dir):
                 "date": row["date"].strftime("%Y-%m-%d"),
                 **{stat.replace("+", "_"): row[stat] for stat in all_stats if stat in row}  # Replace `+` with `_`
             }
-            for _, row in player_gamelogs.iterrows()
+            for _, row in player_fight_totals.iterrows()
         ]
         chart_data.sort(key=lambda x: x["date"])
 

@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>UFC 6: Clash of the Titans</title>
+<link rel="stylesheet" href="stylesheet.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("event-table");
+        const headerRow = table.querySelector("thead tr:first-child");
+        const filterRow = document.querySelector("#filter-row");
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+        // Add filters and sorting
+        addFilters(table);
+        addSortToHeaders(table);
+
+        function addFilters(table) {
+            const headerRow = table.querySelector("thead tr:first-child");
+            const filterRow = document.createElement("tr");
+            filterRow.id = "filter-row";
+            Array.from(headerRow.cells).forEach((header, index) => {
+                const filterCell = document.createElement("td");
+                const filterSelect = document.createElement("select");
+                filterSelect.classList.add("filter-select");
+
+                filterSelect.innerHTML = '<option value="">All</option>';
+                const values = Array.from(new Set(
+                    Array.from(table.querySelectorAll("tbody tr td:nth-child(" + (index + 1) + ")"))
+                    .map(cell => cell.textContent.trim())
+                )).sort();
+
+                values.forEach(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+                    filterSelect.appendChild(option);
+                });
+
+                filterSelect.addEventListener("change", filterTable);
+                filterCell.appendChild(filterSelect);
+                filterRow.appendChild(filterCell);
+            });
+            table.querySelector("thead").appendChild(filterRow);
+        }
+
+        function filterTable() {
+            const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+            rows.forEach(row => {
+                const cells = Array.from(row.cells);
+                const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
+                row.style.display = matchesFilter ? "" : "none";
+            });
+        }
+
+        function addSortToHeaders(table) {
+            const headers = table.querySelectorAll("thead th");
+            headers.forEach((header, index) => {
+                header.style.cursor = "pointer";
+                header.addEventListener("click", function () {
+                    sortTable(table, index);
+                });
+            });
+        }
+
+        function sortTable(table, columnIndex) {
+            const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const direction = table.dataset.sortDirection === "asc" ? "desc" : "asc";
+            table.dataset.sortDirection = direction;
+
+            // Detect data type
+            let isNumeric = true;
+            let isDate = true;
+            for (let row of rows) {
+                const cellText = row.cells[columnIndex].textContent.trim();
+                if (cellText === '') continue; // Skip empty cells
+                if (isNumeric && isNaN(cellText)) {
+                    isNumeric = false;
+                }
+                if (isDate && isNaN(Date.parse(cellText))) {
+                    isDate = false;
+                }
+                if (!isNumeric && !isDate) break;
+            }
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].textContent.trim();
+                const cellB = b.cells[columnIndex].textContent.trim();
+
+                let valA, valB;
+
+                if (isNumeric) {
+                    valA = parseFloat(cellA);
+                    valB = parseFloat(cellB);
+                } else if (isDate) {
+                    valA = new Date(cellA);
+                    valB = new Date(cellB);
+                } else {
+                    valA = cellA.toLowerCase();
+                    valB = cellB.toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === "asc" ? -1 : 1;
+                } else if (valA > valB) {
+                    return direction === "asc" ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            const tbody = table.querySelector("tbody");
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+    document.addEventListener("DOMContentLoaded", async function () {
+    const searchBar = document.getElementById("search-bar");
+    const searchResults = document.getElementById("search-results");
+
+    let fighterLinks = {};
+    let eventLinks = {};
+
+    // Load players and teams data from JSON files
+    async function loadLinks() {
+        fighterLinks = await fetch('fighters.json').then(response => response.json());
+        eventLinks = await fetch('events.json').then(response => response.json());
+    }
+
+    await loadLinks();  // Ensure links are loaded before searching
+
+    // Filter data and show suggestions based on input
+    function updateSuggestions() {
+        const query = searchBar.value.trim().toLowerCase();
+        searchResults.innerHTML = ""; // Clear previous results
+
+        if (query === "") return;
+
+        // Combine players and teams for search
+        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const matchingEntries = Object.entries(combinedLinks)
+            .filter(([name]) => name.includes(query))  // Matches on both name and ID
+            .slice(0, 5); // Limit to top 5
+
+        matchingEntries.forEach(([name, url]) => {
+            const resultItem = document.createElement("div");
+            resultItem.classList.add("suggestion");
+
+            // Proper case for names
+            resultItem.textContent = name.split(" ")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+
+            resultItem.addEventListener("click", () => {
+                window.open(url, "_self");
+            });
+            searchResults.appendChild(resultItem);
+        });
+
+        if (matchingEntries.length > 0) {
+            searchResults.style.display = "block"; // Show results if matches are found
+        } else {
+            const noResultItem = document.createElement("div");
+            noResultItem.classList.add("no-result");
+            noResultItem.textContent = "No results found.";
+            searchResults.appendChild(noResultItem);
+            searchResults.style.display = "block";
+        }
+    }
+    
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    // Add event listener to search bar
+    searchBar.addEventListener("input", updateSuggestions);
+});
+    </script>
+</head>
+<body>
+    <div class="topnav">
+        <a href="/ufc/">Projections</a>
+        <a href="/ufc/fighters/">Fighters</a>
+        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/events/">Events</a>
+        <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
+        <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-bar" placeholder="Search for fighters or events...">
+        <button id="search-button">Search</button>
+        <div id="search-results"></div>
+    </div>
+    <div class="header">
+        <h1>UFC 6: Clash of the Titans</h1>
+        <h2>UFC</h2>
+        <h2>Casper, Wyoming, USA - 7/14/1995</h2>
+    </div>
+    <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
+    
+    <div id="event-container">
+    <table id="event-table">
+        <thead>
+            <tr>
+                <th>Fight</th>
+                <th>Weight Class</th>
+                <th>Fight Duration</th>
+                <th>Scheduled Rounds</th>
+                <th>Result</th>
+                <th>Fighter</th>
+                <th></th>
+                <th>Significant Strikes</th>
+                <th>Strike Accuracy</th>
+                <th>SSLPM</th>
+                <th>Strike Defense</th>
+                <th>Takedowns</th>
+                <th>Takedown Accuracy</th>
+                <th>Takedown Defense</th>
+                <th>Fighter</th>
+                <th></th>
+                <th>Significant Strikes</th>
+                <th>Strike Accuracy</th>
+                <th>SSLPM</th>
+                <th>Strike Defense</th>
+                <th>Takedowns</th>
+                <th>Takedown Accuracy</th>
+                <th>Takedown Defense</th>
+            </tr>
+            <tr id="filter-row"></tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0048UFC.html" target="_blank">David Abbott vs Oleg Taktarov</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">17.75</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/taktaole01.html" target="_blank">Oleg Taktarov</a></td>
+                <td>W</td>
+                <td>4</td>
+                <td>40.00%</td>
+                <td>0.23</td>
+                <td>62.22%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>33.33%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/abbotdav01.html" target="_blank">David Abbott</a></td>
+                <td>L</td>
+                <td>17</td>
+                <td>37.78%</td>
+                <td>0.96</td>
+                <td>60.00%</td>
+                <td>2</td>
+                <td>66.67%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0049UFC.html" target="_blank">Dan Severn vs Ken Shamrock</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">2.23</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/shamrken01.html" target="_blank">Ken Shamrock</a></td>
+                <td>W</td>
+                <td>2</td>
+                <td>40.00%</td>
+                <td>0.90</td>
+                <td>0.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/severdan01.html" target="_blank">Dan Severn</a></td>
+                <td>L</td>
+                <td>2</td>
+                <td>100.00%</td>
+                <td>0.90</td>
+                <td>60.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0050UFC.html" target="_blank">Anthony Macias vs Oleg Taktarov</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">0.15</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/taktaole01.html" target="_blank">Oleg Taktarov</a></td>
+                <td>W</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00</td>
+                <td>100.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/maciaant01.html" target="_blank">Anthony Macias</a></td>
+                <td>L</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00</td>
+                <td>100.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0051UFC.html" target="_blank">David Abbott vs Paul Varelans</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">1.88</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/abbotdav01.html" target="_blank">David Abbott</a></td>
+                <td>W</td>
+                <td>14</td>
+                <td>66.67%</td>
+                <td>7.45</td>
+                <td>50.00%</td>
+                <td>1</td>
+                <td>100.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/varelpau01.html" target="_blank">Paul Varelans</a></td>
+                <td>L</td>
+                <td>1</td>
+                <td>50.00%</td>
+                <td>0.53</td>
+                <td>33.33%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0052UFC.html" target="_blank">Dave Beneteau vs Oleg Taktarov</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">0.95</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/taktaole01.html" target="_blank">Oleg Taktarov</a></td>
+                <td>W</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00</td>
+                <td>64.29%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/benetdav01.html" target="_blank">Dave Beneteau</a></td>
+                <td>L</td>
+                <td>5</td>
+                <td>35.71%</td>
+                <td>5.26</td>
+                <td>100.00%</td>
+                <td>1</td>
+                <td>100.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0053UFC.html" target="_blank">Rudyard Moncayo vs Patrick Smith</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">1.13</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">Submission</td>
+                <td style="text-align:left"><a href="/ufc/fighters/smithpat01.html" target="_blank">Patrick Smith</a></td>
+                <td>W</td>
+                <td>6</td>
+                <td>75.00%</td>
+                <td>5.31</td>
+                <td>100.00%</td>
+                <td>2</td>
+                <td>100.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/moncarud01.html" target="_blank">Rudyard Moncayo</a></td>
+                <td>L</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00</td>
+                <td>25.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0054UFC.html" target="_blank">Paul Varelans vs Cal Worsham</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">1.03</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/varelpau01.html" target="_blank">Paul Varelans</a></td>
+                <td>W</td>
+                <td>8</td>
+                <td>36.36%</td>
+                <td>7.77</td>
+                <td>72.73%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/worshcal01.html" target="_blank">Cal Worsham</a></td>
+                <td>L</td>
+                <td>9</td>
+                <td>27.27%</td>
+                <td>8.74</td>
+                <td>63.64%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+            <tr>
+                <td style="text-align:left"><a href="/ufc/fights/0055UFC.html" target="_blank">David Abbott vs John Matua</a></td>
+                <td style="text-align:left">Open Weight</td>
+                <td style="text-align:left">0.33</td>
+                <td style="text-align:left">1</td>
+                <td style="text-align:left">KO/TKO</td>
+                <td style="text-align:left"><a href="/ufc/fighters/abbotdav01.html" target="_blank">David Abbott</a></td>
+                <td>W</td>
+                <td>7</td>
+                <td>58.33%</td>
+                <td>21.21</td>
+                <td>100.00%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+                
+                <td style="text-align:left"><a href="/ufc/fighters/matuajoh01.html" target="_blank">John Matua</a></td>
+                <td>L</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>0.00</td>
+                <td>41.67%</td>
+                <td>0</td>
+                <td>0.00%</td>
+                <td>100.00%</td>
+            </tr>
+            
+                </tbody>
+            </table>
+            </div>
+        </body>
+        </html>
+        

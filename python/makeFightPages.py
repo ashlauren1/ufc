@@ -27,11 +27,14 @@ for _, row in fight_data.iterrows():
     outcome	= row['outcome']
     fight_duration = row['fight_duration']
 
+fight_data = fight_data.drop_duplicates(subset=['fightID', 'fighterID', 'fightRound'])
+
 # Generate Individual Game Boxscore Pages
 def create_fight_boxscores(fight_data, output_dir):
     grouped_data = fight_data.groupby('fightID')
 
     for fight_id, fight_data in grouped_data:
+        event = fight_data.iloc[0]['event']
         fight_name = fight_data.iloc[0]['fight']
         weight_class = fight_data.iloc[0]['weight_class']
         scheduled_rounds = fight_data.iloc[0]['scheduled_rounds']
@@ -41,9 +44,10 @@ def create_fight_boxscores(fight_data, output_dir):
         fighter_name = fight_data.iloc[0]['fighter']
         fighter_id = fight_data.iloc[0]['fighterID']
         round_duration = fight_data.iloc[0]['round_duration']
-        home_data = fight_data[fight_data['Is_Home'] == 1]
-        away_data = fight_data[fight_data['Is_Home'] == 0]
+        home_data = fight_data[fight_data['Is_Home'] == 1].drop_duplicates(subset=['fighterID', 'fightRound'])
+        away_data = fight_data[fight_data['Is_Home'] == 0].drop_duplicates(subset=['fighterID', 'fightRound'])
         fight_filename = f'{output_dir}/{fight_id}.html'
+        
 
         
         def calculate_totals(data):

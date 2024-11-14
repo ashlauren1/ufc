@@ -282,24 +282,26 @@ def create_player_directory(roster_data, output_file_path):
 
     print(f"Player directory created at {output_file_path}")
 
-# Generate Individual Game Boxscore Pages
+
+# Define calculate_fight_totals function outside create_fightlog
+def calculate_fight_totals(data):
+    totals = data[['knockdowns', 'SigStr', 'SigStrAtt', 'totalStrikesLanded', 'totalStrikesAttempted', 'takedown', 'takedownAtt', 'subAtt', 'reversals', 'sigHeadStr', 'sigHeadStrAtt', 'sigBodyStr', 'sigBodyStrAtt', 'sigLegStr', 'sigLegStrAtt', 'clinchStrikes', 'clinchAttStr', 'groundStr', 'groundAttStr', 'SigStrAg', 'SigStrAttAg', 'TotStrAg', 'TotStrAttAg', 'TDAg', 'TDAttAg', 'SubAttAg']].sum()
+    
+    totals['StrAccuracy'] = (totals['SigStr'] / totals['SigStrAtt'] * 100) if totals['SigStrAtt'] > 0 else 0.0
+    totals['SLPM'] = round((totals['SigStr'] / data['fight_duration'].sum()), 2) if data['fight_duration'].sum() > 0 else 0.0
+    totals['takedownAcc'] = (totals['takedown'] / totals['takedownAtt'] * 100) if totals['takedownAtt'] > 0 else 0.0
+    totals['SigStrDef'] = (100 - (totals['SigStrAg'] / totals['SigStrAttAg'] * 100)) if totals['SigStrAttAg'] > 0 else 0.0
+    totals['TDDef'] = (100 - (totals['TDAg'] / totals['TDAttAg'] * 100)) if totals['TDAttAg'] > 0 else 0.0
+    
+    return totals
+
+# Now define create_fightlog function
 def create_fightlog(fight_data, output_dir):
     grouped_data = fight_data.groupby('fighterID')
     
     for fighter_id, fighter_data in grouped_data:
         fighter_name = fighter_data.iloc[0]['fighter']
         fighter_filename = f'{output_dir}/{fighter_id}.html'
-        
-        def calculate_fight_totals(data):
-            totals = data[['knockdowns', 'SigStr', 'SigStrAtt', 'totalStrikesLanded', 'totalStrikesAttempted', 'takedown', 'takedownAtt', 'subAtt', 'reversals', 'sigHeadStr', 'sigHeadStrAtt', 'sigBodyStr', 'sigBodyStrAtt', 'sigLegStr', 'sigLegStrAtt', 'clinchStrikes', 'clinchAttStr', 'groundStr', 'groundAttStr', 'SigStrAg', 'SigStrAttAg', 'TotStrAg', 'TotStrAttAg', 'TDAg', 'TDAttAg', 'SubAttAg']].sum()
-            
-            totals['StrAccuracy'] = (totals['SigStr'] / totals['SigStrAtt'] * 100) if totals['SigStrAtt'] > 0 else 0.0
-            totals['SLPM'] = round((totals['SigStr'] / data['fight_duration'].sum()), 2) if data['fight_duration'].sum() > 0 else 0.0
-            totals['takedownAcc'] = (totals['takedown'] / totals['takedownAtt'] * 100) if totals['takedownAtt'] > 0 else 0.0
-            totals['SigStrDef'] = (100-(totals['SigStrAg'] / totals['SigStrAttAg'] * 100)) if totals['SigStrAttAg'] > 0 else 0.0
-            totals['TDDef'] = (100-(totals['TDAg'] / totals['TDAttAg'] * 100)) if totals['TDAttAg'] > 0 else 0.0
-            
-            return totals
 
         # Start HTML content for the game boxscore
         html_content = f'''
@@ -572,8 +574,10 @@ def create_fightlog(fight_data, output_dir):
         '''
 
             # Add rows for each fighter in the data
-        for _, row in fighter_data.iterrows():
-            fight_totals = calculate_fight_totals(fighter_data[fighter_data['fightID'] == row['fightID']])
+        fight_groups = fighter_data.groupby('fightID')
+        for fight_id, fight_rounds in fight_groups:
+            fight_totals = calculate_fight_totals(fight_rounds)  # Calculate totals for all rounds in this fight
+            row = fight_rounds.iloc[0]
             html_content  += f'''
         <tr>
             <td style="text-align:left"><a href="/ufc/events/{row['eventID']}.html" target="_blank">{row['event']}</a></td>
