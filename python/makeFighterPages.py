@@ -316,7 +316,6 @@ def create_fightlog(fight_data, output_dir):
     document.addEventListener("DOMContentLoaded", function () {{
         const table = document.getElementById("fighter-table");
         const headerRow = table.querySelector("thead tr:first-child");
-        const filterRow = document.querySelector("#filter-row");
         const rows = Array.from(table.querySelectorAll("tbody tr"));
 
         // Add filters and sorting
@@ -519,13 +518,6 @@ def create_fightlog(fight_data, output_dir):
         <table id="fighter-table">
         <thead>
             <tr>
-                <td class="multiColHeaders" colspan="10"></td>
-                <td class="multiColHeaders" colspan="17">Striking - Offense</td>
-                <td class="multiColHeaders" colspan="5">Grappling - Offense</td>
-                <td class="multiColHeaders" colspan="5">Striking - Defense</td>
-                <td class="multiColHeaders" colspan="4">Grappling - Defense</td>
-            </tr>
-            <tr>
                 <th>Event</th>
                 <th>Fight</th>
                 <th>Opp</th>
@@ -568,7 +560,6 @@ def create_fightlog(fight_data, output_dir):
                 <th>TD Def</th>
                 <th>Sub. Att. Agst</th>
             </tr>
-            <tr id="filter-row"></tr>
         </thead>
         <tbody>
         '''

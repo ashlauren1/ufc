@@ -28,7 +28,6 @@ def create_event_directory(fight_data, output_dir):
     document.addEventListener("DOMContentLoaded", function () {
         const table = document.getElementById("event-index");
         const headerRow = table.querySelector("thead tr:first-child");
-        const filterRow = document.querySelector("#filter-row");
         const rows = Array.from(table.querySelectorAll("tbody tr"));
 
         // Add filters and sorting
@@ -313,7 +312,6 @@ def create_event_pages(fight_data, output_dir):
     document.addEventListener("DOMContentLoaded", function () {{
         const table = document.getElementById("event-table");
         const headerRow = table.querySelector("thead tr:first-child");
-        const filterRow = document.querySelector("#filter-row");
         const rows = Array.from(table.querySelectorAll("tbody tr"));
 
         // Add filters and sorting
@@ -532,7 +530,6 @@ def create_event_pages(fight_data, output_dir):
                 <th>Takedown Accuracy</th>
                 <th>Takedown Defense</th>
             </tr>
-            <tr id="filter-row"></tr>
         </thead>
         <tbody>
         '''

@@ -30,7 +30,6 @@ def create_game_directory(fight_data, output_file_path):
         document.addEventListener("DOMContentLoaded", function () {
             const table = document.getElementById("fight-index");
             const headerRow = table.querySelector("thead tr:first-child");
-            const filterRow = document.querySelector("#filter-row");
             const rows = Array.from(table.querySelectorAll("tbody tr"));
 
             // Add filters and sorting

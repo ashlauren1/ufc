@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Phillip Hawes</title>
+<title>Phil Hawes</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="stylesheet.css" rel="stylesheet"/>
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
@@ -11,7 +11,6 @@
     document.addEventListener("DOMContentLoaded", function () {
         const table = document.getElementById("fighter-table");
         const headerRow = table.querySelector("thead tr:first-child");
-        const filterRow = document.querySelector("#filter-row");
         const rows = Array.from(table.querySelectorAll("tbody tr"));
 
         // Add filters and sorting
@@ -196,7 +195,7 @@
 <div id="search-results"></div>
 </div>
 <div class="header">
-<h1>Phillip Hawes</h1>
+<h1>Phil Hawes</h1>
 </div>
 <div class="info-box">
 </div>
@@ -268,13 +267,6 @@
 <table id="fighter-table">
 <thead>
 <tr>
-<td class="multiColHeaders" colspan="10"></td>
-<td class="multiColHeaders" colspan="17">Striking - Offense</td>
-<td class="multiColHeaders" colspan="5">Grappling - Offense</td>
-<td class="multiColHeaders" colspan="5">Striking - Defense</td>
-<td class="multiColHeaders" colspan="4">Grappling - Defense</td>
-</tr>
-<tr>
 <th>Event</th>
 <th>Fight</th>
 <th>Opp</th>
@@ -317,7 +309,6 @@
 <th>TD Def</th>
 <th>Sub. Att. Agst</th>
 </tr>
-<tr id="filter-row"></tr>
 </thead>
 <tbody>
 <tr>
