@@ -573,7 +573,7 @@ def create_fightlog(fight_data, output_dir):
         <tr>
             <td style="text-align:left"><a href="/ufc/events/{row['eventID']}.html" target="_blank">{row['event']}</a></td>
             <td style="text-align:left"><a href="/ufc/fights/{row['fightID']}.html" target="_blank">{row['fight']}</a></td>
-            <td style="text-align:left"><a href="/ufc/players/{row['oppID']}.html" target="_blank">{row['opp']}</a></td>
+            <td style="text-align:left"><a href="/ufc/fighters/{row['oppID']}.html" target="_blank">{row['opp']}</a></td>
             <td>{row['date']}</td>
             <td>{row['location']}</td>
             <td>{row['weight_class']}</td>
