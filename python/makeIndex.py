@@ -54,7 +54,7 @@ def create_game_directory(fight_data, output_file_path):
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-    <script src="fighter.json"></script>
+    <script src="fighters.json"></script>
     <script src="events.json"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -169,13 +169,13 @@ def create_game_directory(fight_data, output_file_path):
         const searchBar = document.getElementById("search-bar");
         const searchResults = document.getElementById("search-results");
 
-        let playerLinks = {};
-        let teamLinks = {};
+        let fighterLinks = {};
+        let eventLinks = {};
 
         // Load players and teams data from JSON files
         async function loadLinks() {
-            playerLinks = await fetch('players.json').then(response => response.json());
-            teamLinks = await fetch('teams.json').then(response => response.json());
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
         }
 
         await loadLinks();  // Ensure links are loaded before searching
@@ -188,7 +188,7 @@ def create_game_directory(fight_data, output_file_path):
             if (query === "") return;
 
             // Combine players and teams for search
-            const combinedLinks = { ...playerLinks, ...teamLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))  // Matches on both name and ID
                 .slice(0, 5); // Limit to top 5

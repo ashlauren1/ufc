@@ -139,13 +139,13 @@ def create_game_directory(fight_data, output_file_path):
         const searchBar = document.getElementById("search-bar");
         const searchResults = document.getElementById("search-results");
 
-        let playerLinks = {};
-        let teamLinks = {};
+        let fighterLinks = {};
+        let eventLinks = {};
 
         // Load players and teams data from JSON files
         async function loadLinks() {
-            playerLinks = await fetch('players.json').then(response => response.json());
-            teamLinks = await fetch('teams.json').then(response => response.json());
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
         }
 
         await loadLinks();  // Ensure links are loaded before searching
@@ -158,7 +158,7 @@ def create_game_directory(fight_data, output_file_path):
             if (query === "") return;
 
             // Combine players and teams for search
-            const combinedLinks = { ...playerLinks, ...teamLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))  // Matches on both name and ID
                 .slice(0, 5); // Limit to top 5
