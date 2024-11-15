@@ -268,13 +268,7 @@ a:visited {
 	gap: 36px;
 }
 
-        
-/*
-        <span class="table-button-container">
-            <button id="toggle-selection-btn">Show Selected Only</button>
-            <button id="clear-filters-btn">Remove Filters</button>
-            <button id="clear-all-btn">Clear All</button>
-        </span>*/
+
 
 /* BOXSCORES */
 #boxscore-container {
@@ -397,22 +391,26 @@ a:visited {
 }
 
 
+#rank-index td:nth-child(1) {
+	width: 8%;
+}
+
 #rank-index td:nth-child(2) {
-	padding: 10px;
+	width: 5%;
 }
 
 #rank-index td:nth-child(3) {
-	width: 164px;
+	width: 16%;
 	text-align: left;
 }
 
 #rank-index td:nth-child(4) {
-	width: 68px;
+	width: 8%;
 	text-align: left;
 }
 
 #rank-index td:nth-child(6), #rank-index td:nth-child(7), #rank-index td:nth-child(8), #rank-index td:nth-child(9), #rank-index td:nth-child(10), #rank-index td:nth-child(11), #rank-index td:nth-child(12) {
-	width: 62px;
+	width: 7%;
 }
 
 
