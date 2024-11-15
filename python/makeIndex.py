@@ -8,11 +8,12 @@ import json
 # File paths
 metrics_file_path = r"C:\Users\ashle\Documents\Projects\ufc\data\gamelogs.csv"
 rosters_file_path = r"C:\Users\ashle\Documents\Projects\ufc\data\rosters.csv"
-data_dir = r"C:\Users\ashle\Documents\Projects\ufc\data"
-output_dir_fight_index = r"C:\Users\ashle\Documents\Projects\ufc"
+rankings_file_path = r"C:\Users\ashle\Documents\Projects\ufc\data\rankings.csv"
+output_dir_rank_index = r"C:\Users\ashle\Documents\Projects\ufc"
 
 rosters_data = pd.read_csv(rosters_file_path)
 metrics_data = pd.read_csv(metrics_file_path,  parse_dates=["date"], low_memory=False)
+rankings_data = pd.read_csv(rankings_file_path, low_memory=False)
 
 fighter_links = {f"{row['fighter']} ({row['fighterID']})".lower(): f"/ufc/fighters/{row['fighterID']}.html" 
                 for _, row in rosters_data.iterrows()}
@@ -32,17 +33,11 @@ print("fighters.json and events.json created successfully!")
 
 
 # Ensure output directory exists
-os.makedirs(output_dir_fight_index, exist_ok=True)
-
-# Load game logs data
-gamelogs_csv = os.path.join(data_dir, "gamelogs.csv")
-fight_data = pd.read_csv(gamelogs_csv, low_memory=False)
-
-unique_fights = fight_data.drop_duplicates(subset=['fightID'])
+os.makedirs(output_dir_rank_index, exist_ok=True)
 
 
 # **Part 1: Generate Game Directory (index.html)**
-def create_game_directory(fight_data, output_file_path):
+def create_rank_directory(rankings_data, output_file_path):
     html_content = """
 <!DOCTYPE html>
 <html>
@@ -58,7 +53,7 @@ def create_game_directory(fight_data, output_file_path):
     <script src="events.json"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const table = document.getElementById("fight-index");
+            const table = document.getElementById("rank-index");
             const headerRow = table.querySelector("thead tr:first-child");
             const filterRow = document.querySelector("#filter-row");
             const rows = Array.from(table.querySelectorAll("tbody tr"));
@@ -246,60 +241,65 @@ def create_game_directory(fight_data, output_file_path):
         <div id="search-results"></div>
     </div>
     <div class="header">
-        <h1>Fight Directory</h1>
+        <h1>Rankings</h1>
     </div>
     <button class="arrowUp" onclick="window.scrollTo({{top: 0}})">Top</button>
-    <div id="index-container">
-        <table id="fight-index">
+    <div id="rank-index-container">
+    <p class="rank-index">* No Contest</p>
+        <table id="rank-index">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Event</th>
-                    <th>Location</th>
-                    <th>Fight</th>
-                    <th>Weight Class</th>
-                    <th>Fight Duration</th>
-                    <th>Result</th>
+                    <th>Division</th>
+                    <th>Rk</th>
                     <th>Fighter</th>
-                    <th></th>
-                    <th>Fighter</th>
-                    <th></th>
+                    <th>Record<br>(W-L-D)</th>
+                    <th>Style</th>
+                    <th>SS Avg</th>
+                    <th>SS Acc</th>
+                    <th>SLPM</th>
+                    <th>SS Def.</th>
+                    <th>TD Avg</th>
+                    <th>TD Acc.</th>
+                    <th>TD Def.</th>
                 </tr>
             </thead>
             <tbody>
     """
 
     # Populate the table with each unique game
-    for _, row in unique_fights.iterrows():
-        date = row['date']
-        event = row['event']
-        event_id = row['eventID']
-        fight_location = row['location']
+    for _, row in rankings_data.iterrows():
         weight_class = row['weight_class']
-        fight_name = row['fight']
-        fight_id = row['fightID']
-        result = row['result']
-        fight_duration = row['fight_duration']
-        fighter_name = row['fighter']
+        rk = row['rk']
+        fighter = row['fighter']
         fighter_id = row['fighterID']
-        outcome = row['outcome']
-        opp_name = row['opp']
-        opp_id = row['oppID']
-        opp_outcome = row['oppOutcome']
+        record = row['record']
+        ko_tko = row['KO_TKO']
+        age = row['age']
+        height = row['height']
+        reach = row['reach']
+        style = row['style']
+        sig_str_avg = row['SigStrAvg']
+        str_acc = row['StrAcc']
+        slpm = row['SLPM']
+        str_def = row['StrDef']
+        td_avg = row['TDAvg']
+        td_def = row['TDDef']
+
 
         html_content += f"""
                 <tr>
-                    <td style="text-align:left">{date}</td>
-                    <td style="text-align:left"><a href="/ufc/events/{event_id}.html">{event}</td>
-                    <td style="text-align:left">{fight_location}</td>
-                    <td style="text-align:left"><a href="/ufc/fights/{fight_id}.html">{fight_name}</td>
                     <td style="text-align:left">{weight_class}</td>
-                    <td style="text-align:left">{fight_duration}</td>
-                    <td style="text-align:left">{result}</td>
-                    <td style="text-align:left"><a href="/ufc/fighters/{fighter_id}.html">{fighter_name}</a></td>
-                    <td style="text-align:center">{outcome}</td>
-                    <td style="text-align:left"><a href="/ufc/fighters/{opp_id}.html">{opp_name}</a></td>
-                    <td style="text-align:center">{opp_outcome}</td>
+                    <td>{rk}</td>
+                    <td style="text-align:left"><a href="/ufc/fighters/{fighter_id}.html">{fighter}</a></td>
+                    <td>{record}</td>
+                    <td style="text-align:left">{style}</td>
+                    <td>{sig_str_avg}</td>
+                    <td>{row['StrAcc']:.2f}%</td>
+                    <td>{slpm}</td>
+                    <td>{row['StrDef']:.2f}%</td>
+                    <td>{td_avg}</td>
+                    <td>{row['TDAcc']:.2f}%</td>
+                    <td>{row['TDDef']:.2f}%</td>
                 </tr>
         """
 
@@ -321,5 +321,5 @@ def create_game_directory(fight_data, output_file_path):
 
 
 # Create game directory
-output_file_path = os.path.join(output_dir_fight_index, "index.html")
-create_game_directory(fight_data, output_file_path)
+output_file_path = os.path.join(output_dir_rank_index, "index.html")
+create_rank_directory(rankings_data, output_file_path)

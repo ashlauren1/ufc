@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Liang Na</title>
+<title>Gerry Harris</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="stylesheet.css" rel="stylesheet"/>
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
@@ -195,7 +195,7 @@
 <div id="search-results"></div>
 </div>
 <div class="header">
-<h1>Liang Na</h1>
+<h1>Gerry Harris</h1>
 </div>
 <div class="info-box">
 </div>
@@ -206,8 +206,8 @@
 <!-- Stat Selection Dropdown -->
 <div class="barChart-filters">
 <div class="barChartFilter">
-<label for="statSelector_nalia01">Stat:</label>
-<select id="statSelector_nalia01" onchange="updateStat('nalia01', this.value)">
+<label for="statSelector_harriger02">Stat:</label>
+<select id="statSelector_harriger02" onchange="updateStat('harriger02', this.value)">
 <option value="SigStr">Significant Strikes</option>
 <option value="knockdowns">Knockdowns</option>
 <option value="SigStrAtt">Significant Strike Attempts</option>
@@ -222,31 +222,31 @@
 </select>
 </div>
 <div class="barChartFilter">
-<label for="startDate_nalia01">Start:</label>
-<input id="startDate_nalia01" onchange="applyFilters('nalia01')" type="date"/>
+<label for="startDate_harriger02">Start:</label>
+<input id="startDate_harriger02" onchange="applyFilters('harriger02')" type="date"/>
 </div>
 <div class="barChartFilter">
-<label for="endDate_nalia01">End:</label>
-<input id="endDate_nalia01" onchange="applyFilters('nalia01')" type="date"/>
+<label for="endDate_harriger02">End:</label>
+<input id="endDate_harriger02" onchange="applyFilters('harriger02')" type="date"/>
 </div>
 </div>
-<canvas class="player-barChart" id="chart_nalia01"></canvas>
+<canvas class="player-barChart" id="chart_harriger02"></canvas>
 <div class="filter-buttons">
-<button id="L5_nalia01" onclick="showRecentGames('nalia01', 5)">L5</button>
-<button id="L10_nalia01" onclick="showRecentGames('nalia01', 10)">L10</button>
-<button id="L20_nalia01" onclick="showRecentGames('nalia01', 20)">L20</button>
-<button id="showAll_nalia01" onclick="showAllGames('nalia01')">All</button>
-<button id="fight_duration_nalia01" onclick="toggleFightDurationOverlay('nalia01')">Toggle Fight Duration</button>
-<button class="clear-chart-filters" id="clearFiltersBtn_nalia01" onclick="clearFilters('nalia01')">Clear Filters</button>
+<button id="L5_harriger02" onclick="showRecentGames('harriger02', 5)">L5</button>
+<button id="L10_harriger02" onclick="showRecentGames('harriger02', 10)">L10</button>
+<button id="L20_harriger02" onclick="showRecentGames('harriger02', 20)">L20</button>
+<button id="showAll_harriger02" onclick="showAllGames('harriger02')">All</button>
+<button id="fight_duration_harriger02" onclick="toggleFightDurationOverlay('harriger02')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_harriger02" onclick="clearFilters('harriger02')">Clear Filters</button>
 </div>
 <div class="slider-container">
 <div id="line-slider">
-<label for="lineSlider_nalia01">Change Line:</label>
-<input id="lineSlider_nalia01" max="250" min="0" oninput="updateLine('nalia01', this.value)" step="0.5" type="range" value="25.5"/>
-<span id="lineValue_nalia01">25.5</span>
+<label for="lineSlider_harriger02">Change Line:</label>
+<input id="lineSlider_harriger02" max="250" min="0" oninput="updateLine('harriger02', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_harriger02">25.5</span>
 </div>
 <div class="chartButtons">
-<button class="reset-line-btn" id="reset-line-btn_nalia01" onclick="resetLine('nalia01', 25.5)">Reset Line</button>
+<button class="reset-line-btn" id="reset-line-btn_harriger02" onclick="resetLine('harriger02', 25.5)">Reset Line</button>
 </div>
 </div>
 </div>
@@ -255,7 +255,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("nalia01", [{'date': '2022-06-11', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 8, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-08-26', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 47, 'SigStrAttAg': 65, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-04-27', 'SigStr': 24, 'knockdowns': 0, 'SigStrAtt': 52, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 36, 'SigStrAttAg': 73, 'TDAg': 3, 'TDAttAg': 4, 'SubAttAg': 1}], 25.5, "SigStr");
+    initializeChart("harriger02", [{'date': '1995-09-08', 'SigStr': 0, 'knockdowns': 0, 'SigStrAtt': 2, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 4, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,133 +312,47 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0277PPV.html" target="_blank">UFC 275: Teixeira vs. Prochazka</a></td>
-<td style="text-align:left"><a href="/ufc/fights/6620UFC.html" target="_blank">Silvana Gomez Juarez vs Liang Na</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/juaresil01.html" target="_blank">Silvana Gomez Juarez</a></td>
-<td>6/11/2022</td>
-<td>Kallang, Singapore</td>
-<td>Women's Strawweight</td>
+<td style="text-align:left"><a href="/ufc/events/0007PPV.html" target="_blank">UFC 7: The Brawl in Buffalo</a></td>
+<td style="text-align:left"><a href="/ufc/fights/0063UFC.html" target="_blank">Gerry Harris vs Paul Varelans</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/varelpau01.html" target="_blank">Paul Varelans</a></td>
+<td>9/8/1995</td>
+<td>Buffalo, New York, USA</td>
+<td>Open Weight</td>
 <td>KO/TKO</td>
 <td>L</td>
-<td>3</td>
-<td>1.37</td>
-<td>0</td>
-<td>4</td>
-<td>17</td>
-<td>23.53%</td>
-<td>2.92</td>
-<td>4</td>
-<td>17</td>
-<td>4</td>
-<td>17</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
+<td>1</td>
+<td>1.08</td>
 <td>0</td>
 <td>0</td>
 <td>2</td>
 <td>0.00%</td>
+<td>0.00</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
 <td>0</td>
 <td>0</td>
-<td>8</td>
-<td>12</td>
-<td>33.33%</td>
-<td>10</td>
-<td>14</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>
 <td>0</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">UFC Fight Night: Holloway vs. The Korean Zombie</a></td>
-<td style="text-align:left"><a href="/ufc/fights/7269UFC.html" target="_blank">JJ Aldrich vs Liang Na</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/aldrijj01.html" target="_blank">JJ Aldrich</a></td>
-<td>8/26/2023</td>
-<td>Kallang, Singapore</td>
-<td>Women's Flyweight</td>
-<td>KO/TKO</td>
-<td>L</td>
-<td>3</td>
-<td>9.82</td>
 <td>0</td>
-<td>11</td>
-<td>41</td>
-<td>26.83%</td>
-<td>0.56</td>
-<td>27</td>
-<td>61</td>
-<td>7</td>
-<td>30</td>
-<td>3</td>
-<td>8</td>
-<td>1</td>
-<td>3</td>
-<td>2</td>
-<td>5</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
 <td>4</td>
-<td>75.00%</td>
-<td>0</td>
-<td>0</td>
-<td>47</td>
-<td>65</td>
-<td>27.69%</td>
-<td>68</td>
-<td>89</td>
-<td>0</td>
-<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>35</td>
+<td>38</td>
+<td>1</td>
+<td>1</td>
 <td>0.00%</td>
 <td>0</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="/ufc/events/0357FNI.html" target="_blank">UFC Fight Night: Nicolau vs. Perez</a></td>
-<td style="text-align:left"><a href="/ufc/fights/7596UFC.html" target="_blank">Liang Na vs Ivana Petrovic</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/petroiva01.html" target="_blank">Ivana Petrovic</a></td>
-<td>4/27/2024</td>
-<td>Las Vegas, Nevada, USA</td>
-<td>Women's Flyweight</td>
-<td>Submission</td>
-<td>L</td>
-<td>3</td>
-<td>11.48</td>
-<td>0</td>
-<td>24</td>
-<td>52</td>
-<td>46.15%</td>
-<td>0.70</td>
-<td>49</td>
-<td>89</td>
-<td>8</td>
-<td>34</td>
-<td>10</td>
-<td>11</td>
-<td>6</td>
-<td>7</td>
-<td>1</td>
-<td>4</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-<td>50.00%</td>
-<td>0</td>
-<td>1</td>
-<td>36</td>
-<td>73</td>
-<td>50.68%</td>
-<td>101</td>
-<td>150</td>
-<td>3</td>
-<td>4</td>
-<td>25.00%</td>
-<td>1</td>
 </tr>
 </tbody>
 </table>
