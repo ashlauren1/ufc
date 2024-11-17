@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Alvarez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0137FNI.html" target="_blank">Fight Night: Dos Anjos vs Alvarez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3690UFC.html" target="_blank">Mehdi Baghdad vs John Makdessi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baghdmeh01.html" target="_blank">Mehdi Baghdad</a></td>
 <td>7/7/2016</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3953UFC.html" target="_blank">John Makdessi vs Lando Vannata</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vannalan01.html" target="_blank">Lando Vannata</a></td>
 <td>12/10/2016</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC on Fox 26: Lawler vs dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4423UFC.html" target="_blank">John Makdessi vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/trujiabe01.html" target="_blank">Abel Trujillo</a></td>
 <td>12/16/2017</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">UFC Fight Night: Alvarez vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC on Fox 30: Alvarez vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4705UFC.html" target="_blank">John Makdessi vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>7/28/2018</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206FNI.html" target="_blank">UFC Fight Night: Thompson vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">Fight Night: Thompson vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5011UFC.html" target="_blank">John Makdessi vs Jesus Pinedo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pinedjes01.html" target="_blank">Jesus Pinedo</a></td>
 <td>3/23/2019</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">UFC Fight Night: Lee vs. Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">Fight Night: Lee vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5513UFC.html" target="_blank">John Makdessi vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/trinafra01.html" target="_blank">Francisco Trinaldo</a></td>
 <td>3/14/2020</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">UFC Fight Night: Vettori vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC on ABC 2: Vettori vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6015UFC.html" target="_blank">Ignacio Bahamondes vs John Makdessi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bahamign01.html" target="_blank">Ignacio Bahamondes</a></td>
 <td>4/10/2021</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">UFC Fight Night: Gane vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">Fight Night: Gane vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6751UFC.html" target="_blank">Nasrat Haqparast vs John Makdessi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/haqpanas01.html" target="_blank">Nasrat Haqparast</a></td>
 <td>9/3/2022</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7289UFC.html" target="_blank">John Makdessi vs Jamie Mullarkey</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mullajam01.html" target="_blank">Jamie Mullarkey</a></td>
 <td>9/9/2023</td>

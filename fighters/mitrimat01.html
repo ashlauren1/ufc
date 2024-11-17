@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">The Ultimate Fighter: Heavyweights Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">TUF 10 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1236UFC.html" target="_blank">Marcus Jones vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jonesmar01.html" target="_blank">Marcus Jones</a></td>
 <td>12/5/2009</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">UFC Fight Night: Fight for the Troops 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">Fight Night: Fight for the Troops 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1518UFC.html" target="_blank">Tim Hague vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/haguetim01.html" target="_blank">Tim Hague</a></td>
 <td>1/22/2011</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC Live on Versus: Kongo vs Barry</a></td>
+<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC on Versus 4: Kongo vs Barry</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1634UFC.html" target="_blank">Matt Mitrione vs Christian Morecraft</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morecchr01.html" target="_blank">Christian Morecraft</a></td>
 <td>6/26/2011</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0016TUF.html" target="_blank">The Ultimate Fighter 16 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0016TUF.html" target="_blank">TUF 16 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2124UFC.html" target="_blank">Matt Mitrione vs Roy Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nelsoroy01.html" target="_blank">Roy Nelson</a></td>
 <td>12/15/2012</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0054FNI.html" target="_blank">UFC on FUEL TV 9: Mousasi vs Latifi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0054FNI.html" target="_blank">UFC on Fuel TV 9: Mousasi vs Latifi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2229UFC.html" target="_blank">Philip De Fries vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/friesphi01.html" target="_blank">Philip De Fries</a></td>
 <td>4/6/2013</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0072FNI.html" target="_blank">UFC Fight Night: Kim vs Hathaway</a></td>
+<td style="text-align:left"><a href="/ufc/events/0072FNI.html" target="_blank">Fight Night: Kim vs Hathaway</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2603UFC.html" target="_blank">Shawn Jordan vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jordasha01.html" target="_blank">Shawn Jordan</a></td>
 <td>3/1/2014</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">UFC Fight Night: Souza vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">Fight Night: Souza vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2871UFC.html" target="_blank">Derrick Lewis vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lewisder01.html" target="_blank">Derrick Lewis</a></td>
 <td>9/5/2014</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">UFC Fight Night: Boetsch vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0111FNI.html" target="_blank">Fight Night: Boetsch vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3219UFC.html" target="_blank">Matt Mitrione vs Ben Rothwell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rothwben01.html" target="_blank">Ben Rothwell</a></td>
 <td>6/6/2015</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC Fight Night: Dillashaw vs Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">Fight Night: Dillashaw vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3511UFC.html" target="_blank">Travis Browne vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/browntra01.html" target="_blank">Travis Browne</a></td>
 <td>1/17/2016</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0098FNI.html" target="_blank">UFC on Fox 13: Dos Santos vs Miocic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7864UFC.html" target="_blank">Gabriel Gonzaga vs Matt Mitrione</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gonzagab01.html" target="_blank">Gabriel Gonzaga</a></td>
 <td>12/13/2014</td>

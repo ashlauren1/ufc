@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">Fight Night: Cerrone vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4310UFC.html" target="_blank">Nasrat Haqparast vs Marcin Held</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heldmar01.html" target="_blank">Marcin Held</a></td>
 <td>10/21/2017</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4689UFC.html" target="_blank">Marc Diakiese vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diakimar01.html" target="_blank">Marc Diakiese</a></td>
 <td>7/22/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">UFC Fight Night: Oezdemir vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">Fight Night: Oezdemir vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4793UFC.html" target="_blank">Thibault Gouti vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goutithi01.html" target="_blank">Thibault Gouti</a></td>
 <td>10/27/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">UFC Fight Night: Covington vs. Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">Fight Night: Covington vs Lawler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5206UFC.html" target="_blank">Nasrat Haqparast vs Joaquim Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvajoa01.html" target="_blank">Joaquim Silva</a></td>
 <td>8/3/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5434UFC.html" target="_blank">Drew Dober vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>1/18/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">UFC Fight Night: Lewis vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">Fight Night: Lewis vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5674UFC.html" target="_blank">Nasrat Haqparast vs Alexander Munoz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munozale01.html" target="_blank">Alexander Munoz</a></td>
 <td>8/8/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">UFC Fight Night: Edwards vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">Fight Night: Edwards vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5984UFC.html" target="_blank">Rafa Garcia vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garciraf01.html" target="_blank">Rafa Garcia</a></td>
 <td>3/13/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6249UFC.html" target="_blank">Nasrat Haqparast vs Dan Hooker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hookedan01.html" target="_blank">Dan Hooker</a></td>
 <td>9/25/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6429UFC.html" target="_blank">Bobby King Green vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greenbob01.html" target="_blank">Bobby King Green</a></td>
 <td>2/12/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">UFC Fight Night: Gane vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">Fight Night: Gane vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6751UFC.html" target="_blank">Nasrat Haqparast vs John Makdessi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makdejoh01.html" target="_blank">John Makdessi</a></td>
 <td>9/3/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7290UFC.html" target="_blank">Nasrat Haqparast vs Landon Quinones</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/quinolan01.html" target="_blank">Landon Quinones</a></td>
 <td>9/9/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">UFC Fight Night: Song vs. Gutierrez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">Fight Night: Song vs Gutierrez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7401UFC.html" target="_blank">Nasrat Haqparast vs Jamie Mullarkey</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mullajam01.html" target="_blank">Jamie Mullarkey</a></td>
 <td>12/9/2023</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0362FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Aliskerov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC on ABC 6: Whittaker vs Aliskerov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7677UFC.html" target="_blank">Jared Gordon vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gordojar01.html" target="_blank">Jared Gordon</a></td>
 <td>6/22/2024</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0050FNI.html" target="_blank">UFC on FX: Belfort vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0050FNI.html" target="_blank">UFC on FX 7: Belfort vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2157UFC.html" target="_blank">CJ Keith vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/keithcj01.html" target="_blank">CJ Keith</a></td>
 <td>1/19/2013</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX 8: Belfort vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2280UFC.html" target="_blank">Mike Rio vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riomike01.html" target="_blank">Mike Rio</a></td>
 <td>5/18/2013</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0061FNI.html" target="_blank">UFC Fight Night: Teixeira vs Bader</a></td>
+<td style="text-align:left"><a href="/ufc/events/0061FNI.html" target="_blank">Fight Night: Teixeira vs Bader</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2398UFC.html" target="_blank">Piotr Hallmann vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hallmpio01.html" target="_blank">Piotr Hallmann</a></td>
 <td>9/4/2013</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0071FNI.html" target="_blank">UFC Fight Night: Machida vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0071FNI.html" target="_blank">Fight Night: Machida vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2585UFC.html" target="_blank">Jesse Ronson vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ronsojes01.html" target="_blank">Jesse Ronson</a></td>
 <td>2/15/2014</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">UFC Fight Night: Silva vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0091FNI.html" target="_blank">Fight Night: Silva vs Arlovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2886UFC.html" target="_blank">Leandro Silva vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvalea01.html" target="_blank">Leandro Silva</a></td>
 <td>9/13/2014</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">UFC Fight Night: Maia vs LaFlare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">Fight Night: Maia vs LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3120UFC.html" target="_blank">Akbarh Arreola vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/arreoakb01.html" target="_blank">Akbarh Arreola</a></td>
 <td>3/21/2015</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3210UFC.html" target="_blank">Norman Parke vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/parkenor01.html" target="_blank">Norman Parke</a></td>
 <td>5/30/2015</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">UFC Fight Night: Holloway vs Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">Fight Night: Holloway vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3348UFC.html" target="_blank">Chad Laprise vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lapricha01.html" target="_blank">Chad Laprise</a></td>
 <td>8/23/2015</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC Fight Night: Dillashaw vs Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">Fight Night: Dillashaw vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3512UFC.html" target="_blank">Ross Pearson vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>1/17/2016</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3825UFC.html" target="_blank">Paul Felder vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/feldepau01.html" target="_blank">Paul Felder</a></td>
 <td>9/24/2016</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4053UFC.html" target="_blank">Kevin Lee vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leekev01.html" target="_blank">Kevin Lee</a></td>
 <td>3/11/2017</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">UFC Fight Night: Brunson vs. Machida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">Fight Night: Brunson vs Machida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4320UFC.html" target="_blank">Jim Miller vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>10/28/2017</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0179FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Medeiros</a></td>
+<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">Fight Night: Cerrone vs Medeiros</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4495UFC.html" target="_blank">Francisco Trinaldo vs James Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vickjam01.html" target="_blank">James Vick</a></td>
 <td>2/18/2018</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">Fight Night: Marreta vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4766UFC.html" target="_blank">Evan Dunham vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
 <td>9/22/2018</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">Fight Night: Dos Anjos vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5184UFC.html" target="_blank">Alexander Hernandez vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaale01.html" target="_blank">Alexander Hernandez</a></td>
 <td>7/20/2019</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">Fight Night: Blachowicz vs Jacare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5383UFC.html" target="_blank">Bobby King Green vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greenbob01.html" target="_blank">Bobby King Green</a></td>
 <td>11/16/2019</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">UFC Fight Night: Lee vs. Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">Fight Night: Lee vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5513UFC.html" target="_blank">John Makdessi vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makdejoh01.html" target="_blank">John Makdessi</a></td>
 <td>3/14/2020</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">Fight Night: Whittaker vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5651UFC.html" target="_blank">Jai Herbert vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/herbejai01.html" target="_blank">Jai Herbert</a></td>
 <td>7/25/2020</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">Fight Night: Rozenstruik vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6095UFC.html" target="_blank">Muslim Salikhov vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/salikmus01.html" target="_blank">Muslim Salikhov</a></td>
 <td>6/5/2021</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286FNI.html" target="_blank">Fight Night: Costa vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6291UFC.html" target="_blank">Dwight Grant vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grantdwi01.html" target="_blank">Dwight Grant</a></td>
 <td>10/23/2021</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6566UFC.html" target="_blank">Danny Roberts vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberdan01.html" target="_blank">Danny Roberts</a></td>
 <td>5/7/2022</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0312FNI.html" target="_blank">UFC Fight Night: Dern vs. Yan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0313FNI.html" target="_blank">Fight Night: Dern vs Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6783UFC.html" target="_blank">Randy Brown vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownran01.html" target="_blank">Randy Brown</a></td>
 <td>10/1/2022</td>

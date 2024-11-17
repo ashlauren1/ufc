@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0044FNI.html" target="_blank">UFC on FOX: Shogun vs Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0044FNI.html" target="_blank">UFC on Fox 4: Shogun vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2026UFC.html" target="_blank">Mauricio Rua vs Brandon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/verabran01.html" target="_blank">Brandon Vera</a></td>
 <td>8/4/2012</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox: Henderson vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox 5: Henderson vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2104UFC.html" target="_blank">Alexander Gustafsson vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gustaale01.html" target="_blank">Alexander Gustafsson</a></td>
 <td>12/8/2012</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2358UFC.html" target="_blank">Mauricio Rua vs Chael Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sonnecha01.html" target="_blank">Chael Sonnen</a></td>
 <td>8/17/2013</td>
@@ -785,7 +787,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">UFC Fight Night: Hunt vs Bigfoot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">Fight Night: Hunt vs Bigfoot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2501UFC.html" target="_blank">James Te Huna vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hunajame01.html" target="_blank">James Te Huna</a></td>
 <td>12/6/2013</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">UFC Fight Night: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">Fight Night: Shogun vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2631UFC.html" target="_blank">Dan Henderson vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hendedan01.html" target="_blank">Dan Henderson</a></td>
 <td>3/23/2014</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2957UFC.html" target="_blank">Ovince Saint Preux vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/preuxovi01.html" target="_blank">Ovince Saint Preux</a></td>
 <td>11/8/2014</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4048UFC.html" target="_blank">Mauricio Rua vs Gian Villante</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/villagia01.html" target="_blank">Gian Villante</a></td>
 <td>3/11/2017</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4684UFC.html" target="_blank">Mauricio Rua vs Anthony Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smithant01.html" target="_blank">Anthony Smith</a></td>
 <td>7/22/2018</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">Fight Night: Dos Santos vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4861UFC.html" target="_blank">Tyson Pedro vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pedrotys01.html" target="_blank">Tyson Pedro</a></td>
 <td>12/1/2018</td>
@@ -1129,7 +1131,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">Fight Night: Blachowicz vs Jacare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5377UFC.html" target="_blank">Paul Craig vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/craigpau01.html" target="_blank">Paul Craig</a></td>
 <td>11/16/2019</td>
@@ -1172,7 +1174,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">Fight Night: Whittaker vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5645UFC.html" target="_blank">Rogerio Nogueira vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/noguerog01.html" target="_blank">Rogerio Nogueira</a></td>
 <td>7/25/2020</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs. Perez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5832UFC.html" target="_blank">Paul Craig vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/craigpau01.html" target="_blank">Paul Craig</a></td>
 <td>11/21/2020</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6564UFC.html" target="_blank">Ovince Saint Preux vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/preuxovi01.html" target="_blank">Ovince Saint Preux</a></td>
 <td>5/7/2022</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6918UFC.html" target="_blank">Ihor Potieria vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/potieiho01.html" target="_blank">Ihor Potieria</a></td>
 <td>1/21/2023</td>

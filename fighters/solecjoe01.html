@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">UFC Fight Night: Overeem vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">Fight Night: Overeem vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5397UFC.html" target="_blank">Joe Solecki vs Matt Wiman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wimanmat01.html" target="_blank">Matt Wiman</a></td>
 <td>12/7/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">UFC Fight Night: Munhoz vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">Fight Night: Munhoz vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5692UFC.html" target="_blank">Austin Hubbard vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hubbaaus01.html" target="_blank">Austin Hubbard</a></td>
 <td>8/22/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">UFC Fight Night: Vettori vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC on ABC 2: Vettori vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6013UFC.html" target="_blank">Jim Miller vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>4/10/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283FNI.html" target="_blank">Fight Night: Santos vs Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6261UFC.html" target="_blank">Jared Gordon vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gordojar01.html" target="_blank">Jared Gordon</a></td>
 <td>10/2/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303FNI.html" target="_blank">Fight Night: Volkov vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6604UFC.html" target="_blank">Alex Da Silva vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaale01.html" target="_blank">Alex Da Silva</a></td>
 <td>6/4/2022</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">UFC Fight Night: Muniz vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">Fight Night: Muniz vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6971UFC.html" target="_blank">Carl Deaton vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/deatocar01.html" target="_blank">Carl Deaton</a></td>
 <td>2/25/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">UFC Fight Night: Dariush vs. Tsarukyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">Fight Night: Dariush vs Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7395UFC.html" target="_blank">Drakkar Klose vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/klosedra01.html" target="_blank">Drakkar Klose</a></td>
 <td>12/2/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0304PPV.html" target="_blank">UFC 302: Makhachev vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0304PPV.html" target="_blank">UFC 302: Makhachev vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7642UFC.html" target="_blank">Grant Dawson vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dawsogra01.html" target="_blank">Grant Dawson</a></td>
 <td>6/1/2024</td>

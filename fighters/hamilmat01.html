@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003TUF.html" target="_blank">The Ultimate Fighter 3 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003TUF.html" target="_blank">TUF 3 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0567UFC.html" target="_blank">Jesse Forbes vs Matt Hamill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/forbejes01.html" target="_blank">Jesse Forbes</a></td>
 <td>6/24/2006</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0007FNI.html" target="_blank">Ortiz vs Shamrock 3: The Final Chapter</a></td>
+<td style="text-align:left"><a href="/ufc/events/0007FNI.html" target="_blank">Fight Night: Ortiz vs Shamrock 3: The Final Chapter</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0617UFC.html" target="_blank">Matt Hamill vs Seth Petruzelli</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/petruset01.html" target="_blank">Seth Petruzelli</a></td>
 <td>10/10/2006</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">UFC Fight Night: Florian vs Lauzon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">Fight Night: Florian vs Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0877UFC.html" target="_blank">Tim Boetsch vs Matt Hamill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/boetstim01.html" target="_blank">Tim Boetsch</a></td>
 <td>4/2/2008</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">The Ultimate Fighter: Heavyweights Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">TUF 10 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1233UFC.html" target="_blank">Matt Hamill vs Jon Jones</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jonesjon01.html" target="_blank">Jon Jones</a></td>
 <td>12/5/2009</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0011TUF.html" target="_blank">The Ultimate Fighter FINALE: Team Liddell vs Team Ortiz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0011TUF.html" target="_blank">TUF 11 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1370UFC.html" target="_blank">Matt Hamill vs Keith Jardine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jardikei01.html" target="_blank">Keith Jardine</a></td>
 <td>6/19/2010</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0062FNI.html" target="_blank">UFC Fight Night: Maia vs Shields</a></td>
+<td style="text-align:left"><a href="/ufc/events/0062FNI.html" target="_blank">Fight Night: Maia vs Shields</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2421UFC.html" target="_blank">Matt Hamill vs Thiago Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvathi01.html" target="_blank">Thiago Silva</a></td>
 <td>10/9/2013</td>

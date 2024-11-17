@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3608UFC.html" target="_blank">Cyril Asker vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cannojar01.html" target="_blank">Jared Cannonier</a></td>
 <td>4/10/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Penn</a></td>
+<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">Fight Night: Rodriguez vs Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3990UFC.html" target="_blank">Cyril Asker vs Dmitrii Smoliakov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smolidmi01.html" target="_blank">Dmitrii Smoliakov</a></td>
 <td>1/15/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4161UFC.html" target="_blank">Cyril Asker vs Walt Harris</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/harriwal01.html" target="_blank">Walt Harris</a></td>
 <td>6/17/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">UFC Fight Night: Bisping vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">Fight Night: Bisping vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4377UFC.html" target="_blank">Cyril Asker vs Hu Yaozong</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yaozohu01.html" target="_blank">Hu Yaozong</a></td>
 <td>11/25/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4483UFC.html" target="_blank">Cyril Asker vs Tai Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tuivatai01.html" target="_blank">Tai Tuivasa</a></td>
 <td>2/10/2018</td>

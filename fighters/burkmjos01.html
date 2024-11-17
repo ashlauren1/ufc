@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">The Ultimate Fighter 2 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">TUF 2 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0497UFC.html" target="_blank">Joshua Burkman vs Sammy Morgan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morgasam01.html" target="_blank">Sammy Morgan</a></td>
 <td>11/5/2005</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">UFC Fight Night 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">Fight Night 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0510UFC.html" target="_blank">Joshua Burkman vs Drew Fickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fickedre01.html" target="_blank">Drew Fickett</a></td>
 <td>1/16/2006</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0004FNI.html" target="_blank">UFC Fight Night 4</a></td>
+<td style="text-align:left"><a href="/ufc/events/0004FNI.html" target="_blank">Fight Night 4</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0538UFC.html" target="_blank">Joshua Burkman vs Jon Fitch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fitchjon01.html" target="_blank">Jon Fitch</a></td>
 <td>4/6/2006</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009FNI.html" target="_blank">UFC Fight Night: Evans vs Salmon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009FNI.html" target="_blank">Fight Night: Evans vs Salmon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0670UFC.html" target="_blank">Joshua Burkman vs Chad Reiner</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reinecha01.html" target="_blank">Chad Reiner</a></td>
 <td>1/25/2007</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0013FNI.html" target="_blank">UFC Fight Night: Swick vs Burkman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0013FNI.html" target="_blank">Fight Night: Swick vs Burkman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0846UFC.html" target="_blank">Joshua Burkman vs Mike Swick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swickmik01.html" target="_blank">Mike Swick</a></td>
 <td>1/23/2008</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">The Ultimate Fighter Finale: Team Rampage vs Team Forrest</a></td>
+<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">TUF 7 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0924UFC.html" target="_blank">Joshua Burkman vs Dustin Hazelett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hazeldus01.html" target="_blank">Dustin Hazelett</a></td>
 <td>6/21/2008</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">UFC Fight Night: Holloway vs Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">Fight Night: Holloway vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3347UFC.html" target="_blank">Joshua Burkman vs Patrick Cote</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cotepat01.html" target="_blank">Patrick Cote</a></td>
 <td>8/23/2015</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC Fight Night: Hendricks vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">Fight Night: Hendricks vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3541UFC.html" target="_blank">Joshua Burkman vs KJ Noons</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/noonskj01.html" target="_blank">KJ Noons</a></td>
 <td>2/6/2016</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">UFC Fight Night: Almeida vs Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">Fight Night: Almeida vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3652UFC.html" target="_blank">Joshua Burkman vs Paul Felder</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/feldepau01.html" target="_blank">Paul Felder</a></td>
 <td>5/29/2016</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">UFC Fight Night: Lineker vs. Dodson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">Fight Night: Lineker vs Dodson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3837UFC.html" target="_blank">Joshua Burkman vs Zak Ottow</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ottowzak01.html" target="_blank">Zak Ottow</a></td>
 <td>10/1/2016</td>
@@ -1000,7 +1002,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4056UFC.html" target="_blank">Joshua Burkman vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/prazemic01.html" target="_blank">Michel Prazeres</a></td>
 <td>3/11/2017</td>
@@ -1043,7 +1045,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs. Jones 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs Jones 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4239UFC.html" target="_blank">Joshua Burkman vs Drew Dober</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>7/29/2017</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0179FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Medeiros</a></td>
+<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">Fight Night: Cerrone vs Medeiros</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4503UFC.html" target="_blank">Joshua Burkman vs Alex Morono</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moronale01.html" target="_blank">Alex Morono</a></td>
 <td>2/18/2018</td>

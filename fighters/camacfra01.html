@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4164UFC.html" target="_blank">Frank Camacho vs Li Jingliang</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jinglli01.html" target="_blank">Li Jingliang</a></td>
 <td>6/17/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">Fight Night: Werdum vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4362UFC.html" target="_blank">Damien Brown vs Frank Camacho</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/browndam01.html" target="_blank">Damien Brown</a></td>
 <td>11/18/2017</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0177FNI.html" target="_blank">UFC Fight Night: Jacare vs. Brunson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC on Fox 27: Jacare vs Brunson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4461UFC.html" target="_blank">Frank Camacho vs Drew Dober</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>1/27/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4742UFC.html" target="_blank">Frank Camacho vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nealgeo01.html" target="_blank">Geoff Neal</a></td>
 <td>9/8/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">Fight Night: Gustafsson vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5115UFC.html" target="_blank">Frank Camacho vs Nick Hein</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heinnic01.html" target="_blank">Nick Hein</a></td>
 <td>6/1/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225FNI.html" target="_blank">UFC Fight Night: Maia vs. Askren</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">Fight Night: Maia vs Askren</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5347UFC.html" target="_blank">Frank Camacho vs Beneil Dariush</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dariuben01.html" target="_blank">Beneil Dariush</a></td>
 <td>10/26/2019</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240FNI.html" target="_blank">Fight Night: Blaydes vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5595UFC.html" target="_blank">Frank Camacho vs Justin Jaynes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jaynejus01.html" target="_blank">Justin Jaynes</a></td>
 <td>6/20/2020</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Rakic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">Fight Night: Blachowicz vs Rakic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6579UFC.html" target="_blank">Frank Camacho vs Manuel Torres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/torreman01.html" target="_blank">Manuel Torres</a></td>
 <td>5/14/2022</td>

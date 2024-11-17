@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">The Ultimate Fighter 2 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">TUF 2 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0498UFC.html" target="_blank">Marcus Davis vs Melvin Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/davismar01.html" target="_blank">Marcus Davis</a></td>
 <td>11/5/2005</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">UFC Fight Night 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">Fight Night 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0512UFC.html" target="_blank">Melvin Guillard vs Josh Neer</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/neerjosh01.html" target="_blank">Josh Neer</a></td>
 <td>1/16/2006</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">UFC Fight Night: Stevenson vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">Fight Night: Stevenson vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0692UFC.html" target="_blank">Melvin Guillard vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stevejoe01.html" target="_blank">Joe Stevenson</a></td>
 <td>4/5/2007</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">The Ultimate Fighter: Team US vs Team UK Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">TUF 9 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1139UFC.html" target="_blank">Melvin Guillard vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tibaugle01.html" target="_blank">Gleison Tibau</a></td>
 <td>6/20/2009</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">UFC Fight Night: Diaz vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">Fight Night: Diaz vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1177UFC.html" target="_blank">Nate Diaz vs Melvin Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diaznat01.html" target="_blank">Nate Diaz</a></td>
 <td>9/16/2009</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">UFC Fight Night: Fight for the Troops 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">Fight Night: Fight for the Troops 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1517UFC.html" target="_blank">Evan Dunham vs Melvin Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
 <td>1/22/2011</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0034FNI.html" target="_blank">UFC on FX: Guillard vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0034FNI.html" target="_blank">UFC on FX 1: Guillard vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1816UFC.html" target="_blank">Melvin Guillard vs Jim Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>1/20/2012</td>
@@ -1129,7 +1131,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2340UFC.html" target="_blank">Mac Danzig vs Melvin Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/danzimac01.html" target="_blank">Mac Danzig</a></td>
 <td>7/27/2013</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">UFC Fight Night: Machida vs Munoz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">Fight Night: Machida vs Munoz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2443UFC.html" target="_blank">Melvin Guillard vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>10/26/2013</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Manuwa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">Fight Night: Gustafsson vs Manuwa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2610UFC.html" target="_blank">Melvin Guillard vs Michael Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmic01.html" target="_blank">Michael Johnson</a></td>
 <td>3/8/2014</td>

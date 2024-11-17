@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">UFC Fight Night: Bisping vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">Fight Night: Bisping vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4371UFC.html" target="_blank">Bobby Nash vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nashbob01.html" target="_blank">Bobby Nash</a></td>
 <td>11/25/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4642UFC.html" target="_blank">Hector Aldana vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldanhec01.html" target="_blank">Hector Aldana</a></td>
 <td>6/23/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Ngannou 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">Fight Night: Blaydes vs Ngannou 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4839UFC.html" target="_blank">Alex Morono vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moronale01.html" target="_blank">Alex Morono</a></td>
 <td>11/24/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">Fight Night: Andrade vs Zhang</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5244UFC.html" target="_blank">Derrick Krantz vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krantder01.html" target="_blank">Derrick Krantz</a></td>
 <td>8/31/2019</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">UFC Fight Night: Felder vs. Hooker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233FNI.html" target="_blank">Fight Night: Felder vs Hooker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5482UFC.html" target="_blank">Callan Potter vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pottecal01.html" target="_blank">Callan Potter</a></td>
 <td>2/22/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">UFC Fight Night: Brunson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">Fight Night: Brunson vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5989UFC.html" target="_blank">Max Griffin vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/griffmax01.html" target="_blank">Max Griffin</a></td>
 <td>3/20/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6982UFC.html" target="_blank">Ian Garry vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garryian01.html" target="_blank">Ian Garry</a></td>
 <td>3/4/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">UFC Fight Night: Holloway vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0339FNI.html" target="_blank">Fight Night: Holloway vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7267UFC.html" target="_blank">Rolando Bedoya vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bedoyrol01.html" target="_blank">Rolando Bedoya</a></td>
 <td>8/26/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">UFC Fight Night: Song vs. Gutierrez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">Fight Night: Song vs Gutierrez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7404UFC.html" target="_blank">Kevin Jousset vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jousskev01.html" target="_blank">Kevin Jousset</a></td>
 <td>12/9/2023</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7766UFC.html" target="_blank">Ricky Glenn vs Kenan Song</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/glennric01.html" target="_blank">Ricky Glenn</a></td>
 <td>8/17/2024</td>

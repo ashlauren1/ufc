@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">UFC Fight Night: Iaquinta vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">Fight Night: Iaquinta vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5075UFC.html" target="_blank">Walt Harris vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/harriwal01.html" target="_blank">Walt Harris</a></td>
 <td>5/4/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5304UFC.html" target="_blank">Serghei Spivac vs Tai Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tuivatai01.html" target="_blank">Tai Tuivasa</a></td>
 <td>10/5/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233FNI.html" target="_blank">UFC Fight Night: Benavidez vs. Figueiredo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">Fight Night: Benavidez vs Figueiredo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5493UFC.html" target="_blank">Serghei Spivac vs Marcin Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tyburmar01.html" target="_blank">Marcin Tybura</a></td>
 <td>2/29/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">UFC Fight Night: Figueiredo vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">Fight Night: Figueiredo vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5643UFC.html" target="_blank">Carlos Felipe vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/felipcar01.html" target="_blank">Carlos Felipe</a></td>
 <td>7/18/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">Fight Night: Blaydes vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5950UFC.html" target="_blank">Serghei Spivac vs Jared Vanderaa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vandejar01.html" target="_blank">Jared Vanderaa</a></td>
 <td>2/20/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">UFC Fight Night: Jung vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">Fight Night: Jung vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6116UFC.html" target="_blank">Aleksei Oleinik vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oleinale01.html" target="_blank">Aleksei Oleinik</a></td>
 <td>6/19/2021</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">UFC Fight Night: Brunson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281FNI.html" target="_blank">Fight Night: Brunson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6221UFC.html" target="_blank">Tom Aspinall vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aspintom01.html" target="_blank">Tom Aspinall</a></td>
 <td>9/4/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6466UFC.html" target="_blank">Greg Hardy vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hardygre01.html" target="_blank">Greg Hardy</a></td>
 <td>3/5/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">UFC Fight Night: Santos vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">Fight Night: Santos vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6713UFC.html" target="_blank">Augusto Sakai vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sakaiaug01.html" target="_blank">Augusto Sakai</a></td>
 <td>8/6/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0320FNI.html" target="_blank">UFC Fight Night: Lewis vs. Spivac</a></td>
+<td style="text-align:left"><a href="/ufc/events/0321FNI.html" target="_blank">Fight Night: Lewis vs Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6928UFC.html" target="_blank">Derrick Lewis vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lewisder01.html" target="_blank">Derrick Lewis</a></td>
 <td>2/4/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0339FNI.html" target="_blank">UFC Fight Night: Gane vs. Spivac</a></td>
+<td style="text-align:left"><a href="/ufc/events/0340FNI.html" target="_blank">Fight Night: Gane vs Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7271UFC.html" target="_blank">Ciryl Gane vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ganecir01.html" target="_blank">Ciryl Gane</a></td>
 <td>9/2/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC Fight Night: Tybura vs. Spivac 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0367FNI.html" target="_blank">Fight Night: Tybura vs Spivac 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7746UFC.html" target="_blank">Serghei Spivac vs Marcin Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tyburmar01.html" target="_blank">Marcin Tybura</a></td>
 <td>8/10/2024</td>

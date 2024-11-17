@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("gibsocod01", [{'date': '2014-02-22', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 53, 'takedown': 4, 'takedownAtt': 6, 'subAtt': 1, 'SigStrAg': 46, 'SigStrAttAg': 89, 'TDAg': 3, 'TDAttAg': 5, 'SubAttAg': 3}, {'date': '2014-06-28', 'SigStr': 3, 'knockdowns': 1, 'SigStrAtt': 8, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 11, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-09-27', 'SigStr': 49, 'knockdowns': 1, 'SigStrAtt': 118, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 52, 'TDAg': 2, 'TDAttAg': 6, 'SubAttAg': 1}, {'date': '2015-02-22', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 137, 'takedown': 0, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 39, 'SigStrAttAg': 131, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-08-19', 'SigStr': 164, 'knockdowns': 0, 'SigStrAtt': 268, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 160, 'SigStrAttAg': 311, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-03-23', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 62, 'takedown': 1, 'takedownAtt': 7, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 79, 'TDAg': 2, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2024-07-20', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 2, 'takedownAtt': 5, 'subAtt': 1, 'SigStrAg': 2, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("gibsocod01", [{'date': '2014-02-22', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 53, 'takedown': 4, 'takedownAtt': 6, 'subAtt': 1, 'SigStrAg': 46, 'SigStrAttAg': 89, 'TDAg': 3, 'TDAttAg': 5, 'SubAttAg': 3}, {'date': '2014-06-28', 'SigStr': 3, 'knockdowns': 1, 'SigStrAtt': 8, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 11, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2014-09-27', 'SigStr': 49, 'knockdowns': 1, 'SigStrAtt': 118, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 52, 'TDAg': 2, 'TDAttAg': 6, 'SubAttAg': 1}, {'date': '2015-02-22', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 137, 'takedown': 0, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 39, 'SigStrAttAg': 131, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-08-19', 'SigStr': 164, 'knockdowns': 0, 'SigStrAtt': 268, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 160, 'SigStrAttAg': 311, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-03-23', 'SigStr': 18, 'knockdowns': 0, 'SigStrAtt': 62, 'takedown': 1, 'takedownAtt': 7, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 79, 'TDAg': 2, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2024-07-20', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 24, 'takedown': 2, 'takedownAtt': 5, 'subAtt': 1, 'SigStrAg': 2, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-11-02', 'SigStr': 16, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 5, 'takedownAtt': 6, 'subAtt': 2, 'SigStrAg': 11, 'SigStrAttAg': 19, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -355,7 +357,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0081FNI.html" target="_blank">UFC Fight Night: Swanson vs Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0082FNI.html" target="_blank">Fight Night: Swanson vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2762UFC.html" target="_blank">Johnny Bedford vs Cody Gibson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bedfojoh01.html" target="_blank">Johnny Bedford</a></td>
 <td>6/28/2014</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">UFC Fight Night: Bigfoot vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">Fight Night: Bigfoot vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3089UFC.html" target="_blank">Douglas Silva de Andrade vs Cody Gibson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andradou01.html" target="_blank">Douglas Silva de Andrade</a></td>
 <td>2/22/2015</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs. O'Malley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7254UFC.html" target="_blank">Cody Gibson vs Brad Katona</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/katonbra01.html" target="_blank">Brad Katona</a></td>
 <td>8/19/2023</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">UFC Fight Night: Ribas vs. Namajunas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">Fight Night: Ribas vs Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7542UFC.html" target="_blank">Cody Gibson vs Miles Johns</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmil01.html" target="_blank">Miles Johns</a></td>
 <td>3/23/2024</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">UFC Fight Night: Lemos vs. Jandiroba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">Fight Night: Lemos vs Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7714UFC.html" target="_blank">Cody Gibson vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kellebri01.html" target="_blank">Brian Kelleher</a></td>
 <td>7/20/2024</td>
@@ -607,6 +609,49 @@
 <td>83.33%</td>
 <td>2</td>
 <td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0374FNI.html" target="_blank">Fight Night: Moreno vs Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7898UFC.html" target="_blank">Cody Gibson vs Chad Anheliger</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/anhelcha01.html" target="_blank">Chad Anheliger</a></td>
+<td>11/2/2024</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>16</td>
+<td>34</td>
+<td>47.06%</td>
+<td>0.36</td>
+<td>59</td>
+<td>93</td>
+<td>15</td>
+<td>28</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>12</td>
+<td>5</td>
+<td>6</td>
+<td>83.33%</td>
+<td>2</td>
+<td>0</td>
+<td>11</td>
+<td>19</td>
+<td>42.11%</td>
+<td>59</td>
+<td>77</td>
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>

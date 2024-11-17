@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0037FNI.html" target="_blank">UFC on FX: Alves vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0037FNI.html" target="_blank">UFC on FX 2: Alves vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1872UFC.html" target="_blank">James Te Huna vs Aaron Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rosaaaro01.html" target="_blank">Aaron Rosa</a></td>
 <td>3/2/2012</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0043FNI.html" target="_blank">UFC on FUEL TV: Munoz vs Weidman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0043FNI.html" target="_blank">UFC on Fuel TV 4: Munoz vs Weidman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1996UFC.html" target="_blank">Joey Beltran vs James Te Huna</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/beltrjoe01.html" target="_blank">Joey Beltran</a></td>
 <td>7/11/2012</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0052FNI.html" target="_blank">UFC on FUEL TV: Barao vs McDonald</a></td>
+<td style="text-align:left"><a href="/ufc/events/0052FNI.html" target="_blank">UFC on Fuel TV 7: Barao vs McDonald</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2183UFC.html" target="_blank">James Te Huna vs Ryan Jimmo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jimmorya01.html" target="_blank">Ryan Jimmo</a></td>
 <td>2/16/2013</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">UFC Fight Night: Hunt vs Bigfoot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">Fight Night: Hunt vs Bigfoot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2501UFC.html" target="_blank">James Te Huna vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ruamau01.html" target="_blank">Mauricio Rua</a></td>
 <td>12/6/2013</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0082FNI.html" target="_blank">UFC Fight Night: Te Huna vs Marquardt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0083FNI.html" target="_blank">Fight Night: Te Huna vs Marquardt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2766UFC.html" target="_blank">James Te Huna vs Nate Marquardt</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/marqunat01.html" target="_blank">Nate Marquardt</a></td>
 <td>6/28/2014</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">UFC Fight Night: Hunt vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">Fight Night: Hunt vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3589UFC.html" target="_blank">Steve Bosse vs James Te Huna</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bosseste01.html" target="_blank">Steve Bosse</a></td>
 <td>3/19/2016</td>

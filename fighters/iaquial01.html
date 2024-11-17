@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">The Ultimate Fighter LIVE Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">TUF 15 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1940UFC.html" target="_blank">Michael Chiesa vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
 <td>6/1/2012</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">UFC Fight Night: Machida vs Munoz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">Fight Night: Machida vs Munoz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2448UFC.html" target="_blank">Piotr Hallmann vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hallmpio01.html" target="_blank">Piotr Hallmann</a></td>
 <td>10/26/2013</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">UFC Fight Night: Souza vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">Fight Night: Souza vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2874UFC.html" target="_blank">Rodrigo Damm vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dammrodr01.html" target="_blank">Rodrigo Damm</a></td>
 <td>9/5/2014</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0094FNI.html" target="_blank">UFC Fight Night: Rockhold vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">Fight Night: Rockhold vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2947UFC.html" target="_blank">Al Iaquinta vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>11/7/2014</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">UFC Fight Night: Mendes vs Lamas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">Fight Night: Mendes vs Lamas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3127UFC.html" target="_blank">Al Iaquinta vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>4/4/2015</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4097UFC.html" target="_blank">Al Iaquinta vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchdie01.html" target="_blank">Diego Sanchez</a></td>
 <td>4/22/2017</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226PPV.html" target="_blank">UFC 223: Khabib vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226PPV.html" target="_blank">UFC 223: Khabib vs Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4539UFC.html" target="_blank">Al Iaquinta vs Khabib Nurmagomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nurmakha01.html" target="_blank">Khabib Nurmagomedov</a></td>
 <td>4/7/2018</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">UFC Fight Night: Lee vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC on Fox 31: Lee vs Iaquinta 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4885UFC.html" target="_blank">Al Iaquinta vs Kevin Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leekev01.html" target="_blank">Kevin Lee</a></td>
 <td>12/15/2018</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">UFC Fight Night: Iaquinta vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">Fight Night: Iaquinta vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5071UFC.html" target="_blank">Donald Cerrone vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
 <td>5/4/2019</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5303UFC.html" target="_blank">Dan Hooker vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hookedan01.html" target="_blank">Dan Hooker</a></td>
 <td>10/5/2019</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6321UFC.html" target="_blank">Bobby King Green vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greenbob01.html" target="_blank">Bobby King Green</a></td>
 <td>11/6/2021</td>

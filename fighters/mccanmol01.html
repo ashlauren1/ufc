@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">UFC Fight Night: Thompson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">Fight Night: Thompson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4608UFC.html" target="_blank">Molly McCann vs Gillian Robertson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/robergil01.html" target="_blank">Gillian Robertson</a></td>
 <td>5/27/2018</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">UFC Fight Night: Till vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0206FNI.html" target="_blank">Fight Night: Till vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5007UFC.html" target="_blank">Priscila Cachoeira vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cachopri01.html" target="_blank">Priscila Cachoeira</a></td>
 <td>3/16/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5142UFC.html" target="_blank">Ariane da Silva vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaari01.html" target="_blank">Ariane da Silva</a></td>
 <td>6/22/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0224FNI.html" target="_blank">UFC Fight Night: Reyes vs. Weidman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225FNI.html" target="_blank">Fight Night: Reyes vs Weidman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5334UFC.html" target="_blank">Diana Belbita vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/belbidia01.html" target="_blank">Diana Belbita</a></td>
 <td>10/18/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241FNI.html" target="_blank">UFC Fight Night: Kattar vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">Fight Night: Kattar vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5624UFC.html" target="_blank">Molly McCann vs Taila Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santotai01.html" target="_blank">Taila Santos</a></td>
 <td>7/15/2020</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">Fight Night: Overeem vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5925UFC.html" target="_blank">Molly McCann vs Lara Procopio</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/procolar01.html" target="_blank">Lara Procopio</a></td>
 <td>2/6/2021</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">UFC Fight Night: Brunson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281FNI.html" target="_blank">Fight Night: Brunson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6225UFC.html" target="_blank">Ji Yeon Kim vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kimji01.html" target="_blank">Ji Yeon Kim</a></td>
 <td>9/4/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295FNI.html" target="_blank">UFC Fight Night: Volkov vs. Aspinall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">Fight Night: Volkov vs Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6493UFC.html" target="_blank">Luana Carolina vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carollua01.html" target="_blank">Luana Carolina</a></td>
 <td>3/19/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Aspinall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">Fight Night: Blaydes vs Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6686UFC.html" target="_blank">Hannah Goldy vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goldyhan01.html" target="_blank">Hannah Goldy</a></td>
 <td>7/23/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6845UFC.html" target="_blank">Erin Blanchfield vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blanceri01.html" target="_blank">Erin Blanchfield</a></td>
 <td>11/12/2022</td>
@@ -742,7 +744,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">UFC Fight Night: Aspinall vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">Fight Night: Aspinall vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7196UFC.html" target="_blank">Molly McCann vs Julija Stoliarenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stolijul01.html" target="_blank">Julija Stoliarenko</a></td>
 <td>7/22/2023</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">UFC Fight Night: Dolidze vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0350FNI.html" target="_blank">Fight Night: Dolidze vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7451UFC.html" target="_blank">Diana Belbita vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/belbidia01.html" target="_blank">Diana Belbita</a></td>
 <td>2/3/2024</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs. Muhammad 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs Muhammad 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7725UFC.html" target="_blank">Bruna Brasil vs Molly McCann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brasibru01.html" target="_blank">Bruna Brasil</a></td>
 <td>7/27/2024</td>

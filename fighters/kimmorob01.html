@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">The Ultimate Fighter Finale: Team Rampage vs Team Forrest</a></td>
+<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">TUF 7 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0928UFC.html" target="_blank">Rob Kimmons vs Rob Yundt</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yundtrob01.html" target="_blank">Rob Yundt</a></td>
 <td>6/21/2008</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0016FNI.html" target="_blank">UFC Fight Night: Diaz vs Neer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0016FNI.html" target="_blank">Fight Night: Diaz vs Neer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0977UFC.html" target="_blank">Rob Kimmons vs Dan Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/milledan01.html" target="_blank">Dan Miller</a></td>
 <td>9/17/2008</td>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">Fight Night: Condit vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1097UFC.html" target="_blank">Rob Kimmons vs Joe Vedepo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vedepjoe01.html" target="_blank">Joe Vedepo</a></td>
 <td>4/1/2009</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC LIVE: Jones vs Matyushenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC on Versus 2: Jones vs Matyushenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1399UFC.html" target="_blank">Rob Kimmons vs Steve Steinbeiss</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/steinste01.html" target="_blank">Steve Steinbeiss</a></td>
 <td>8/1/2010</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027FNI.html" target="_blank">UFC on VERSUS: Sanchez vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027FNI.html" target="_blank">UFC on Versus 3: Sanchez vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1559UFC.html" target="_blank">Rob Kimmons vs Dongi Yang</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yangdon01.html" target="_blank">Dongi Yang</a></td>
 <td>3/3/2011</td>

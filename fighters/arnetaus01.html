@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0177FNI.html" target="_blank">UFC Fight Night: Jacare vs. Brunson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC on Fox 27: Jacare vs Brunson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4469UFC.html" target="_blank">Austin Arnett vs Cory Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandhcor01.html" target="_blank">Cory Sandhagen</a></td>
 <td>1/27/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">UFC Fight Night: Alvarez vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC on Fox 30: Alvarez vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4702UFC.html" target="_blank">Austin Arnett vs Hakeem Dawodu</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dawodhak01.html" target="_blank">Hakeem Dawodu</a></td>
 <td>7/28/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">UFC Fight Night: Magny vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">Fight Night: Magny vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4830UFC.html" target="_blank">Austin Arnett vs Humberto Bandenay</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bandehum01.html" target="_blank">Humberto Bandenay</a></td>
 <td>11/17/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4942UFC.html" target="_blank">Austin Arnett vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/youngsha01.html" target="_blank">Shane Young</a></td>
 <td>2/9/2019</td>

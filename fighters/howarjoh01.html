@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">The Ultimate Fighter: Heavyweights Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">TUF 10 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1240UFC.html" target="_blank">Dennis Hallman vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hallmden01.html" target="_blank">Dennis Hallman</a></td>
 <td>12/5/2009</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022FNI.html" target="_blank">UFC on Versus: Vera vs Jones</a></td>
+<td style="text-align:left"><a href="/ufc/events/0022FNI.html" target="_blank">UFC on Versus 1: Vera vs Jones</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1301UFC.html" target="_blank">John Howard vs Daniel Roberts</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberdan02.html" target="_blank">Daniel Roberts</a></td>
 <td>3/21/2010</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC LIVE: Jones vs Matyushenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC on Versus 2: Jones vs Matyushenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1392UFC.html" target="_blank">Jake Ellenberger vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>8/1/2010</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC Live on Versus: Kongo vs Barry</a></td>
+<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC on Versus 4: Kongo vs Barry</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1633UFC.html" target="_blank">Matt Brown vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownmat01.html" target="_blank">Matt Brown</a></td>
 <td>6/26/2011</td>
@@ -613,7 +615,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2362UFC.html" target="_blank">Uriah Hall vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/halluri01.html" target="_blank">Uriah Hall</a></td>
 <td>8/17/2013</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0075FNI.html" target="_blank">UFC Fight Night: Minotauro vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0075FNI.html" target="_blank">Fight Night: Minotauro vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2644UFC.html" target="_blank">John Howard vs Ryan LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/laflarya01.html" target="_blank">Ryan LaFlare</a></td>
 <td>4/11/2014</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0099FNI.html" target="_blank">UFC Fight Night: McGregor vs Siver</a></td>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">Fight Night: McGregor vs Siver</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3040UFC.html" target="_blank">John Howard vs Lorenz Larkin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/larkilor01.html" target="_blank">Lorenz Larkin</a></td>
 <td>1/18/2015</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">Fight Night: Namajunas vs VanZant</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3454UFC.html" target="_blank">John Howard vs Tim Means</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meanstim01.html" target="_blank">Tim Means</a></td>
 <td>12/10/2015</td>

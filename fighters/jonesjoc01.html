@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -313,8 +315,8 @@
 <tbody>
 <tr>
 <td style="text-align:left"><a href="/ufc/events/0197PPV.html" target="_blank">UFC 194: Aldo vs McGregor</a></td>
-<td style="text-align:left"><a href="/ufc/fights/3477UFC.html" target="_blank">Jocelyn Jones-Lybarger vs Tecia Torres</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/torretec01.html" target="_blank">Tecia Torres</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3477UFC.html" target="_blank">Jocelyn Jones-Lybarger vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/pennitec01.html" target="_blank">Tecia Pennington</a></td>
 <td>12/12/2015</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Women's Strawweight</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">UFC Fight Night: MacDonald vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">Fight Night: MacDonald vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3682UFC.html" target="_blank">Jocelyn Jones-Lybarger vs Randa Markos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/markoran01.html" target="_blank">Randa Markos</a></td>
 <td>6/18/2016</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Penn</a></td>
+<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">Fight Night: Rodriguez vs Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3987UFC.html" target="_blank">Nina Ansaroff vs Jocelyn Jones-Lybarger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ansarnin01.html" target="_blank">Nina Ansaroff</a></td>
 <td>1/15/2017</td>

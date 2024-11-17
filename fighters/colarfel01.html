@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4933UFC.html" target="_blank">Felipe Colares vs Geraldo de Freitas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/freitger01.html" target="_blank">Geraldo de Freitas</a></td>
 <td>2/2/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">Fight Night: Dos Anjos vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5192UFC.html" target="_blank">Felipe Colares vs Domingo Pilarte</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pilardom01.html" target="_blank">Domingo Pilarte</a></td>
 <td>7/20/2019</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">Fight Night: Blaydes vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5445UFC.html" target="_blank">Felipe Colares vs Montel Jackson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jacksmon01.html" target="_blank">Montel Jackson</a></td>
 <td>1/25/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6054UFC.html" target="_blank">Felipe Colares vs Luke Sanders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandeluk01.html" target="_blank">Luke Sanders</a></td>
 <td>5/1/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283FNI.html" target="_blank">UFC Fight Night: Dern vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0284FNI.html" target="_blank">Fight Night: Dern vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6272UFC.html" target="_blank">Felipe Colares vs Chris Gutierrez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gutiechr01.html" target="_blank">Chris Gutierrez</a></td>
 <td>10/9/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">UFC Fight Night: Holm vs. Vieira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">Fight Night: Holm vs Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6595UFC.html" target="_blank">Felipe Colares vs Chase Hooper</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hoopecha01.html" target="_blank">Chase Hooper</a></td>
 <td>5/21/2022</td>

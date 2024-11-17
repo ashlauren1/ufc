@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">The Ultimate Fighter 24 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">TUF 24 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3927UFC.html" target="_blank">Rob Font vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fontrob01.html" target="_blank">Rob Font</a></td>
 <td>12/3/2016</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4108UFC.html" target="_blank">Hector Sandoval vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandohec01.html" target="_blank">Hector Sandoval</a></td>
 <td>4/22/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4303UFC.html" target="_blank">Marco Beltran vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/beltrmar01.html" target="_blank">Marco Beltran</a></td>
 <td>10/7/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4645UFC.html" target="_blank">Naoki Inoue vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/inouenao01.html" target="_blank">Naoki Inoue</a></td>
 <td>6/23/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">Fight Night: Lewis vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4994UFC.html" target="_blank">Matt Schnell vs Louis Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smolklou01.html" target="_blank">Louis Smolka</a></td>
 <td>3/9/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">UFC Fight Night: Covington vs. Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">Fight Night: Covington vs Lawler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5212UFC.html" target="_blank">Jordan Espinosa vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/espinjor01.html" target="_blank">Jordan Espinosa</a></td>
 <td>8/3/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">UFC Fight Night: Edgar vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">Fight Night: Edgar vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5422UFC.html" target="_blank">Alexandre Pantoja vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pantoale01.html" target="_blank">Alexandre Pantoja</a></td>
 <td>12/21/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5896UFC.html" target="_blank">Tyson Nam vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namtys01.html" target="_blank">Tyson Nam</a></td>
 <td>1/20/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs. Chandler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs Chandler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6066UFC.html" target="_blank">Rogerio Bontorin vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bontorog01.html" target="_blank">Rogerio Bontorin</a></td>
 <td>5/15/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6568UFC.html" target="_blank">Brandon Royval vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/royvabra01.html" target="_blank">Brandon Royval</a></td>
 <td>5/7/2022</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6673UFC.html" target="_blank">Matt Schnell vs Su Mudaerji</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mudaesu01.html" target="_blank">Su Mudaerji</a></td>
 <td>7/16/2022</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0317FNI.html" target="_blank">UFC Fight Night: Thompson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">Fight Night: Thompson vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6865UFC.html" target="_blank">Matheus Nicolau vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nicolmat01.html" target="_blank">Matheus Nicolau</a></td>
 <td>12/3/2022</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0352FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gaziev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">Fight Night: Rozenstruik vs Gaziev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7500UFC.html" target="_blank">Steve Erceg vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ercegste01.html" target="_blank">Steve Erceg</a></td>
 <td>3/2/2024</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0368FNI.html" target="_blank">UFC Fight Night: Burns vs. Brady</a></td>
+<td style="text-align:left"><a href="/ufc/events/0369FNI.html" target="_blank">Fight Night: Burns vs Brady</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7782UFC.html" target="_blank">Cody Durden vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/durdecod01.html" target="_blank">Cody Durden</a></td>
 <td>9/7/2024</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,9 +314,9 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
-<td style="text-align:left"><a href="/ufc/fights/3139UFC.html" target="_blank">Joanne Calderwood vs Maryna Moroz</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/caldejoa01.html" target="_blank">Joanne Calderwood</a></td>
+<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3139UFC.html" target="_blank">Joanne Wood vs Maryna Moroz</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/woodjoa01.html" target="_blank">Joanne Wood</a></td>
 <td>4/11/2015</td>
 <td>Krakow, Poland</td>
 <td>Women's Strawweight</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">UFC Fight Night: Holloway vs Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">Fight Night: Holloway vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3350UFC.html" target="_blank">Valerie Letourneau vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/letouval01.html" target="_blank">Valerie Letourneau</a></td>
 <td>8/23/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3602UFC.html" target="_blank">Maryna Moroz vs Cristina Stanciu</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stanccri01.html" target="_blank">Cristina Stanciu</a></td>
 <td>4/10/2016</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Caceres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">Fight Night: Rodriguez vs Caceres</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3760UFC.html" target="_blank">Maryna Moroz vs Danielle Taylor</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/taylodan01.html" target="_blank">Danielle Taylor</a></td>
 <td>8/6/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">Fight Night: Chiesa vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4176UFC.html" target="_blank">Carla Esparza vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/esparcar01.html" target="_blank">Carla Esparza</a></td>
 <td>6/25/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4511UFC.html" target="_blank">Angela Hill vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>2/24/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">UFC Fight Night: Barboza vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">Fight Night: Barboza vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5032UFC.html" target="_blank">Sabina Mazo vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mazosab01.html" target="_blank">Sabina Mazo</a></td>
 <td>3/30/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">UFC Fight Night: Lee vs. Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">Fight Night: Lee vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5518UFC.html" target="_blank">Maryna Moroz vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvamay01.html" target="_blank">Mayra Bueno Silva</a></td>
 <td>3/14/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6470UFC.html" target="_blank">Mariya Agapova vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/agapomar01.html" target="_blank">Mariya Agapova</a></td>
 <td>3/5/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">UFC Fight Night: Nzechukwu vs. Cutelaba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0317FNI.html" target="_blank">Fight Night: Nzechukwu vs Cutelaba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6857UFC.html" target="_blank">Jennifer Maia vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiajen01.html" target="_blank">Jennifer Maia</a></td>
 <td>11/19/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs. O'Malley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7257UFC.html" target="_blank">Maryna Moroz vs Karine Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvakar01.html" target="_blank">Karine Silva</a></td>
 <td>8/19/2023</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301PPV.html" target="_blank">UFC 299: O'Malley vs. Vera 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0301PPV.html" target="_blank">UFC 299: O'Malley vs Vera 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7520UFC.html" target="_blank">Maryna Moroz vs Joanne Wood</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodjoa01.html" target="_blank">Joanne Wood</a></td>
 <td>3/9/2024</td>

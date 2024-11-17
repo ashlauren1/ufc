@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6519UFC.html" target="_blank">Josh Fremd vs Anthony Hernandez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaant01.html" target="_blank">Anthony Hernandez</a></td>
 <td>4/9/2022</td>
@@ -355,7 +357,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0314FNI.html" target="_blank">UFC Fight Night: Kattar vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0315FNI.html" target="_blank">Fight Night: Kattar vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6819UFC.html" target="_blank">Josh Fremd vs Tresean Gore</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goretre01.html" target="_blank">Tresean Gore</a></td>
 <td>10/29/2022</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">UFC Fight Night: Yan vs. Dvalishvili</a></td>
+<td style="text-align:left"><a href="/ufc/events/0324FNI.html" target="_blank">Fight Night: Yan vs Dvalishvili</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6995UFC.html" target="_blank">Sedriques Dumas vs Josh Fremd</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dumassed01.html" target="_blank">Sedriques Dumas</a></td>
 <td>3/11/2023</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7238UFC.html" target="_blank">Josh Fremd vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pickejam01.html" target="_blank">Jamie Pickett</a></td>
 <td>8/12/2023</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0340FNI.html" target="_blank">UFC Fight Night: Grasso vs. Shevchenko 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0341FNI.html" target="_blank">Fight Night: Grasso vs Shevchenko 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7300UFC.html" target="_blank">Josh Fremd vs Roman Kopylov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kopylrom01.html" target="_blank">Roman Kopylov</a></td>
 <td>9/16/2023</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC Fight Night: Namajunas vs. Cortez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">Fight Night: Namajunas vs Cortez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7706UFC.html" target="_blank">Josh Fremd vs Andre Petroski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/petroand01.html" target="_blank">Andre Petroski</a></td>
 <td>7/13/2024</td>

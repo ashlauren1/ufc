@@ -165,19 +165,8 @@ a:visited {
 }
 
 .suggestion:hover {
-    background-color: #f0f0f0;
+    background-color: #e9f1f1;
 }
-
-.min-filters {
-	width:100%;
-}
-
-.min-filters tr {
-	height: 38px;
-}
-
-
-
 
 	
 
@@ -201,135 +190,6 @@ a:visited {
 	cursor: pointer;
 }
 
-.button-container {
-	width: 95%;
-	margin: 6px auto 12px auto;
-	display: flex;
-	gap: 8px;
-	align-items: center;
-	flex-wrap: wrap;
-}
-
-.button-container button {
-	background-color: var(--box-background-color);
-	color: var(--text-color);
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	padding: 6px 10px;
-	font-size: 12px;
-	cursor: pointer;
-	transition: background-color 0.1s ease;
-}
-
-.button-container button:hover {
-	background-color: var(--hover-color);
-}
-
-
-#filter-row, #filter-row:hover {
-	background-color: #f2f2f2;
-	font-weight: 500;
-	cursor: pointer;
-}
-
-.filter-select {
-	width: 100%;
-	font-size: 11px;
-	background-color: #ffffff;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	cursor: pointer;
-}
-
-.filter-select option {
-	background-color: #f2f2f2;
-	width: 100%;
-	color: #000000;
-	cursor: pointer;
-}
-
-.subhead {
-	width: 95%;
-	margin: 0 auto;
-	overflow-x: auto;
-	gap: 8px;
-}
-
-.subhead h3 {
-	font-size: 14px;
-	margin: 4px auto;
-	font-weight: 500;
-}
-
-#table-container {
-	width: 95%;
-	margin: 12px auto 24px auto;
-	overflow-x: scroll;
-	gap: 36px;
-}
-
-
-
-/* BOXSCORES */
-#boxscore-container {
-	width: 100%;
-}
-
-#home-boxscore, #away-boxscore {
-	width: 100%;
-	border-collapse: collapse;
-	background-color: #ffffff;
-	color: var(--text-color);
-	min-width: 800px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 18px;
-	table-layout: auto;
-}
-
-
-#home-boxscore thead th, #away-boxscore thead th {
-	background-color: var(--box-background-color);
-	font-weight: 600;
-	padding: 8px 6px;
-	text-align: center;
-	border: 1px solid #ddd;
-	font-size: 10px;
-}
-
-.multiColHeaders {
-	background-color: var(--box-background-color);
-	font-weight: 700;
-	padding: 8px;
-	text-align: center;
-	font-size: 12px;
-	border: 1px solid #ddd;
-}
-
-#home-boxscore tbody tr:hover, #away-boxscore tbody tr:hover {
-	background-color: #eaf4f9;
-}
-
-#home-boxscore tbody td, #away-boxscore tbody td, #home-boxscore tfoot td, #away-boxscore tfoot td {
-	padding: 6px;
-	text-align: center;
-	border: 1px solid #ddd;
-	font-size: 10px;
-	font-weight: 500;
-}
-
-#home-boxscore tfoot, #away-boxscore tfoot {
-	background-color: var(--box-background-color);
-	font-weight: 600;
-	cursor: pointer;
-	padding: 8px 6px;
-	text-align: center;
-	font-size: 10px;
-}
-
-
-
-
 
 /* PLAYERS and H2H PAGES */
 #fighter-container, #H2H-container {
@@ -337,83 +197,130 @@ a:visited {
 }
 
 
-
+/* RANKING PAGE */
 
 #rank-index-container {
 	width: 95%;
 	margin: 12px auto 24px auto;
 	overflow-x: auto;
-	gap: 36px;
+	color: var(--text-color);
+	box-sizing: border-box;
 }
 
-#rank-index {
+#rank-index-container h3 {
+	color: #b81414;
+}
+
+/*
+Men's PFP
+Flyweight
+Bantamweight
+Featherweight
+Lightweight
+Welterweight
+Middleweight
+Light Heavyweight
+Heavyweight
+Women's PFP
+Women's Strawweight
+Women's Flyweight
+Women's Bantamweight
+*/
+
+#grouped-ranking-container {
+	width: 100%;
+	margin: 0px auto;
+    align-items: start;
+	margin: 0px auto;
+    padding: 12px 0; 
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.ranking-table {
+    flex: 0 0 50%;
+    border: 2px solid #ccc;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    margin: 0 10px;
+}
+
+.weight-class-rankings {
 	border-collapse: collapse;
-	background-color: #ffffff;
+	border: 2px solid #000;
+	background-color: #fff;
 	color: var(--text-color);
-	width: 100%;
-	margin: 8px auto;
+	margin: 12px auto;
 	box-sizing: border-box;
+	vertical-align: top;
+	table-layout: auto;
 }
 
-.rank-index {
-	color: var(--text-color);
-	width: 100%;
-	margin: 8px auto;
-	box-sizing: border-box;
-	font-size: 11px;
-}
-	
-
-#rank-index th {
-	background-color: var(--box-background-color);
+.weight-class-rankings th {
+	background-color: #e6e6e6;
+	color: #000;
 	font-weight: 600;
 	cursor: pointer;
 	padding: 6px;
 	text-align: center;
-	border: 1px solid #e0e0e0;
+	font-size: 12px;
+	border-bottom: 1px solid #000;
+}
+
+.weight-class-rankings th:nth-child(2), .weight-class-rankings th:nth-child(3) {
+	border-left: 1px solid #a6a6a6;
+	border-right: 1px solid #a6a6a6;
+}
+
+.weight-class-rankings th:hover {
+	background-color: #d6d6d6;
+}
+
+.weight-class-rankings td {
+	padding: 4px;
+	text-align: center;
 	font-size: 11px;
 }
 
-#rank-index th:hover {
-	background-color: var(--hover-color);
+.weight-class-rankings td:nth-child(2) {
+	width: 45%;
+	text-align: left;
+	border: 1px solid #a6a6a6;
 }
 
-#rank-index td {
-	padding: 8px;
-	text-align: center;
-	border: 1px solid #e0e0e0;
-	font-size: 10px;
-	font-weight: 500;
+.weight-class-rankings td:nth-child(3) {
+	width: 30%;
+	text-align: left;
+	border: 1px solid #a6a6a6;
 }
 
-#rank-index tr {
-	height: 32px;
-}
-
-
-#rank-index td:nth-child(1) {
-	width: 8%;
-}
-
-#rank-index td:nth-child(2) {
-	width: 5%;
-}
-
-#rank-index td:nth-child(3) {
-	width: 16%;
+.weight-class-rankings td:nth-child(4) {
+	width: 25%;
 	text-align: left;
 }
 
-#rank-index td:nth-child(4) {
-	width: 8%;
-	text-align: left;
+.weight-class-rankings tr {
+	height: 36px;
+	border-bottom: 1px solid #a6a6a6
 }
 
-#rank-index td:nth-child(6), #rank-index td:nth-child(7), #rank-index td:nth-child(8), #rank-index td:nth-child(9), #rank-index td:nth-child(10), #rank-index td:nth-child(11), #rank-index td:nth-child(12) {
-	width: 7%;
+.weight-class-rankings tr:nth-child(16) {
+	border-bottom: 2px solid #000;
+}
+
+.weight-class-rankings tr:nth-child(0), .weight-class-rankings tr:nth-child(1) {
+	border-top: 1px solid #000;
 }
 
 
+.champ-row {
+	background-color: #f2ddb1;
+	font-weight: 600;
+}
 
 
 /* INDEX.HTML */

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">UFC Fight Night: Korean Zombie vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">Fight Night: Korean Zombie vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4814UFC.html" target="_blank">Beneil Dariush vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dariuben01.html" target="_blank">Beneil Dariush</a></td>
 <td>11/10/2018</td>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5089UFC.html" target="_blank">Kurt Holobaugh vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holobkur01.html" target="_blank">Kurt Holobaugh</a></td>
 <td>5/11/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">Fight Night: Andrade vs Zhang</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5249UFC.html" target="_blank">Damir Ismagulov vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ismagdam01.html" target="_blank">Damir Ismagulov</a></td>
 <td>8/31/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">UFC Fight Night: Smith vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">Fight Night: Smith vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5537UFC.html" target="_blank">Michael Johnson vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmic01.html" target="_blank">Michael Johnson</a></td>
 <td>5/13/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">UFC Fight Night: Hall vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">Fight Night: Hall vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5804UFC.html" target="_blank">Bobby King Green vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greenbob01.html" target="_blank">Bobby King Green</a></td>
 <td>10/31/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">Fight Night: Rozenstruik vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5956UFC.html" target="_blank">Alexander Hernandez vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaale01.html" target="_blank">Alexander Hernandez</a></td>
 <td>2/27/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6152UFC.html" target="_blank">Islam Makhachev vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>7/17/2021</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0286FNI.html" target="_blank">UFC Fight Night: Holloway vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287FNI.html" target="_blank">Fight Night: Holloway vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6334UFC.html" target="_blank">Joel Alvarez vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alvarjoe01.html" target="_blank">Joel Alvarez</a></td>
 <td>11/13/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0304FNI.html" target="_blank">UFC Fight Night: Tsarukyan vs. Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">Fight Night: Tsarukyan vs Gamrot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6638UFC.html" target="_blank">Christos Giagos vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/giagochr01.html" target="_blank">Christos Giagos</a></td>
 <td>6/25/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6920UFC.html" target="_blank">Melquizael Costa vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costamel01.html" target="_blank">Melquizael Costa</a></td>
 <td>1/21/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0339FNI.html" target="_blank">UFC Fight Night: Gane vs. Spivac</a></td>
+<td style="text-align:left"><a href="/ufc/events/0340FNI.html" target="_blank">Fight Night: Gane vs Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7273UFC.html" target="_blank">Benoit Saint Denis vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/denisben01.html" target="_blank">Benoit Saint Denis</a></td>
 <td>9/2/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">UFC Fight Night: Tuivasa vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">Fight Night: Tuivasa vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7532UFC.html" target="_blank">Thiago Moises vs Mitch Ramirez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ramirmit01.html" target="_blank">Mitch Ramirez</a></td>
 <td>3/16/2024</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0361FNI.html" target="_blank">Fight Night: Cannonier vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7653UFC.html" target="_blank">Ludovit Klein vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kleinlud01.html" target="_blank">Ludovit Klein</a></td>
 <td>6/8/2024</td>

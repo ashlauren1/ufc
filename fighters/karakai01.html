@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">Fight Night: Dos Santos vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4869UFC.html" target="_blank">Elias Garcia vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garcieli01.html" target="_blank">Elias Garcia</a></td>
 <td>12/1/2018</td>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4943UFC.html" target="_blank">Kai Kara-France vs Raulian Paiva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/paivarau01.html" target="_blank">Raulian Paiva</a></td>
 <td>2/9/2019</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">Fight Night: Andrade vs Zhang</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5243UFC.html" target="_blank">Kai Kara-France vs Mark De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rosamar01.html" target="_blank">Mark De La Rosa</a></td>
 <td>8/31/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5410UFC.html" target="_blank">Kai Kara-France vs Brandon Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morenbra01.html" target="_blank">Brandon Moreno</a></td>
 <td>12/14/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">UFC Fight Night: Felder vs. Hooker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233FNI.html" target="_blank">Fight Night: Felder vs Hooker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5483UFC.html" target="_blank">Kai Kara-France vs Tyson Nam</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namtys01.html" target="_blank">Tyson Nam</a></td>
 <td>2/22/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs. Costa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5744UFC.html" target="_blank">Kai Kara-France vs Brandon Royval</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/royvabra01.html" target="_blank">Brandon Royval</a></td>
 <td>9/26/2020</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5968UFC.html" target="_blank">Rogerio Bontorin vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bontorog01.html" target="_blank">Rogerio Bontorin</a></td>
 <td>3/6/2021</td>
@@ -613,7 +615,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6367UFC.html" target="_blank">Cody Garbrandt vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garbrcod01.html" target="_blank">Cody Garbrandt</a></td>
 <td>12/11/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297FNI.html" target="_blank">Fight Night: Blaydes vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6504UFC.html" target="_blank">Askar Askarov vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askarask01.html" target="_blank">Askar Askarov</a></td>
 <td>3/26/2022</td>
@@ -699,7 +701,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs. Nunes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs Nunes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6697UFC.html" target="_blank">Kai Kara-France vs Brandon Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morenbra01.html" target="_blank">Brandon Moreno</a></td>
 <td>7/30/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0330FNI.html" target="_blank">UFC Fight Night: Kara-France vs. Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0331FNI.html" target="_blank">Fight Night: Kara-France vs Albazi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7108UFC.html" target="_blank">Amir Albazi vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/albazami01.html" target="_blank">Amir Albazi</a></td>
 <td>6/3/2023</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7757UFC.html" target="_blank">Steve Erceg vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ercegste01.html" target="_blank">Steve Erceg</a></td>
 <td>8/17/2024</td>

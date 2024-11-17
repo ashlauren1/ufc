@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">UFC Fight Night: Jacare vs. Hermansson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">Fight Night: Jacare vs Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5066UFC.html" target="_blank">Carla Esparza vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/esparcar01.html" target="_blank">Carla Esparza</a></td>
 <td>4/27/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">UFC Fight Night: Overeem vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">Fight Night: Overeem vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5398UFC.html" target="_blank">Virna Jandiroba vs Mallory Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martimal01.html" target="_blank">Mallory Martin</a></td>
 <td>12/7/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs. Cormier 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs Cormier 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5685UFC.html" target="_blank">Felice Herrig vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/herrifel01.html" target="_blank">Felice Herrig</a></td>
 <td>8/15/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5866UFC.html" target="_blank">Mackenzie Dern vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dernmac01.html" target="_blank">Mackenzie Dern</a></td>
 <td>12/12/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">UFC Fight Night: Jung vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">Fight Night: Jung vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6122UFC.html" target="_blank">Virna Jandiroba vs Kanako Murata</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muratkan01.html" target="_blank">Kanako Murata</a></td>
 <td>6/19/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6307UFC.html" target="_blank">Virna Jandiroba vs Amanda Ribas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ribasama01.html" target="_blank">Amanda Ribas</a></td>
 <td>10/30/2021</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Rakic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">Fight Night: Blachowicz vs Rakic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6583UFC.html" target="_blank">Angela Hill vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>5/14/2022</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7081UFC.html" target="_blank">Virna Jandiroba vs Marina Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
 <td>5/6/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">UFC Fight Night: Blanchfield vs. Fiorot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0356FNI.html" target="_blank">Fight Night: Blanchfield vs Fiorot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7554UFC.html" target="_blank">Loopy Godinez vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/godinloo01.html" target="_blank">Loopy Godinez</a></td>
 <td>3/30/2024</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">UFC Fight Night: Lemos vs. Jandiroba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">Fight Night: Lemos vs Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7708UFC.html" target="_blank">Virna Jandiroba vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lemosama01.html" target="_blank">Amanda Lemos</a></td>
 <td>7/20/2024</td>

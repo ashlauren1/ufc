@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">UFC Fight Night: Anderson vs. Blachowicz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">Fight Night: Anderson vs Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5473UFC.html" target="_blank">Tim Means vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meanstim01.html" target="_blank">Tim Means</a></td>
 <td>2/15/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">UFC Fight Night: Woodley vs. Burns</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238FNI.html" target="_blank">Fight Night: Woodley vs Burns</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5559UFC.html" target="_blank">Gabe Green vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greengab01.html" target="_blank">Gabe Green</a></td>
 <td>5/30/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">UFC Fight Night: Munhoz vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">Fight Night: Munhoz vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5694UFC.html" target="_blank">Dwight Grant vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grantdwi01.html" target="_blank">Dwight Grant</a></td>
 <td>8/22/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs. Perez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5840UFC.html" target="_blank">Nicolas Dalby vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dalbynic01.html" target="_blank">Nicolas Dalby</a></td>
 <td>11/21/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">UFC Fight Night: Vettori vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC on ABC 2: Vettori vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6012UFC.html" target="_blank">Mike Perry vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perrymik01.html" target="_blank">Mike Perry</a></td>
 <td>4/10/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6157UFC.html" target="_blank">Preston Parsons vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/parsopre01.html" target="_blank">Preston Parsons</a></td>
 <td>7/17/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">UFC Fight Night: Barboza vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">Fight Night: Barboza vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6211UFC.html" target="_blank">Kevin Lee vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leekev01.html" target="_blank">Kevin Lee</a></td>
 <td>8/28/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6758UFC.html" target="_blank">Li Jingliang vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jinglli01.html" target="_blank">Li Jingliang</a></td>
 <td>9/10/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0315FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Lemos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">Fight Night: Rodriguez vs Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6828UFC.html" target="_blank">Neil Magny vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
 <td>11/5/2022</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC on ABC 4: Rozenstruik vs Almeida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7087UFC.html" target="_blank">Ian Garry vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garryian01.html" target="_blank">Ian Garry</a></td>
 <td>5/13/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0362FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Aliskerov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC on ABC 6: Whittaker vs Aliskerov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7674UFC.html" target="_blank">Kelvin Gastelum vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
 <td>6/22/2024</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0370FNI.html" target="_blank">UFC Fight Night: Royval vs. Taira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0371FNI.html" target="_blank">Fight Night: Royval vs Taira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7831UFC.html" target="_blank">Alex Morono vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moronale01.html" target="_blank">Alex Morono</a></td>
 <td>10/12/2024</td>

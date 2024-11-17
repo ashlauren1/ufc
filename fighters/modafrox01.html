@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0018TUF.html" target="_blank">The Ultimate Fighter 18 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0018TUF.html" target="_blank">TUF 18 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2494UFC.html" target="_blank">Roxanne Modafferi vs Raquel Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penniraq01.html" target="_blank">Raquel Pennington</a></td>
 <td>11/30/2013</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">The Ultimate Fighter 26 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026TUF.html" target="_blank">TUF 26 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4378UFC.html" target="_blank">Roxanne Modafferi vs Nicco Montano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/montanic01.html" target="_blank">Nicco Montano</a></td>
 <td>12/1/2017</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028TUF.html" target="_blank">UFC - TUF 27 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">TUF 27 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4652UFC.html" target="_blank">Barb Honchak vs Roxanne Modafferi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/honchbar01.html" target="_blank">Barb Honchak</a></td>
 <td>7/6/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4805UFC.html" target="_blank">Sijara Eubanks vs Roxanne Modafferi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eubansij01.html" target="_blank">Sijara Eubanks</a></td>
 <td>11/3/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">UFC Fight Night: Overeem vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">Fight Night: Overeem vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5050UFC.html" target="_blank">Roxanne Modafferi vs Antonina Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shevcant01.html" target="_blank">Antonina Shevchenko</a></td>
 <td>4/20/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">Fight Night: Dos Anjos vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5189UFC.html" target="_blank">Jennifer Maia vs Roxanne Modafferi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiajen01.html" target="_blank">Jennifer Maia</a></td>
 <td>7/20/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5431UFC.html" target="_blank">Maycee Barber vs Roxanne Modafferi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbemay01.html" target="_blank">Maycee Barber</a></td>
 <td>1/18/2020</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240FNI.html" target="_blank">Fight Night: Blaydes vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5596UFC.html" target="_blank">Roxanne Modafferi vs Lauren Murphy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/murphlau01.html" target="_blank">Lauren Murphy</a></td>
 <td>6/20/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">UFC Fight Night: Waterson vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">Fight Night: Waterson vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5718UFC.html" target="_blank">Andrea Lee vs Roxanne Modafferi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leeand01.html" target="_blank">Andrea Lee</a></td>
 <td>9/12/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5895UFC.html" target="_blank">Viviane Araujo vs Roxanne Modafferi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/araujviv01.html" target="_blank">Viviane Araujo</a></td>
 <td>1/20/2021</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6251UFC.html" target="_blank">Roxanne Modafferi vs Taila Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santotai01.html" target="_blank">Taila Santos</a></td>
 <td>9/25/2021</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6431UFC.html" target="_blank">Roxanne Modafferi vs Casey O'Neill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oneicas01.html" target="_blank">Casey O'Neill</a></td>
 <td>2/12/2022</td>

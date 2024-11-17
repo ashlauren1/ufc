@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">The Ultimate Fighter: Team US vs Team UK Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">TUF 9 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1135UFC.html" target="_blank">DaMarques Johnson vs James Wilks</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wilksjam01.html" target="_blank">James Wilks</a></td>
 <td>6/20/2009</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC LIVE: Jones vs Matyushenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC on Versus 2: Jones vs Matyushenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1395UFC.html" target="_blank">DaMarques Johnson vs Matthew Riddle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riddlmat01.html" target="_blank">Matthew Riddle</a></td>
 <td>8/1/2010</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">UFC Fight Night: Fight for the Troops 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">Fight Night: Fight for the Troops 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1523UFC.html" target="_blank">Mike Guymon vs DaMarques Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guymomik01.html" target="_blank">Mike Guymon</a></td>
 <td>1/22/2011</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">UFC Fight Night Live: Nogueira vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">Fight Night: Nogueira vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1576UFC.html" target="_blank">DaMarques Johnson vs Amir Sadollah</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sadolami01.html" target="_blank">Amir Sadollah</a></td>
 <td>3/26/2011</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0033FNI.html" target="_blank">UFC on Fox: Velasquez vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0033FNI.html" target="_blank">UFC on Fox 1: Velasquez vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1756UFC.html" target="_blank">Clay Harvison vs DaMarques Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/harvicla01.html" target="_blank">Clay Harvison</a></td>
 <td>11/12/2011</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0038FNI.html" target="_blank">UFC on FUEL TV: Gustafsson vs Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0038FNI.html" target="_blank">UFC on Fuel TV 2: Gustafsson vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1883UFC.html" target="_blank">DaMarques Johnson vs John Maguire</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maguijoh01.html" target="_blank">John Maguire</a></td>
 <td>4/14/2012</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0044FNI.html" target="_blank">UFC on FOX: Shogun vs Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0044FNI.html" target="_blank">UFC on Fox 4: Shogun vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2019UFC.html" target="_blank">DaMarques Johnson vs Mike Swick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swickmik01.html" target="_blank">Mike Swick</a></td>
 <td>8/4/2012</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0045FNI.html" target="_blank">UFC on FUEL TV: Struve vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0045FNI.html" target="_blank">UFC on Fuel TV 5: Struve vs Miocic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2058UFC.html" target="_blank">DaMarques Johnson vs Gunnar Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nelsogun01.html" target="_blank">Gunnar Nelson</a></td>
 <td>9/29/2012</td>

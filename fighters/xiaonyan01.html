@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">UFC Fight Night: Bisping vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">Fight Night: Bisping vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4372UFC.html" target="_blank">Kailin Curran vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/currakai01.html" target="_blank">Kailin Curran</a></td>
 <td>11/25/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4644UFC.html" target="_blank">Viviane Pereira vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereiviv01.html" target="_blank">Viviane Pereira</a></td>
 <td>6/23/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Ngannou 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">Fight Night: Blaydes vs Ngannou 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4844UFC.html" target="_blank">Syuri Kondo vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kondosyu01.html" target="_blank">Syuri Kondo</a></td>
 <td>11/24/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0240PPV.html" target="_blank">UFC 238: Cejudo vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240PPV.html" target="_blank">UFC 238: Cejudo vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5129UFC.html" target="_blank">Angela Hill vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>6/8/2019</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">UFC Fight Night: Felder vs. Hooker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233FNI.html" target="_blank">Fight Night: Felder vs Hooker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5476UFC.html" target="_blank">Karolina Kowalkiewicz vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kowalkar01.html" target="_blank">Karolina Kowalkiewicz</a></td>
 <td>2/22/2020</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">UFC Fight Night: Santos vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">Fight Night: Santos vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5819UFC.html" target="_blank">Claudia Gadelha vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gadelcla01.html" target="_blank">Claudia Gadelha</a></td>
 <td>11/7/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271FNI.html" target="_blank">UFC Fight Night: Font vs. Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">Fight Night: Font vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6077UFC.html" target="_blank">Carla Esparza vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/esparcar01.html" target="_blank">Carla Esparza</a></td>
 <td>5/22/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6468UFC.html" target="_blank">Marina Rodriguez vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
 <td>3/5/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0312FNI.html" target="_blank">UFC Fight Night: Dern vs. Yan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0313FNI.html" target="_blank">Fight Night: Dern vs Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6782UFC.html" target="_blank">Mackenzie Dern vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dernmac01.html" target="_blank">Mackenzie Dern</a></td>
 <td>10/1/2022</td>
@@ -699,7 +701,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7075UFC.html" target="_blank">Jessica Andrade vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andrajes01.html" target="_blank">Jessica Andrade</a></td>
 <td>5/6/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7573UFC.html" target="_blank">Zhang Weili vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weilizha01.html" target="_blank">Zhang Weili</a></td>
 <td>4/13/2024</td>

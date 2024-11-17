@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("fakhrrin01", [{'date': '2022-06-04', 'SigStr': 45, 'knockdowns': 0, 'SigStrAtt': 61, 'takedown': 5, 'takedownAtt': 10, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 33, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2022-12-17', 'SigStr': 43, 'knockdowns': 1, 'SigStrAtt': 68, 'takedown': 7, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-07-01', 'SigStr': 11, 'knockdowns': 1, 'SigStrAtt': 17, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 8, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-11-04', 'SigStr': 87, 'knockdowns': 1, 'SigStrAtt': 186, 'takedown': 1, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 75, 'SigStrAttAg': 152, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 1}, {'date': '2024-06-22', 'SigStr': 68, 'knockdowns': 0, 'SigStrAtt': 134, 'takedown': 5, 'takedownAtt': 11, 'subAtt': 0, 'SigStrAg': 66, 'SigStrAttAg': 134, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("fakhrrin01", [{'date': '2022-06-04', 'SigStr': 45, 'knockdowns': 0, 'SigStrAtt': 61, 'takedown': 5, 'takedownAtt': 10, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 33, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2022-12-17', 'SigStr': 43, 'knockdowns': 1, 'SigStrAtt': 68, 'takedown': 7, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2023-07-01', 'SigStr': 11, 'knockdowns': 1, 'SigStrAtt': 17, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 8, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-11-04', 'SigStr': 87, 'knockdowns': 1, 'SigStrAtt': 186, 'takedown': 1, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 75, 'SigStrAttAg': 152, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 1}, {'date': '2024-06-22', 'SigStr': 68, 'knockdowns': 0, 'SigStrAtt': 134, 'takedown': 5, 'takedownAtt': 11, 'subAtt': 0, 'SigStrAg': 66, 'SigStrAttAg': 134, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2024-10-26', 'SigStr': 109, 'knockdowns': 0, 'SigStrAtt': 222, 'takedown': 2, 'takedownAtt': 19, 'subAtt': 0, 'SigStrAg': 107, 'SigStrAttAg': 246, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303FNI.html" target="_blank">Fight Night: Volkov vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6609UFC.html" target="_blank">Rinat Fakhretdinov vs Andreas Michailidis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/michaand01.html" target="_blank">Andreas Michailidis</a></td>
 <td>6/4/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6899UFC.html" target="_blank">Bryan Battle vs Rinat Fakhretdinov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/battlbry01.html" target="_blank">Bryan Battle</a></td>
 <td>12/17/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC Fight Night: Strickland vs. Magomedov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0334FNI.html" target="_blank">Fight Night: Strickland vs Magomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7163UFC.html" target="_blank">Rinat Fakhretdinov vs Kevin Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leekev01.html" target="_blank">Kevin Lee</a></td>
 <td>7/1/2023</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0344FNI.html" target="_blank">UFC Fight Night: Almeida vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0345FNI.html" target="_blank">Fight Night: Almeida vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7355UFC.html" target="_blank">Rinat Fakhretdinov vs Elizeu Zaleski dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoeli01.html" target="_blank">Elizeu Zaleski dos Santos</a></td>
 <td>11/4/2023</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0362FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Aliskerov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC on ABC 6: Whittaker vs Aliskerov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7679UFC.html" target="_blank">Nicolas Dalby vs Rinat Fakhretdinov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dalbynic01.html" target="_blank">Nicolas Dalby</a></td>
 <td>6/22/2024</td>
@@ -524,6 +526,49 @@
 <td>0</td>
 <td>4</td>
 <td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0310PPV.html" target="_blank">UFC 308: Topuria vs Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7873UFC.html" target="_blank">Rinat Fakhretdinov vs Carlos Leal</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/lealcar01.html" target="_blank">Carlos Leal</a></td>
+<td>10/26/2024</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Welterweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>109</td>
+<td>222</td>
+<td>49.10%</td>
+<td>2.42</td>
+<td>119</td>
+<td>236</td>
+<td>82</td>
+<td>184</td>
+<td>15</td>
+<td>26</td>
+<td>12</td>
+<td>12</td>
+<td>13</td>
+<td>25</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>19</td>
+<td>10.53%</td>
+<td>0</td>
+<td>0</td>
+<td>107</td>
+<td>246</td>
+<td>56.50%</td>
+<td>146</td>
+<td>292</td>
+<td>1</td>
+<td>4</td>
+<td>75.00%</td>
 <td>0</td>
 </tr>
 </tbody>

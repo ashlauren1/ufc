@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012TUF.html" target="_blank">The Ultimate Fighter 12: Team GSP vs Team Koscheck</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012TUF.html" target="_blank">TUF 12 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1486UFC.html" target="_blank">Kendall Grove vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/groveken01.html" target="_blank">Kendall Grove</a></td>
 <td>12/4/2010</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on FOX: Evans vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on Fox 2: Evans vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1828UFC.html" target="_blank">Demian Maia vs Chris Weidman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weidmchr01.html" target="_blank">Chris Weidman</a></td>
 <td>1/28/2012</td>
@@ -1000,7 +1002,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0062FNI.html" target="_blank">UFC Fight Night: Maia vs Shields</a></td>
+<td style="text-align:left"><a href="/ufc/events/0062FNI.html" target="_blank">Fight Night: Maia vs Shields</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2419UFC.html" target="_blank">Demian Maia vs Jake Shields</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shieljak01.html" target="_blank">Jake Shields</a></td>
 <td>10/9/2013</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019TUF.html" target="_blank">TUF Brazil Finale: Miocic vs Maldonado</a></td>
+<td style="text-align:left"><a href="/ufc/events/0079FNI.html" target="_blank">Fight Night: Miocic vs Maldonado</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2714UFC.html" target="_blank">Demian Maia vs Alexander Yakovlev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yakovale01.html" target="_blank">Alexander Yakovlev</a></td>
 <td>5/31/2014</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">UFC Fight Night: Maia vs LaFlare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">Fight Night: Maia vs LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3114UFC.html" target="_blank">Ryan LaFlare vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/laflarya01.html" target="_blank">Ryan LaFlare</a></td>
 <td>3/21/2015</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">UFC Fight Night: Maia vs. Condit</a></td>
+<td style="text-align:left"><a href="/ufc/events/0141FNI.html" target="_blank">UFC on Fox 21: Maia vs Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3779UFC.html" target="_blank">Carlos Condit vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/condicar01.html" target="_blank">Carlos Condit</a></td>
 <td>8/27/2016</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4111UFC.html" target="_blank">Demian Maia vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>5/13/2017</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs. Jones 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs Jones 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4229UFC.html" target="_blank">Demian Maia vs Tyron Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodltyr01.html" target="_blank">Tyron Woodley</a></td>
 <td>7/29/2017</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">UFC Fight Night: Brunson vs. Machida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">Fight Night: Brunson vs Machida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4318UFC.html" target="_blank">Colby Covington vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/covincol01.html" target="_blank">Colby Covington</a></td>
 <td>10/28/2017</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4586UFC.html" target="_blank">Demian Maia vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>5/19/2018</td>
@@ -1516,7 +1518,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4925UFC.html" target="_blank">Lyman Good vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goodlym01.html" target="_blank">Lyman Good</a></td>
 <td>2/2/2019</td>
@@ -1559,7 +1561,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0215FNI.html" target="_blank">Fight Night: Ngannou vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5146UFC.html" target="_blank">Demian Maia vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martiant01.html" target="_blank">Anthony Rocco Martin</a></td>
 <td>6/29/2019</td>
@@ -1602,7 +1604,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225FNI.html" target="_blank">UFC Fight Night: Maia vs. Askren</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">Fight Night: Maia vs Askren</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5345UFC.html" target="_blank">Ben Askren vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askreben01.html" target="_blank">Ben Askren</a></td>
 <td>10/26/2019</td>
@@ -1645,7 +1647,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">UFC Fight Night: Lee vs. Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">Fight Night: Lee vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5510UFC.html" target="_blank">Gilbert Burns vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burnsgil01.html" target="_blank">Gilbert Burns</a></td>
 <td>3/14/2020</td>
@@ -1688,7 +1690,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs. Vettori 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs Vettori 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6104UFC.html" target="_blank">Demian Maia vs Belal Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muhambel01.html" target="_blank">Belal Muhammad</a></td>
 <td>6/12/2021</td>

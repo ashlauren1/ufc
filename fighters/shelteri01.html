@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4001UFC.html" target="_blank">Alexandre Pantoja vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pantoale01.html" target="_blank">Alexandre Pantoja</a></td>
 <td>1/28/2017</td>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs. Jones 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs Jones 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4238UFC.html" target="_blank">Jarred Brooks vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brookjar01.html" target="_blank">Jarred Brooks</a></td>
 <td>7/29/2017</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">Fight Night: Werdum vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4364UFC.html" target="_blank">Jenel Lausa vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lausajen01.html" target="_blank">Jenel Lausa</a></td>
 <td>11/18/2017</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4515UFC.html" target="_blank">Alex Perez vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perezale01.html" target="_blank">Alex Perez</a></td>
 <td>2/24/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">UFC Fight Night: Korean Zombie vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">Fight Night: Korean Zombie vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4821UFC.html" target="_blank">Joseph Morales vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraljos01.html" target="_blank">Joseph Morales</a></td>
 <td>11/10/2018</td>
@@ -527,7 +529,7 @@
 <td>4</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206FNI.html" target="_blank">UFC Fight Night: Thompson vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">Fight Night: Thompson vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5020UFC.html" target="_blank">Jordan Espinosa vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/espinjor01.html" target="_blank">Jordan Espinosa</a></td>
 <td>3/23/2019</td>

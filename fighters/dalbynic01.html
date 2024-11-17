@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3214UFC.html" target="_blank">Nicolas Dalby vs Elizeu Zaleski dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoeli01.html" target="_blank">Elizeu Zaleski dos Santos</a></td>
 <td>5/30/2015</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">Fight Night: Holohan vs Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3392UFC.html" target="_blank">Nicolas Dalby vs Darren Till</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tilldar01.html" target="_blank">Darren Till</a></td>
 <td>10/24/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3603UFC.html" target="_blank">Zak Cummings vs Nicolas Dalby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummizak01.html" target="_blank">Zak Cummings</a></td>
 <td>4/10/2016</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0141FNI.html" target="_blank">UFC Fight Night: Arlovski vs. Barnett</a></td>
+<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">Fight Night: Arlovski vs Barnett</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3794UFC.html" target="_blank">Nicolas Dalby vs Peter Sobotta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sobotpet01.html" target="_blank">Peter Sobotta</a></td>
 <td>9/3/2016</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5294UFC.html" target="_blank">Nicolas Dalby vs Alex Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oliveale01.html" target="_blank">Alex Oliveira</a></td>
 <td>9/28/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">Fight Night: Whittaker vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5652UFC.html" target="_blank">Nicolas Dalby vs Jesse Ronson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ronsojes01.html" target="_blank">Jesse Ronson</a></td>
 <td>7/25/2020</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs. Perez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5840UFC.html" target="_blank">Nicolas Dalby vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodridan01.html" target="_blank">Daniel Rodriguez</a></td>
 <td>11/21/2020</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">UFC Fight Night: Gane vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">Fight Night: Gane vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6131UFC.html" target="_blank">Nicolas Dalby vs Tim Means</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meanstim01.html" target="_blank">Tim Means</a></td>
 <td>6/26/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Aspinall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">Fight Night: Blaydes vs Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6695UFC.html" target="_blank">Nicolas Dalby vs Claudio Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvacla01.html" target="_blank">Claudio Silva</a></td>
 <td>7/23/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6925UFC.html" target="_blank">Warlley Alves vs Nicolas Dalby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alveswar01.html" target="_blank">Warlley Alves</a></td>
 <td>1/21/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0331FNI.html" target="_blank">UFC Fight Night: Vettori vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">Fight Night: Vettori vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7137UFC.html" target="_blank">Nicolas Dalby vs Muslim Salikhov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/salikmus01.html" target="_blank">Muslim Salikhov</a></td>
 <td>6/17/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0344FNI.html" target="_blank">UFC Fight Night: Almeida vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0345FNI.html" target="_blank">Fight Night: Almeida vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7351UFC.html" target="_blank">Gabriel Bonfim vs Nicolas Dalby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bonfigab01.html" target="_blank">Gabriel Bonfim</a></td>
 <td>11/4/2023</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0362FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Aliskerov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC on ABC 6: Whittaker vs Aliskerov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7679UFC.html" target="_blank">Nicolas Dalby vs Rinat Fakhretdinov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fakhrrin01.html" target="_blank">Rinat Fakhretdinov</a></td>
 <td>6/22/2024</td>

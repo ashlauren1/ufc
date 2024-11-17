@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">The Ultimate Fighter LIVE Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">TUF 15 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1940UFC.html" target="_blank">Michael Chiesa vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/iaquial01.html" target="_blank">Al Iaquinta</a></td>
 <td>6/1/2012</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2338UFC.html" target="_blank">Michael Chiesa vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>7/27/2013</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">UFC Fight Night: Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">Fight Night: Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2458UFC.html" target="_blank">Michael Chiesa vs Colton Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smithcol02.html" target="_blank">Colton Smith</a></td>
 <td>11/6/2013</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">UFC Fight Night: Souza vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">Fight Night: Souza vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2872UFC.html" target="_blank">Michael Chiesa vs Joe Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lauzojoe01.html" target="_blank">Joe Lauzon</a></td>
 <td>9/5/2014</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">UFC Fight Night: Mendes vs Lamas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">Fight Night: Mendes vs Lamas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3128UFC.html" target="_blank">Michael Chiesa vs Mitch Clarke</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/clarkmit01.html" target="_blank">Mitch Clarke</a></td>
 <td>4/4/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">Fight Night: Namajunas vs VanZant</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3451UFC.html" target="_blank">Michael Chiesa vs Jim Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>12/10/2015</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">Fight Night: Chiesa vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4168UFC.html" target="_blank">Michael Chiesa vs Kevin Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leekev01.html" target="_blank">Kevin Lee</a></td>
 <td>6/25/2017</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229PPV.html" target="_blank">UFC 226: Miocic vs. Cormier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229PPV.html" target="_blank">UFC 226: Miocic vs Cormier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4663UFC.html" target="_blank">Michael Chiesa vs Anthony Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pettiant01.html" target="_blank">Anthony Pettis</a></td>
 <td>7/7/2018</td>
@@ -742,7 +744,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs Gustafsson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4899UFC.html" target="_blank">Michael Chiesa vs Carlos Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/condicar01.html" target="_blank">Carlos Condit</a></td>
 <td>12/29/2018</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5160UFC.html" target="_blank">Michael Chiesa vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchdie01.html" target="_blank">Diego Sanchez</a></td>
 <td>7/6/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">Fight Night: Blaydes vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5438UFC.html" target="_blank">Rafael Dos Anjos vs Michael Chiesa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>1/25/2020</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5892UFC.html" target="_blank">Michael Chiesa vs Neil Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
 <td>1/20/2021</td>
@@ -914,7 +916,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6185UFC.html" target="_blank">Michael Chiesa vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/luquevic01.html" target="_blank">Vicente Luque</a></td>
 <td>8/7/2021</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287FNI.html" target="_blank">UFC Fight Night: Vieira vs. Tate</a></td>
+<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">Fight Night: Vieira vs Tate</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6341UFC.html" target="_blank">Sean Brady vs Michael Chiesa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bradysea01.html" target="_blank">Sean Brady</a></td>
 <td>11/20/2021</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0293PPV.html" target="_blank">UFC 291: Poirier vs. Gaethje 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293PPV.html" target="_blank">UFC 291: Poirier vs Gaethje 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7214UFC.html" target="_blank">Michael Chiesa vs Kevin Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollakev01.html" target="_blank">Kevin Holland</a></td>
 <td>7/29/2023</td>
@@ -1043,7 +1045,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Nurmagomedov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC on ABC 7: Sandhagen vs Nurmagomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7736UFC.html" target="_blank">Michael Chiesa vs Tony Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferguton01.html" target="_blank">Tony Ferguson</a></td>
 <td>8/3/2024</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">UFC Fight Night: Teixeira vs Evans</a></td>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC on Fox 19: Teixeira vs Evans</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7854UFC.html" target="_blank">Michael Chiesa vs Beneil Dariush</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dariuben01.html" target="_blank">Beneil Dariush</a></td>
 <td>4/16/2016</td>

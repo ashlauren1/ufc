@@ -13,11 +13,13 @@
 
         let fighterLinks = {};
         let eventLinks = {};
+        let fightLinks = {};
 
         // Load JSON files
         async function loadLinks() {
             fighterLinks = await fetch('fighters.json').then(response => response.json());
             eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
         }
 
         await loadLinks();
@@ -29,7 +31,7 @@
 
             if (query === "") return;
 
-            const combinedLinks = { ...fighterLinks, ...eventLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))
                 .slice(0, 5); // Limit to top 5
@@ -73,21 +75,21 @@
 </head>
 <body>
     <div class="topnav">
-        <a href="/ufc/">Projections</a>
+        <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/fights/">Fights and Results</a>
         <a href="/ufc/stats/">Stats</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for a fighter or event...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
     <div class="header">
         <h1>Jan Blachowicz vs Dominick Reyes</h1>
-        <h2>UFC 253: Adesanya vs. Costa - 9/26/2020</h2>
+        <h2>UFC 253: Adesanya vs Costa - 9/26/2020</h2>
         <h2>Abu Dhabi, Abu Dhabi, United Arab Emirates</h2>
     </div>
     <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
@@ -140,6 +142,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -182,6 +185,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>9.0</td>
                 <td>10</td>
                 <td>20</td>
                 <td>50.00%</td>
@@ -222,6 +226,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>27.6</td>
                 <td>11</td>
                 <td>31</td>
                 <td>64.52%</td>
@@ -259,6 +264,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>111.6 (36.6 pts + 75.0 pts for winning)</td>
                 <td>21</td>
                 <td>51</td>
                 <td>58.82%</td>
@@ -311,6 +317,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -353,6 +360,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>6.0</td>
                 <td>15</td>
                 <td>36</td>
                 <td>58.33%</td>
@@ -393,6 +401,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>6.6</td>
                 <td>26</td>
                 <td>53</td>
                 <td>50.94%</td>
@@ -430,6 +439,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>12.6 (12.6 pts + 0.0 pts for winning)</td>
                 <td>41</td>
                 <td>89</td>
                 <td>53.93%</td>

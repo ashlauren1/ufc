@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs. Thompson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs Thompson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4046UFC.html" target="_blank">Albert Morales vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moralalb01.html" target="_blank">Albert Morales</a></td>
 <td>3/4/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC Fight Night: Pettis vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">Fight Night: Pettis vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4245UFC.html" target="_blank">Alejandro Perez vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perezale02.html" target="_blank">Alejandro Perez</a></td>
 <td>8/5/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4409UFC.html" target="_blank">Luke Sanders vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandeluk01.html" target="_blank">Luke Sanders</a></td>
 <td>12/9/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4519UFC.html" target="_blank">Sean O'Malley vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/omalsea01.html" target="_blank">Sean O'Malley</a></td>
 <td>3/3/2018</td>
@@ -484,7 +486,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">UFC Fight Night: Oezdemir vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">Fight Night: Oezdemir vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4789UFC.html" target="_blank">Jonathan Martinez vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martijon01.html" target="_blank">Jonathan Martinez</a></td>
 <td>10/27/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5044UFC.html" target="_blank">Montel Jackson vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jacksmon01.html" target="_blank">Montel Jackson</a></td>
 <td>4/13/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">Fight Night: Andrade vs Zhang</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5247UFC.html" target="_blank">Su Mudaerji vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mudaesu01.html" target="_blank">Su Mudaerji</a></td>
 <td>8/31/2019</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("nascirod01", [{'date': '2020-05-16', 'SigStr': 32, 'knockdowns': 0, 'SigStrAtt': 52, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 27, 'SigStrAttAg': 48, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-10-10', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 4, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 21, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-07-17', 'SigStr': 49, 'knockdowns': 0, 'SigStrAtt': 83, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 60, 'SigStrAttAg': 91, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-09-17', 'SigStr': 36, 'knockdowns': 0, 'SigStrAtt': 86, 'takedown': 3, 'takedownAtt': 7, 'subAtt': 1, 'SigStrAg': 62, 'SigStrAttAg': 115, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-05-20', 'SigStr': 68, 'knockdowns': 0, 'SigStrAtt': 152, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 49, 'SigStrAttAg': 77, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2023-11-04', 'SigStr': 70, 'knockdowns': 0, 'SigStrAtt': 154, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 79, 'SigStrAttAg': 159, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2024-05-11', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 75, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("nascirod01", [{'date': '2020-05-16', 'SigStr': 32, 'knockdowns': 0, 'SigStrAtt': 52, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 27, 'SigStrAttAg': 48, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-10-10', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 4, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 13, 'SigStrAttAg': 21, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-07-17', 'SigStr': 49, 'knockdowns': 0, 'SigStrAtt': 83, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 60, 'SigStrAttAg': 91, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-09-17', 'SigStr': 36, 'knockdowns': 0, 'SigStrAtt': 86, 'takedown': 3, 'takedownAtt': 7, 'subAtt': 1, 'SigStrAg': 62, 'SigStrAttAg': 115, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-05-20', 'SigStr': 68, 'knockdowns': 0, 'SigStrAtt': 152, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 49, 'SigStrAttAg': 77, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2023-11-04', 'SigStr': 70, 'knockdowns': 0, 'SigStrAtt': 154, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 79, 'SigStrAttAg': 159, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2024-05-11', 'SigStr': 27, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 75, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2024-11-02', 'SigStr': 31, 'knockdowns': 0, 'SigStrAtt': 91, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 45, 'SigStrAttAg': 92, 'TDAg': 6, 'TDAttAg': 10, 'SubAttAg': 1}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">UFC Fight Night: Overeem vs. Harris</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">Fight Night: Overeem vs Harris</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5552UFC.html" target="_blank">Don'Tale Mayes vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mayesdon01.html" target="_blank">Don'Tale Mayes</a></td>
 <td>5/16/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">UFC Fight Night: Moraes vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">Fight Night: Moraes vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5771UFC.html" target="_blank">Chris Daukaus vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/daukachr01.html" target="_blank">Chris Daukaus</a></td>
 <td>10/10/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6161UFC.html" target="_blank">Alan Baudot vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baudoala01.html" target="_blank">Alan Baudot</a></td>
 <td>7/17/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Song</a></td>
+<td style="text-align:left"><a href="/ufc/events/0312FNI.html" target="_blank">Fight Night: Sandhagen vs Song</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6773UFC.html" target="_blank">Tanner Boser vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bosertan01.html" target="_blank">Tanner Boser</a></td>
 <td>9/17/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC Fight Night: Dern vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0330FNI.html" target="_blank">Fight Night: Dern vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7104UFC.html" target="_blank">Ilir Latifi vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/latifili01.html" target="_blank">Ilir Latifi</a></td>
 <td>5/20/2023</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0344FNI.html" target="_blank">UFC Fight Night: Almeida vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0345FNI.html" target="_blank">Fight Night: Almeida vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7352UFC.html" target="_blank">Don'Tale Mayes vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mayesdon01.html" target="_blank">Don'Tale Mayes</a></td>
 <td>11/4/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/events/0359FNI.html" target="_blank">Fight Night: Lewis vs Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7611UFC.html" target="_blank">Derrick Lewis vs Rodrigo Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lewisder01.html" target="_blank">Derrick Lewis</a></td>
 <td>5/11/2024</td>
@@ -611,6 +613,49 @@
 <td>4</td>
 <td>75.00%</td>
 <td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0374FNI.html" target="_blank">Fight Night: Moreno vs Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7900UFC.html" target="_blank">Alexandr Romanov vs Rodrigo Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/romanale01.html" target="_blank">Alexandr Romanov</a></td>
+<td>11/2/2024</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Heavyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>31</td>
+<td>91</td>
+<td>34.07%</td>
+<td>0.69</td>
+<td>48</td>
+<td>108</td>
+<td>19</td>
+<td>77</td>
+<td>7</td>
+<td>9</td>
+<td>5</td>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>45</td>
+<td>92</td>
+<td>51.09%</td>
+<td>87</td>
+<td>135</td>
+<td>6</td>
+<td>10</td>
+<td>40.00%</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC on ABC 5: Emmett vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7153UFC.html" target="_blank">Joshua Van vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zhumazha01.html" target="_blank">Zhalgas Zhumagulov</a></td>
 <td>6/24/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7371UFC.html" target="_blank">Kevin Borjas vs Joshua Van</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/borjakev01.html" target="_blank">Kevin Borjas</a></td>
 <td>11/11/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">UFC Fight Night: Ankalaev vs. Walker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">Fight Night: Ankalaev vs Walker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7432UFC.html" target="_blank">Felipe Bunes vs Joshua Van</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bunesfel01.html" target="_blank">Felipe Bunes</a></td>
 <td>1/13/2024</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC Fight Night: Namajunas vs. Cortez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">Fight Night: Namajunas vs Cortez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7702UFC.html" target="_blank">Charles Johnson vs Joshua Van</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnscha01.html" target="_blank">Charles Johnson</a></td>
 <td>7/13/2024</td>

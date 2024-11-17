@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0005TUF.html" target="_blank">The Ultimate Fighter 5 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0005TUF.html" target="_blank">TUF 5 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0747UFC.html" target="_blank">Nate Diaz vs Manvel Gamburyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gambuman01.html" target="_blank">Manvel Gamburyan</a></td>
 <td>6/23/2007</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">UFC Fight Night: Thomas vs Florian</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">Fight Night: Thomas vs Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0784UFC.html" target="_blank">Junior Assuncao vs Nate Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/assunjun01.html" target="_blank">Junior Assuncao</a></td>
 <td>9/19/2007</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0013FNI.html" target="_blank">UFC Fight Night: Swick vs Burkman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0013FNI.html" target="_blank">Fight Night: Swick vs Burkman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0849UFC.html" target="_blank">Nate Diaz vs Alvin Robinson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/robinalv01.html" target="_blank">Alvin Robinson</a></td>
 <td>1/23/2008</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">UFC Fight Night: Florian vs Lauzon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">Fight Night: Florian vs Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0878UFC.html" target="_blank">Nate Diaz vs Kurt Pellegrino</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pellekur01.html" target="_blank">Kurt Pellegrino</a></td>
 <td>4/2/2008</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0016FNI.html" target="_blank">UFC Fight Night: Diaz vs Neer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0016FNI.html" target="_blank">Fight Night: Diaz vs Neer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0968UFC.html" target="_blank">Nate Diaz vs Josh Neer</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/neerjosh01.html" target="_blank">Josh Neer</a></td>
 <td>9/17/2008</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">The Ultimate Fighter: Team US vs Team UK Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">TUF 9 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1138UFC.html" target="_blank">Nate Diaz vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stevejoe01.html" target="_blank">Joe Stevenson</a></td>
 <td>6/20/2009</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">UFC Fight Night: Diaz vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">Fight Night: Diaz vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1177UFC.html" target="_blank">Nate Diaz vs Melvin Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guillmel01.html" target="_blank">Melvin Guillard</a></td>
 <td>9/16/2009</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">UFC Fight Night: Maynard vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">Fight Night: Maynard vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1263UFC.html" target="_blank">Nate Diaz vs Gray Maynard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maynagra01.html" target="_blank">Gray Maynard</a></td>
 <td>1/11/2010</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0039FNI.html" target="_blank">UFC on FOX: Diaz vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0039FNI.html" target="_blank">UFC on Fox 3: Diaz vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1903UFC.html" target="_blank">Nate Diaz vs Jim Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>5/5/2012</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox: Henderson vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox 5: Henderson vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2103UFC.html" target="_blank">Nate Diaz vs Benson Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hendeben01.html" target="_blank">Benson Henderson</a></td>
 <td>12/8/2012</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on FOX: Henderson vs Melendez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on Fox 7: Henderson vs Melendez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2254UFC.html" target="_blank">Nate Diaz vs Josh Thomson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thomsjos01.html" target="_blank">Josh Thomson</a></td>
 <td>4/20/2013</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0018TUF.html" target="_blank">The Ultimate Fighter 18 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0018TUF.html" target="_blank">TUF 18 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2490UFC.html" target="_blank">Nate Diaz vs Gray Maynard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maynagra01.html" target="_blank">Gray Maynard</a></td>
 <td>11/30/2013</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">UFC on FOX: Dos Anjos vs. Cowboy 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC on Fox 17: Dos Anjos vs Cowboy 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3486UFC.html" target="_blank">Nate Diaz vs Michael Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmic01.html" target="_blank">Michael Johnson</a></td>
 <td>12/19/2015</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0205PPV.html" target="_blank">UFC 202: Diaz vs. McGregor 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205PPV.html" target="_blank">UFC 202: Diaz vs McGregor 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3767UFC.html" target="_blank">Nate Diaz vs Conor McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcgrecon01.html" target="_blank">Conor McGregor</a></td>
 <td>8/20/2016</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243PPV.html" target="_blank">UFC 241: Cormier vs. Miocic 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243PPV.html" target="_blank">UFC 241: Cormier vs Miocic 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5229UFC.html" target="_blank">Nate Diaz vs Anthony Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pettiant01.html" target="_blank">Anthony Pettis</a></td>
 <td>8/17/2019</td>
@@ -1301,7 +1303,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs. Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5351UFC.html" target="_blank">Nate Diaz vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>11/2/2019</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs. Vettori 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs Vettori 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6103UFC.html" target="_blank">Nate Diaz vs Leon Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edwarleo01.html" target="_blank">Leon Edwards</a></td>
 <td>6/12/2021</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6756UFC.html" target="_blank">Nate Diaz vs Tony Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferguton01.html" target="_blank">Tony Ferguson</a></td>
 <td>9/10/2022</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0098FNI.html" target="_blank">UFC on Fox 13: Dos Santos vs Miocic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7862UFC.html" target="_blank">Rafael Dos Anjos vs Nate Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>12/13/2014</td>

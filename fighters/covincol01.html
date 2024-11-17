@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">UFC Fight Night: Bisping vs Le</a></td>
+<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">Fight Night: Bisping vs Le</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2857UFC.html" target="_blank">Colby Covington vs Wang Anying</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wangan01.html" target="_blank">Wang Anying</a></td>
 <td>8/23/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2966UFC.html" target="_blank">Colby Covington vs Wagner Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvawag01.html" target="_blank">Wagner Silva</a></td>
 <td>11/8/2014</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">UFC Fight Night: MacDonald vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">Fight Night: MacDonald vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3683UFC.html" target="_blank">Colby Covington vs Jonathan Meunier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meunijon01.html" target="_blank">Jonathan Meunier</a></td>
 <td>6/18/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0205PPV.html" target="_blank">UFC 202: Diaz vs. McGregor 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205PPV.html" target="_blank">UFC 202: Diaz vs McGregor 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3777UFC.html" target="_blank">Colby Covington vs Max Griffin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/griffmax01.html" target="_blank">Max Griffin</a></td>
 <td>8/20/2016</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC on Fox 22: VanZant vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3962UFC.html" target="_blank">Bryan Barberena vs Colby Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbebry01.html" target="_blank">Bryan Barberena</a></td>
 <td>12/17/2016</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4158UFC.html" target="_blank">Colby Covington vs Dong Hyun Kim</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kimdon01.html" target="_blank">Dong Hyun Kim</a></td>
 <td>6/17/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">UFC Fight Night: Brunson vs. Machida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">Fight Night: Brunson vs Machida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4318UFC.html" target="_blank">Colby Covington vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiadem01.html" target="_blank">Demian Maia</a></td>
 <td>10/28/2017</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs Romero 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4623UFC.html" target="_blank">Rafael Dos Anjos vs Colby Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>6/9/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">UFC Fight Night: Covington vs. Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">Fight Night: Covington vs Lawler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5204UFC.html" target="_blank">Colby Covington vs Robbie Lawler</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
 <td>8/3/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5400UFC.html" target="_blank">Colby Covington vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>12/14/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">Fight Night: Covington vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5728UFC.html" target="_blank">Colby Covington vs Tyron Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodltyr01.html" target="_blank">Tyron Woodley</a></td>
 <td>9/19/2020</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6315UFC.html" target="_blank">Colby Covington vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>11/6/2021</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6462UFC.html" target="_blank">Colby Covington vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>3/5/2022</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7410UFC.html" target="_blank">Colby Covington vs Leon Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edwarleo01.html" target="_blank">Leon Edwards</a></td>
 <td>12/16/2023</td>

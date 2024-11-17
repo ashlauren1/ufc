@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0041FNI.html" target="_blank">UFC on FX: Johnson vs McCall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0041FNI.html" target="_blank">UFC on FX 3: Johnson vs McCall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1958UFC.html" target="_blank">Caio Magalhaes vs Buddy Roberts</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberbud01.html" target="_blank">Buddy Roberts</a></td>
 <td>6/8/2012</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on FUEL TV 10</a></td>
+<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on Fuel TV 10: Nogueira vs Werdum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2310UFC.html" target="_blank">Caio Magalhaes vs Karlos Vemola</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vemolkar01.html" target="_blank">Karlos Vemola</a></td>
 <td>6/8/2013</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">UFC Fight Night: Hunt vs Bigfoot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">Fight Night: Hunt vs Bigfoot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2507UFC.html" target="_blank">Caio Magalhaes vs Nick Ring</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ringnick01.html" target="_blank">Nick Ring</a></td>
 <td>12/6/2013</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox 11: Werdum vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2671UFC.html" target="_blank">Caio Magalhaes vs Luke Zachrich</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zachrluk01.html" target="_blank">Luke Zachrich</a></td>
 <td>4/19/2014</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2963UFC.html" target="_blank">Caio Magalhaes vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smithtre01.html" target="_blank">Trevor Smith</a></td>
 <td>11/8/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">The Ultimate Fighter 21 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">TUF 21 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3278UFC.html" target="_blank">Caio Magalhaes vs Josh Samman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sammajos01.html" target="_blank">Josh Samman</a></td>
 <td>7/12/2015</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3806UFC.html" target="_blank">Caio Magalhaes vs Brad Tavares</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tavarbra01.html" target="_blank">Brad Tavares</a></td>
 <td>9/10/2016</td>

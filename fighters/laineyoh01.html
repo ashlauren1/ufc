@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">UFC Fight Night: Font vs. Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">Fight Night: Font vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6558UFC.html" target="_blank">Gabe Green vs Yohan Lainesse</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greengab01.html" target="_blank">Gabe Green</a></td>
 <td>4/30/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6768UFC.html" target="_blank">Yohan Lainesse vs Darian Weeks</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weeksdar01.html" target="_blank">Darian Weeks</a></td>
 <td>9/10/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">UFC Fight Night: Muniz vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">Fight Night: Muniz vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6966UFC.html" target="_blank">Yohan Lainesse vs Mike Malott</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/malotmik01.html" target="_blank">Mike Malott</a></td>
 <td>2/25/2023</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs. Du Plessis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7442UFC.html" target="_blank">Yohan Lainesse vs Sam Patterson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pattesam01.html" target="_blank">Sam Patterson</a></td>
 <td>1/20/2024</td>

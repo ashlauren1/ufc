@@ -13,11 +13,13 @@
 
         let fighterLinks = {};
         let eventLinks = {};
+        let fightLinks = {};
 
         // Load JSON files
         async function loadLinks() {
             fighterLinks = await fetch('fighters.json').then(response => response.json());
             eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
         }
 
         await loadLinks();
@@ -29,7 +31,7 @@
 
             if (query === "") return;
 
-            const combinedLinks = { ...fighterLinks, ...eventLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))
                 .slice(0, 5); // Limit to top 5
@@ -73,15 +75,15 @@
 </head>
 <body>
     <div class="topnav">
-        <a href="/ufc/">Projections</a>
+        <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/fights/">Fights and Results</a>
         <a href="/ufc/stats/">Stats</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for a fighter or event...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
@@ -140,6 +142,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -182,6 +185,7 @@
                 <td>0.00%</td>
                 <td>1</td>
                 <td>0</td>
+                <td>9.8</td>
                 <td>5</td>
                 <td>16</td>
                 <td>68.75%</td>
@@ -222,6 +226,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>28.8</td>
                 <td>0</td>
                 <td>0</td>
                 <td>0.00%</td>
@@ -259,6 +264,7 @@
                 <td>0.00%</td>
                 <td>1</td>
                 <td>0</td>
+                <td>113.6 (38.6 pts + 75.0 pts for winning)</td>
                 <td>5</td>
                 <td>16</td>
                 <td>68.75%</td>
@@ -311,6 +317,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -353,6 +360,7 @@
                 <td>80.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>27.0</td>
                 <td>3</td>
                 <td>9</td>
                 <td>66.67%</td>
@@ -393,6 +401,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>0.0</td>
                 <td>8</td>
                 <td>8</td>
                 <td>0.00%</td>
@@ -430,6 +439,7 @@
                 <td>80.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>27.0 (27.0 pts + 0.0 pts for winning)</td>
                 <td>11</td>
                 <td>17</td>
                 <td>35.29%</td>

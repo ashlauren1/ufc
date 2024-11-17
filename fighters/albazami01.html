@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("albazami01", [{'date': '2020-07-18', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-01-23', 'SigStr': 68, 'knockdowns': 0, 'SigStrAtt': 169, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 59, 'SigStrAttAg': 132, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2022-08-20', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 18, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 11, 'SigStrAttAg': 15, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-12-17', 'SigStr': 37, 'knockdowns': 2, 'SigStrAtt': 81, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-06-03', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 145, 'takedown': 1, 'takedownAtt': 9, 'subAtt': 1, 'SigStrAg': 99, 'SigStrAttAg': 283, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("albazami01", [{'date': '2020-07-18', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 28, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 16, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-01-23', 'SigStr': 68, 'knockdowns': 0, 'SigStrAtt': 169, 'takedown': 2, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 59, 'SigStrAttAg': 132, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2022-08-20', 'SigStr': 12, 'knockdowns': 0, 'SigStrAtt': 18, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 11, 'SigStrAttAg': 15, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-12-17', 'SigStr': 37, 'knockdowns': 2, 'SigStrAtt': 81, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-06-03', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 145, 'takedown': 1, 'takedownAtt': 9, 'subAtt': 1, 'SigStrAg': 99, 'SigStrAttAg': 283, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-11-02', 'SigStr': 63, 'knockdowns': 0, 'SigStrAtt': 235, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 132, 'SigStrAttAg': 317, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">UFC Fight Night: Figueiredo vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">Fight Night: Figueiredo vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5641UFC.html" target="_blank">Amir Albazi vs Malcolm Gordon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gordomal01.html" target="_blank">Malcolm Gordon</a></td>
 <td>7/18/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5916UFC.html" target="_blank">Amir Albazi vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zhumazha01.html" target="_blank">Zhalgas Zhumagulov</a></td>
 <td>1/23/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6741UFC.html" target="_blank">Amir Albazi vs Francisco Figueiredo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/figuefra01.html" target="_blank">Francisco Figueiredo</a></td>
 <td>8/20/2022</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6891UFC.html" target="_blank">Amir Albazi vs Alessandro Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costaale01.html" target="_blank">Alessandro Costa</a></td>
 <td>12/17/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0330FNI.html" target="_blank">UFC Fight Night: Kara-France vs. Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0331FNI.html" target="_blank">Fight Night: Kara-France vs Albazi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7108UFC.html" target="_blank">Amir Albazi vs Kai Kara-France</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/karakai01.html" target="_blank">Kai Kara-France</a></td>
 <td>6/3/2023</td>
@@ -524,6 +526,49 @@
 <td>2</td>
 <td>2</td>
 <td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0374FNI.html" target="_blank">Fight Night: Moreno vs Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7909UFC.html" target="_blank">Brandon Moreno vs Amir Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/morenbra01.html" target="_blank">Brandon Moreno</a></td>
+<td>11/2/2024</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Flyweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>5</td>
+<td>25.0</td>
+<td>0</td>
+<td>63</td>
+<td>235</td>
+<td>26.81%</td>
+<td>0.50</td>
+<td>63</td>
+<td>236</td>
+<td>50</td>
+<td>207</td>
+<td>6</td>
+<td>14</td>
+<td>7</td>
+<td>14</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+<td>25.00%</td>
+<td>0</td>
+<td>0</td>
+<td>132</td>
+<td>317</td>
+<td>58.36%</td>
+<td>132</td>
+<td>317</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
 <td>0</td>
 </tr>
 </tbody>

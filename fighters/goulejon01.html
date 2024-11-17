@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002FNI.html" target="_blank">UFC Fight Night 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002FNI.html" target="_blank">Fight Night 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0484UFC.html" target="_blank">Jonathan Goulet vs Jay Hieron</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hierojay01.html" target="_blank">Jay Hieron</a></td>
 <td>10/3/2005</td>
@@ -355,7 +357,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">UFC Fight Night 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">Fight Night 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0513UFC.html" target="_blank">Jonathan Goulet vs Duane Ludwig</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ludwidua01.html" target="_blank">Duane Ludwig</a></td>
 <td>1/16/2006</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0005FNI.html" target="_blank">UFC Fight Night 5</a></td>
+<td style="text-align:left"><a href="/ufc/events/0005FNI.html" target="_blank">Fight Night 5</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0569UFC.html" target="_blank">Luke Cummo vs Jonathan Goulet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummoluk01.html" target="_blank">Luke Cummo</a></td>
 <td>6/28/2006</td>
@@ -441,7 +443,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0006FNI.html" target="_blank">UFC Fight Night 6</a></td>
+<td style="text-align:left"><a href="/ufc/events/0006FNI.html" target="_blank">Fight Night 6</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0590UFC.html" target="_blank">Jonathan Goulet vs Josh Koscheck</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/koschjos01.html" target="_blank">Josh Koscheck</a></td>
 <td>8/17/2006</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">UFC Fight Night: Thomas vs Florian</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">Fight Night: Thomas vs Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0790UFC.html" target="_blank">Jonathan Goulet vs Dustin Hazelett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hazeldus01.html" target="_blank">Dustin Hazelett</a></td>
 <td>9/19/2007</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0006TUF.html" target="_blank">The Ultimate Fighter: Team Serra vs Team Hughes Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0006TUF.html" target="_blank">TUF 6 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0826UFC.html" target="_blank">Paul Georgieff vs Jonathan Goulet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/georgpau01.html" target="_blank">Paul Georgieff</a></td>
 <td>12/8/2007</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0017FNI.html" target="_blank">UFC Fight Night - Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0017FNI.html" target="_blank">Fight Night - Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1009UFC.html" target="_blank">Jonathan Goulet vs Mike Swick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swickmik01.html" target="_blank">Mike Swick</a></td>
 <td>12/10/2008</td>

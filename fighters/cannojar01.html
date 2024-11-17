@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3608UFC.html" target="_blank">Cyril Asker vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askercyr01.html" target="_blank">Cyril Asker</a></td>
 <td>4/10/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">The Ultimate Fighter 24 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">TUF 24 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3923UFC.html" target="_blank">Jared Cannonier vs Ion Cutelaba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cutelion01.html" target="_blank">Ion Cutelaba</a></td>
 <td>12/3/2016</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs. De Randamie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs De Randamie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4018UFC.html" target="_blank">Jared Cannonier vs Glover Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/teixeglo01.html" target="_blank">Glover Teixeira</a></td>
 <td>2/11/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0026TUF.html" target="_blank">The Ultimate Fighter 25 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">TUF 25 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4184UFC.html" target="_blank">Jared Cannonier vs Nick Roehrick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roehrnic01.html" target="_blank">Nick Roehrick</a></td>
 <td>7/7/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC on Fox 26: Lawler vs dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4419UFC.html" target="_blank">Jan Blachowicz vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blachjan01.html" target="_blank">Jan Blachowicz</a></td>
 <td>12/16/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4588UFC.html" target="_blank">Jared Cannonier vs Dominick Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reyesdom01.html" target="_blank">Dominick Reyes</a></td>
 <td>5/19/2018</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4801UFC.html" target="_blank">David Branch vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brancdav01.html" target="_blank">David Branch</a></td>
 <td>11/3/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5084UFC.html" target="_blank">Jared Cannonier vs Anderson Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaand01.html" target="_blank">Anderson Silva</a></td>
 <td>5/11/2019</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5289UFC.html" target="_blank">Jared Cannonier vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hermajac01.html" target="_blank">Jack Hermansson</a></td>
 <td>9/28/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0256PPV.html" target="_blank">UFC 254: Khabib vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0256PPV.html" target="_blank">UFC 254: Khabib vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5789UFC.html" target="_blank">Jared Cannonier vs Robert Whittaker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/whittrob01.html" target="_blank">Robert Whittaker</a></td>
 <td>10/24/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">Fight Night: Cannonier vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6196UFC.html" target="_blank">Jared Cannonier vs Kelvin Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
 <td>8/21/2021</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6427UFC.html" target="_blank">Derek Brunson vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brunsder01.html" target="_blank">Derek Brunson</a></td>
 <td>2/12/2022</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6647UFC.html" target="_blank">Israel Adesanya vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/adesaisr01.html" target="_blank">Israel Adesanya</a></td>
 <td>7/2/2022</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6889UFC.html" target="_blank">Jared Cannonier vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>12/17/2022</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0331FNI.html" target="_blank">UFC Fight Night: Vettori vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">Fight Night: Vettori vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7132UFC.html" target="_blank">Jared Cannonier vs Marvin Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vettomar01.html" target="_blank">Marvin Vettori</a></td>
 <td>6/17/2023</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0361FNI.html" target="_blank">Fight Night: Cannonier vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7647UFC.html" target="_blank">Jared Cannonier vs Nassourdine Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/imavonas01.html" target="_blank">Nassourdine Imavov</a></td>
 <td>6/8/2024</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0367FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Borralho</a></td>
+<td style="text-align:left"><a href="/ufc/events/0368FNI.html" target="_blank">Fight Night: Cannonier vs Borralho</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7768UFC.html" target="_blank">Caio Borralho vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/borracai01.html" target="_blank">Caio Borralho</a></td>
 <td>8/24/2024</td>

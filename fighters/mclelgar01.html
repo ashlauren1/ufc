@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">Fight Night: Gonzaga vs Cro Cop 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3141UFC.html" target="_blank">Bartosz Fabinski vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fabinbar01.html" target="_blank">Bartosz Fabinski</a></td>
 <td>4/11/2015</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">Fight Night: Holohan vs Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3399UFC.html" target="_blank">Bubba Bush vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bushbubb01.html" target="_blank">Bubba Bush</a></td>
 <td>10/24/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC Fight Night: Overeem vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">Fight Night: Overeem vs Arlovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3629UFC.html" target="_blank">Magnus Cedenblad vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cedenmag01.html" target="_blank">Magnus Cedenblad</a></td>
 <td>5/8/2016</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">UFC Fight Night: Maia vs. Condit</a></td>
+<td style="text-align:left"><a href="/ufc/events/0141FNI.html" target="_blank">UFC on Fox 21: Maia vs Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3785UFC.html" target="_blank">Alessio Di Chirico vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiriale01.html" target="_blank">Alessio Di Chirico</a></td>
 <td>8/27/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4058UFC.html" target="_blank">Paulo Costa vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costapau01.html" target="_blank">Paulo Costa</a></td>
 <td>3/11/2017</td>

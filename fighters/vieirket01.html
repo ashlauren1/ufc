@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">UFC Fight Night: Lineker vs. Dodson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">Fight Night: Lineker vs Dodson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3846UFC.html" target="_blank">Kelly Faszholz vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/faszhkel01.html" target="_blank">Kelly Faszholz</a></td>
 <td>10/1/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0157FNI.html" target="_blank">UFC Fight Night: Johnson vs. Reis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC on Fox 24: Johnson vs Reis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4095UFC.html" target="_blank">Ashlee Evans-Smith vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/evansash01.html" target="_blank">Ashlee Evans-Smith</a></td>
 <td>4/15/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4521UFC.html" target="_blank">Ketlen Vieira vs Cat Zingano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zingacat01.html" target="_blank">Cat Zingano</a></td>
 <td>3/3/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5406UFC.html" target="_blank">Irene Aldana vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldanire01.html" target="_blank">Irene Aldana</a></td>
 <td>12/14/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs. Costa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5745UFC.html" target="_blank">Sijara Eubanks vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eubansij01.html" target="_blank">Sijara Eubanks</a></td>
 <td>9/26/2020</td>
@@ -570,9 +572,9 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Lewis</a></td>
-<td style="text-align:left"><a href="/ufc/fights/5940UFC.html" target="_blank">Yana Kunitskaya vs Ketlen Vieira</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/kunityan01.html" target="_blank">Yana Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">Fight Night: Blaydes vs Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5940UFC.html" target="_blank">Yana Santos vs Ketlen Vieira</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/santoyan01.html" target="_blank">Yana Santos</a></td>
 <td>2/20/2021</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Women's Bantamweight</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287FNI.html" target="_blank">UFC Fight Night: Vieira vs. Tate</a></td>
+<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">Fight Night: Vieira vs Tate</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6340UFC.html" target="_blank">Miesha Tate vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tatemie01.html" target="_blank">Miesha Tate</a></td>
 <td>11/20/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">UFC Fight Night: Holm vs. Vieira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">Fight Night: Holm vs Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6586UFC.html" target="_blank">Holly Holm vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holmhol01.html" target="_blank">Holly Holm</a></td>
 <td>5/21/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">UFC Fight Night: Strickland vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0320FNI.html" target="_blank">Fight Night: Strickland vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6905UFC.html" target="_blank">Raquel Pennington vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penniraq01.html" target="_blank">Raquel Pennington</a></td>
 <td>1/14/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">UFC Fight Night: Aspinall vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">Fight Night: Aspinall vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7206UFC.html" target="_blank">Pannie Kianzad vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
 <td>7/22/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs Rountree Jr.</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7819UFC.html" target="_blank">Kayla Harrison vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/harrikay01.html" target="_blank">Kayla Harrison</a></td>
 <td>10/5/2024</td>

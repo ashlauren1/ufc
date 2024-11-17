@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0079FNI.html" target="_blank">UFC Fight Night: Munoz vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">Fight Night: Munoz vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2725UFC.html" target="_blank">Luke Barnatt vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barnaluk01.html" target="_blank">Luke Barnatt</a></td>
 <td>5/31/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">UFC Fight Night: Bigfoot vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">Fight Night: Bigfoot vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3085UFC.html" target="_blank">Santiago Ponzinibbio vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ponzisan01.html" target="_blank">Santiago Ponzinibbio</a></td>
 <td>2/22/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0113FNI.html" target="_blank">UFC Fight Night: Mir vs Duffee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">Fight Night: Mir vs Duffee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3292UFC.html" target="_blank">Igor Araujo vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/araujigo01.html" target="_blank">Igor Araujo</a></td>
 <td>7/15/2015</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">UFC Fight Night: Cowboy vs Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">Fight Night: Cowboy vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3553UFC.html" target="_blank">Alex Garcia vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garciale01.html" target="_blank">Alex Garcia</a></td>
 <td>2/21/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3668UFC.html" target="_blank">Tom Breese vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/breestom01.html" target="_blank">Tom Breese</a></td>
 <td>6/4/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs. Johnson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs Johnson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4076UFC.html" target="_blank">Sean Strickland vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>4/8/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">UFC Fight Night: Poirier vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">Fight Night: Poirier vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4350UFC.html" target="_blank">Court McGee vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcgeecou01.html" target="_blank">Court McGee</a></td>
 <td>11/11/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4581UFC.html" target="_blank">Elizeu Zaleski dos Santos vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoeli01.html" target="_blank">Elizeu Zaleski dos Santos</a></td>
 <td>5/12/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">UFC Fight Night: Oezdemir vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">Fight Night: Oezdemir vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4792UFC.html" target="_blank">Sean Strickland vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/talebnor01.html" target="_blank">Nordine Taleb</a></td>
 <td>10/27/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">UFC Fight Night: Hall vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">Fight Night: Hall vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5807UFC.html" target="_blank">Jack Marshman vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/marshjac01.html" target="_blank">Jack Marshman</a></td>
 <td>10/31/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">UFC Fight Night: Felder vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0257FNI.html" target="_blank">Fight Night: Felder vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5827UFC.html" target="_blank">Brendan Allen vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allenbre01.html" target="_blank">Brendan Allen</a></td>
 <td>11/14/2020</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6047UFC.html" target="_blank">Krzysztof Jotko vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jotkokrz01.html" target="_blank">Krzysztof Jotko</a></td>
 <td>5/1/2021</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0277FNI.html" target="_blank">UFC Fight Night: Hall vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278FNI.html" target="_blank">Fight Night: Hall vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6173UFC.html" target="_blank">Uriah Hall vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/halluri01.html" target="_blank">Uriah Hall</a></td>
 <td>7/31/2021</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">Fight Night: Hermansson vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6412UFC.html" target="_blank">Jack Hermansson vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hermajac01.html" target="_blank">Jack Hermansson</a></td>
 <td>2/5/2022</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6649UFC.html" target="_blank">Alex Pereira vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereiale01.html" target="_blank">Alex Pereira</a></td>
 <td>7/2/2022</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6889UFC.html" target="_blank">Jared Cannonier vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cannojar01.html" target="_blank">Jared Cannonier</a></td>
 <td>12/17/2022</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">UFC Fight Night: Strickland vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0320FNI.html" target="_blank">Fight Night: Strickland vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6902UFC.html" target="_blank">Nassourdine Imavov vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/imavonas01.html" target="_blank">Nassourdine Imavov</a></td>
 <td>1/14/2023</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC Fight Night: Strickland vs. Magomedov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0334FNI.html" target="_blank">Fight Night: Strickland vs Magomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7157UFC.html" target="_blank">Abus Magomedov vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magomabu01.html" target="_blank">Abus Magomedov</a></td>
 <td>7/1/2023</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7282UFC.html" target="_blank">Israel Adesanya vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/adesaisr01.html" target="_blank">Israel Adesanya</a></td>
 <td>9/9/2023</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs. Du Plessis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7433UFC.html" target="_blank">Dricus Du Plessis vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/plessdri01.html" target="_blank">Dricus Du Plessis</a></td>
 <td>1/20/2024</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0304PPV.html" target="_blank">UFC 302: Makhachev vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0304PPV.html" target="_blank">UFC 302: Makhachev vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7636UFC.html" target="_blank">Paulo Costa vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costapau01.html" target="_blank">Paulo Costa</a></td>
 <td>6/1/2024</td>

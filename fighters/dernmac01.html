@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4522UFC.html" target="_blank">Mackenzie Dern vs Ashley Yoder</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yoderash01.html" target="_blank">Ashley Yoder</a></td>
 <td>3/3/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4575UFC.html" target="_blank">Amanda Cooper vs Mackenzie Dern</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/coopeama01.html" target="_blank">Amanda Cooper</a></td>
 <td>5/12/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">UFC Fight Night: Joanna vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224FNI.html" target="_blank">Fight Night: Joanna vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5316UFC.html" target="_blank">Mackenzie Dern vs Amanda Ribas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ribasama01.html" target="_blank">Amanda Ribas</a></td>
 <td>10/12/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">UFC Fight Night: Woodley vs. Burns</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238FNI.html" target="_blank">Fight Night: Woodley vs Burns</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5557UFC.html" target="_blank">Hannah Cifers vs Mackenzie Dern</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ciferhan01.html" target="_blank">Hannah Cifers</a></td>
 <td>5/30/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">Fight Night: Covington vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5732UFC.html" target="_blank">Mackenzie Dern vs Randa Markos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/markoran01.html" target="_blank">Randa Markos</a></td>
 <td>9/19/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5866UFC.html" target="_blank">Mackenzie Dern vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jandivir01.html" target="_blank">Virna Jandiroba</a></td>
 <td>12/12/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">UFC Fight Night: Vettori vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC on ABC 2: Vettori vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6011UFC.html" target="_blank">Mackenzie Dern vs Nina Nunes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nunesnin01.html" target="_blank">Nina Nunes</a></td>
 <td>4/10/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283FNI.html" target="_blank">UFC Fight Night: Dern vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0284FNI.html" target="_blank">Fight Night: Dern vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6268UFC.html" target="_blank">Mackenzie Dern vs Marina Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
 <td>10/9/2021</td>
@@ -656,9 +658,9 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs. The Korean Zombie</a></td>
-<td style="text-align:left"><a href="/ufc/fights/6516UFC.html" target="_blank">Mackenzie Dern vs Tecia Torres</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/torretec01.html" target="_blank">Tecia Torres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6516UFC.html" target="_blank">Mackenzie Dern vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/pennitec01.html" target="_blank">Tecia Pennington</a></td>
 <td>4/9/2022</td>
 <td>Jacksonville, Florida, USA</td>
 <td>Women's Strawweight</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0312FNI.html" target="_blank">UFC Fight Night: Dern vs. Yan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0313FNI.html" target="_blank">Fight Night: Dern vs Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6782UFC.html" target="_blank">Mackenzie Dern vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/xiaonyan01.html" target="_blank">Yan Xiaonan</a></td>
 <td>10/1/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC Fight Night: Dern vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0330FNI.html" target="_blank">Fight Night: Dern vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7096UFC.html" target="_blank">Mackenzie Dern vs Angela Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>5/20/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7362UFC.html" target="_blank">Jessica Andrade vs Mackenzie Dern</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andrajes01.html" target="_blank">Jessica Andrade</a></td>
 <td>11/11/2023</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7477UFC.html" target="_blank">Mackenzie Dern vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lemosama01.html" target="_blank">Amanda Lemos</a></td>
 <td>2/17/2024</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Nurmagomedov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC on ABC 7: Sandhagen vs Nurmagomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7737UFC.html" target="_blank">Mackenzie Dern vs Loopy Godinez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/godinloo01.html" target="_blank">Loopy Godinez</a></td>
 <td>8/3/2024</td>

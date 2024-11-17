@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">The Ultimate Fighter 26 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026TUF.html" target="_blank">TUF 26 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4384UFC.html" target="_blank">Christina Marks vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/markschr01.html" target="_blank">Christina Marks</a></td>
 <td>12/1/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028TUF.html" target="_blank">UFC - TUF 27 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">TUF 27 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4654UFC.html" target="_blank">Rachael Ostovich vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ostovrac01.html" target="_blank">Rachael Ostovich</a></td>
 <td>7/6/2018</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4939UFC.html" target="_blank">Nadia Kassem vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kassenad01.html" target="_blank">Nadia Kassem</a></td>
 <td>2/9/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5136UFC.html" target="_blank">Andrea Lee vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leeand01.html" target="_blank">Andrea Lee</a></td>
 <td>6/22/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">UFC Fight Night: Anderson vs. Blachowicz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">Fight Night: Anderson vs Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5468UFC.html" target="_blank">Mara Romero Borella vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/borelmar01.html" target="_blank">Mara Romero Borella</a></td>
 <td>2/15/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5714UFC.html" target="_blank">Viviane Araujo vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/araujviv01.html" target="_blank">Viviane Araujo</a></td>
 <td>9/5/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">Fight Night: Rozenstruik vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5953UFC.html" target="_blank">Montana De La Rosa vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvamay01.html" target="_blank">Mayra Bueno Silva</a></td>
 <td>2/27/2021</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">Fight Night: Rozenstruik vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6093UFC.html" target="_blank">Ariane da Silva vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaari01.html" target="_blank">Ariane da Silva</a></td>
 <td>6/5/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">UFC Fight Night: Lemos vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">Fight Night: Lemos vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6541UFC.html" target="_blank">Maycee Barber vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbemay01.html" target="_blank">Maycee Barber</a></td>
 <td>4/23/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">UFC Fight Night: Muniz vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">Fight Night: Muniz vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6965UFC.html" target="_blank">Montana De La Rosa vs Tatiana Suarez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/suaretat01.html" target="_blank">Tatiana Suarez</a></td>
 <td>2/25/2023</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0342FNI.html" target="_blank">UFC Fight Night: Dawson vs. Green</a></td>
+<td style="text-align:left"><a href="/ufc/events/0343FNI.html" target="_blank">Fight Night: Dawson vs Green</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7325UFC.html" target="_blank">JJ Aldrich vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldrijj01.html" target="_blank">JJ Aldrich</a></td>
 <td>10/7/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0361FNI.html" target="_blank">Fight Night: Cannonier vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7656UFC.html" target="_blank">Andrea Lee vs Montana De La Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leeand01.html" target="_blank">Andrea Lee</a></td>
 <td>6/8/2024</td>

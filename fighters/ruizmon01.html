@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Montserrat Conejo Ruiz</title>
+<title>Montserrat Ruiz</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="stylesheet.css" rel="stylesheet"/>
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,12 +192,12 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
 <div class="header">
-<h1>Montserrat Conejo Ruiz</h1>
+<h1>Montserrat Ruiz</h1>
 </div>
 <div class="info-box">
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("ruizmon01", [{'date': '2023-08-12', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 86, 'SigStrAttAg': 136, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 4}, {'date': '2023-11-04', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 57, 'SigStrAttAg': 77, 'TDAg': 3, 'TDAttAg': 3, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("ruizmon01", [{'date': '2021-03-20', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 41, 'takedown': 4, 'takedownAtt': 5, 'subAtt': 2, 'SigStrAg': 31, 'SigStrAttAg': 65, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-07-17', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 7, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 13, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 86, 'SigStrAttAg': 136, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 4}, {'date': '2023-11-04', 'SigStr': 5, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 57, 'SigStrAttAg': 77, 'TDAg': 3, 'TDAttAg': 3, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,8 +314,94 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
-<td style="text-align:left"><a href="/ufc/fights/7243UFC.html" target="_blank">Jaqueline Amorim vs Montserrat Conejo Ruiz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">Fight Night: Brunson vs Holland</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5990UFC.html" target="_blank">Cheyanne Vlismas vs Montserrat Ruiz</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/vlismche01.html" target="_blank">Cheyanne Vlismas</a></td>
+<td>3/20/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>15</td>
+<td>41</td>
+<td>36.59%</td>
+<td>0.33</td>
+<td>136</td>
+<td>168</td>
+<td>10</td>
+<td>35</td>
+<td>0</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>5</td>
+<td>80.00%</td>
+<td>2</td>
+<td>1</td>
+<td>31</td>
+<td>65</td>
+<td>52.31%</td>
+<td>49</td>
+<td>87</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6158UFC.html" target="_blank">Montserrat Ruiz vs Amanda Lemos</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/lemosama01.html" target="_blank">Amanda Lemos</a></td>
+<td>7/17/2021</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>0.58</td>
+<td>0</td>
+<td>3</td>
+<td>7</td>
+<td>42.86%</td>
+<td>5.17</td>
+<td>3</td>
+<td>7</td>
+<td>2</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>13</td>
+<td>46.15%</td>
+<td>7</td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7243UFC.html" target="_blank">Jaqueline Amorim vs Montserrat Ruiz Ruiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/amorijaq01.html" target="_blank">Jaqueline Amorim</a></td>
 <td>8/12/2023</td>
 <td>Las Vegas, Nevada, USA</td>
@@ -355,8 +443,8 @@
 <td>4</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0344FNI.html" target="_blank">UFC Fight Night: Almeida vs. Lewis</a></td>
-<td style="text-align:left"><a href="/ufc/fights/7358UFC.html" target="_blank">Eduarda Moura vs Montserrat Conejo Ruiz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0345FNI.html" target="_blank">Fight Night: Almeida vs Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7358UFC.html" target="_blank">Eduarda Moura vs Montserrat Ruiz Ruiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mouraedu01.html" target="_blank">Eduarda Moura</a></td>
 <td>11/4/2023</td>
 <td>Sao Paulo, Sao Paulo, Brazil</td>

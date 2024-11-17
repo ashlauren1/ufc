@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("pennitec01", [{'date': '2024-05-11', 'SigStr': 80, 'knockdowns': 0, 'SigStrAtt': 219, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 54, 'SigStrAttAg': 143, 'TDAg': 1, 'TDAttAg': 10, 'SubAttAg': 0}, {'date': '2024-10-05', 'SigStr': 80, 'knockdowns': 0, 'SigStrAtt': 150, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 39, 'SigStrAttAg': 123, 'TDAg': 4, 'TDAttAg': 7, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("pennitec01", [{'date': '2014-12-12', 'SigStr': 96, 'knockdowns': 1, 'SigStrAtt': 196, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 37, 'SigStrAttAg': 145, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2015-06-13', 'SigStr': 32, 'knockdowns': 0, 'SigStrAtt': 80, 'takedown': 2, 'takedownAtt': 12, 'subAtt': 0, 'SigStrAg': 27, 'SigStrAttAg': 68, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2015-12-12', 'SigStr': 77, 'knockdowns': 0, 'SigStrAtt': 133, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 29, 'SigStrAttAg': 106, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2016-04-16', 'SigStr': 61, 'knockdowns': 0, 'SigStrAtt': 121, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 46, 'SigStrAttAg': 156, 'TDAg': 2, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2017-02-04', 'SigStr': 81, 'knockdowns': 0, 'SigStrAtt': 189, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 37, 'SigStrAttAg': 151, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2017-07-07', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 23, 'takedown': 0, 'takedownAtt': 7, 'subAtt': 1, 'SigStrAg': 6, 'SigStrAttAg': 31, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2017-12-02', 'SigStr': 95, 'knockdowns': 0, 'SigStrAtt': 173, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 56, 'SigStrAttAg': 138, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2018-02-24', 'SigStr': 69, 'knockdowns': 0, 'SigStrAtt': 150, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 92, 'SigStrAttAg': 178, 'TDAg': 10, 'TDAttAg': 12, 'SubAttAg': 0}, {'date': '2018-07-28', 'SigStr': 33, 'knockdowns': 0, 'SigStrAtt': 78, 'takedown': 0, 'takedownAtt': 10, 'subAtt': 0, 'SigStrAg': 62, 'SigStrAttAg': 166, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-03-02', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 62, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 142, 'TDAg': 2, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2019-08-10', 'SigStr': 41, 'knockdowns': 0, 'SigStrAtt': 108, 'takedown': 0, 'takedownAtt': 7, 'subAtt': 0, 'SigStrAg': 84, 'SigStrAttAg': 167, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 1}, {'date': '2020-06-20', 'SigStr': 74, 'knockdowns': 0, 'SigStrAtt': 160, 'takedown': 0, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 68, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2020-12-12', 'SigStr': 52, 'knockdowns': 0, 'SigStrAtt': 103, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 53, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-08-07', 'SigStr': 144, 'knockdowns': 0, 'SigStrAtt': 298, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 96, 'SigStrAttAg': 188, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2022-04-09', 'SigStr': 76, 'knockdowns': 0, 'SigStrAtt': 124, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 50, 'SigStrAttAg': 156, 'TDAg': 0, 'TDAttAg': 5, 'SubAttAg': 3}, {'date': '2024-05-11', 'SigStr': 80, 'knockdowns': 0, 'SigStrAtt': 219, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 54, 'SigStrAttAg': 143, 'TDAg': 1, 'TDAttAg': 10, 'SubAttAg': 0}, {'date': '2024-10-05', 'SigStr': 80, 'knockdowns': 0, 'SigStrAtt': 150, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 39, 'SigStrAttAg': 123, 'TDAg': 4, 'TDAttAg': 7, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,609 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020TUF.html" target="_blank">TUF 20 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3009UFC.html" target="_blank">Angela Magana vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/maganang01.html" target="_blank">Angela Magana</a></td>
+<td>12/12/2014</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>96</td>
+<td>196</td>
+<td>48.98%</td>
+<td>2.13</td>
+<td>98</td>
+<td>200</td>
+<td>57</td>
+<td>137</td>
+<td>29</td>
+<td>46</td>
+<td>10</td>
+<td>13</td>
+<td>7</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>37</td>
+<td>145</td>
+<td>74.48%</td>
+<td>38</td>
+<td>146</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0191PPV.html" target="_blank">UFC 188: Velasquez vs Werdum</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3234UFC.html" target="_blank">Angela Hill vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
+<td>6/13/2015</td>
+<td>Mexico City, Distrito Federal, Mexico</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>32</td>
+<td>80</td>
+<td>40.00%</td>
+<td>0.71</td>
+<td>86</td>
+<td>144</td>
+<td>14</td>
+<td>56</td>
+<td>10</td>
+<td>15</td>
+<td>8</td>
+<td>9</td>
+<td>9</td>
+<td>13</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>12</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>27</td>
+<td>68</td>
+<td>60.29%</td>
+<td>66</td>
+<td>110</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0197PPV.html" target="_blank">UFC 194: Aldo vs McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3477UFC.html" target="_blank">Jocelyn Jones-Lybarger vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/jonesjoc01.html" target="_blank">Jocelyn Jones-Lybarger</a></td>
+<td>12/12/2015</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>77</td>
+<td>133</td>
+<td>57.89%</td>
+<td>1.71</td>
+<td>126</td>
+<td>192</td>
+<td>67</td>
+<td>116</td>
+<td>7</td>
+<td>14</td>
+<td>3</td>
+<td>3</td>
+<td>13</td>
+<td>20</td>
+<td>9</td>
+<td>11</td>
+<td>0</td>
+<td>4</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>29</td>
+<td>106</td>
+<td>72.64%</td>
+<td>53</td>
+<td>137</td>
+<td>0</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">Fight Night: Bermudez vs The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4012UFC.html" target="_blank">Bec Rawlings vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/rawlibec01.html" target="_blank">Bec Rawlings</a></td>
+<td>2/4/2017</td>
+<td>Houston, Texas, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>81</td>
+<td>189</td>
+<td>42.86%</td>
+<td>1.80</td>
+<td>112</td>
+<td>232</td>
+<td>45</td>
+<td>144</td>
+<td>14</td>
+<td>18</td>
+<td>22</td>
+<td>27</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>37</td>
+<td>151</td>
+<td>75.50%</td>
+<td>41</td>
+<td>158</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">TUF 25 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4190UFC.html" target="_blank">Juliana Lima vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/limajul01.html" target="_blank">Juliana Lima</a></td>
+<td>7/7/2017</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>5.88</td>
+<td>0</td>
+<td>15</td>
+<td>23</td>
+<td>65.22%</td>
+<td>1.28</td>
+<td>26</td>
+<td>34</td>
+<td>5</td>
+<td>11</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>7</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>6</td>
+<td>31</td>
+<td>80.65%</td>
+<td>14</td>
+<td>39</td>
+<td>1</td>
+<td>3</td>
+<td>66.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0221PPV.html" target="_blank">UFC 218: Holloway vs Aldo 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4393UFC.html" target="_blank">Tecia Pennington vs Michelle Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/watermic01.html" target="_blank">Michelle Waterson</a></td>
+<td>12/2/2017</td>
+<td>Detroit, Michigan, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>95</td>
+<td>173</td>
+<td>54.91%</td>
+<td>2.11</td>
+<td>154</td>
+<td>238</td>
+<td>72</td>
+<td>143</td>
+<td>21</td>
+<td>28</td>
+<td>2</td>
+<td>2</td>
+<td>23</td>
+<td>31</td>
+<td>17</td>
+<td>18</td>
+<td>1</td>
+<td>2</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>56</td>
+<td>138</td>
+<td>59.42%</td>
+<td>66</td>
+<td>148</td>
+<td>2</td>
+<td>3</td>
+<td>33.33%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4506UFC.html" target="_blank">Jessica Andrade vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/andrajes01.html" target="_blank">Jessica Andrade</a></td>
+<td>2/24/2018</td>
+<td>Orlando, Florida, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>69</td>
+<td>150</td>
+<td>46.00%</td>
+<td>1.53</td>
+<td>88</td>
+<td>171</td>
+<td>54</td>
+<td>132</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>5</td>
+<td>13</td>
+<td>3</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>92</td>
+<td>178</td>
+<td>48.31%</td>
+<td>151</td>
+<td>237</td>
+<td>10</td>
+<td>12</td>
+<td>16.67%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC on Fox 30: Alvarez vs Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4699UFC.html" target="_blank">Joanna Jedrzejczyk vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/jedrzjoa01.html" target="_blank">Joanna Jedrzejczyk</a></td>
+<td>7/28/2018</td>
+<td>Calgary, Alberta, Canada</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>33</td>
+<td>78</td>
+<td>42.31%</td>
+<td>0.73</td>
+<td>54</td>
+<td>100</td>
+<td>11</td>
+<td>44</td>
+<td>2</td>
+<td>2</td>
+<td>20</td>
+<td>32</td>
+<td>4</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>62</td>
+<td>166</td>
+<td>62.65%</td>
+<td>81</td>
+<td>185</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0237PPV.html" target="_blank">UFC 235: Jones vs Smith</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4975UFC.html" target="_blank">Tecia Pennington vs Zhang Weili</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/zhangwei01.html" target="_blank">Zhang Weili</a></td>
+<td>3/2/2019</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>30</td>
+<td>62</td>
+<td>48.39%</td>
+<td>0.67</td>
+<td>33</td>
+<td>65</td>
+<td>14</td>
+<td>41</td>
+<td>5</td>
+<td>7</td>
+<td>11</td>
+<td>14</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>63</td>
+<td>142</td>
+<td>55.63%</td>
+<td>118</td>
+<td>204</td>
+<td>2</td>
+<td>8</td>
+<td>75.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">Fight Night: Shevchenko vs Carmouche 2</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5224UFC.html" target="_blank">Marina Rodriguez vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
+<td>8/10/2019</td>
+<td>Montevideo, Uruguay</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>41</td>
+<td>108</td>
+<td>37.96%</td>
+<td>0.91</td>
+<td>58</td>
+<td>126</td>
+<td>17</td>
+<td>70</td>
+<td>17</td>
+<td>26</td>
+<td>7</td>
+<td>12</td>
+<td>12</td>
+<td>19</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>84</td>
+<td>167</td>
+<td>49.70%</td>
+<td>98</td>
+<td>186</td>
+<td>1</td>
+<td>4</td>
+<td>75.00%</td>
+<td>1</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0240FNI.html" target="_blank">Fight Night: Blaydes vs Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5592UFC.html" target="_blank">Brianna Van Buren vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/burenbri01.html" target="_blank">Brianna Van Buren</a></td>
+<td>6/20/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>74</td>
+<td>160</td>
+<td>46.25%</td>
+<td>1.64</td>
+<td>111</td>
+<td>199</td>
+<td>42</td>
+<td>127</td>
+<td>21</td>
+<td>22</td>
+<td>11</td>
+<td>11</td>
+<td>17</td>
+<td>21</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>3</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>34</td>
+<td>68</td>
+<td>50.00%</td>
+<td>37</td>
+<td>71</td>
+<td>2</td>
+<td>7</td>
+<td>71.43%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/fights/5865UFC.html" target="_blank">Sam Hughes vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/hughesam01.html" target="_blank">Sam Hughes</a></td>
+<td>12/12/2020</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Women's Strawweight</td>
+<td>TKO - Doctor's Stoppage</td>
+<td>W</td>
+<td>3</td>
+<td>5.0</td>
+<td>0</td>
+<td>52</td>
+<td>103</td>
+<td>50.49%</td>
+<td>10.40</td>
+<td>52</td>
+<td>103</td>
+<td>27</td>
+<td>71</td>
+<td>13</td>
+<td>17</td>
+<td>12</td>
+<td>15</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>20</td>
+<td>53</td>
+<td>62.26%</td>
+<td>26</td>
+<td>59</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs Gane</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6186UFC.html" target="_blank">Angela Hill vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
+<td>8/7/2021</td>
+<td>Houston, Texas, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>144</td>
+<td>298</td>
+<td>48.32%</td>
+<td>3.20</td>
+<td>166</td>
+<td>322</td>
+<td>80</td>
+<td>217</td>
+<td>41</td>
+<td>52</td>
+<td>23</td>
+<td>29</td>
+<td>16</td>
+<td>22</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>6</td>
+<td>16.67%</td>
+<td>0</td>
+<td>0</td>
+<td>96</td>
+<td>188</td>
+<td>48.94%</td>
+<td>99</td>
+<td>191</td>
+<td>2</td>
+<td>7</td>
+<td>71.43%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6516UFC.html" target="_blank">Mackenzie Dern vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/dernmac01.html" target="_blank">Mackenzie Dern</a></td>
+<td>4/9/2022</td>
+<td>Jacksonville, Florida, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Split</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>76</td>
+<td>124</td>
+<td>61.29%</td>
+<td>1.69</td>
+<td>78</td>
+<td>126</td>
+<td>19</td>
+<td>61</td>
+<td>25</td>
+<td>30</td>
+<td>32</td>
+<td>33</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+<td>156</td>
+<td>67.95%</td>
+<td>58</td>
+<td>164</td>
+<td>0</td>
+<td>5</td>
+<td>100.00%</td>
+<td>3</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0359FNI.html" target="_blank">Fight Night: Lewis vs Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7619UFC.html" target="_blank">Tecia Pennington vs Tabatha Ricci</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riccitab01.html" target="_blank">Tabatha Ricci</a></td>
 <td>5/11/2024</td>
@@ -355,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs Rountree Jr.</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7825UFC.html" target="_blank">Carla Esparza vs Tecia Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/esparcar01.html" target="_blank">Carla Esparza</a></td>
 <td>10/5/2024</td>
@@ -395,6 +999,49 @@
 <td>4</td>
 <td>7</td>
 <td>42.86%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC on Fox 19: Teixeira vs Evans</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7851UFC.html" target="_blank">Rose Namajunas vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
+<td>4/16/2016</td>
+<td>Tampa, Florida, USA</td>
+<td>Women's Strawweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>61</td>
+<td>121</td>
+<td>50.41%</td>
+<td>1.36</td>
+<td>93</td>
+<td>155</td>
+<td>20</td>
+<td>74</td>
+<td>13</td>
+<td>18</td>
+<td>28</td>
+<td>29</td>
+<td>9</td>
+<td>12</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>46</td>
+<td>156</td>
+<td>70.51%</td>
+<td>48</td>
+<td>160</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
 <td>0</td>
 </tr>
 </tbody>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("mcghemar01", [{'date': '2023-04-29', 'SigStr': 25, 'knockdowns': 1, 'SigStrAtt': 53, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 13, 'SigStrAttAg': 46, 'TDAg': 0, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 7, 'knockdowns': 1, 'SigStrAtt': 13, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2024-01-13', 'SigStr': 65, 'knockdowns': 1, 'SigStrAtt': 123, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 28, 'SigStrAttAg': 81, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("mcghemar01", [{'date': '2023-04-29', 'SigStr': 25, 'knockdowns': 1, 'SigStrAtt': 53, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 13, 'SigStrAttAg': 46, 'TDAg': 0, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2023-08-12', 'SigStr': 7, 'knockdowns': 1, 'SigStrAtt': 13, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 30, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2024-01-13', 'SigStr': 65, 'knockdowns': 1, 'SigStrAtt': 123, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 28, 'SigStrAttAg': 81, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-11-16', 'SigStr': 102, 'knockdowns': 0, 'SigStrAtt': 223, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 48, 'SigStrAttAg': 108, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">UFC Fight Night: Song vs. Simon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">Fight Night: Song vs Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7071UFC.html" target="_blank">Marcus McGhee vs Journey Newson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/newsojou01.html" target="_blank">Journey Newson</a></td>
 <td>4/29/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7239UFC.html" target="_blank">JP Buys vs Marcus McGhee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/buysjp01.html" target="_blank">JP Buys</a></td>
 <td>8/12/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">UFC Fight Night: Ankalaev vs. Walker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">Fight Night: Ankalaev vs Walker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7428UFC.html" target="_blank">Gaston Bolanos vs Marcus McGhee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bolangas01.html" target="_blank">Gaston Bolanos</a></td>
 <td>1/13/2024</td>
@@ -435,6 +437,49 @@
 <td>65.43%</td>
 <td>28</td>
 <td>82</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0311PPV.html" target="_blank">UFC 309: Jones vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7916UFC.html" target="_blank">Marcus McGhee vs Jonathan Martinez</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/martijon01.html" target="_blank">Jonathan Martinez</a></td>
+<td>11/16/2024</td>
+<td>New York City, New York, USA</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>102</td>
+<td>223</td>
+<td>45.74%</td>
+<td>2.27</td>
+<td>105</td>
+<td>226</td>
+<td>60</td>
+<td>167</td>
+<td>18</td>
+<td>27</td>
+<td>24</td>
+<td>29</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>48</td>
+<td>108</td>
+<td>55.56%</td>
+<td>49</td>
+<td>109</td>
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("semelmat01", [{'date': '2020-08-22', 'SigStr': 118, 'knockdowns': 1, 'SigStrAtt': 233, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 77, 'SigStrAttAg': 182, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-03-13', 'SigStr': 3, 'knockdowns': 1, 'SigStrAtt': 5, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 4, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-06-19', 'SigStr': 64, 'knockdowns': 0, 'SigStrAtt': 141, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 91, 'SigStrAttAg': 260, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-09-25', 'SigStr': 3, 'knockdowns': 1, 'SigStrAtt': 5, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 3, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-03-12', 'SigStr': 40, 'knockdowns': 0, 'SigStrAtt': 82, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 64, 'TDAg': 4, 'TDAttAg': 6, 'SubAttAg': 2}, {'date': '2022-07-30', 'SigStr': 74, 'knockdowns': 1, 'SigStrAtt': 229, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 106, 'SigStrAttAg': 194, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-12-17', 'SigStr': 45, 'knockdowns': 3, 'SigStrAtt': 116, 'takedown': 3, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 32, 'SigStrAttAg': 89, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2023-04-22', 'SigStr': 20, 'knockdowns': 2, 'SigStrAtt': 37, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 36, 'SigStrAttAg': 76, 'TDAg': 6, 'TDAttAg': 10, 'SubAttAg': 0}, {'date': '2023-07-29', 'SigStr': 52, 'knockdowns': 1, 'SigStrAtt': 120, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 69, 'SigStrAttAg': 128, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2024-01-13', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 69, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 2, 'SigStrAg': 47, 'SigStrAttAg': 87, 'TDAg': 7, 'TDAttAg': 11, 'SubAttAg': 2}], 25.5, "SigStr");
+    initializeChart("semelmat01", [{'date': '2020-08-22', 'SigStr': 118, 'knockdowns': 1, 'SigStrAtt': 233, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 77, 'SigStrAttAg': 182, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-03-13', 'SigStr': 3, 'knockdowns': 1, 'SigStrAtt': 5, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 4, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-06-19', 'SigStr': 64, 'knockdowns': 0, 'SigStrAtt': 141, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 91, 'SigStrAttAg': 260, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-09-25', 'SigStr': 3, 'knockdowns': 1, 'SigStrAtt': 5, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 3, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-03-12', 'SigStr': 40, 'knockdowns': 0, 'SigStrAtt': 82, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 64, 'TDAg': 4, 'TDAttAg': 6, 'SubAttAg': 2}, {'date': '2022-07-30', 'SigStr': 74, 'knockdowns': 1, 'SigStrAtt': 229, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 106, 'SigStrAttAg': 194, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-12-17', 'SigStr': 45, 'knockdowns': 3, 'SigStrAtt': 116, 'takedown': 3, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 32, 'SigStrAttAg': 89, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2023-04-22', 'SigStr': 20, 'knockdowns': 2, 'SigStrAtt': 37, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 36, 'SigStrAttAg': 76, 'TDAg': 6, 'TDAttAg': 10, 'SubAttAg': 0}, {'date': '2023-07-29', 'SigStr': 52, 'knockdowns': 1, 'SigStrAtt': 120, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 69, 'SigStrAttAg': 128, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2024-01-13', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 69, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 2, 'SigStrAg': 47, 'SigStrAttAg': 87, 'TDAg': 7, 'TDAttAg': 11, 'SubAttAg': 2}, {'date': '2024-11-09', 'SigStr': 2, 'knockdowns': 0, 'SigStrAtt': 8, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 7, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">UFC Fight Night: Munhoz vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">Fight Night: Munhoz vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5697UFC.html" target="_blank">Carlton Minus vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/minuscar01.html" target="_blank">Carlton Minus</a></td>
 <td>8/22/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">UFC Fight Night: Edwards vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">Fight Night: Edwards vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5987UFC.html" target="_blank">Matthew Semelsberger vs Jason Witt</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wittjas01.html" target="_blank">Jason Witt</a></td>
 <td>3/13/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">UFC Fight Night: Jung vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">Fight Night: Jung vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6123UFC.html" target="_blank">Matthew Semelsberger vs Khaos Williams</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/willikha01.html" target="_blank">Khaos Williams</a></td>
 <td>6/19/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6254UFC.html" target="_blank">Martin Sano vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanomar01.html" target="_blank">Martin Sano</a></td>
 <td>9/25/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294FNI.html" target="_blank">UFC Fight Night: Santos vs. Ankalaev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295FNI.html" target="_blank">Fight Night: Santos vs Ankalaev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6481UFC.html" target="_blank">AJ Fletcher vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fletcaj01.html" target="_blank">AJ Fletcher</a></td>
 <td>3/12/2022</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs. Nunes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs Nunes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6701UFC.html" target="_blank">Alex Morono vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moronale01.html" target="_blank">Alex Morono</a></td>
 <td>7/30/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6896UFC.html" target="_blank">Jake Matthews vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/matthjak01.html" target="_blank">Jake Matthews</a></td>
 <td>12/17/2022</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">UFC Fight Night: Pavlovich vs. Blaydes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">Fight Night: Pavlovich vs Blaydes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7055UFC.html" target="_blank">Matthew Semelsberger vs Jeremiah Wells</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wellsjer01.html" target="_blank">Jeremiah Wells</a></td>
 <td>4/22/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0293PPV.html" target="_blank">UFC 291: Poirier vs. Gaethje 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293PPV.html" target="_blank">UFC 291: Poirier vs Gaethje 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7219UFC.html" target="_blank">Uros Medic vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/medicuro01.html" target="_blank">Uros Medic</a></td>
 <td>7/29/2023</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">UFC Fight Night: Ankalaev vs. Walker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">Fight Night: Ankalaev vs Walker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7427UFC.html" target="_blank">Preston Parsons vs Matthew Semelsberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/parsopre01.html" target="_blank">Preston Parsons</a></td>
 <td>1/13/2024</td>
@@ -740,6 +742,49 @@
 <td>11</td>
 <td>36.36%</td>
 <td>2</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0373FNI.html" target="_blank">Fight Night: Magny vs Prates</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7889UFC.html" target="_blank">Charles Radtke vs Matthew Semelsberger</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/radtkcha01.html" target="_blank">Charles Radtke</a></td>
+<td>11/9/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>L</td>
+<td>3</td>
+<td>0.85</td>
+<td>0</td>
+<td>2</td>
+<td>8</td>
+<td>25.00%</td>
+<td>2.35</td>
+<td>2</td>
+<td>8</td>
+<td>1</td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+<td>12</td>
+<td>41.67%</td>
+<td>7</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0141FNI.html" target="_blank">UFC Fight Night: Arlovski vs. Barnett</a></td>
+<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">Fight Night: Arlovski vs Barnett</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3798UFC.html" target="_blank">Scott Askham vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askhasco01.html" target="_blank">Scott Askham</a></td>
 <td>9/3/2016</td>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">Fight Night: Bader vs Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3888UFC.html" target="_blank">Cezar Ferreira vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferrecez01.html" target="_blank">Cezar Ferreira</a></td>
 <td>11/19/2016</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">Fight Night: Gustafsson vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4126UFC.html" target="_blank">Jack Hermansson vs Alex Nicholson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nichoale01.html" target="_blank">Alex Nicholson</a></td>
 <td>5/28/2017</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC Fight Night: Pettis vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">Fight Night: Pettis vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4246UFC.html" target="_blank">Jack Hermansson vs Bradley Scott</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/scottbra01.html" target="_blank">Bradley Scott</a></td>
 <td>8/5/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">UFC Fight Night: Brunson vs. Machida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">Fight Night: Brunson vs Machida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4321UFC.html" target="_blank">Jack Hermansson vs Thiago Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santothi01.html" target="_blank">Thiago Santos</a></td>
 <td>10/28/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4583UFC.html" target="_blank">Jack Hermansson vs Thales Leites</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leitetha01.html" target="_blank">Thales Leites</a></td>
 <td>5/12/2018</td>
@@ -570,7 +572,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">UFC Fight Night: Lee vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC on Fox 31: Lee vs Iaquinta 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4892UFC.html" target="_blank">Jack Hermansson vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meersger01.html" target="_blank">Gerald Meerschaert</a></td>
 <td>12/15/2018</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">UFC Fight Night: Barboza vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">Fight Night: Barboza vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5022UFC.html" target="_blank">David Branch vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brancdav01.html" target="_blank">David Branch</a></td>
 <td>3/30/2019</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">UFC Fight Night: Jacare vs. Hermansson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">Fight Night: Jacare vs Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5058UFC.html" target="_blank">Jack Hermansson vs Jacare Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/souzajac01.html" target="_blank">Jacare Souza</a></td>
 <td>4/27/2019</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5289UFC.html" target="_blank">Jared Cannonier vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cannojar01.html" target="_blank">Jared Cannonier</a></td>
 <td>9/28/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">UFC Fight Night: Figueiredo vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">Fight Night: Figueiredo vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5633UFC.html" target="_blank">Kelvin Gastelum vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
 <td>7/18/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259FNI.html" target="_blank">Fight Night: Hermansson vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5852UFC.html" target="_blank">Jack Hermansson vs Marvin Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vettomar01.html" target="_blank">Marvin Vettori</a></td>
 <td>12/5/2020</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271FNI.html" target="_blank">UFC Fight Night: Font vs. Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">Fight Night: Font vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6081UFC.html" target="_blank">Jack Hermansson vs Edmen Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shahbedm01.html" target="_blank">Edmen Shahbazyan</a></td>
 <td>5/22/2021</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">Fight Night: Hermansson vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6412UFC.html" target="_blank">Jack Hermansson vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>2/5/2022</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Aspinall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">Fight Night: Blaydes vs Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6683UFC.html" target="_blank">Chris Curtis vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/curtichr01.html" target="_blank">Chris Curtis</a></td>
 <td>7/23/2022</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0317FNI.html" target="_blank">UFC Fight Night: Thompson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">Fight Night: Thompson vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6867UFC.html" target="_blank">Roman Dolidze vs Jack Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dolidrom01.html" target="_blank">Roman Dolidze</a></td>
 <td>12/3/2022</td>
@@ -1000,7 +1002,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0350FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Pyfer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0351FNI.html" target="_blank">Fight Night: Hermansson vs Pyfer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7458UFC.html" target="_blank">Jack Hermansson vs Joe Pyfer</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pyferjoe01.html" target="_blank">Joe Pyfer</a></td>
 <td>2/10/2024</td>

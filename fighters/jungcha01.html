@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">UFC Fight Night Live: Nogueira vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">Fight Night: Nogueira vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1577UFC.html" target="_blank">Leonard Garcia vs Chan Sung Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garcileo01.html" target="_blank">Leonard Garcia</a></td>
 <td>3/26/2011</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0040FNI.html" target="_blank">UFC on FUEL TV: Korean Zombie vs Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0040FNI.html" target="_blank">UFC on Fuel TV 3: Korean Zombie vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1926UFC.html" target="_blank">Chan Sung Jung vs Dustin Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/poiridus01.html" target="_blank">Dustin Poirier</a></td>
 <td>5/15/2012</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC Fight Night: Bermudez vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">Fight Night: Bermudez vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4003UFC.html" target="_blank">Dennis Bermudez vs Chan Sung Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bermuden01.html" target="_blank">Dennis Bermudez</a></td>
 <td>2/4/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">UFC Fight Night: Korean Zombie vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">Fight Night: Korean Zombie vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4811UFC.html" target="_blank">Chan Sung Jung vs Yair Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodriyai01.html" target="_blank">Yair Rodriguez</a></td>
 <td>11/10/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5133UFC.html" target="_blank">Chan Sung Jung vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moicaren01.html" target="_blank">Renato Moicano</a></td>
 <td>6/22/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">UFC Fight Night: Edgar vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">Fight Night: Edgar vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5413UFC.html" target="_blank">Frankie Edgar vs Chan Sung Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
 <td>12/21/2019</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">UFC Fight Night: Ortega vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">Fight Night: Ortega vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5777UFC.html" target="_blank">Chan Sung Jung vs Brian Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortegbri01.html" target="_blank">Brian Ortega</a></td>
 <td>10/17/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">UFC Fight Night: Jung vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">Fight Night: Jung vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6115UFC.html" target="_blank">Dan Ige vs Chan Sung Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/igedan01.html" target="_blank">Dan Ige</a></td>
 <td>6/19/2021</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6513UFC.html" target="_blank">Chan Sung Jung vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/volkaale01.html" target="_blank">Alexander Volkanovski</a></td>
 <td>4/9/2022</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">UFC Fight Night: Holloway vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0339FNI.html" target="_blank">Fight Night: Holloway vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7258UFC.html" target="_blank">Max Holloway vs Chan Sung Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>8/26/2023</td>

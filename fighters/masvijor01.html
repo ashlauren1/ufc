@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on FOX: Henderson vs Melendez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on Fox 7: Henderson vs Melendez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2260UFC.html" target="_blank">Jorge Masvidal vs Tim Means</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meanstim01.html" target="_blank">Tim Means</a></td>
 <td>4/20/2013</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2338UFC.html" target="_blank">Michael Chiesa vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
 <td>7/27/2013</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">UFC Fight Night: Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">Fight Night: Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2457UFC.html" target="_blank">Rustam Khabilov vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/khabirus01.html" target="_blank">Rustam Khabilov</a></td>
 <td>11/6/2013</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox 11: Werdum vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2669UFC.html" target="_blank">Pat Healy vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/healypat01.html" target="_blank">Pat Healy</a></td>
 <td>4/19/2014</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">UFC on Fox: Lawler vs Brown</a></td>
+<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC on Fox 12: Lawler vs Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2822UFC.html" target="_blank">Daron Cruickshank vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cruicdar01.html" target="_blank">Daron Cruickshank</a></td>
 <td>7/26/2014</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">UFC Fight Night: Mendes vs Lamas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">Fight Night: Mendes vs Lamas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3127UFC.html" target="_blank">Al Iaquinta vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/iaquial01.html" target="_blank">Al Iaquinta</a></td>
 <td>4/4/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">The Ultimate Fighter 21 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">TUF 21 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3275UFC.html" target="_blank">Cezar Ferreira vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferrecez01.html" target="_blank">Cezar Ferreira</a></td>
 <td>7/12/2015</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">UFC Fight Night: Henderson vs Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">Fight Night: Henderson vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3439UFC.html" target="_blank">Benson Henderson vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hendeben01.html" target="_blank">Benson Henderson</a></td>
 <td>11/28/2015</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">UFC Fight Night: Almeida vs Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">Fight Night: Almeida vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3651UFC.html" target="_blank">Lorenz Larkin vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/larkilor01.html" target="_blank">Lorenz Larkin</a></td>
 <td>5/29/2016</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3750UFC.html" target="_blank">Jorge Masvidal vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>7/30/2016</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">The Ultimate Fighter 24 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">TUF 24 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3922UFC.html" target="_blank">Jake Ellenberger vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>12/3/2016</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3992UFC.html" target="_blank">Donald Cerrone vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
 <td>1/28/2017</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4111UFC.html" target="_blank">Demian Maia vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiadem01.html" target="_blank">Demian Maia</a></td>
 <td>5/13/2017</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0220PPV.html" target="_blank">UFC 217: Bisping vs. St-Pierre</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220PPV.html" target="_blank">UFC 217: Bisping vs St-Pierre</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4332UFC.html" target="_blank">Jorge Masvidal vs Stephen Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thompste01.html" target="_blank">Stephen Thompson</a></td>
 <td>11/4/2017</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">UFC Fight Night: Till vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0206FNI.html" target="_blank">Fight Night: Till vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4997UFC.html" target="_blank">Jorge Masvidal vs Darren Till</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tilldar01.html" target="_blank">Darren Till</a></td>
 <td>3/16/2019</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5158UFC.html" target="_blank">Ben Askren vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askreben01.html" target="_blank">Ben Askren</a></td>
 <td>7/6/2019</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs. Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5351UFC.html" target="_blank">Nate Diaz vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diaznat01.html" target="_blank">Nate Diaz</a></td>
 <td>11/2/2019</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5608UFC.html" target="_blank">Jorge Masvidal vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>7/11/2020</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0263PPV.html" target="_blank">UFC 261: Usman vs. Masvidal 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263PPV.html" target="_blank">UFC 261: Usman vs Masvidal 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6031UFC.html" target="_blank">Jorge Masvidal vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>4/24/2021</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6462UFC.html" target="_blank">Colby Covington vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/covincol01.html" target="_blank">Colby Covington</a></td>
 <td>3/5/2022</td>
@@ -1215,7 +1217,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs. Adesanya 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs Adesanya 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7026UFC.html" target="_blank">Gilbert Burns vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burnsgil01.html" target="_blank">Gilbert Burns</a></td>
 <td>4/8/2023</td>

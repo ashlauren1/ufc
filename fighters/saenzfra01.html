@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC Fight Night: Bader vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">Fight Night: Bader vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2839UFC.html" target="_blank">Frankie Saenz vs Nolan Ticman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ticmanol01.html" target="_blank">Nolan Ticman</a></td>
 <td>8/16/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">UFC Fight Night: Bigfoot vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">Fight Night: Bigfoot vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3084UFC.html" target="_blank">Iuri Alcantara vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
 <td>2/22/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC Fight Night: Teixeira vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">Fight Night: Teixeira vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3341UFC.html" target="_blank">Sirwan Kakai vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kakaisir01.html" target="_blank">Sirwan Kakai</a></td>
 <td>8/8/2015</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0138FNI.html" target="_blank">UFC Fight Night: Holm vs. Shevchenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC on Fox 20: Holm vs Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3737UFC.html" target="_blank">Frankie Saenz vs Eddie Wineland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wineledd01.html" target="_blank">Eddie Wineland</a></td>
 <td>7/23/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Penn</a></td>
+<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">Fight Night: Rodriguez vs Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3984UFC.html" target="_blank">Augusto Mendes vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mendeaug01.html" target="_blank">Augusto Mendes</a></td>
 <td>1/15/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4411UFC.html" target="_blank">Merab Dvalishvili vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dvalimer01.html" target="_blank">Merab Dvalishvili</a></td>
 <td>12/9/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4597UFC.html" target="_blank">Henry Briones vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brionhen01.html" target="_blank">Henry Briones</a></td>
 <td>5/19/2018</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206FNI.html" target="_blank">UFC Fight Night: Thompson vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">Fight Night: Thompson vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5016UFC.html" target="_blank">Frankie Saenz vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>3/23/2019</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">UFC Fight Night: Brunson vs. Shahbazyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">Fight Night: Brunson vs Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5663UFC.html" target="_blank">Jonathan Martinez vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martijon01.html" target="_blank">Jonathan Martinez</a></td>
 <td>8/1/2020</td>

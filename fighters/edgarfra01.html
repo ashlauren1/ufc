@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">UFC Fight Night: Florian vs Lauzon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">Fight Night: Florian vs Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0875UFC.html" target="_blank">Frankie Edgar vs Gray Maynard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maynagra01.html" target="_blank">Gray Maynard</a></td>
 <td>4/2/2008</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0015FNI.html" target="_blank">UFC: Silva vs Irvin</a></td>
+<td style="text-align:left"><a href="/ufc/events/0015FNI.html" target="_blank">Fight Night: Silva vs Irvin</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0940UFC.html" target="_blank">Frankie Edgar vs Hermes Franca</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/francher01.html" target="_blank">Hermes Franca</a></td>
 <td>7/19/2008</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">The Ultimate Fighter: Heavyweights Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010TUF.html" target="_blank">TUF 10 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1235UFC.html" target="_blank">Frankie Edgar vs Matt Veach</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veachmat01.html" target="_blank">Matt Veach</a></td>
 <td>12/5/2009</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020TUF.html" target="_blank">The Ultimate Fighter 19 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0019TUF.html" target="_blank">TUF 19 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2786UFC.html" target="_blank">Frankie Edgar vs BJ Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pennbj01.html" target="_blank">BJ Penn</a></td>
 <td>7/6/2014</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">UFC Fight Night: Edgar vs Swanson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">Fight Night: Edgar vs Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2978UFC.html" target="_blank">Frankie Edgar vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swanscub01.html" target="_blank">Cub Swanson</a></td>
 <td>11/22/2014</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">Fight Night: Edgar vs Faber</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3183UFC.html" target="_blank">Frankie Edgar vs Urijah Faber</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/faberuri01.html" target="_blank">Urijah Faber</a></td>
 <td>5/16/2015</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023TUF.html" target="_blank">The Ultimate Fighter 22 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">TUF 22 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3462UFC.html" target="_blank">Frankie Edgar vs Chad Mendes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mendecha01.html" target="_blank">Chad Mendes</a></td>
 <td>12/11/2015</td>
@@ -1215,7 +1217,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4112UFC.html" target="_blank">Frankie Edgar vs Yair Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodriyai01.html" target="_blank">Yair Rodriguez</a></td>
 <td>5/13/2017</td>
@@ -1258,7 +1260,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4518UFC.html" target="_blank">Frankie Edgar vs Brian Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortegbri01.html" target="_blank">Brian Ortega</a></td>
 <td>3/3/2018</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4563UFC.html" target="_blank">Frankie Edgar vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swanscub01.html" target="_blank">Cub Swanson</a></td>
 <td>4/21/2018</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5193UFC.html" target="_blank">Frankie Edgar vs Max Holloway</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>7/27/2019</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">UFC Fight Night: Edgar vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">Fight Night: Edgar vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5413UFC.html" target="_blank">Frankie Edgar vs Chan Sung Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jungcha01.html" target="_blank">Chan Sung Jung</a></td>
 <td>12/21/2019</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">UFC Fight Night: Munhoz vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">Fight Night: Munhoz vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5690UFC.html" target="_blank">Frankie Edgar vs Pedro Munhoz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munhoped01.html" target="_blank">Pedro Munhoz</a></td>
 <td>8/22/2020</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">Fight Night: Overeem vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5918UFC.html" target="_blank">Frankie Edgar vs Cory Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandhcor01.html" target="_blank">Cory Sandhagen</a></td>
 <td>2/6/2021</td>
@@ -1516,7 +1518,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6317UFC.html" target="_blank">Frankie Edgar vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>11/6/2021</td>
@@ -1559,7 +1561,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6841UFC.html" target="_blank">Frankie Edgar vs Chris Gutierrez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gutiechr01.html" target="_blank">Chris Gutierrez</a></td>
 <td>11/12/2022</td>

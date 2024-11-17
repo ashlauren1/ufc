@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">UFC Fight Night: Maynard vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">Fight Night: Maynard vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1264UFC.html" target="_blank">Evan Dunham vs Efrain Escudero</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/escudefr01.html" target="_blank">Efrain Escudero</a></td>
 <td>1/11/2010</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">UFC Fight Night: Fight for the Troops 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">Fight Night: Fight for the Troops 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1517UFC.html" target="_blank">Evan Dunham vs Melvin Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guillmel01.html" target="_blank">Melvin Guillard</a></td>
 <td>1/22/2011</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0031FNI.html" target="_blank">UFC Fight Night Live: Shields vs Ellenberger</a></td>
+<td style="text-align:left"><a href="/ufc/events/0031FNI.html" target="_blank">Fight Night: Shields vs Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1693UFC.html" target="_blank">Shamar Bailey vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bailesha01.html" target="_blank">Shamar Bailey</a></td>
 <td>9/17/2011</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on FOX: Evans vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on Fox 2: Evans vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1829UFC.html" target="_blank">Evan Dunham vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lentznik01.html" target="_blank">Nik Lentz</a></td>
 <td>1/28/2012</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX 8: Belfort vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2277UFC.html" target="_blank">Rafael Dos Anjos vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>5/18/2013</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0083FNI.html" target="_blank">UFC Fight Night: Cerrone vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">Fight Night: Cerrone vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2798UFC.html" target="_blank">Edson Barboza vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barboeds01.html" target="_blank">Edson Barboza</a></td>
 <td>7/16/2014</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">UFC Fight Night: Bisping vs Leites</a></td>
+<td style="text-align:left"><a href="/ufc/events/0115FNI.html" target="_blank">Fight Night: Bisping vs Leites</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3296UFC.html" target="_blank">Evan Dunham vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>7/18/2015</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023TUF.html" target="_blank">The Ultimate Fighter 22 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">TUF 22 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3465UFC.html" target="_blank">Evan Dunham vs Joe Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lauzojoe01.html" target="_blank">Joe Lauzon</a></td>
 <td>12/11/2015</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">UFC Fight Night: Poirier vs. Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">Fight Night: Poirier vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3812UFC.html" target="_blank">Evan Dunham vs Ricky Glenn</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/glennric01.html" target="_blank">Ricky Glenn</a></td>
 <td>9/17/2016</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4299UFC.html" target="_blank">Beneil Dariush vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dariuben01.html" target="_blank">Beneil Dariush</a></td>
 <td>10/7/2017</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226PPV.html" target="_blank">UFC 223: Khabib vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226PPV.html" target="_blank">UFC 223: Khabib vs Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4545UFC.html" target="_blank">Olivier Aubin-Mercier vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aubinoli01.html" target="_blank">Olivier Aubin-Mercier</a></td>
 <td>4/7/2018</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">Fight Night: Marreta vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4766UFC.html" target="_blank">Evan Dunham vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/trinafra01.html" target="_blank">Francisco Trinaldo</a></td>
 <td>9/22/2018</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs. Spencer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5575UFC.html" target="_blank">Herbert Burns vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burnsher01.html" target="_blank">Herbert Burns</a></td>
 <td>6/6/2020</td>

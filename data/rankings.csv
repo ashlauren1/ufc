@@ -1,17 +1,17 @@
 weight_class,rk,fighter,fighterID,record,KO_TKO,age,height,reach,style,SigStrAvg,StrAcc,SLPM,StrDef,TDAvg,TDAcc,TDDef
 Men's PFP,1,Islam Makhachev,makhaisl01,15-1-0,3,33,70,70.5,Sambo,28.06,59.55,2.65,61.02,2.25,53.73,90.91
 Men's PFP,2,Alex Pereira,pereiale01,9-1-0,7,37,76,79,Kickboxer,58.1,63.08,5.46,55.2,0.1,100,70
-Men's PFP,3,Jon Jones,jonesjon01,21-1-0*,5,35,76,84.5,Other,63.83,57.89,4.29,64.32,1.91,45.36,95
+Men's PFP,3,Jon Jones,jonesjon01,21-1-0 (1 NC),5,35,76,84.5,Other,63.83,57.89,4.29,64.32,1.91,45.36,95
 Men's PFP,4,Ilia Topuria,topurili01,7-0-0,4,27,67,69,Jiu-Jitsu,44.14,46.33,4.4,65.39,1.29,56.25,92.86
-Men's PFP,5,Belal Muhammad,muhambel01,15-3-0*,2,36,71,72,Other,65.32,43.7,4.39,57.14,2.26,39.09,89.36
+Men's PFP,5,Belal Muhammad,muhambel01,15-3-0 (1 NC),2,36,71,72,Other,65.32,43.7,4.39,57.14,2.26,39.09,89.36
 Men's PFP,6,Dricus Du Plessis,plessdri01,8-0-0,4,30,73,76,MMA,76.25,49.39,6.18,54.81,2.5,50,50
 Men's PFP,7,Merab Dvalishvili,dvalimer01,11-2-0,1,33,66,68,Freestyle,70.08,42.2,4.35,56.59,6.54,36.96,80.77
 Men's PFP,8,Tom Aspinall,aspintom01,8-1-0,6,31,77,78,Freestyle,16.44,67.27,8.07,65.36,0.44,100,100
-Men's PFP,9,Leon Edwards,edwarleo01,14-3-0*,3,33,72,74,MMA,46.56,53.93,2.68,53.95,1.44,36.62,65.81
+Men's PFP,9,Leon Edwards,edwarleo01,14-3-0 (1 NC),3,33,72,74,MMA,46.56,53.93,2.68,53.95,1.44,36.62,65.81
 Men's PFP,10,Alexander Volkanovski,volkaale01,13-3-0,5,36,66,71.5,Other,97.44,56.51,6.16,58.15,1.88,37.97,70
 Men's PFP,11,Alexandre Pantoja,pantoale01,12-3-0,2,34,65,67,MMA,57.4,49.74,4.41,50.29,2.27,47.89,68.42
 Men's PFP,12,Max Holloway,hollomax01,22-7-0,10,32,71,69,Muay Thai,116.48,48.1,7.17,59.39,0.28,53.33,84.11
-Men's PFP,13,Sean O'Malley,omalsea01,10-2-0*,6,30,71,72,Other,77.77,61.46,6.71,60.81,0.23,42.86,60.47
+Men's PFP,13,Sean O'Malley,omalsea01,10-2-0 (1 NC),6,30,71,72,Other,77.77,61.46,6.71,60.81,0.23,42.86,60.47
 Men's PFP,14,Sean Strickland,stricsea01,16-6-0,4,33,73,76,MMA,94.05,42.22,6.01,61.5,0.82,64.29,77.05
 Men's PFP,15,Israel Adesanya,adesaisr01,13-4-0,5,35,76,80,Freestyle,73.24,48.09,4,56.05,0.06,12.5,75.79
 Flyweight,Champ,Alexandre Pantoja,pantoale01,12-3-0,2,34,65,67,MMA,57.4,49.74,4.41,50.29,2.27,47.89,68.42
@@ -31,7 +31,7 @@ Flyweight,13,Charles Johnson,johnscha01,6-4-0,2,33,69,70,Other,64.4,50.55,4.77,5
 Flyweight,14,Cody Durden,durdecod01,6-4-1,1,33,67,67,Striker,31.45,50.14,3.35,50.51,2.73,50.85,73.33
 Flyweight,15,Matt Schnell,schnemat01,6-8-0,0,34,68,70,Jiu-Jitsu,33.36,39.48,4.39,55.54,0.29,40,50
 Bantamweight,Champ,Merab Dvalishvili,dvalimer01,11-2-0,1,33,66,68,Freestyle,70.08,42.2,4.35,56.59,6.54,36.96,80.77
-Bantamweight,1,Sean O'Malley,omalsea01,10-2-0*,6,30,71,72,Other,77.77,61.46,6.71,60.81,0.23,42.86,60.47
+Bantamweight,1,Sean O'Malley,omalsea01,10-2-0 (1 NC),6,30,71,72,Other,77.77,61.46,6.71,60.81,0.23,42.86,60.47
 Bantamweight,2,Umar Nurmagomedov,nurmauma01,6-0-0,1,28,68,69,MMA,53.17,63.42,4.46,63.81,3.17,50,100
 Bantamweight,3,Petr Yan,yanpet01,9-4-0,4,31,67.5,67,Boxer,85.77,53.53,5.14,58.71,1.92,51.02,85.16
 Bantamweight,4,Cory Sandhagen,sandhcor01,10-4-0,4,32,71,70,MMA,72.14,44.47,5.02,56.82,1.14,32,63.46
@@ -50,9 +50,9 @@ Featherweight,Champ,Ilia Topuria,topurili01,7-0-0,4,27,67,69,Jiu-Jitsu,44.14,46.
 Featherweight,1,Alexander Volkanovski,volkaale01,13-3-0,5,36,66,71.5,Other,97.44,56.51,6.16,58.15,1.88,37.97,70
 Featherweight,2,Max Holloway,hollomax01,22-7-0,10,32,71,69,Muay Thai,116.48,48.1,7.17,59.39,0.28,53.33,84.11
 Featherweight,3,Diego Lopes,lopesdie01,5-1-0,2,29,71,72.5,Jiu-Jitsu,38.5,53.85,4.66,52.36,0.33,40,61.54
-Featherweight,4,Yair Rodriguez,rodriyai01,10-4-0*,4,32,71,71,Freestyle,60.93,46.3,4.65,52.4,0.6,27.27,58.46
+Featherweight,4,Yair Rodriguez,rodriyai01,10-4-0 (1 NC),4,32,71,71,Freestyle,60.93,46.3,4.65,52.4,0.6,27.27,58.46
 Featherweight,5,Movsar Evloev,evloemov01,8-0-0,0,30,67,72.5,Freestyle,66.38,48.4,4.43,61.1,4.75,46.34,71.43
-Featherweight,6,Brian Ortega,ortegbri01,8-4-0*,3,33,68,69,Jiu-Jitsu,52.85,37.89,4.08,49.68,0.92,26.09,55.56
+Featherweight,6,Brian Ortega,ortegbri01,8-4-0 (1 NC),3,33,68,69,Jiu-Jitsu,52.85,37.89,4.08,49.68,0.92,26.09,55.56
 Featherweight,7,Arnold Allen,allenarn01,11-2-0,2,30,68,70,MMA,47,41.54,3.45,61.63,0.85,47.83,75
 Featherweight,8,Josh Emmett,emmetjos01,10-4-0,4,39,66.5,70,Freestyle,52.21,36.33,4.04,61.18,0.79,37.93,46.67
 Featherweight,9,Aljamain Sterling,sterlalj01,16-4-0,2,35,67,71,Kickboxer,61.25,52.51,4.61,58.48,2.05,27.52,45.24
@@ -64,9 +64,9 @@ Featherweight,14,Dan Ige,igedan01,10-7-0,4,33,67,71,Jiu-Jitsu,46.41,46.03,3.68,5
 Featherweight,15,Edson Barboza,barboeds01,18-12-0,9,38,71,75,Striker,50.17,44.12,4.11,56.14,0.37,50,72.55
 Lightweight,Champ,Islam Makhachev,makhaisl01,15-1-0,3,33,70,70.5,Sambo,28.06,59.55,2.65,61.02,2.25,53.73,90.91
 Lightweight,1,Arman Tsarukyan,tsaruarm01,9-2-0,4,28,67,72.5,Kickboxer,47.73,48.93,3.79,53.97,2.73,37.04,75
-Lightweight,2,Charles Oliveira,olivecha01,22-10-0*,4,35,70,74,Jiu-Jitsu,24.12,53.86,3.39,51.04,1.03,40,55.1
+Lightweight,2,Charles Oliveira,olivecha01,22-10-0 (1 NC),4,35,70,74,Jiu-Jitsu,24.12,53.86,3.39,51.04,1.03,40,55.1
 Lightweight,3,Justin Gaethje,gaethjus01,8-5-0,6,35,71,70,MMA,74.15,59.21,6.78,52.01,0.08,25,75
-Lightweight,4,Dustin Poirier,poiridus01,22-8-0*,10,35,69,72,Jiu-Jitsu,56.52,50.53,5.42,52.95,0.9,36.36,63.04
+Lightweight,4,Dustin Poirier,poiridus01,22-8-0 (1 NC),10,35,69,72,Jiu-Jitsu,56.52,50.53,5.42,52.95,0.9,36.36,63.04
 Lightweight,5,Max Holloway,hollomax01,22-7-0,10,32,71,69,Muay Thai,116.48,48.1,7.17,59.39,0.28,53.33,84.11
 Lightweight,6,Dan Hooker,hookedan01,14-8-0,7,34,72,75,MMA,51.41,48.65,5.03,51.13,0.5,34.38,78.26
 Lightweight,7,Michael Chandler,chandmic01,2-3-0,2,38,68,71.5,Wrestler,44,46.12,5.49,42.78,1,35.71,50
@@ -78,8 +78,8 @@ Lightweight,12,Benoit Saint Denis,denisben01,5-3-0,3,28,71,73,MMA,39,53.33,5.17,
 Lightweight,13,Jalin Turner,turnejal01,7-5-0,4,29,75,77,MMA,38.75,47.89,5.19,40.58,0.33,50,74.47
 Lightweight,14,Paddy Pimblett,pimblpad01,6-0-0,1,29,70,73,Other,40.67,53.16,4.94,40.78,0.5,25,52.94
 Lightweight,15,Rafael Dos Anjos,anjosraf01,21-14-0,4,40,68,70,Grappler,51.94,47.12,3.48,60.38,1.94,35.6,55.15
-Welterweight,Champ,Belal Muhammad,muhambel01,15-3-0*,2,36,71,72,Other,65.32,43.7,4.39,57.14,2.26,39.09,89.36
-Welterweight,1,Leon Edwards,edwarleo01,14-3-0*,3,33,72,74,MMA,46.56,53.93,2.68,53.95,1.44,36.62,65.81
+Welterweight,Champ,Belal Muhammad,muhambel01,15-3-0 (1 NC),2,36,71,72,Other,65.32,43.7,4.39,57.14,2.26,39.09,89.36
+Welterweight,1,Leon Edwards,edwarleo01,14-3-0 (1 NC),3,33,72,74,MMA,46.56,53.93,2.68,53.95,1.44,36.62,65.81
 Welterweight,2,Kamaru Usman,usmankam01,15-3-0,4,37,72,76,Freestyle,76.11,52.29,4.36,54.01,3.28,45.38,89.8
 Welterweight,3,Shavkat Rakhmonov,rakhmsha01,6-0-0,1,30,73,77,Sambo,34.5,61.06,4.12,51.79,0.83,29.41,100
 Welterweight,4,Sean Brady,bradysea01,7-1-0,0,31,70,72,Jiu-Jitsu,57.13,55.06,4.09,60.38,3.25,52,85.71
@@ -99,7 +99,7 @@ Middleweight,1,Sean Strickland,stricsea01,16-6-0,4,33,73,76,MMA,94.05,42.22,6.01
 Middleweight,2,Israel Adesanya,adesaisr01,13-4-0,5,35,76,80,Freestyle,73.24,48.09,4,56.05,0.06,12.5,75.79
 Middleweight,3,Khamzat Chimaev,chimakha01,7-0-0,2,29,74,75,Wrestler,36.86,58.77,5.72,42.22,1.71,46.15,100
 Middleweight,4,Robert Whittaker,whittrob01,17-5-0,6,33,72,73.5,Jiu-Jitsu,62.14,43.03,4.58,59.95,0.73,38.1,82.86
-Middleweight,5,Nassourdine Imavov,imavonas01,7-2-0*,3,29,75,75,Striker,68.8,55.8,4.51,58.98,0.9,36,78.38
+Middleweight,5,Nassourdine Imavov,imavonas01,7-2-0 (1 NC),3,29,75,75,Striker,68.8,55.8,4.51,58.98,0.9,36,78.38
 Middleweight,6,Caio Borralho,borracai01,7-0-0,1,31,73.5,75,MMA,48,59.05,3.4,62.17,1.29,56.25,72.73
 Middleweight,7,Marvin Vettori,vettomar01,9-5-1,0,31,72,74,MMA,77.07,45.66,4.56,56.75,1.87,45.16,69.05
 Middleweight,8,Jared Cannonier,cannojar01,10-8-0,6,40,71,77.5,Striker,61.78,50.14,4.49,56.52,0.39,46.67,62.5
@@ -111,27 +111,27 @@ Middleweight,13,Anthony Hernandez,hernaant01,7-2-0,2,31,72,75,Striker,49.33,62.8
 Middleweight,14,Shara Magomedov,magomsha01,3-0-0,1,30,74,73,Other,97.33,66.36,6.88,41.7,0,0,71.43
 Middleweight,15,Michel Pereira,pereimic01,9-3-0,2,31,73,73,Striker,48.25,53.76,4.45,52.79,0.92,52.38,76.6
 Light Heavyweight,Champ,Alex Pereira,pereiale01,9-1-0,7,37,76,79,Kickboxer,58.1,63.08,5.46,55.2,0.1,100,70
-Light Heavyweight,1,Magomed Ankalaev,ankalmag01,10-1-1*,6,32,75,75,MMA,41.31,53.43,3.64,59.41,0.77,31.25,86.36
+Light Heavyweight,1,Magomed Ankalaev,ankalmag01,10-1-1 (1 NC),6,32,75,75,MMA,41.31,53.43,3.64,59.41,0.77,31.25,86.36
 Light Heavyweight,2,Jiri Prochazka,prochjir01,4-2-0,3,32,75,80,Muay Thai,56,55.08,5.38,39.93,0.5,60,68.42
 Light Heavyweight,3,Jamahal Hill,hilljam01,7-2-0,5,33,76,79,MMA,58.56,52.81,6.85,46.68,0,0,70.83
 Light Heavyweight,4,Jan Blachowicz,blachjan01,12-7-1,5,41,74,78,MMA,44.7,50.14,3.41,53.05,0.95,50,68.97
 Light Heavyweight,5,Aleksandar Rakic,rakicale01,6-3-0,2,32,76,78,Freestyle,47,50.78,4.26,50.88,0.56,25,85.71
-Light Heavyweight,6,Khalil Rountree Jr.,rountkha01,9-6-0*,7,34,73,76.5,MMA,32,38.38,3.73,48.11,0,0,58.82
+Light Heavyweight,6,Khalil Rountree Jr.,rountkha01,9-6-0 (1 NC),7,34,73,76.5,MMA,32,38.38,3.73,48.11,0,0,58.82
 Light Heavyweight,6,Nikita Krylov,krylonik01,11-7-0,4,32,75,77.5,Karate,30.33,55.77,4.38,44.6,1.06,38,53.19
 Light Heavyweight,8,Volkan Oezdemir,oezdevol01,8-6-0,4,35,74,75,Striker,45.86,48.09,4.78,55.9,0.36,33.33,80
-Light Heavyweight,9,Johnny Walker,walkejoh01,7-6-0*,5,32,78,82,MMA,22.07,50.57,3.6,47.39,0.14,100,50
+Light Heavyweight,9,Johnny Walker,walkejoh01,7-6-0 (1 NC),5,32,78,82,MMA,22.07,50.57,3.6,47.39,0.14,100,50
 Light Heavyweight,10,Carlos Ulberg,ulbercar01,6-1-0,4,34,76,77,Kickboxer,48.86,60.32,7.52,51.76,0.43,75,75
 Light Heavyweight,11,Azamat Murzakanov,murzaaza01,4-0-0,3,35,70,71.5,MMA,54.75,56.59,4.83,61.69,0.5,16.67,83.33
 Light Heavyweight,12,Dominick Reyes,reyesdom01,7-4-0,4,34,76,77,Other,38.18,50.42,4.87,48.73,0.18,28.57,80.56
 Light Heavyweight,12,Anthony Smith,smithant01,13-10-0,5,36,76,76,Freestyle,35.17,50.22,3.29,46.63,0.35,26.67,50
 Light Heavyweight,14,Bogdan Guskov,guskobog01,2-1-0,2,32,75,76,MMA,16.33,48.04,3.13,47.27,0,0,66.67
 Light Heavyweight,15,Alonzo Menifield,menifalo01,8-5-1,4,37,72,76,Freestyle,30.5,54.74,3.74,49.18,0.36,38.46,78.05
-Heavyweight,Champ,Jon Jones,jonesjon01,21-1-0*,5,35,76,84.5,Other,63.83,57.89,4.29,64.32,1.91,45.36,95
+Heavyweight,Champ,Jon Jones,jonesjon01,21-1-0 (1 NC),5,35,76,84.5,Other,63.83,57.89,4.29,64.32,1.91,45.36,95
 Heavyweight,1,Tom Aspinall,aspintom01,8-1-0,6,31,77,78,Freestyle,16.44,67.27,8.07,65.36,0.44,100,100
 Heavyweight,2,Ciryl Gane,ganecir01,9-2-0,4,34,76,81,Muay Thai,77.82,60.88,5.49,63.23,0.55,21.43,50
 Heavyweight,3,Alexander Volkov,volkoale01,12-4-0,6,36,79,80,Jiu-Jitsu,68.69,57.03,5.46,55.42,0.44,63.64,75
 Heavyweight,4,Sergei Pavlovich,pavloser01,6-3-0,6,32,75,84,MMA,21.33,44.04,5.86,51.75,0,0,75
-Heavyweight,5,Curtis Blaydes,blaydcur01,13-5-0*,7,33,76,80,MMA,30.47,50.13,3.54,58.84,3.26,53.45,31.58
+Heavyweight,5,Curtis Blaydes,blaydcur01,13-5-0 (1 NC),7,33,76,80,MMA,30.47,50.13,3.54,58.84,3.26,53.45,31.58
 Heavyweight,6,Jailton Almeida,almeijai01,7-1-0,2,33,75,79,Boxer,19.25,65.81,2.72,43.48,3.25,59.09,100
 Heavyweight,7,Serghei Spivac,spivaser01,8-4-0,3,29,75,78,Sambo,26.5,49.53,3.51,50,2.33,65.12,70
 Heavyweight,8,Stipe Miocic,miocisti01,14-4-0,9,42,77,80,Other,53.89,53.27,4.82,54.63,1.39,34.25,68.42

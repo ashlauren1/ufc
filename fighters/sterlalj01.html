@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0083FNI.html" target="_blank">UFC Fight Night: Cerrone vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">Fight Night: Cerrone vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2806UFC.html" target="_blank">Aljamain Sterling vs Hugo Viana</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vianahug01.html" target="_blank">Hugo Viana</a></td>
 <td>7/16/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">UFC Fight Night: Machida vs Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0107FNI.html" target="_blank">UFC on Fox 15: Machida vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3155UFC.html" target="_blank">Takeya Mizugaki vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mizugtak01.html" target="_blank">Takeya Mizugaki</a></td>
 <td>4/18/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">Fight Night: Namajunas vs VanZant</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3457UFC.html" target="_blank">Johnny Eduardo vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eduarjoh01.html" target="_blank">Johnny Eduardo</a></td>
 <td>12/10/2015</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">UFC Fight Night: Almeida vs Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">Fight Night: Almeida vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3657UFC.html" target="_blank">Bryan Caraway vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carawbry01.html" target="_blank">Bryan Caraway</a></td>
 <td>5/29/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3996UFC.html" target="_blank">Raphael Assuncao vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/assunrap01.html" target="_blank">Raphael Assuncao</a></td>
 <td>1/28/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0157FNI.html" target="_blank">UFC Fight Night: Johnson vs. Reis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC on Fox 24: Johnson vs Reis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4091UFC.html" target="_blank">Augusto Mendes vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mendeaug01.html" target="_blank">Augusto Mendes</a></td>
 <td>4/15/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs. Jones 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs Jones 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4234UFC.html" target="_blank">Renan Barao vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baraoren01.html" target="_blank">Renan Barao</a></td>
 <td>7/29/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4404UFC.html" target="_blank">Marlon Moraes vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraemar01.html" target="_blank">Marlon Moraes</a></td>
 <td>12/9/2017</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4566UFC.html" target="_blank">Brett Johns vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsbre01.html" target="_blank">Brett Johns</a></td>
 <td>4/21/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4741UFC.html" target="_blank">Cody Stamann vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stamacod01.html" target="_blank">Cody Stamann</a></td>
 <td>9/8/2018</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Velasquez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">Fight Night: Ngannou vs Velasquez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4953UFC.html" target="_blank">Jimmie Rivera vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riverjim01.html" target="_blank">Jimmie Rivera</a></td>
 <td>2/17/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0240PPV.html" target="_blank">UFC 238: Cejudo vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240PPV.html" target="_blank">UFC 238: Cejudo vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5126UFC.html" target="_blank">Pedro Munhoz vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munhoped01.html" target="_blank">Pedro Munhoz</a></td>
 <td>6/8/2019</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs. Spencer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5566UFC.html" target="_blank">Cory Sandhagen vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandhcor01.html" target="_blank">Cory Sandhagen</a></td>
 <td>6/6/2020</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5962UFC.html" target="_blank">Aljamain Sterling vs Petr Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yanpet01.html" target="_blank">Petr Yan</a></td>
 <td>3/6/2021</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6514UFC.html" target="_blank">Aljamain Sterling vs Petr Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yanpet01.html" target="_blank">Petr Yan</a></td>
 <td>4/9/2022</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6805UFC.html" target="_blank">TJ Dillashaw vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dillatj01.html" target="_blank">TJ Dillashaw</a></td>
 <td>10/22/2022</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7073UFC.html" target="_blank">Henry Cejudo vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cejudhen01.html" target="_blank">Henry Cejudo</a></td>
 <td>5/6/2023</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs. O'Malley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7246UFC.html" target="_blank">Sean O'Malley vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/omalsea01.html" target="_blank">Sean O'Malley</a></td>
 <td>8/19/2023</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7578UFC.html" target="_blank">Calvin Kattar vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kattacal01.html" target="_blank">Calvin Kattar</a></td>
 <td>4/13/2024</td>

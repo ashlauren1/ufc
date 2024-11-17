@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0008PPV.html" target="_blank">UFC - Ultimate Ultimate '95</a></td>
+<td style="text-align:left"><a href="/ufc/events/0008PPV.html" target="_blank">UFC 7.5: Ultimate Ultimate '95</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0067UFC.html" target="_blank">David Abbott vs Dan Severn</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/severdan01.html" target="_blank">Dan Severn</a></td>
 <td>12/16/1995</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0008PPV.html" target="_blank">UFC - Ultimate Ultimate '95</a></td>
+<td style="text-align:left"><a href="/ufc/events/0008PPV.html" target="_blank">UFC 7.5: Ultimate Ultimate '95</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0071UFC.html" target="_blank">David Abbott vs Steve Jennum</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jennuste01.html" target="_blank">Steve Jennum</a></td>
 <td>12/16/1995</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0013PPV.html" target="_blank">UFC - Ultimate Ultimate '96</a></td>
+<td style="text-align:left"><a href="/ufc/events/0013PPV.html" target="_blank">UFC 11.5: Ultimate Ultimate '96</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0101UFC.html" target="_blank">David Abbott vs Don Frye</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fryedon01.html" target="_blank">Don Frye</a></td>
 <td>12/7/1996</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0013PPV.html" target="_blank">UFC - Ultimate Ultimate '96</a></td>
+<td style="text-align:left"><a href="/ufc/events/0013PPV.html" target="_blank">UFC 11.5: Ultimate Ultimate '96</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0102UFC.html" target="_blank">David Abbott vs Steve Nelmark</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nelmaste01.html" target="_blank">Steve Nelmark</a></td>
 <td>12/7/1996</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0013PPV.html" target="_blank">UFC - Ultimate Ultimate '96</a></td>
+<td style="text-align:left"><a href="/ufc/events/0013PPV.html" target="_blank">UFC 11.5: Ultimate Ultimate '96</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0106UFC.html" target="_blank">David Abbott vs Cal Worsham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/worshcal01.html" target="_blank">Cal Worsham</a></td>
 <td>12/7/1996</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0018PPV.html" target="_blank">UFC - Ultimate Japan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0018PPV.html" target="_blank">UFC 15.5: Ultimate Japan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0145UFC.html" target="_blank">David Abbott vs Yoji Anjo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjoyoji01.html" target="_blank">Yoji Anjo</a></td>
 <td>12/21/1997</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0021PPV.html" target="_blank">UFC - Ultimate Brazil</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021PPV.html" target="_blank">UFC 17.5: Ultimate Brazil</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0163UFC.html" target="_blank">David Abbott vs Pedro Rizzo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rizzoped01.html" target="_blank">Pedro Rizzo</a></td>
 <td>10/16/1998</td>

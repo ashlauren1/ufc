@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003TUF.html" target="_blank">The Ultimate Fighter 3 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003TUF.html" target="_blank">TUF 3 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0561UFC.html" target="_blank">Michael Bisping vs Josh Haynes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/haynejos01.html" target="_blank">Josh Haynes</a></td>
 <td>6/24/2006</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0014TUF.html" target="_blank">The Ultimate Fighter 14 Finale: Team Bisping vs Team Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0014TUF.html" target="_blank">TUF 14 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1774UFC.html" target="_blank">Michael Bisping vs Jason Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejas01.html" target="_blank">Jason Miller</a></td>
 <td>12/3/2011</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on FOX: Evans vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on Fox 2: Evans vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1827UFC.html" target="_blank">Michael Bisping vs Chael Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sonnecha01.html" target="_blank">Chael Sonnen</a></td>
 <td>1/28/2012</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0050FNI.html" target="_blank">UFC on FX: Belfort vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0050FNI.html" target="_blank">UFC on FX 7: Belfort vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2147UFC.html" target="_blank">Vitor Belfort vs Michael Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/belfovit01.html" target="_blank">Vitor Belfort</a></td>
 <td>1/19/2013</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0076FNI.html" target="_blank">UFC Fight Night: Bisping vs Kennedy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0076FNI.html" target="_blank">Fight Night: Bisping vs Kennedy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2650UFC.html" target="_blank">Michael Bisping vs Tim Kennedy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kennetim01.html" target="_blank">Tim Kennedy</a></td>
 <td>4/16/2014</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">UFC Fight Night: Bisping vs Le</a></td>
+<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">Fight Night: Bisping vs Le</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2860UFC.html" target="_blank">Michael Bisping vs Cung Le</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lecung01.html" target="_blank">Cung Le</a></td>
 <td>8/23/2014</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0094FNI.html" target="_blank">UFC Fight Night: Rockhold vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">Fight Night: Rockhold vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2946UFC.html" target="_blank">Michael Bisping vs Luke Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rockhluk01.html" target="_blank">Luke Rockhold</a></td>
 <td>11/7/2014</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">UFC Fight Night: Bisping vs Leites</a></td>
+<td style="text-align:left"><a href="/ufc/events/0115FNI.html" target="_blank">Fight Night: Bisping vs Leites</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3295UFC.html" target="_blank">Michael Bisping vs Thales Leites</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leitetha01.html" target="_blank">Thales Leites</a></td>
 <td>7/18/2015</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">UFC Fight Night: Silva vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">Fight Night: Silva vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3560UFC.html" target="_blank">Michael Bisping vs Anderson Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaand01.html" target="_blank">Anderson Silva</a></td>
 <td>2/27/2016</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3659UFC.html" target="_blank">Michael Bisping vs Luke Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rockhluk01.html" target="_blank">Luke Rockhold</a></td>
 <td>6/4/2016</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs. Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3847UFC.html" target="_blank">Michael Bisping vs Dan Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hendedan01.html" target="_blank">Dan Henderson</a></td>
 <td>10/8/2016</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0220PPV.html" target="_blank">UFC 217: Bisping vs. St-Pierre</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220PPV.html" target="_blank">UFC 217: Bisping vs St-Pierre</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4329UFC.html" target="_blank">Michael Bisping vs Georges St-Pierre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stpiegeo01.html" target="_blank">Georges St-Pierre</a></td>
 <td>11/4/2017</td>
@@ -1516,7 +1518,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">UFC Fight Night: Bisping vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">Fight Night: Bisping vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4366UFC.html" target="_blank">Michael Bisping vs Kelvin Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
 <td>11/25/2017</td>

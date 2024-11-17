@@ -119,11 +119,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -136,7 +138,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -188,7 +190,7 @@
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for fighters or events...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
@@ -312,7 +314,7 @@
             </tr>
             
             <tr>
-                <td style="text-align:left"><a href="/ufc/fights/6516UFC.html" target="_blank">Mackenzie Dern vs Tecia Torres</a></td>
+                <td style="text-align:left"><a href="/ufc/fights/6516UFC.html" target="_blank">Mackenzie Dern vs Tecia Pennington</a></td>
                 <td style="text-align:left">Women's Strawweight</td>
                 <td style="text-align:left">15.0</td>
                 <td style="text-align:left">5</td>
@@ -327,7 +329,7 @@
                 <td>0.00%</td>
                 <td>100.00%</td>
                 
-                <td style="text-align:left"><a href="/ufc/fighters/torretec01.html" target="_blank">Tecia Torres</a></td>
+                <td style="text-align:left"><a href="/ufc/fighters/pennitec01.html" target="_blank">Tecia Pennington</a></td>
                 <td>L</td>
                 <td>76</td>
                 <td>61.29%</td>

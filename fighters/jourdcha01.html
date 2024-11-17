@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("jourdcha01", [{'date': '2019-05-18', 'SigStr': 55, 'knockdowns': 0, 'SigStrAtt': 146, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 78, 'SigStrAttAg': 144, 'TDAg': 4, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2019-12-21', 'SigStr': 64, 'knockdowns': 2, 'SigStrAtt': 129, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 42, 'SigStrAttAg': 94, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-06-13', 'SigStr': 62, 'knockdowns': 1, 'SigStrAtt': 138, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 44, 'SigStrAttAg': 171, 'TDAg': 5, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2020-10-03', 'SigStr': 44, 'knockdowns': 0, 'SigStrAtt': 101, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 3, 'SigStrAg': 46, 'SigStrAttAg': 124, 'TDAg': 0, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2021-03-13', 'SigStr': 106, 'knockdowns': 2, 'SigStrAtt': 220, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 74, 'SigStrAttAg': 204, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2021-09-04', 'SigStr': 85, 'knockdowns': 1, 'SigStrAtt': 163, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 103, 'SigStrAttAg': 214, 'TDAg': 2, 'TDAttAg': 5, 'SubAttAg': 1}, {'date': '2021-12-18', 'SigStr': 137, 'knockdowns': 0, 'SigStrAtt': 228, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 56, 'SigStrAttAg': 171, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-04-23', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 7, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 8, 'SigStrAttAg': 14, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-07-16', 'SigStr': 113, 'knockdowns': 0, 'SigStrAtt': 188, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 42, 'SigStrAttAg': 80, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 3}, {'date': '2022-09-03', 'SigStr': 86, 'knockdowns': 0, 'SigStrAtt': 203, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 97, 'SigStrAttAg': 202, 'TDAg': 5, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2023-05-06', 'SigStr': 80, 'knockdowns': 0, 'SigStrAtt': 168, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 32, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-09-23', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 9, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 0, 'SigStrAttAg': 9, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 1}, {'date': '2024-01-20', 'SigStr': 60, 'knockdowns': 0, 'SigStrAtt': 156, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 80, 'SigStrAttAg': 168, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2024-06-29', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 46, 'takedown': 3, 'takedownAtt': 7, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 55, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("jourdcha01", [{'date': '2019-05-18', 'SigStr': 55, 'knockdowns': 0, 'SigStrAtt': 146, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 78, 'SigStrAttAg': 144, 'TDAg': 4, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2019-12-21', 'SigStr': 64, 'knockdowns': 2, 'SigStrAtt': 129, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 42, 'SigStrAttAg': 94, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-06-13', 'SigStr': 62, 'knockdowns': 1, 'SigStrAtt': 138, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 44, 'SigStrAttAg': 171, 'TDAg': 5, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2020-10-03', 'SigStr': 44, 'knockdowns': 0, 'SigStrAtt': 101, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 3, 'SigStrAg': 46, 'SigStrAttAg': 124, 'TDAg': 0, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2021-03-13', 'SigStr': 106, 'knockdowns': 2, 'SigStrAtt': 220, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 74, 'SigStrAttAg': 204, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2021-09-04', 'SigStr': 85, 'knockdowns': 1, 'SigStrAtt': 163, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 103, 'SigStrAttAg': 214, 'TDAg': 2, 'TDAttAg': 5, 'SubAttAg': 1}, {'date': '2021-12-18', 'SigStr': 137, 'knockdowns': 0, 'SigStrAtt': 228, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 56, 'SigStrAttAg': 171, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-04-23', 'SigStr': 4, 'knockdowns': 0, 'SigStrAtt': 7, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 8, 'SigStrAttAg': 14, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-07-16', 'SigStr': 113, 'knockdowns': 0, 'SigStrAtt': 188, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 42, 'SigStrAttAg': 80, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 3}, {'date': '2022-09-03', 'SigStr': 86, 'knockdowns': 0, 'SigStrAtt': 203, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 97, 'SigStrAttAg': 202, 'TDAg': 5, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2023-05-06', 'SigStr': 80, 'knockdowns': 0, 'SigStrAtt': 168, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 32, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-09-23', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 9, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 0, 'SigStrAttAg': 9, 'TDAg': 2, 'TDAttAg': 3, 'SubAttAg': 1}, {'date': '2024-01-20', 'SigStr': 60, 'knockdowns': 0, 'SigStrAtt': 156, 'takedown': 0, 'takedownAtt': 4, 'subAtt': 1, 'SigStrAg': 80, 'SigStrAttAg': 168, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2024-06-29', 'SigStr': 23, 'knockdowns': 0, 'SigStrAtt': 46, 'takedown': 3, 'takedownAtt': 7, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 55, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-11-02', 'SigStr': 39, 'knockdowns': 0, 'SigStrAtt': 73, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 24, 'SigStrAttAg': 54, 'TDAg': 4, 'TDAttAg': 6, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">Fight Night: Dos Anjos vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5101UFC.html" target="_blank">Desmond Green vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greendes01.html" target="_blank">Desmond Green</a></td>
 <td>5/18/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">UFC Fight Night: Edgar vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">Fight Night: Edgar vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5415UFC.html" target="_blank">Dooho Choi vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/choidoo01.html" target="_blank">Dooho Choi</a></td>
 <td>12/21/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238FNI.html" target="_blank">UFC Fight Night: Eye vs. Calvillo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">Fight Night: Eye vs Calvillo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5579UFC.html" target="_blank">Andre Fili vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/filiand01.html" target="_blank">Andre Fili</a></td>
 <td>6/13/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">UFC Fight Night: Holm vs. Aldana</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">Fight Night: Holm vs Aldana</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5759UFC.html" target="_blank">Josh Culibao vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/culibjos01.html" target="_blank">Josh Culibao</a></td>
 <td>10/3/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">UFC Fight Night: Edwards vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">Fight Night: Edwards vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5982UFC.html" target="_blank">Charles Jourdain vs Marcelo Rojo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rojomar01.html" target="_blank">Marcelo Rojo</a></td>
 <td>3/13/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">UFC Fight Night: Brunson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281FNI.html" target="_blank">Fight Night: Brunson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6227UFC.html" target="_blank">Julian Erosa vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/erosajul01.html" target="_blank">Julian Erosa</a></td>
 <td>9/4/2021</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">UFC Fight Night: Lewis vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">Fight Night: Lewis vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6387UFC.html" target="_blank">Andre Ewell vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ewelland01.html" target="_blank">Andre Ewell</a></td>
 <td>12/18/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">UFC Fight Night: Lemos vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">Fight Night: Lemos vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6542UFC.html" target="_blank">Charles Jourdain vs Lando Vannata</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vannalan01.html" target="_blank">Lando Vannata</a></td>
 <td>4/23/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6674UFC.html" target="_blank">Shane Burgos vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burgosha01.html" target="_blank">Shane Burgos</a></td>
 <td>7/16/2022</td>
@@ -699,7 +701,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">UFC Fight Night: Gane vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">Fight Night: Gane vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6749UFC.html" target="_blank">Charles Jourdain vs Nathaniel Wood</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodnat01.html" target="_blank">Nathaniel Wood</a></td>
 <td>9/3/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7077UFC.html" target="_blank">Kron Gracie vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gracikro01.html" target="_blank">Kron Gracie</a></td>
 <td>5/6/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0341FNI.html" target="_blank">UFC Fight Night: Fiziev vs. Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0342FNI.html" target="_blank">Fight Night: Fiziev vs Gamrot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7309UFC.html" target="_blank">Charles Jourdain vs Ricardo Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ramosric01.html" target="_blank">Ricardo Ramos</a></td>
 <td>9/23/2023</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs. Du Plessis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7439UFC.html" target="_blank">Charles Jourdain vs Sean Woodson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodssea01.html" target="_blank">Sean Woodson</a></td>
 <td>1/20/2024</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs. Prochazka 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs Prochazka 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7690UFC.html" target="_blank">Charles Jourdain vs Jean Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvajea01.html" target="_blank">Jean Silva</a></td>
 <td>6/29/2024</td>
@@ -911,6 +913,49 @@
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0374FNI.html" target="_blank">Fight Night: Moreno vs Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7902UFC.html" target="_blank">Charles Jourdain vs Victor Henry</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/henryvic01.html" target="_blank">Victor Henry</a></td>
+<td>11/2/2024</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Submission</td>
+<td>W</td>
+<td>3</td>
+<td>8.716666667</td>
+<td>0</td>
+<td>39</td>
+<td>73</td>
+<td>53.42%</td>
+<td>2.24</td>
+<td>50</td>
+<td>87</td>
+<td>19</td>
+<td>49</td>
+<td>14</td>
+<td>18</td>
+<td>6</td>
+<td>6</td>
+<td>8</td>
+<td>11</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>1</td>
+<td>0</td>
+<td>24</td>
+<td>54</td>
+<td>55.56%</td>
+<td>39</td>
+<td>75</td>
+<td>4</td>
+<td>6</td>
+<td>33.33%</td>
 <td>0</td>
 </tr>
 </tbody>

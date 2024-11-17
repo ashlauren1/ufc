@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">The Ultimate Fighter 26 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026TUF.html" target="_blank">TUF 26 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4379UFC.html" target="_blank">Sean O'Malley vs Terrion Ware</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wareter01.html" target="_blank">Terrion Ware</a></td>
 <td>12/1/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4519UFC.html" target="_blank">Sean O'Malley vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/soukhand01.html" target="_blank">Andre Soukhamthath</a></td>
 <td>3/3/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5503UFC.html" target="_blank">Sean O'Malley vs Jose Quinonez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/quinojos01.html" target="_blank">Jose Quinonez</a></td>
 <td>3/7/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs. Spencer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5568UFC.html" target="_blank">Sean O'Malley vs Eddie Wineland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wineledd01.html" target="_blank">Eddie Wineland</a></td>
 <td>6/6/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs. Cormier 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs Cormier 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5680UFC.html" target="_blank">Sean O'Malley vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>8/15/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262PPV.html" target="_blank">UFC 260: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262PPV.html" target="_blank">UFC 260: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6000UFC.html" target="_blank">Thomas Almeida vs Sean O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/almeitho01.html" target="_blank">Thomas Almeida</a></td>
 <td>3/27/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs. McGregor 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs McGregor 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6144UFC.html" target="_blank">Kris Moutinho vs Sean O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moutikri01.html" target="_blank">Kris Moutinho</a></td>
 <td>7/10/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6368UFC.html" target="_blank">Sean O'Malley vs Raulian Paiva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/paivarau01.html" target="_blank">Raulian Paiva</a></td>
 <td>12/11/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6651UFC.html" target="_blank">Pedro Munhoz vs Sean O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munhoped01.html" target="_blank">Pedro Munhoz</a></td>
 <td>7/2/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6806UFC.html" target="_blank">Sean O'Malley vs Petr Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yanpet01.html" target="_blank">Petr Yan</a></td>
 <td>10/22/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs. O'Malley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7246UFC.html" target="_blank">Sean O'Malley vs Aljamain Sterling</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sterlalj01.html" target="_blank">Aljamain Sterling</a></td>
 <td>8/19/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301PPV.html" target="_blank">UFC 299: O'Malley vs. Vera 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0301PPV.html" target="_blank">UFC 299: O'Malley vs Vera 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7507UFC.html" target="_blank">Sean O'Malley vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>3/9/2024</td>

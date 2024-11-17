@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5904UFC.html" target="_blank">Sergey Morozov vs Umar Nurmagomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nurmauma01.html" target="_blank">Umar Nurmagomedov</a></td>
 <td>1/20/2021</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6159UFC.html" target="_blank">Sergey Morozov vs Khalid Taha</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tahakha01.html" target="_blank">Khalid Taha</a></td>
 <td>7/17/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6436UFC.html" target="_blank">Douglas Silva de Andrade vs Sergey Morozov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andradou01.html" target="_blank">Douglas Silva de Andrade</a></td>
 <td>2/12/2022</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0304FNI.html" target="_blank">UFC Fight Night: Tsarukyan vs. Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">Fight Night: Tsarukyan vs Gamrot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6643UFC.html" target="_blank">Sergey Morozov vs Raulian Paiva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/paivarau01.html" target="_blank">Raulian Paiva</a></td>
 <td>6/25/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6901UFC.html" target="_blank">Sergey Morozov vs Journey Newson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/newsojou01.html" target="_blank">Journey Newson</a></td>
 <td>12/17/2022</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7076UFC.html" target="_blank">Movsar Evloev vs Diego Lopes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/evloemov01.html" target="_blank">Movsar Evloev</a></td>
 <td>5/6/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Font</a></td>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">Fight Night: Sandhagen vs Font</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7224UFC.html" target="_blank">Diego Lopes vs Gavin Tucker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tuckegav01.html" target="_blank">Gavin Tucker</a></td>
 <td>8/5/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7364UFC.html" target="_blank">Diego Lopes vs Pat Sabatini</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sabatpat01.html" target="_blank">Pat Sabatini</a></td>
 <td>11/11/2023</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7580UFC.html" target="_blank">Diego Lopes vs Sodiq Yusuff</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yusufsod01.html" target="_blank">Sodiq Yusuff</a></td>
 <td>4/13/2024</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs. Prochazka 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs Prochazka 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7684UFC.html" target="_blank">Dan Ige vs Diego Lopes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/igedan01.html" target="_blank">Dan Ige</a></td>
 <td>6/29/2024</td>

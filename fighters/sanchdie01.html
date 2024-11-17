@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">The Ultimate Fighter 1 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">TUF 1 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0439UFC.html" target="_blank">Kenny Florian vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/floriken01.html" target="_blank">Kenny Florian</a></td>
 <td>4/9/2005</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">The Ultimate Fighter 2 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">TUF 2 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0493UFC.html" target="_blank">Nick Diaz vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diaznick01.html" target="_blank">Nick Diaz</a></td>
 <td>11/5/2005</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0006FNI.html" target="_blank">UFC Fight Night 6</a></td>
+<td style="text-align:left"><a href="/ufc/events/0006FNI.html" target="_blank">Fight Night 6</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0587UFC.html" target="_blank">Karo Parisyan vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pariskar01.html" target="_blank">Karo Parisyan</a></td>
 <td>8/17/2006</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0008FNI.html" target="_blank">UFC Fight Night: Sanchez vs Riggs</a></td>
+<td style="text-align:left"><a href="/ufc/events/0008FNI.html" target="_blank">Fight Night: Sanchez vs Riggs</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0648UFC.html" target="_blank">Joe Riggs vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riggsjoe01.html" target="_blank">Joe Riggs</a></td>
 <td>12/13/2006</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">The Ultimate Fighter Finale: Team Rampage vs Team Forrest</a></td>
+<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">TUF 7 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0921UFC.html" target="_blank">Luigi Fioravanti vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fioralui01.html" target="_blank">Luigi Fioravanti</a></td>
 <td>6/21/2008</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">The Ultimate Fighter: Team US vs Team UK Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">TUF 9 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1134UFC.html" target="_blank">Clay Guida vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guidacla01.html" target="_blank">Clay Guida</a></td>
 <td>6/20/2009</td>
@@ -957,7 +959,7 @@
 <td>4</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027FNI.html" target="_blank">UFC on VERSUS: Sanchez vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027FNI.html" target="_blank">UFC on Versus 3: Sanchez vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1551UFC.html" target="_blank">Martin Kampmann vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kampmmar01.html" target="_blank">Martin Kampmann</a></td>
 <td>3/3/2011</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0036FNI.html" target="_blank">UFC on FUEL TV: Sanchez vs Ellenberger</a></td>
+<td style="text-align:left"><a href="/ufc/events/0036FNI.html" target="_blank">UFC on Fuel TV 1: Sanchez vs Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1847UFC.html" target="_blank">Jake Ellenberger vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>2/15/2012</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on FUEL TV: Japan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on Fuel TV 8: Silva vs Stann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2206UFC.html" target="_blank">Takanori Gomi vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gomitak01.html" target="_blank">Takanori Gomi</a></td>
 <td>3/2/2013</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">UFC Fight Night: Henderson vs Khabilov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0081FNI.html" target="_blank">Fight Night: Henderson vs Khabilov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2733UFC.html" target="_blank">Ross Pearson vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>6/7/2014</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">UFC Fight Night: Magny vs Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">Fight Night: Magny vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3427UFC.html" target="_blank">Ricardo Lamas vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lamasric01.html" target="_blank">Ricardo Lamas</a></td>
 <td>11/21/2015</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">Fight Night: Dos Anjos vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3859UFC.html" target="_blank">Marcin Held vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heldmar01.html" target="_blank">Marcin Held</a></td>
 <td>11/5/2016</td>
@@ -1387,7 +1389,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4097UFC.html" target="_blank">Al Iaquinta vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/iaquial01.html" target="_blank">Al Iaquinta</a></td>
 <td>4/22/2017</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">UFC Fight Night: Poirier vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">Fight Night: Poirier vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4341UFC.html" target="_blank">Matt Brown vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownmat01.html" target="_blank">Matt Brown</a></td>
 <td>11/11/2017</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4744UFC.html" target="_blank">Diego Sanchez vs Craig White</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/whitecra01.html" target="_blank">Craig White</a></td>
 <td>9/8/2018</td>
@@ -1516,7 +1518,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0237PPV.html" target="_blank">UFC 235: Jones vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237PPV.html" target="_blank">UFC 235: Jones vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4980UFC.html" target="_blank">Mickey Gall vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gallmic01.html" target="_blank">Mickey Gall</a></td>
 <td>3/2/2019</td>
@@ -1559,7 +1561,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5160UFC.html" target="_blank">Michael Chiesa vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
 <td>7/6/2019</td>
@@ -1602,7 +1604,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">UFC Fight Night: Anderson vs. Blachowicz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">Fight Night: Anderson vs Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5467UFC.html" target="_blank">Michel Pereira vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereimic01.html" target="_blank">Michel Pereira</a></td>
 <td>2/15/2020</td>
@@ -1645,7 +1647,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs. Costa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5748UFC.html" target="_blank">Jake Matthews vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/matthjak01.html" target="_blank">Jake Matthews</a></td>
 <td>9/26/2020</td>

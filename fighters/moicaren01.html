@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0098FNI.html" target="_blank">UFC Fight Night: Machida vs Dollaway</a></td>
+<td style="text-align:left"><a href="/ufc/events/0099FNI.html" target="_blank">Fight Night: Machida vs Dollaway</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3019UFC.html" target="_blank">Renato Moicano vs Tom Niinimaki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/niinitom01.html" target="_blank">Tom Niinimaki</a></td>
 <td>12/20/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0157FNI.html" target="_blank">UFC Fight Night: Johnson vs. Reis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC on Fox 24: Johnson vs Reis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4086UFC.html" target="_blank">Renato Moicano vs Jeremy Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
 <td>4/15/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs. Jones 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0217PPV.html" target="_blank">UFC 214: Cormier vs Jones 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4235UFC.html" target="_blank">Renato Moicano vs Brian Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortegbri01.html" target="_blank">Brian Ortega</a></td>
 <td>7/29/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226PPV.html" target="_blank">UFC 223: Khabib vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226PPV.html" target="_blank">UFC 223: Khabib vs Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4541UFC.html" target="_blank">Calvin Kattar vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kattacal01.html" target="_blank">Calvin Kattar</a></td>
 <td>4/7/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230PPV.html" target="_blank">UFC 227: Dillashaw vs. Garbrandt 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230PPV.html" target="_blank">UFC 227: Dillashaw vs Garbrandt 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4712UFC.html" target="_blank">Renato Moicano vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swanscub01.html" target="_blank">Cub Swanson</a></td>
 <td>8/4/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4924UFC.html" target="_blank">Jose Aldo vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldojos01.html" target="_blank">Jose Aldo</a></td>
 <td>2/2/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5133UFC.html" target="_blank">Chan Sung Jung vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jungcha01.html" target="_blank">Chan Sung Jung</a></td>
 <td>6/22/2019</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">UFC Fight Night: Lee vs. Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">Fight Night: Lee vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5511UFC.html" target="_blank">Damir Hadzovic vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hadzodam01.html" target="_blank">Damir Hadzovic</a></td>
 <td>3/14/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5868UFC.html" target="_blank">Rafael Fiziev vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
 <td>12/12/2020</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">UFC Fight Night: Gane vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">Fight Night: Gane vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6132UFC.html" target="_blank">Jai Herbert vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/herbejai01.html" target="_blank">Jai Herbert</a></td>
 <td>6/26/2021</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6428UFC.html" target="_blank">Alexander Hernandez vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaale01.html" target="_blank">Alexander Hernandez</a></td>
 <td>2/12/2022</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6463UFC.html" target="_blank">Rafael Dos Anjos vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>3/5/2022</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6843UFC.html" target="_blank">Renato Moicano vs Brad Riddell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riddebra01.html" target="_blank">Brad Riddell</a></td>
 <td>11/12/2022</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">UFC Fight Night: Dolidze vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0350FNI.html" target="_blank">Fight Night: Dolidze vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7446UFC.html" target="_blank">Drew Dober vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>2/3/2024</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7581UFC.html" target="_blank">Renato Moicano vs Jalin Turner</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/turnejal01.html" target="_blank">Jalin Turner</a></td>
 <td>4/13/2024</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0369FNI.html" target="_blank">UFC Fight Night: Moicano vs. Saint Denis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0370FNI.html" target="_blank">Fight Night: Moicano vs Saint Denis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7801UFC.html" target="_blank">Benoit Saint Denis vs Renato Moicano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/denisben01.html" target="_blank">Benoit Saint Denis</a></td>
 <td>9/28/2024</td>

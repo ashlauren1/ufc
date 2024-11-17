@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0137FNI.html" target="_blank">UFC Fight Night: McDonald vs. Lineker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0138FNI.html" target="_blank">Fight Night: McDonald vs Lineker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3728UFC.html" target="_blank">Sam Alvey vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alveysam01.html" target="_blank">Sam Alvey</a></td>
 <td>7/13/2016</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3826UFC.html" target="_blank">Thiago Santos vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santothi01.html" target="_blank">Thiago Santos</a></td>
 <td>9/24/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3999UFC.html" target="_blank">Alessio Di Chirico vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiriale01.html" target="_blank">Alessio Di Chirico</a></td>
 <td>1/28/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0215PPV.html" target="_blank">UFC 212: Aldo vs. Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/events/0215PPV.html" target="_blank">UFC 212: Aldo vs Holloway</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4139UFC.html" target="_blank">Antonio Carlos Junior vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carloant01.html" target="_blank">Antonio Carlos Junior</a></td>
 <td>6/3/2017</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">The Ultimate Fighter 26 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026TUF.html" target="_blank">TUF 26 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4381UFC.html" target="_blank">Gerald Meerschaert vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meersger01.html" target="_blank">Gerald Meerschaert</a></td>
 <td>12/1/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">UFC Fight Night: Thompson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">Fight Night: Thompson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4604UFC.html" target="_blank">Eric Spicely vs Darren Stewart</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stewadar01.html" target="_blank">Darren Stewart</a></td>
 <td>5/27/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5143UFC.html" target="_blank">Eric Spicely vs Deron Winn</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/winnder01.html" target="_blank">Deron Winn</a></td>
 <td>6/22/2019</td>

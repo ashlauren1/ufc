@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5298UFC.html" target="_blank">Giga Chikadze vs Brandon Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/davisbra01.html" target="_blank">Brandon Davis</a></td>
 <td>9/28/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5507UFC.html" target="_blank">Giga Chikadze vs Jamall Emmers</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/emmerjam01.html" target="_blank">Jamall Emmers</a></td>
 <td>3/7/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">UFC Fight Night: Overeem vs. Harris</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">Fight Night: Overeem vs Harris</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5549UFC.html" target="_blank">Giga Chikadze vs Irwin Rivera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riverirw01.html" target="_blank">Irwin Rivera</a></td>
 <td>5/16/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">UFC Fight Night: Moraes vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">Fight Night: Moraes vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5774UFC.html" target="_blank">Giga Chikadze vs Omar Morales</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraloma01.html" target="_blank">Omar Morales</a></td>
 <td>10/10/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">UFC Fight Night: Santos vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0256FNI.html" target="_blank">Fight Night: Santos vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5818UFC.html" target="_blank">Giga Chikadze vs Jamey Simmons</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/simmojam01.html" target="_blank">Jamey Simmons</a></td>
 <td>11/7/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6045UFC.html" target="_blank">Giga Chikadze vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swanscub01.html" target="_blank">Cub Swanson</a></td>
 <td>5/1/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">UFC Fight Night: Barboza vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">Fight Night: Barboza vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6208UFC.html" target="_blank">Edson Barboza vs Giga Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barboeds01.html" target="_blank">Edson Barboza</a></td>
 <td>8/28/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">UFC Fight Night: Kattar vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">Fight Night: Kattar vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6391UFC.html" target="_blank">Giga Chikadze vs Calvin Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kattacal01.html" target="_blank">Calvin Kattar</a></td>
 <td>1/15/2022</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">UFC Fight Night: Holloway vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0339FNI.html" target="_blank">Fight Night: Holloway vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7260UFC.html" target="_blank">Alex Caceres vs Giga Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cacerale01.html" target="_blank">Alex Caceres</a></td>
 <td>8/26/2023</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs. Muhammad 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs Muhammad 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7723UFC.html" target="_blank">Arnold Allen vs Giga Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allenarn01.html" target="_blank">Arnold Allen</a></td>
 <td>7/27/2024</td>

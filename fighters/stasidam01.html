@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">Fight Night: Gonzaga vs Cro Cop 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3143UFC.html" target="_blank">Yaotzin Meza vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mezayao01.html" target="_blank">Yaotzin Meza</a></td>
 <td>4/11/2015</td>
@@ -355,7 +357,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3606UFC.html" target="_blank">Filip Pejic vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pejicfil01.html" target="_blank">Filip Pejic</a></td>
 <td>4/10/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs. Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3853UFC.html" target="_blank">Davey Grant vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grantdav01.html" target="_blank">Davey Grant</a></td>
 <td>10/8/2016</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">Fight Night: Gustafsson vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4127UFC.html" target="_blank">Pedro Munhoz vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munhoped01.html" target="_blank">Pedro Munhoz</a></td>
 <td>5/28/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">Fight Night: Cerrone vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4311UFC.html" target="_blank">Brian Kelleher vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kellebri01.html" target="_blank">Brian Kelleher</a></td>
 <td>10/21/2017</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4696UFC.html" target="_blank">Liu Pingyuan vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pingyliu01.html" target="_blank">Liu Pingyuan</a></td>
 <td>7/22/2018</td>

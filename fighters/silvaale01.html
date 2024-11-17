@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">UFC Fight Night: Overeem vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">Fight Night: Overeem vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5054UFC.html" target="_blank">Alex Da Silva vs Alexander Yakovlev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yakovale01.html" target="_blank">Alexander Yakovlev</a></td>
 <td>4/20/2019</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Carmouche 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">Fight Night: Shevchenko vs Carmouche 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5227UFC.html" target="_blank">Alex Da Silva vs Kazula Vargas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vargakaz01.html" target="_blank">Kazula Vargas</a></td>
 <td>8/10/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs. Costa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5747UFC.html" target="_blank">Brad Riddell vs Alex Da Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riddebra01.html" target="_blank">Brad Riddell</a></td>
 <td>9/26/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303FNI.html" target="_blank">Fight Night: Volkov vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6604UFC.html" target="_blank">Alex Da Silva vs Joe Solecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/solecjoe01.html" target="_blank">Joe Solecki</a></td>
 <td>6/4/2022</td>

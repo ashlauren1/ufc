@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">The Ultimate Fighter Finale: Team Rampage vs Team Forrest</a></td>
+<td style="text-align:left"><a href="/ufc/events/0007TUF.html" target="_blank">TUF 7 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0926UFC.html" target="_blank">Matt Arroyo vs Matt Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/arroymat01.html" target="_blank">Matt Arroyo</a></td>
 <td>6/21/2008</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC Live on Versus: Kongo vs Barry</a></td>
+<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC on Versus 4: Kongo vs Barry</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1633UFC.html" target="_blank">Matt Brown vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/howarjoh01.html" target="_blank">John Howard</a></td>
 <td>6/26/2011</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0042FNI.html" target="_blank">UFC on FX: Maynard vs Guida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0042FNI.html" target="_blank">UFC on FX 4: Maynard vs Guida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1970UFC.html" target="_blank">Matt Brown vs Luis Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ramoslui01.html" target="_blank">Luis Ramos</a></td>
 <td>6/22/2012</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox: Henderson vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox 5: Henderson vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2106UFC.html" target="_blank">Matt Brown vs Mike Swick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swickmik01.html" target="_blank">Mike Swick</a></td>
 <td>12/8/2012</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on FOX: Henderson vs Melendez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on Fox 7: Henderson vs Melendez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2255UFC.html" target="_blank">Matt Brown vs Jordan Mein</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meinjor01.html" target="_blank">Jordan Mein</a></td>
 <td>4/20/2013</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2361UFC.html" target="_blank">Matt Brown vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pylemik01.html" target="_blank">Mike Pyle</a></td>
 <td>8/17/2013</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0078FNI.html" target="_blank">UFC Fight Night: Brown vs Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0078FNI.html" target="_blank">Fight Night: Brown vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2686UFC.html" target="_blank">Matt Brown vs Erick Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaeri01.html" target="_blank">Erick Silva</a></td>
 <td>5/10/2014</td>
@@ -1043,7 +1045,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">UFC on Fox: Lawler vs Brown</a></td>
+<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC on Fox 12: Lawler vs Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2818UFC.html" target="_blank">Matt Brown vs Robbie Lawler</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lawlerob01.html" target="_blank">Robbie Lawler</a></td>
 <td>7/26/2014</td>
@@ -1215,7 +1217,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3746UFC.html" target="_blank">Matt Brown vs Jake Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>7/30/2016</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3945UFC.html" target="_blank">Matt Brown vs Donald Cerrone</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
 <td>12/10/2016</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">UFC Fight Night: Poirier vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">Fight Night: Poirier vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4341UFC.html" target="_blank">Matt Brown vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchdie01.html" target="_blank">Diego Sanchez</a></td>
 <td>11/11/2017</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5408UFC.html" target="_blank">Matt Brown vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/saundben01.html" target="_blank">Ben Saunders</a></td>
 <td>12/14/2019</td>
@@ -1387,7 +1389,7 @@
 <td>4</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">UFC Fight Night: Overeem vs. Harris</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">Fight Night: Overeem vs Harris</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5547UFC.html" target="_blank">Miguel Baeza vs Matt Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baezamig01.html" target="_blank">Miguel Baeza</a></td>
 <td>5/16/2020</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">UFC Fight Night: Holloway vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC on ABC 1: Holloway vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5883UFC.html" target="_blank">Matt Brown vs Carlos Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/condicar01.html" target="_blank">Carlos Condit</a></td>
 <td>1/16/2021</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">UFC Fight Night: Jung vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">Fight Night: Jung vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6120UFC.html" target="_blank">Matt Brown vs Dhiego Lima</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/limadhi01.html" target="_blank">Dhiego Lima</a></td>
 <td>6/19/2021</td>
@@ -1516,7 +1518,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297FNI.html" target="_blank">Fight Night: Blaydes vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6503UFC.html" target="_blank">Bryan Barberena vs Matt Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbebry01.html" target="_blank">Bryan Barberena</a></td>
 <td>3/26/2022</td>
@@ -1559,7 +1561,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC on ABC 4: Rozenstruik vs Almeida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7090UFC.html" target="_blank">Matt Brown vs Court McGee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcgeecou01.html" target="_blank">Court McGee</a></td>
 <td>5/13/2023</td>

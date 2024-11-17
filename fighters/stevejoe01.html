@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">The Ultimate Fighter 2 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">TUF 2 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0495UFC.html" target="_blank">Luke Cummo vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummoluk01.html" target="_blank">Luke Cummo</a></td>
 <td>11/5/2005</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0004FNI.html" target="_blank">UFC Fight Night 4</a></td>
+<td style="text-align:left"><a href="/ufc/events/0004FNI.html" target="_blank">Fight Night 4</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0535UFC.html" target="_blank">Josh Neer vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/neerjosh01.html" target="_blank">Josh Neer</a></td>
 <td>4/6/2006</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">UFC Fight Night: Stevenson vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">Fight Night: Stevenson vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0692UFC.html" target="_blank">Melvin Guillard vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guillmel01.html" target="_blank">Melvin Guillard</a></td>
 <td>4/5/2007</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">The Ultimate Fighter: Team US vs Team UK Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">TUF 9 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1138UFC.html" target="_blank">Nate Diaz vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diaznat01.html" target="_blank">Nate Diaz</a></td>
 <td>6/20/2009</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027FNI.html" target="_blank">UFC on VERSUS: Sanchez vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027FNI.html" target="_blank">UFC on Versus 3: Sanchez vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1556UFC.html" target="_blank">Danny Castillo vs Joe Stevenson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/castidan01.html" target="_blank">Danny Castillo</a></td>
 <td>3/3/2011</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC Live on Versus: Kongo vs Barry</a></td>
+<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC on Versus 4: Kongo vs Barry</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1636UFC.html" target="_blank">Joe Stevenson vs Javier Vazquez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vazqujav01.html" target="_blank">Javier Vazquez</a></td>
 <td>6/26/2011</td>

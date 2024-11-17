@@ -13,11 +13,13 @@
 
         let fighterLinks = {};
         let eventLinks = {};
+        let fightLinks = {};
 
         // Load JSON files
         async function loadLinks() {
             fighterLinks = await fetch('fighters.json').then(response => response.json());
             eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
         }
 
         await loadLinks();
@@ -29,7 +31,7 @@
 
             if (query === "") return;
 
-            const combinedLinks = { ...fighterLinks, ...eventLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))
                 .slice(0, 5); // Limit to top 5
@@ -73,21 +75,21 @@
 </head>
 <body>
     <div class="topnav">
-        <a href="/ufc/">Projections</a>
+        <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/fights/">Fights and Results</a>
         <a href="/ufc/stats/">Stats</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for a fighter or event...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
     <div class="header">
         <h1>Andrei Arlovski vs Chase Sherman</h1>
-        <h2>UFC Fight Night: Whittaker vs. Gastelum - 4/17/2021</h2>
+        <h2>Fight Night: Whittaker vs Gastelum - 4/17/2021</h2>
         <h2>Las Vegas, Nevada, USA</h2>
     </div>
     <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
@@ -140,6 +142,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -182,6 +185,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>16.2</td>
                 <td>33</td>
                 <td>69</td>
                 <td>52.17%</td>
@@ -222,6 +226,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>19.2</td>
                 <td>21</td>
                 <td>58</td>
                 <td>63.79%</td>
@@ -262,6 +267,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>27.6</td>
                 <td>34</td>
                 <td>65</td>
                 <td>47.69%</td>
@@ -299,6 +305,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>83.0 (63.0 pts + 20.0 pts for winning)</td>
                 <td>88</td>
                 <td>192</td>
                 <td>54.17%</td>
@@ -351,6 +358,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -393,6 +401,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>19.8</td>
                 <td>27</td>
                 <td>65</td>
                 <td>58.46%</td>
@@ -433,6 +442,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>12.6</td>
                 <td>32</td>
                 <td>69</td>
                 <td>53.62%</td>
@@ -473,6 +483,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>20.4</td>
                 <td>46</td>
                 <td>88</td>
                 <td>47.73%</td>
@@ -510,6 +521,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>52.8 (52.8 pts + 0.0 pts for winning)</td>
                 <td>105</td>
                 <td>222</td>
                 <td>52.70%</td>

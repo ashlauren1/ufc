@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3609UFC.html" target="_blank">Alessio Di Chirico vs Bojan Velickovic</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/velicboj01.html" target="_blank">Bojan Velickovic</a></td>
 <td>4/10/2016</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">UFC Fight Night: Maia vs. Condit</a></td>
+<td style="text-align:left"><a href="/ufc/events/0141FNI.html" target="_blank">UFC on Fox 21: Maia vs Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3785UFC.html" target="_blank">Alessio Di Chirico vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mclelgar01.html" target="_blank">Garreth McLellan</a></td>
 <td>8/27/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3999UFC.html" target="_blank">Alessio Di Chirico vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spiceeri01.html" target="_blank">Eric Spicely</a></td>
 <td>1/28/2017</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC on Fox 26: Lawler vs dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4424UFC.html" target="_blank">Oluwale Bamgbose vs Alessio Di Chirico</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bamgbolu01.html" target="_blank">Oluwale Bamgbose</a></td>
 <td>12/16/2017</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028TUF.html" target="_blank">UFC - TUF 27 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">TUF 27 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4653UFC.html" target="_blank">Alessio Di Chirico vs Julian Marquez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/marqujul01.html" target="_blank">Julian Marquez</a></td>
 <td>7/6/2018</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5137UFC.html" target="_blank">Alessio Di Chirico vs Kevin Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollakev01.html" target="_blank">Kevin Holland</a></td>
 <td>6/22/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5296UFC.html" target="_blank">Alessio Di Chirico vs Makhmud Muradov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muradmak01.html" target="_blank">Makhmud Muradov</a></td>
 <td>9/28/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">UFC Fight Night: Smith vs. Rakic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">Fight Night: Smith vs Rakic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5704UFC.html" target="_blank">Alessio Di Chirico vs Zak Cummings</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummizak01.html" target="_blank">Zak Cummings</a></td>
 <td>8/29/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">UFC Fight Night: Holloway vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC on ABC 1: Holloway vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5885UFC.html" target="_blank">Joaquin Buckley vs Alessio Di Chirico</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/buckljoa01.html" target="_blank">Joaquin Buckley</a></td>
 <td>1/16/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">UFC Fight Night: Barboza vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">Fight Night: Barboza vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6214UFC.html" target="_blank">Abdul Razak Alhassan vs Alessio Di Chirico</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alhasabd01.html" target="_blank">Abdul Razak Alhassan</a></td>
 <td>8/28/2021</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">UFC Fight Night: Gane vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">Fight Night: Gane vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6747UFC.html" target="_blank">Alessio Di Chirico vs Roman Kopylov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kopylrom01.html" target="_blank">Roman Kopylov</a></td>
 <td>9/3/2022</td>

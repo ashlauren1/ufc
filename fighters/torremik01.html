@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0076FNI.html" target="_blank">UFC Fight Night: Bisping vs Kennedy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0076FNI.html" target="_blank">Fight Night: Bisping vs Kennedy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2659UFC.html" target="_blank">Mark Bocek vs Mike de la Torre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bocekmar01.html" target="_blank">Mark Bocek</a></td>
 <td>4/16/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">UFC on Fox: Lawler vs Brown</a></td>
+<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC on Fox 12: Lawler vs Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2825UFC.html" target="_blank">Brian Ortega vs Mike de la Torre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortegbri01.html" target="_blank">Brian Ortega</a></td>
 <td>7/26/2014</td>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">UFC Fight Night: Bigfoot vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">Fight Night: Bigfoot vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3088UFC.html" target="_blank">Mike de la Torre vs Tiago Trator</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tratotia01.html" target="_blank">Tiago Trator</a></td>
 <td>2/22/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">The Ultimate Fighter 21 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">TUF 21 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3277UFC.html" target="_blank">Maximo Blanco vs Mike de la Torre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blancmax01.html" target="_blank">Maximo Blanco</a></td>
 <td>7/12/2015</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">UFC Fight Night: Henderson vs Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">Fight Night: Henderson vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3444UFC.html" target="_blank">Yui Chul Nam vs Mike de la Torre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namyui01.html" target="_blank">Yui Chul Nam</a></td>
 <td>11/28/2015</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3827UFC.html" target="_blank">Godofredo Pepey vs Mike de la Torre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pepeygod01.html" target="_blank">Godofredo Pepey</a></td>
 <td>9/24/2016</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs. Johnson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs Johnson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4075UFC.html" target="_blank">Myles Jury vs Mike de la Torre</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jurymyl01.html" target="_blank">Myles Jury</a></td>
 <td>4/8/2017</td>

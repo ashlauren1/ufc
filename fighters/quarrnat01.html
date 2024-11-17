@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">The Ultimate Fighter 1 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">TUF 1 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0443UFC.html" target="_blank">Nate Quarry vs Lodune Sincaid</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sincalod01.html" target="_blank">Lodune Sincaid</a></td>
 <td>4/9/2005</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001FNI.html" target="_blank">UFC Fight Night 1</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001FNI.html" target="_blank">Fight Night 1</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0465UFC.html" target="_blank">Nate Quarry vs Pete Sell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sellpete01.html" target="_blank">Pete Sell</a></td>
 <td>8/6/2005</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">UFC Fight Night: Thomas vs Florian</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">Fight Night: Thomas vs Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0785UFC.html" target="_blank">Nate Quarry vs Pete Sell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sellpete01.html" target="_blank">Pete Sell</a></td>
 <td>9/19/2007</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">UFC Fight Night: Diaz vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">Fight Night: Diaz vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1180UFC.html" target="_blank">Tim Credeur vs Nate Quarry</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/credetim01.html" target="_blank">Tim Credeur</a></td>
 <td>9/16/2009</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">UFC Fight Night: Florian vs Gomi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">Fight Night: Florian vs Gomi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1317UFC.html" target="_blank">Nate Quarry vs Jorge Rivera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riverjor01.html" target="_blank">Jorge Rivera</a></td>
 <td>3/31/2010</td>

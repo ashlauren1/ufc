@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("rebecmat01", [{'date': '2023-01-14', 'SigStr': 89, 'knockdowns': 0, 'SigStrAtt': 171, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 93, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2023-06-24', 'SigStr': 54, 'knockdowns': 2, 'SigStrAtt': 95, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 19, 'SigStrAttAg': 54, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-11-11', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 2, 'SigStrAttAg': 7, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-05-11', 'SigStr': 52, 'knockdowns': 1, 'SigStrAtt': 137, 'takedown': 4, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 123, 'SigStrAttAg': 241, 'TDAg': 3, 'TDAttAg': 3, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("rebecmat01", [{'date': '2023-01-14', 'SigStr': 89, 'knockdowns': 0, 'SigStrAtt': 171, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 34, 'SigStrAttAg': 93, 'TDAg': 1, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2023-06-24', 'SigStr': 54, 'knockdowns': 2, 'SigStrAtt': 95, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 19, 'SigStrAttAg': 54, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-11-11', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 16, 'takedown': 2, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 2, 'SigStrAttAg': 7, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-05-11', 'SigStr': 52, 'knockdowns': 1, 'SigStrAtt': 137, 'takedown': 4, 'takedownAtt': 5, 'subAtt': 0, 'SigStrAg': 123, 'SigStrAttAg': 241, 'TDAg': 3, 'TDAttAg': 3, 'SubAttAg': 0}, {'date': '2024-10-26', 'SigStr': 71, 'knockdowns': 1, 'SigStrAtt': 146, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 61, 'SigStrAttAg': 135, 'TDAg': 2, 'TDAttAg': 5, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">UFC Fight Night: Strickland vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0320FNI.html" target="_blank">Fight Night: Strickland vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6909UFC.html" target="_blank">Nick Fiore vs Mateusz Rebecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fiorenic01.html" target="_blank">Nick Fiore</a></td>
 <td>1/14/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC on ABC 5: Emmett vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7151UFC.html" target="_blank">Loik Radzhabov vs Mateusz Rebecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/radzhloi01.html" target="_blank">Loik Radzhabov</a></td>
 <td>6/24/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7367UFC.html" target="_blank">Mateusz Rebecki vs Roosevelt Roberts</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberroo01.html" target="_blank">Roosevelt Roberts</a></td>
 <td>11/11/2023</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/events/0359FNI.html" target="_blank">Fight Night: Lewis vs Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7614UFC.html" target="_blank">Diego Ferreira vs Mateusz Rebecki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferredie01.html" target="_blank">Diego Ferreira</a></td>
 <td>5/11/2024</td>
@@ -481,6 +483,49 @@
 <td>3</td>
 <td>3</td>
 <td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0310PPV.html" target="_blank">UFC 308: Topuria vs Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7878UFC.html" target="_blank">Mateusz Rebecki vs Myktybek Orolbai</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/orolbmyk01.html" target="_blank">Myktybek Orolbai</a></td>
+<td>10/26/2024</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Catch Weight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>1</td>
+<td>71</td>
+<td>146</td>
+<td>48.63%</td>
+<td>1.58</td>
+<td>93</td>
+<td>174</td>
+<td>52</td>
+<td>123</td>
+<td>10</td>
+<td>11</td>
+<td>9</td>
+<td>12</td>
+<td>5</td>
+<td>6</td>
+<td>12</td>
+<td>14</td>
+<td>3</td>
+<td>4</td>
+<td>75.00%</td>
+<td>0</td>
+<td>0</td>
+<td>61</td>
+<td>135</td>
+<td>54.81%</td>
+<td>85</td>
+<td>162</td>
+<td>2</td>
+<td>5</td>
+<td>60.00%</td>
 <td>0</td>
 </tr>
 </tbody>

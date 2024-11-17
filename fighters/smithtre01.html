@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2342UFC.html" target="_blank">Ed Herman vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hermaed01.html" target="_blank">Ed Herman</a></td>
 <td>7/27/2013</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">UFC Fight Night: Rockhold vs Philippou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">Fight Night: Rockhold vs Philippou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2551UFC.html" target="_blank">Brian Houston vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/houstbri01.html" target="_blank">Brian Houston</a></td>
 <td>1/15/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0075FNI.html" target="_blank">UFC Fight Night: Minotauro vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0075FNI.html" target="_blank">Fight Night: Minotauro vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2647UFC.html" target="_blank">Thales Leites vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leitetha01.html" target="_blank">Thales Leites</a></td>
 <td>4/11/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">UFC Fight Night: McGregor vs Brandao</a></td>
+<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">Fight Night: McGregor vs Brandao</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2815UFC.html" target="_blank">Trevor Smith vs Tor Troeng</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/troentor01.html" target="_blank">Tor Troeng</a></td>
 <td>7/19/2014</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2963UFC.html" target="_blank">Caio Magalhaes vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magalcai01.html" target="_blank">Caio Magalhaes</a></td>
 <td>11/8/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">The Ultimate Fighter 21 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">TUF 21 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3280UFC.html" target="_blank">Dan Miller vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/milledan01.html" target="_blank">Dan Miller</a></td>
 <td>7/12/2015</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Caceres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">Fight Night: Rodriguez vs Caceres</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3759UFC.html" target="_blank">Joe Gigliotti vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/giglijoe01.html" target="_blank">Joe Gigliotti</a></td>
 <td>8/6/2016</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0149FNI.html" target="_blank">UFC Fight Night: Lewis vs. Abdurakhimov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">Fight Night: Lewis vs Abdurakhimov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3938UFC.html" target="_blank">Andrew Sanchez vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchand01.html" target="_blank">Andrew Sanchez</a></td>
 <td>12/9/2016</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">Fight Night: Gustafsson vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4128UFC.html" target="_blank">Chris Camozzi vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camozchr01.html" target="_blank">Chris Camozzi</a></td>
 <td>5/28/2017</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">UFC Fight Night: Thompson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">Fight Night: Thompson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4609UFC.html" target="_blank">Trevor Smith vs Elias Theodorou</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/theodeli01.html" target="_blank">Elias Theodorou</a></td>
 <td>5/27/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">UFC Fight Night: Lee vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC on Fox 31: Lee vs Iaquinta 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4893UFC.html" target="_blank">Zak Cummings vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummizak01.html" target="_blank">Zak Cummings</a></td>
 <td>12/15/2018</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">UFC Fight Night: Overeem vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">Fight Night: Overeem vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5399UFC.html" target="_blank">Makhmud Muradov vs Trevor Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muradmak01.html" target="_blank">Makhmud Muradov</a></td>
 <td>12/7/2019</td>

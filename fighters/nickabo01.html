@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("nickabo01", [{'date': '2023-03-04', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 4, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 2, 'SigStrAg': 1, 'SigStrAttAg': 2, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-07-08', 'SigStr': 7, 'knockdowns': 1, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 2, 'SigStrAttAg': 9, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-04-13', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 3, 'takedownAtt': 6, 'subAtt': 2, 'SigStrAg': 4, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("nickabo01", [{'date': '2023-03-04', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 4, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 2, 'SigStrAg': 1, 'SigStrAttAg': 2, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-07-08', 'SigStr': 7, 'knockdowns': 1, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 2, 'SigStrAttAg': 9, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-04-13', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 3, 'takedownAtt': 6, 'subAtt': 2, 'SigStrAg': 4, 'SigStrAttAg': 12, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-11-16', 'SigStr': 54, 'knockdowns': 0, 'SigStrAtt': 85, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 47, 'SigStrAttAg': 129, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6977UFC.html" target="_blank">Bo Nickal vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pickejam01.html" target="_blank">Jamie Pickett</a></td>
 <td>3/4/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7173UFC.html" target="_blank">Bo Nickal vs Val Woodburn</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodbval01.html" target="_blank">Val Woodburn</a></td>
 <td>7/8/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7576UFC.html" target="_blank">Cody Brundage vs Bo Nickal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brundcod01.html" target="_blank">Cody Brundage</a></td>
 <td>4/13/2024</td>
@@ -435,6 +437,49 @@
 <td>66.67%</td>
 <td>33</td>
 <td>41</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0311PPV.html" target="_blank">UFC 309: Jones vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7919UFC.html" target="_blank">Bo Nickal vs Paul Craig</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/craigpau01.html" target="_blank">Paul Craig</a></td>
+<td>11/16/2024</td>
+<td>New York City, New York, USA</td>
+<td>Middleweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>54</td>
+<td>85</td>
+<td>63.53%</td>
+<td>1.20</td>
+<td>54</td>
+<td>85</td>
+<td>24</td>
+<td>50</td>
+<td>13</td>
+<td>16</td>
+<td>17</td>
+<td>19</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>47</td>
+<td>129</td>
+<td>63.57%</td>
+<td>48</td>
+<td>130</td>
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>

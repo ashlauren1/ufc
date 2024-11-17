@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on FUEL TV 10</a></td>
+<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on Fuel TV 10: Nogueira vs Werdum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2301UFC.html" target="_blank">William Patolino vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/patolwil01.html" target="_blank">William Patolino</a></td>
 <td>6/8/2013</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">UFC Fight Night: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">Fight Night: Shogun vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2633UFC.html" target="_blank">Norman Parke vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/parkenor01.html" target="_blank">Norman Parke</a></td>
 <td>3/23/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">UFC Fight Night: Silva vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0091FNI.html" target="_blank">Fight Night: Silva vs Arlovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2880UFC.html" target="_blank">Efrain Escudero vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/escudefr01.html" target="_blank">Efrain Escudero</a></td>
 <td>9/13/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">UFC Fight Night: Maia vs LaFlare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">Fight Night: Maia vs LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3116UFC.html" target="_blank">Anthony Rocco Martin vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martiant01.html" target="_blank">Anthony Rocco Martin</a></td>
 <td>3/21/2015</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs. Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3857UFC.html" target="_blank">Adriano Martins vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martiadr01.html" target="_blank">Adriano Martins</a></td>
 <td>10/8/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">Fight Night: Gustafsson vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5114UFC.html" target="_blank">Stevie Ray vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rayste01.html" target="_blank">Stevie Ray</a></td>
 <td>6/1/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5616UFC.html" target="_blank">Roman Bogatov vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bogatrom01.html" target="_blank">Roman Bogatov</a></td>
 <td>7/11/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">UFC Fight Night: Brunson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">Fight Night: Brunson vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5994UFC.html" target="_blank">Grant Dawson vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dawsogra01.html" target="_blank">Grant Dawson</a></td>
 <td>3/20/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">UFC Fight Night: Font vs. Aldo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">Fight Night: Font vs Aldo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6354UFC.html" target="_blank">Clay Guida vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guidacla01.html" target="_blank">Clay Guida</a></td>
 <td>12/4/2021</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6738UFC.html" target="_blank">Jared Gordon vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gordojar01.html" target="_blank">Jared Gordon</a></td>
 <td>8/20/2022</td>

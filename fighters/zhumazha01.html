@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5618UFC.html" target="_blank">Raulian Paiva vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/paivarau01.html" target="_blank">Raulian Paiva</a></td>
 <td>7/11/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5916UFC.html" target="_blank">Amir Albazi vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/albazami01.html" target="_blank">Amir Albazi</a></td>
 <td>1/23/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs. McGregor 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs McGregor 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6151UFC.html" target="_blank">Jerome Rivera vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riverjer01.html" target="_blank">Jerome Rivera</a></td>
 <td>7/10/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">UFC Fight Night: Font vs. Aldo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">Fight Night: Font vs Aldo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6358UFC.html" target="_blank">Manel Kape vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kapeman01.html" target="_blank">Manel Kape</a></td>
 <td>12/4/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303FNI.html" target="_blank">Fight Night: Volkov vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6608UFC.html" target="_blank">Jeff Molina vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/molinjef01.html" target="_blank">Jeff Molina</a></td>
 <td>6/4/2022</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">UFC Fight Night: Nzechukwu vs. Cutelaba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0317FNI.html" target="_blank">Fight Night: Nzechukwu vs Cutelaba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6856UFC.html" target="_blank">Charles Johnson vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnscha01.html" target="_blank">Charles Johnson</a></td>
 <td>11/19/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC on ABC 5: Emmett vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7153UFC.html" target="_blank">Joshua Van vs Zhalgas Zhumagulov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vanjos01.html" target="_blank">Joshua Van</a></td>
 <td>6/24/2023</td>

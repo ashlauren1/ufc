@@ -31,10 +31,13 @@ def create_game_directory(fight_data, output_file_path):
             const table = document.getElementById("fight-index");
             const headerRow = table.querySelector("thead tr:first-child");
             const rows = Array.from(table.querySelectorAll("tbody tr"));
+            const titleFightFilter = document.getElementById("title-fight-filter");
 
             // Add filters and sorting
             addFilters(table);
             addSortToHeaders(table);
+            
+            titleFightFilter.addEventListener("change", filterTable);
 
             function addFilters(table) {
                 const headerRow = table.querySelector("thead tr:first-child");
@@ -67,10 +70,21 @@ def create_game_directory(fight_data, output_file_path):
 
             function filterTable() {
                 const filters = Array.from(document.querySelectorAll(".filter-select")).map(select => select.value);
+                const titleFilter = titleFightFilter.value;
+                
                 rows.forEach(row => {
                     const cells = Array.from(row.cells);
+                    const fightCellContent = cells[3].innerHTML; // Assuming "Fight" column is the 4th column
+
                     const matchesFilter = filters.every((filter, i) => !filter || cells[i].textContent.trim() === filter);
-                    row.style.display = matchesFilter ? "" : "none";
+                    let matchesTitleFilter = true;
+                    if (titleFilter === "yes") {
+                        matchesTitleFilter = fightCellContent.includes("🏆");
+                    } else if (titleFilter === "no") {
+                        matchesTitleFilter = !fightCellContent.includes("🏆");
+                    }
+            
+                    row.style.display = matchesFilter && matchesTitleFilter ? "" : "none";
                 });
             }
 
@@ -122,9 +136,9 @@ def create_game_directory(fight_data, output_file_path):
                     }
 
                     if (valA < valB) {
-                        return direction === "asc" ? -1 : 1;
+                        return direction === "desc" ? -1 : 1;
                     } else if (valA > valB) {
-                        return direction === "asc" ? 1 : -1;
+                        return direction === "desc" ? 1 : -1;
                     } else {
                         return 0;
                     }
@@ -140,11 +154,13 @@ def create_game_directory(fight_data, output_file_path):
 
         let fighterLinks = {};
         let eventLinks = {};
+        let fightLinks = {};
 
         // Load players and teams data from JSON files
         async function loadLinks() {
             fighterLinks = await fetch('fighters.json').then(response => response.json());
             eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
         }
 
         await loadLinks();  // Ensure links are loaded before searching
@@ -157,7 +173,7 @@ def create_game_directory(fight_data, output_file_path):
             if (query === "") return;
 
             // Combine players and teams for search
-            const combinedLinks = { ...fighterLinks, ...eventLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))  // Matches on both name and ID
                 .slice(0, 5); // Limit to top 5
@@ -202,23 +218,33 @@ def create_game_directory(fight_data, output_file_path):
     <body>
     
     <div class="topnav">
-        <a href="/ufc/">Projections</a>
+        <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/fights/">Fights and Results</a>
         <a href="/ufc/events/">Events</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search fighters...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
     <div class="header">
         <h1>Fight Directory</h1>
     </div>
-    <button class="arrowUp" onclick="window.scrollTo({{top: 0}})">Top</button>
+    <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
     <div id="index-container">
+    <div id="title-fight-filter-container" style="margin-bottom: 15px;">
+    <label for="title-fight-filter">Filter by Title Fight: </label>
+    <select id="title-fight-filter">
+        <option value="">All</option>
+        <option value="yes">Title Fight</option>
+        <option value="no">Non-Title Fight</option>
+    </select>
+    </div>
+
+    
         <table id="fight-index">
             <thead>
                 <tr>
@@ -226,8 +252,8 @@ def create_game_directory(fight_data, output_file_path):
                     <th>Event</th>
                     <th>Location</th>
                     <th>Fight</th>
-                    <th>Weight Class</th>
-                    <th>Fight Duration</th>
+                    <th>Division</th>
+                    <th>Time</th>
                     <th>Result</th>
                     <th>Fighter</th>
                     <th></th>
@@ -255,13 +281,16 @@ def create_game_directory(fight_data, output_file_path):
         opp_name = row['opp']
         opp_id = row['oppID']
         opp_outcome = row['oppOutcome']
+        
+        title_fight = row.get('title_fight', 0)  # Assuming 'title_fight' is 1 for title fights
+        title_icon = '<div class="title-fight-icon">🏆</div>' if title_fight == 1 else ''
 
         html_content += f"""
                 <tr>
                     <td style="text-align:left">{date}</td>
                     <td style="text-align:left"><a href="/ufc/events/{event_id}.html">{event}</td>
                     <td style="text-align:left">{fight_location}</td>
-                    <td style="text-align:left"><a href="/ufc/fights/{fight_id}.html">{fight_name}</td>
+                    <td style="text-align:left"><a href="/ufc/fights/{fight_id}.html">{fight_name}</a>{title_icon}</td>
                     <td style="text-align:left">{weight_class}</td>
                     <td style="text-align:left">{fight_duration}</td>
                     <td style="text-align:left">{result}</td>
@@ -283,10 +312,10 @@ def create_game_directory(fight_data, output_file_path):
     """
 
     # Write the HTML content to a file
-    with open(output_file_path, "w") as file:
+    with open(output_file_path, "w", encoding="utf-8") as file:
         file.write(html_content)
 
-    print(f"Game directory created at {output_file_path}")
+    print(f"Fight directory created at {output_file_path}")
 
 
 # Create game directory

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">UFC Fight Night: Poirier vs. Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">Fight Night: Poirier vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3821UFC.html" target="_blank">Albert Morales vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perezale02.html" target="_blank">Alejandro Perez</a></td>
 <td>9/17/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">Fight Night: Bader vs Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3883UFC.html" target="_blank">Thomas Almeida vs Albert Morales</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/almeitho01.html" target="_blank">Thomas Almeida</a></td>
 <td>11/19/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs. Thompson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs Thompson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4046UFC.html" target="_blank">Albert Morales vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/soukhand01.html" target="_blank">Andre Soukhamthath</a></td>
 <td>3/4/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0164FNI.html" target="_blank">Fight Night: Nelson vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4213UFC.html" target="_blank">Brett Johns vs Albert Morales</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsbre01.html" target="_blank">Brett Johns</a></td>
 <td>7/16/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4407UFC.html" target="_blank">Benito Lopez vs Albert Morales</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lopezben01.html" target="_blank">Benito Lopez</a></td>
 <td>12/9/2017</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4516UFC.html" target="_blank">Manny Bermudez vs Albert Morales</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bermuman01.html" target="_blank">Manny Bermudez</a></td>
 <td>2/24/2018</td>

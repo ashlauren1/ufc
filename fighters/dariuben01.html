@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">UFC Fight Night: Rockhold vs Philippou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">Fight Night: Rockhold vs Philippou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2554UFC.html" target="_blank">Charlie Brenneman vs Beneil Dariush</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brenncha01.html" target="_blank">Charlie Brenneman</a></td>
 <td>1/15/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0075FNI.html" target="_blank">UFC Fight Night: Minotauro vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0075FNI.html" target="_blank">Fight Night: Minotauro vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2645UFC.html" target="_blank">Beneil Dariush vs Ramsey Nijem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nijemram01.html" target="_blank">Ramsey Nijem</a></td>
 <td>4/11/2014</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">Fight Night: Henderson vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2847UFC.html" target="_blank">Beneil Dariush vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martiant01.html" target="_blank">Anthony Rocco Martin</a></td>
 <td>8/23/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">UFC Fight Night: Machida vs Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0107FNI.html" target="_blank">UFC on Fox 15: Machida vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3152UFC.html" target="_blank">Beneil Dariush vs Jim Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>4/18/2015</td>
@@ -570,7 +572,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC Fight Night: Teixeira vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">Fight Night: Teixeira vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3333UFC.html" target="_blank">Beneil Dariush vs Michael Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmic01.html" target="_blank">Michael Johnson</a></td>
 <td>8/8/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3665UFC.html" target="_blank">Beneil Dariush vs James Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vickjam01.html" target="_blank">James Vick</a></td>
 <td>6/4/2016</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0145FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">Fight Night: Dos Anjos vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3862UFC.html" target="_blank">Beneil Dariush vs Rashid Magomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magomras01.html" target="_blank">Rashid Magomedov</a></td>
 <td>11/5/2016</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4049UFC.html" target="_blank">Edson Barboza vs Beneil Dariush</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barboeds01.html" target="_blank">Edson Barboza</a></td>
 <td>3/11/2017</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4299UFC.html" target="_blank">Beneil Dariush vs Evan Dunham</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
 <td>10/7/2017</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4523UFC.html" target="_blank">Beneil Dariush vs Alexander Hernandez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaale01.html" target="_blank">Alexander Hernandez</a></td>
 <td>3/3/2018</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">UFC Fight Night: Korean Zombie vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">Fight Night: Korean Zombie vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4814UFC.html" target="_blank">Beneil Dariush vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moisethi01.html" target="_blank">Thiago Moises</a></td>
 <td>11/10/2018</td>
@@ -871,7 +873,7 @@
 <td>4</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">Fight Night: Lewis vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4988UFC.html" target="_blank">Beneil Dariush vs Drew Dober</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>3/9/2019</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225FNI.html" target="_blank">UFC Fight Night: Maia vs. Askren</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">Fight Night: Maia vs Askren</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5347UFC.html" target="_blank">Frank Camacho vs Beneil Dariush</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camacfra01.html" target="_blank">Frank Camacho</a></td>
 <td>10/26/2019</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5500UFC.html" target="_blank">Beneil Dariush vs Drakkar Klose</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/klosedra01.html" target="_blank">Drakkar Klose</a></td>
 <td>3/7/2020</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">UFC Fight Night: Lewis vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">Fight Night: Lewis vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5671UFC.html" target="_blank">Beneil Dariush vs Scott Holtzman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holtzsco01.html" target="_blank">Scott Holtzman</a></td>
 <td>8/8/2020</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">Fight Night: Overeem vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5921UFC.html" target="_blank">Beneil Dariush vs Diego Ferreira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferredie01.html" target="_blank">Diego Ferreira</a></td>
 <td>2/6/2021</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs. Chandler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs Chandler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6065UFC.html" target="_blank">Beneil Dariush vs Tony Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferguton01.html" target="_blank">Tony Ferguson</a></td>
 <td>5/15/2021</td>
@@ -1129,7 +1131,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6807UFC.html" target="_blank">Beneil Dariush vs Mateusz Gamrot</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gamromat01.html" target="_blank">Mateusz Gamrot</a></td>
 <td>10/22/2022</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0291PPV.html" target="_blank">UFC 289: Nunes vs. Aldana</a></td>
+<td style="text-align:left"><a href="/ufc/events/0291PPV.html" target="_blank">UFC 289: Nunes vs Aldana</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7122UFC.html" target="_blank">Beneil Dariush vs Charles Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/olivecha01.html" target="_blank">Charles Oliveira</a></td>
 <td>6/10/2023</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">UFC Fight Night: Dariush vs. Tsarukyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">Fight Night: Dariush vs Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7387UFC.html" target="_blank">Beneil Dariush vs Arman Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tsaruarm01.html" target="_blank">Arman Tsarukyan</a></td>
 <td>12/2/2023</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">UFC Fight Night: Teixeira vs Evans</a></td>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC on Fox 19: Teixeira vs Evans</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7854UFC.html" target="_blank">Michael Chiesa vs Beneil Dariush</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
 <td>4/16/2016</td>

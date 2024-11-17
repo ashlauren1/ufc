@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">Fight Night: Gonzaga vs Cro Cop 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3141UFC.html" target="_blank">Bartosz Fabinski vs Garreth McLellan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mclelgar01.html" target="_blank">Garreth McLellan</a></td>
 <td>4/11/2015</td>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">UFC Fight Night: Magny vs Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">Fight Night: Magny vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3433UFC.html" target="_blank">Bartosz Fabinski vs Hector Urbina</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/urbinhec01.html" target="_blank">Hector Urbina</a></td>
 <td>11/21/2015</td>
@@ -398,7 +400,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4691UFC.html" target="_blank">Bartosz Fabinski vs Emil Meek</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meekemi01.html" target="_blank">Emil Meek</a></td>
 <td>7/22/2018</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">UFC Fight Night: Magny vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">Fight Night: Magny vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4828UFC.html" target="_blank">Bartosz Fabinski vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/prazemic01.html" target="_blank">Michel Prazeres</a></td>
 <td>11/17/2018</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5712UFC.html" target="_blank">Bartosz Fabinski vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munizand01.html" target="_blank">Andre Muniz</a></td>
 <td>9/5/2020</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">Fight Night: Whittaker vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6028UFC.html" target="_blank">Bartosz Fabinski vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meersger01.html" target="_blank">Gerald Meerschaert</a></td>
 <td>4/17/2021</td>

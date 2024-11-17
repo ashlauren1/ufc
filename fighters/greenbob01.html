@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">UFC Fight Night: Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">Fight Night: Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2459UFC.html" target="_blank">Bobby King Green vs James Krause</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krausjam01.html" target="_blank">James Krause</a></td>
 <td>11/6/2013</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox: Johnson vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox 9: Johnson vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2517UFC.html" target="_blank">Bobby King Green vs Pat Healy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/healypat01.html" target="_blank">Pat Healy</a></td>
 <td>12/14/2013</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">UFC on Fox: Lawler vs Brown</a></td>
+<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC on Fox 12: Lawler vs Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2821UFC.html" target="_blank">Bobby King Green vs Josh Thomson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thomsjos01.html" target="_blank">Josh Thomson</a></td>
 <td>7/26/2014</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">UFC Fight Night: Edgar vs Swanson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">Fight Night: Edgar vs Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2979UFC.html" target="_blank">Edson Barboza vs Bobby King Green</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barboeds01.html" target="_blank">Edson Barboza</a></td>
 <td>11/22/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3663UFC.html" target="_blank">Bobby King Green vs Dustin Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/poiridus01.html" target="_blank">Dustin Poirier</a></td>
 <td>6/4/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0157FNI.html" target="_blank">UFC Fight Night: Johnson vs. Reis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC on Fox 24: Johnson vs Reis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4089UFC.html" target="_blank">Bobby King Green vs Rashid Magomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magomras01.html" target="_blank">Rashid Magomedov</a></td>
 <td>4/15/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219PPV.html" target="_blank">UFC 216: Ferguson vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4301UFC.html" target="_blank">Bobby King Green vs Lando Vannata</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vannalan01.html" target="_blank">Lando Vannata</a></td>
 <td>10/7/2017</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0177FNI.html" target="_blank">UFC Fight Night: Jacare vs. Brunson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC on Fox 27: Jacare vs Brunson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4462UFC.html" target="_blank">Bobby King Green vs Erik Koch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kocheri01.html" target="_blank">Erik Koch</a></td>
 <td>1/27/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">UFC Fight Night: Lee vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC on Fox 31: Lee vs Iaquinta 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4890UFC.html" target="_blank">Bobby King Green vs Drakkar Klose</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/klosedra01.html" target="_blank">Drakkar Klose</a></td>
 <td>12/15/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">Fight Night: Blachowicz vs Jacare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5383UFC.html" target="_blank">Bobby King Green vs Francisco Trinaldo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/trinafra01.html" target="_blank">Francisco Trinaldo</a></td>
 <td>11/16/2019</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240FNI.html" target="_blank">Fight Night: Blaydes vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5591UFC.html" target="_blank">Bobby King Green vs Clay Guida</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guidacla01.html" target="_blank">Clay Guida</a></td>
 <td>6/20/2020</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">UFC Fight Night: Brunson vs. Shahbazyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">Fight Night: Brunson vs Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5662UFC.html" target="_blank">Bobby King Green vs Lando Vannata</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vannalan01.html" target="_blank">Lando Vannata</a></td>
 <td>8/1/2020</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">UFC Fight Night: Waterson vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">Fight Night: Waterson vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5720UFC.html" target="_blank">Bobby King Green vs Alan Patrick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/patriala01.html" target="_blank">Alan Patrick</a></td>
 <td>9/12/2020</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">UFC Fight Night: Hall vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">Fight Night: Hall vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5804UFC.html" target="_blank">Bobby King Green vs Thiago Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moisethi01.html" target="_blank">Thiago Moises</a></td>
 <td>10/31/2020</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6188UFC.html" target="_blank">Rafael Fiziev vs Bobby King Green</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fizieraf01.html" target="_blank">Rafael Fiziev</a></td>
 <td>8/7/2021</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6321UFC.html" target="_blank">Bobby King Green vs Al Iaquinta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/iaquial01.html" target="_blank">Al Iaquinta</a></td>
 <td>11/6/2021</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6429UFC.html" target="_blank">Bobby King Green vs Nasrat Haqparast</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/haqpanas01.html" target="_blank">Nasrat Haqparast</a></td>
 <td>2/12/2022</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Green</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294FNI.html" target="_blank">Fight Night: Makhachev vs Green</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6451UFC.html" target="_blank">Bobby King Green vs Islam Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>2/26/2022</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6893UFC.html" target="_blank">Drew Dober vs Bobby King Green</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>12/17/2022</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">UFC Fight Night: Pavlovich vs. Blaydes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">Fight Night: Pavlovich vs Blaydes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7053UFC.html" target="_blank">Jared Gordon vs Bobby King Green</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gordojar01.html" target="_blank">Jared Gordon</a></td>
 <td>4/22/2023</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0293PPV.html" target="_blank">UFC 291: Poirier vs. Gaethje 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293PPV.html" target="_blank">UFC 291: Poirier vs Gaethje 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7213UFC.html" target="_blank">Tony Ferguson vs Bobby King Green</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ferguton01.html" target="_blank">Tony Ferguson</a></td>
 <td>7/29/2023</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0342FNI.html" target="_blank">UFC Fight Night: Dawson vs. Green</a></td>
+<td style="text-align:left"><a href="/ufc/events/0343FNI.html" target="_blank">Fight Night: Dawson vs Green</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7316UFC.html" target="_blank">Grant Dawson vs Bobby King Green</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dawsogra01.html" target="_blank">Grant Dawson</a></td>
 <td>10/7/2023</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">UFC Fight Night: Dariush vs. Tsarukyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">Fight Night: Dariush vs Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7388UFC.html" target="_blank">Bobby King Green vs Jalin Turner</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/turnejal01.html" target="_blank">Jalin Turner</a></td>
 <td>12/2/2023</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7583UFC.html" target="_blank">Bobby King Green vs Jim Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>4/13/2024</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs. Muhammad 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs Muhammad 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7721UFC.html" target="_blank">Bobby King Green vs Paddy Pimblett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pimblpad01.html" target="_blank">Paddy Pimblett</a></td>
 <td>7/27/2024</td>

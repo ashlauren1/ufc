@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">Fight Night: Blaydes vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5441UFC.html" target="_blank">Jamahal Hill vs Darko Stosic</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stosidar01.html" target="_blank">Darko Stosic</a></td>
 <td>1/25/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">UFC Fight Night: Woodley vs. Burns</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238FNI.html" target="_blank">Fight Night: Woodley vs Burns</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5560UFC.html" target="_blank">Klidson Abreu vs Jamahal Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/abreukli01.html" target="_blank">Klidson Abreu</a></td>
 <td>5/30/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259FNI.html" target="_blank">Fight Night: Hermansson vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5853UFC.html" target="_blank">Jamahal Hill vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/preuxovi01.html" target="_blank">Ovince Saint Preux</a></td>
 <td>12/5/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs. Vettori 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs Vettori 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6105UFC.html" target="_blank">Paul Craig vs Jamahal Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/craigpau01.html" target="_blank">Paul Craig</a></td>
 <td>6/12/2021</td>
@@ -484,7 +486,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">UFC Fight Night: Font vs. Aldo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">Fight Night: Font vs Aldo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6353UFC.html" target="_blank">Jimmy Crute vs Jamahal Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/crutejim01.html" target="_blank">Jimmy Crute</a></td>
 <td>12/4/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">UFC Fight Night: Walker vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">Fight Night: Walker vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6439UFC.html" target="_blank">Jamahal Hill vs Johnny Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/walkejoh01.html" target="_blank">Johnny Walker</a></td>
 <td>2/19/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">UFC Fight Night: Santos vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">Fight Night: Santos vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6709UFC.html" target="_blank">Jamahal Hill vs Thiago Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santothi01.html" target="_blank">Thiago Santos</a></td>
 <td>8/6/2022</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6913UFC.html" target="_blank">Jamahal Hill vs Glover Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/teixeglo01.html" target="_blank">Glover Teixeira</a></td>
 <td>1/21/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7572UFC.html" target="_blank">Jamahal Hill vs Alex Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereiale01.html" target="_blank">Alex Pereira</a></td>
 <td>4/13/2024</td>

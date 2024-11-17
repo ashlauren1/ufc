@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">The Ultimate Fighter 1 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">TUF 1 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0442UFC.html" target="_blank">Josh Koscheck vs Chris Sanford</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanfochr01.html" target="_blank">Chris Sanford</a></td>
 <td>4/9/2005</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001FNI.html" target="_blank">UFC Fight Night 1</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001FNI.html" target="_blank">Fight Night 1</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0466UFC.html" target="_blank">Josh Koscheck vs Pete Spratt</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spratpet01.html" target="_blank">Pete Spratt</a></td>
 <td>8/6/2005</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002FNI.html" target="_blank">UFC Fight Night 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002FNI.html" target="_blank">Fight Night 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0481UFC.html" target="_blank">Drew Fickett vs Josh Koscheck</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fickedre01.html" target="_blank">Drew Fickett</a></td>
 <td>10/3/2005</td>
@@ -441,7 +443,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0004FNI.html" target="_blank">UFC Fight Night 4</a></td>
+<td style="text-align:left"><a href="/ufc/events/0004FNI.html" target="_blank">Fight Night 4</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0540UFC.html" target="_blank">Ansar Chalangov vs Josh Koscheck</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chalaans01.html" target="_blank">Ansar Chalangov</a></td>
 <td>4/6/2006</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0005FNI.html" target="_blank">UFC Fight Night 5</a></td>
+<td style="text-align:left"><a href="/ufc/events/0005FNI.html" target="_blank">Fight Night 5</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0573UFC.html" target="_blank">Josh Koscheck vs Dave Menne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mennedav01.html" target="_blank">Dave Menne</a></td>
 <td>6/28/2006</td>
@@ -527,7 +529,7 @@
 <td>5</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0006FNI.html" target="_blank">UFC Fight Night 6</a></td>
+<td style="text-align:left"><a href="/ufc/events/0006FNI.html" target="_blank">Fight Night 6</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0590UFC.html" target="_blank">Jonathan Goulet vs Josh Koscheck</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goulejon01.html" target="_blank">Jonathan Goulet</a></td>
 <td>8/17/2006</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0008FNI.html" target="_blank">UFC Fight Night: Sanchez vs Riggs</a></td>
+<td style="text-align:left"><a href="/ufc/events/0008FNI.html" target="_blank">Fight Night: Sanchez vs Riggs</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0649UFC.html" target="_blank">Jeff Joslin vs Josh Koscheck</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/joslijef01.html" target="_blank">Jeff Joslin</a></td>
 <td>12/13/2006</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0017FNI.html" target="_blank">UFC Fight Night - Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0017FNI.html" target="_blank">Fight Night - Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1008UFC.html" target="_blank">Josh Koscheck vs Yoshiyuki Yoshida</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yoshiyos01.html" target="_blank">Yoshiyuki Yoshida</a></td>
 <td>12/10/2008</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0039FNI.html" target="_blank">UFC on FOX: Diaz vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0039FNI.html" target="_blank">UFC on Fox 3: Diaz vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1904UFC.html" target="_blank">Johny Hendricks vs Josh Koscheck</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hendrjoh01.html" target="_blank">Johny Hendricks</a></td>
 <td>5/5/2012</td>
@@ -1344,7 +1346,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">UFC Fight Night: Maia vs LaFlare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">Fight Night: Maia vs LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3115UFC.html" target="_blank">Josh Koscheck vs Erick Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaeri01.html" target="_blank">Erick Silva</a></td>
 <td>3/21/2015</td>

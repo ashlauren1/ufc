@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on FUEL TV: Japan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on Fuel TV 8: Silva vs Stann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2208UFC.html" target="_blank">Mizuto Hirota vs Rani Yahya</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yahyaran01.html" target="_blank">Rani Yahya</a></td>
 <td>3/2/2013</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on FUEL TV 10</a></td>
+<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on Fuel TV 10: Nogueira vs Werdum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2309UFC.html" target="_blank">Rodrigo Damm vs Mizuto Hirota</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dammrodr01.html" target="_blank">Rodrigo Damm</a></td>
 <td>6/8/2013</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">UFC Fight Night: Barnett vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">Fight Night: Barnett vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3373UFC.html" target="_blank">Mizuto Hirota vs Teruto Ishihara</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ishihter01.html" target="_blank">Teruto Ishihara</a></td>
 <td>9/26/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC on Fox 22: VanZant vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3961UFC.html" target="_blank">Mizuto Hirota vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millecol01.html" target="_blank">Cole Miller</a></td>
 <td>12/17/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">UFC Fight Night: Lewis vs. Hunt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">Fight Night: Lewis vs Hunt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4149UFC.html" target="_blank">Mizuto Hirota vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/volkaale01.html" target="_blank">Alexander Volkanovski</a></td>
 <td>6/10/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4490UFC.html" target="_blank">Mizuto Hirota vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>2/10/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">Fight Night: Dos Santos vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4870UFC.html" target="_blank">Christos Giagos vs Mizuto Hirota</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/giagochr01.html" target="_blank">Christos Giagos</a></td>
 <td>12/1/2018</td>

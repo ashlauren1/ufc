@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on FUEL TV 10</a></td>
+<td style="text-align:left"><a href="/ufc/events/0057FNI.html" target="_blank">UFC on Fuel TV 10: Nogueira vs Werdum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2305UFC.html" target="_blank">Rony Jason vs Mike Wilkinson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wilkimik01.html" target="_blank">Mike Wilkinson</a></td>
 <td>6/8/2013</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">Fight Night: Belfort vs Henderson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2472UFC.html" target="_blank">Rony Jason vs Jeremy Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
 <td>11/9/2013</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">UFC Fight Night: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">Fight Night: Shogun vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2636UFC.html" target="_blank">Rony Jason vs Steven Siler</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silerste01.html" target="_blank">Steven Siler</a></td>
 <td>3/23/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019TUF.html" target="_blank">TUF Brazil Finale: Miocic vs Maldonado</a></td>
+<td style="text-align:left"><a href="/ufc/events/0079FNI.html" target="_blank">Fight Night: Miocic vs Maldonado</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2715UFC.html" target="_blank">Rony Jason vs Robert Peralta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/peralrob01.html" target="_blank">Robert Peralta</a></td>
 <td>5/31/2014</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3212UFC.html" target="_blank">Damon Jackson vs Rony Jason</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jacksdam01.html" target="_blank">Damon Jackson</a></td>
 <td>5/30/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Caceres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">Fight Night: Rodriguez vs Caceres</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3756UFC.html" target="_blank">Dennis Bermudez vs Rony Jason</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bermuden01.html" target="_blank">Dennis Bermudez</a></td>
 <td>8/6/2016</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4057UFC.html" target="_blank">Rony Jason vs Jeremy Kennedy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kennejer01.html" target="_blank">Jeremy Kennedy</a></td>
 <td>3/11/2017</td>

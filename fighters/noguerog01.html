@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">UFC Fight Night Live: Nogueira vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">Fight Night: Nogueira vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1574UFC.html" target="_blank">Phil Davis vs Rogerio Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/davisphi01.html" target="_blank">Phil Davis</a></td>
 <td>3/26/2011</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">UFC on Fox: Lawler vs Brown</a></td>
+<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC on Fox 12: Lawler vs Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2819UFC.html" target="_blank">Anthony Johnson vs Rogerio Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsant01.html" target="_blank">Anthony Johnson</a></td>
 <td>7/26/2014</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">Fight Night: Bader vs Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3882UFC.html" target="_blank">Ryan Bader vs Rogerio Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baderrya01.html" target="_blank">Ryan Bader</a></td>
 <td>11/19/2016</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">Fight Night: Marreta vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4762UFC.html" target="_blank">Sam Alvey vs Rogerio Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alveysam01.html" target="_blank">Sam Alvey</a></td>
 <td>9/22/2018</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5088UFC.html" target="_blank">Rogerio Nogueira vs Ryan Spann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spannrya01.html" target="_blank">Ryan Spann</a></td>
 <td>5/11/2019</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">Fight Night: Whittaker vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5645UFC.html" target="_blank">Rogerio Nogueira vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ruamau01.html" target="_blank">Mauricio Rua</a></td>
 <td>7/25/2020</td>

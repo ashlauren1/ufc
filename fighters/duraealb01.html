@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6309UFC.html" target="_blank">Albert Duraev vs Roman Kopylov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kopylrom01.html" target="_blank">Roman Kopylov</a></td>
 <td>10/30/2021</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0303FNI.html" target="_blank">UFC Fight Night: Kattar vs. Emmett</a></td>
+<td style="text-align:left"><a href="/ufc/events/0304FNI.html" target="_blank">Fight Night: Kattar vs Emmett</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6624UFC.html" target="_blank">Joaquin Buckley vs Albert Duraev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/buckljoa01.html" target="_blank">Joaquin Buckley</a></td>
 <td>6/18/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0324FNI.html" target="_blank">UFC Fight Night: Vera vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">Fight Night: Vera vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7019UFC.html" target="_blank">Albert Duraev vs Chidi Njokuani</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/njokuchi01.html" target="_blank">Chidi Njokuani</a></td>
 <td>3/25/2023</td>
@@ -441,9 +443,9 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0334FNI.html" target="_blank">UFC Fight Night: Holm vs. Bueno Silva</a></td>
-<td style="text-align:left"><a href="/ufc/fights/7185UFC.html" target="_blank">Albert Duraev vs JunYong Park</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/parkjun01.html" target="_blank">JunYong Park</a></td>
+<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">Fight Night: Holm vs Bueno Silva</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7185UFC.html" target="_blank">Albert Duraev vs Jun Yong Park</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/parkjun01.html" target="_blank">Jun Yong Park</a></td>
 <td>7/15/2023</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Middleweight</td>

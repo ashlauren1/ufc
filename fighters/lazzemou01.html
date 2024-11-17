@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241FNI.html" target="_blank">UFC Fight Night: Kattar vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">Fight Night: Kattar vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5625UFC.html" target="_blank">Abdul Razak Alhassan vs Mounir Lazzez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alhasabd01.html" target="_blank">Abdul Razak Alhassan</a></td>
 <td>7/15/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5893UFC.html" target="_blank">Warlley Alves vs Mounir Lazzez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alveswar01.html" target="_blank">Warlley Alves</a></td>
 <td>1/20/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297FNI.html" target="_blank">UFC Fight Night: Luque vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">Fight Night: Luque vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6530UFC.html" target="_blank">Mounir Lazzez vs Ange Loosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/loosaang01.html" target="_blank">Ange Loosa</a></td>
 <td>4/16/2022</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6921UFC.html" target="_blank">Gabriel Bonfim vs Mounir Lazzez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bonfigab01.html" target="_blank">Gabriel Bonfim</a></td>
 <td>1/21/2023</td>

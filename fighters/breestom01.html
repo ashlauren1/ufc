@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3217UFC.html" target="_blank">Tom Breese vs Luiz Dutra</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dutralui01.html" target="_blank">Luiz Dutra</a></td>
 <td>5/30/2015</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">Fight Night: Holohan vs Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3397UFC.html" target="_blank">Tom Breese vs Cathal Pendred</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pendrcat01.html" target="_blank">Cathal Pendred</a></td>
 <td>10/24/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">UFC Fight Night: Silva vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">Fight Night: Silva vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3562UFC.html" target="_blank">Tom Breese vs Keita Nakamura</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nakamkei01.html" target="_blank">Keita Nakamura</a></td>
 <td>2/27/2016</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3668UFC.html" target="_blank">Tom Breese vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>6/4/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">UFC Fight Night: Thompson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">Fight Night: Thompson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4605UFC.html" target="_blank">Tom Breese vs Daniel Kelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kellydan01.html" target="_blank">Daniel Kelly</a></td>
 <td>5/27/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233FNI.html" target="_blank">UFC Fight Night: Benavidez vs. Figueiredo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">Fight Night: Benavidez vs Figueiredo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5492UFC.html" target="_blank">Brendan Allen vs Tom Breese</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allenbre01.html" target="_blank">Brendan Allen</a></td>
 <td>2/29/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">UFC Fight Night: Moraes vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">Fight Night: Moraes vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5770UFC.html" target="_blank">KB Bhullar vs Tom Breese</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bhullkb01.html" target="_blank">KB Bhullar</a></td>
 <td>10/10/2020</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5898UFC.html" target="_blank">Omari Akhmedov vs Tom Breese</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/akhmeoma01.html" target="_blank">Omari Akhmedov</a></td>
 <td>1/20/2021</td>

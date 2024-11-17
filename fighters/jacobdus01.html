@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on FOX: Evans vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on Fox 2: Evans vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1835UFC.html" target="_blank">Chris Camozzi vs Dustin Jacoby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camozchr01.html" target="_blank">Chris Camozzi</a></td>
 <td>1/28/2012</td>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">UFC Fight Night: Hall vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">Fight Night: Hall vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5809UFC.html" target="_blank">Dustin Jacoby vs Justin Ledet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ledetjus01.html" target="_blank">Justin Ledet</a></td>
 <td>10/31/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">Fight Night: Rozenstruik vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5959UFC.html" target="_blank">Maxim Grishin vs Dustin Jacoby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grishmax01.html" target="_blank">Maxim Grishin</a></td>
 <td>2/27/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6046UFC.html" target="_blank">Ion Cutelaba vs Dustin Jacoby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cutelion01.html" target="_blank">Ion Cutelaba</a></td>
 <td>5/1/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">UFC Fight Night: Barboza vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">Fight Night: Barboza vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6216UFC.html" target="_blank">Dustin Jacoby vs Darren Stewart</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stewadar01.html" target="_blank">Darren Stewart</a></td>
 <td>8/28/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6326UFC.html" target="_blank">John Allan vs Dustin Jacoby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allanjoh01.html" target="_blank">John Allan</a></td>
 <td>11/6/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6474UFC.html" target="_blank">Dustin Jacoby vs Michal Oleksiejczuk</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oleksmic01.html" target="_blank">Michal Oleksiejczuk</a></td>
 <td>3/5/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6679UFC.html" target="_blank">Dustin Jacoby vs Da Woon Jung</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jungda01.html" target="_blank">Da Woon Jung</a></td>
 <td>7/16/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0314FNI.html" target="_blank">UFC Fight Night: Kattar vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0315FNI.html" target="_blank">Fight Night: Kattar vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6820UFC.html" target="_blank">Dustin Jacoby vs Khalil Rountree Jr.</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rountkha01.html" target="_blank">Khalil Rountree Jr.</a></td>
 <td>10/29/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">UFC Fight Night: Holloway vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">Fight Night: Holloway vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7039UFC.html" target="_blank">Dustin Jacoby vs Azamat Murzakanov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/murzaaza01.html" target="_blank">Azamat Murzakanov</a></td>
 <td>4/15/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Font</a></td>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">Fight Night: Sandhagen vs Font</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7223UFC.html" target="_blank">Dustin Jacoby vs Kennedy Nzechukwu</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nzechken01.html" target="_blank">Kennedy Nzechukwu</a></td>
 <td>8/5/2023</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7415UFC.html" target="_blank">Dustin Jacoby vs Alonzo Menifield</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/menifalo01.html" target="_blank">Alonzo Menifield</a></td>
 <td>12/16/2023</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0361FNI.html" target="_blank">Fight Night: Cannonier vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7648UFC.html" target="_blank">Dustin Jacoby vs Dominick Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reyesdom01.html" target="_blank">Dominick Reyes</a></td>
 <td>6/8/2024</td>

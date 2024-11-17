@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0113FNI.html" target="_blank">UFC Fight Night: Mir vs Duffee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">Fight Night: Mir vs Duffee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3285UFC.html" target="_blank">Holly Holm vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reneamar01.html" target="_blank">Marion Reneau</a></td>
 <td>7/15/2015</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0138FNI.html" target="_blank">UFC Fight Night: Holm vs. Shevchenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC on Fox 20: Holm vs Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3733UFC.html" target="_blank">Holly Holm vs Valentina Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shevcval01.html" target="_blank">Valentina Shevchenko</a></td>
 <td>7/23/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs. De Randamie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs De Randamie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4015UFC.html" target="_blank">Holly Holm vs Germaine de Randamie</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/randager01.html" target="_blank">Germaine de Randamie</a></td>
 <td>2/11/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4156UFC.html" target="_blank">Bethe Correia vs Holly Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/correbet01.html" target="_blank">Bethe Correia</a></td>
 <td>6/17/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs. Holm</a></td>
+<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4426UFC.html" target="_blank">Cris Cyborg vs Holly Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cyborcri01.html" target="_blank">Cris Cyborg</a></td>
 <td>12/30/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs Romero 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4624UFC.html" target="_blank">Megan Anderson vs Holly Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andermeg01.html" target="_blank">Megan Anderson</a></td>
 <td>6/9/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5157UFC.html" target="_blank">Holly Holm vs Amanda Nunes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nunesama01.html" target="_blank">Amanda Nunes</a></td>
 <td>7/6/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5427UFC.html" target="_blank">Holly Holm vs Raquel Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penniraq01.html" target="_blank">Raquel Pennington</a></td>
 <td>1/18/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">UFC Fight Night: Holm vs. Aldana</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">Fight Night: Holm vs Aldana</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5753UFC.html" target="_blank">Irene Aldana vs Holly Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldanire01.html" target="_blank">Irene Aldana</a></td>
 <td>10/3/2020</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">UFC Fight Night: Holm vs. Vieira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">Fight Night: Holm vs Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6586UFC.html" target="_blank">Holly Holm vs Ketlen Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vieirket01.html" target="_blank">Ketlen Vieira</a></td>
 <td>5/21/2022</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0324FNI.html" target="_blank">UFC Fight Night: Vera vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">Fight Night: Vera vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7016UFC.html" target="_blank">Holly Holm vs Yana Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoyan01.html" target="_blank">Yana Santos</a></td>
 <td>3/25/2023</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0334FNI.html" target="_blank">UFC Fight Night: Holm vs. Bueno Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">Fight Night: Holm vs Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7182UFC.html" target="_blank">Holly Holm vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvamay01.html" target="_blank">Mayra Bueno Silva</a></td>
 <td>7/15/2023</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7579UFC.html" target="_blank">Kayla Harrison vs Holly Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/harrikay01.html" target="_blank">Kayla Harrison</a></td>
 <td>4/13/2024</td>

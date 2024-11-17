@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4487UFC.html" target="_blank">Israel Adesanya vs Rob Wilkinson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wilkirob01.html" target="_blank">Rob Wilkinson</a></td>
 <td>2/10/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">UFC Fight Night: Poirier vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC on Fox 29: Poirier vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4549UFC.html" target="_blank">Israel Adesanya vs Marvin Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vettomar01.html" target="_blank">Marvin Vettori</a></td>
 <td>4/14/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028TUF.html" target="_blank">UFC - TUF 27 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">TUF 27 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4648UFC.html" target="_blank">Israel Adesanya vs Brad Tavares</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tavarbra01.html" target="_blank">Brad Tavares</a></td>
 <td>7/6/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4803UFC.html" target="_blank">Israel Adesanya vs Derek Brunson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brunsder01.html" target="_blank">Derek Brunson</a></td>
 <td>11/3/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4936UFC.html" target="_blank">Israel Adesanya vs Anderson Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaand01.html" target="_blank">Anderson Silva</a></td>
 <td>2/9/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5035UFC.html" target="_blank">Israel Adesanya vs Kelvin Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
 <td>4/13/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5302UFC.html" target="_blank">Israel Adesanya vs Robert Whittaker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/whittrob01.html" target="_blank">Robert Whittaker</a></td>
 <td>10/5/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5498UFC.html" target="_blank">Israel Adesanya vs Yoel Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/romeryoe01.html" target="_blank">Yoel Romero</a></td>
 <td>3/7/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs. Costa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5742UFC.html" target="_blank">Israel Adesanya vs Paulo Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costapau01.html" target="_blank">Paulo Costa</a></td>
 <td>9/26/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5960UFC.html" target="_blank">Israel Adesanya vs Jan Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blachjan01.html" target="_blank">Jan Blachowicz</a></td>
 <td>3/6/2021</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs. Vettori 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs Vettori 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6101UFC.html" target="_blank">Israel Adesanya vs Marvin Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vettomar01.html" target="_blank">Marvin Vettori</a></td>
 <td>6/12/2021</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6425UFC.html" target="_blank">Israel Adesanya vs Robert Whittaker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/whittrob01.html" target="_blank">Robert Whittaker</a></td>
 <td>2/12/2022</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6647UFC.html" target="_blank">Israel Adesanya vs Jared Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cannojar01.html" target="_blank">Jared Cannonier</a></td>
 <td>7/2/2022</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6838UFC.html" target="_blank">Israel Adesanya vs Alex Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereiale01.html" target="_blank">Alex Pereira</a></td>
 <td>11/12/2022</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs. Adesanya 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs Adesanya 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7025UFC.html" target="_blank">Israel Adesanya vs Alex Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereiale01.html" target="_blank">Alex Pereira</a></td>
 <td>4/8/2023</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7282UFC.html" target="_blank">Israel Adesanya vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>9/9/2023</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7756UFC.html" target="_blank">Israel Adesanya vs Dricus Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/plessdri01.html" target="_blank">Dricus Du Plessis</a></td>
 <td>8/17/2024</td>

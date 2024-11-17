@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC Fight Night: Bader vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">Fight Night: Bader vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2837UFC.html" target="_blank">Sara McMann vs Lauren Murphy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/murphlau01.html" target="_blank">Lauren Murphy</a></td>
 <td>8/16/2014</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC Fight Night: Teixeira vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">Fight Night: Teixeira vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3336UFC.html" target="_blank">Sara McMann vs Amanda Nunes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nunesama01.html" target="_blank">Amanda Nunes</a></td>
 <td>8/8/2015</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">UFC Fight Night: Almeida vs Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">Fight Night: Almeida vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3653UFC.html" target="_blank">Jessica Eye vs Sara McMann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eyejes01.html" target="_blank">Jessica Eye</a></td>
 <td>5/29/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">The Ultimate Fighter 24 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">TUF 24 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3924UFC.html" target="_blank">Alexis Davis vs Sara McMann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/davisale01.html" target="_blank">Alexis Davis</a></td>
 <td>12/3/2016</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">UFC Fight Night: Lewis vs. Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">Fight Night: Lewis vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4029UFC.html" target="_blank">Gina Mazany vs Sara McMann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mazangin01.html" target="_blank">Gina Mazany</a></td>
 <td>2/19/2017</td>
@@ -699,7 +701,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4510UFC.html" target="_blank">Sara McMann vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reneamar01.html" target="_blank">Marion Reneau</a></td>
 <td>2/24/2018</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">Fight Night: Blaydes vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5446UFC.html" target="_blank">Lina Lansberg vs Sara McMann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lansblin01.html" target="_blank">Lina Lansberg</a></td>
 <td>1/25/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5913UFC.html" target="_blank">Sara McMann vs Julianna Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penajul01.html" target="_blank">Julianna Pena</a></td>
 <td>1/23/2021</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297FNI.html" target="_blank">Fight Night: Blaydes vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6507UFC.html" target="_blank">Sara McMann vs Karol Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rosakar01.html" target="_blank">Karol Rosa</a></td>
 <td>3/26/2022</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">UFC Fight Night: Vettori vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC on ABC 2: Vettori vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6015UFC.html" target="_blank">Ignacio Bahamondes vs John Makdessi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makdejoh01.html" target="_blank">John Makdessi</a></td>
 <td>4/10/2021</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">Fight Night: Cannonier vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6206UFC.html" target="_blank">Ignacio Bahamondes vs Roosevelt Roberts</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberroo01.html" target="_blank">Roosevelt Roberts</a></td>
 <td>8/21/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Green</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294FNI.html" target="_blank">Fight Night: Makhachev vs Green</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6456UFC.html" target="_blank">Ignacio Bahamondes vs Rong Zhu</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zhurong01.html" target="_blank">Rong Zhu</a></td>
 <td>2/26/2022</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs. Adesanya 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs Adesanya 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7034UFC.html" target="_blank">Ignacio Bahamondes vs Trey Ogden</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ogdentre01.html" target="_blank">Trey Ogden</a></td>
 <td>4/8/2023</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Font</a></td>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">Fight Night: Sandhagen vs Font</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7226UFC.html" target="_blank">Ignacio Bahamondes vs Ludovit Klein</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kleinlud01.html" target="_blank">Ludovit Klein</a></td>
 <td>8/5/2023</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0356FNI.html" target="_blank">UFC Fight Night: Allen vs. Curtis 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0357FNI.html" target="_blank">Fight Night: Allen vs Curtis 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7563UFC.html" target="_blank">Ignacio Bahamondes vs Christos Giagos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/giagochr01.html" target="_blank">Christos Giagos</a></td>
 <td>4/6/2024</td>

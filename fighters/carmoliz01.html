@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2337UFC.html" target="_blank">Jessica Andrade vs Liz Carmouche</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andrajes01.html" target="_blank">Jessica Andrade</a></td>
 <td>7/27/2013</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">UFC Fight Night: Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">Fight Night: Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2455UFC.html" target="_blank">Liz Carmouche vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/davisale01.html" target="_blank">Alexis Davis</a></td>
 <td>11/6/2013</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox 11: Werdum vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2664UFC.html" target="_blank">Liz Carmouche vs Miesha Tate</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tatemie01.html" target="_blank">Miesha Tate</a></td>
 <td>4/19/2014</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">UFC Fight Night: Mendes vs Lamas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">Fight Night: Mendes vs Lamas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3132UFC.html" target="_blank">Liz Carmouche vs Lauren Murphy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/murphlau01.html" target="_blank">Lauren Murphy</a></td>
 <td>4/4/2015</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4408UFC.html" target="_blank">Liz Carmouche vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/davisale01.html" target="_blank">Alexis Davis</a></td>
 <td>12/9/2017</td>
@@ -613,7 +615,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Ivanov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">Fight Night: Dos Santos vs Ivanov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4681UFC.html" target="_blank">Liz Carmouche vs Jennifer Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiajen01.html" target="_blank">Jennifer Maia</a></td>
 <td>7/14/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">Fight Night: Blachowicz vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4962UFC.html" target="_blank">Liz Carmouche vs Lucie Pudilova</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pudilluc01.html" target="_blank">Lucie Pudilova</a></td>
 <td>2/23/2019</td>
@@ -699,7 +701,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Carmouche 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">Fight Night: Shevchenko vs Carmouche 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5216UFC.html" target="_blank">Liz Carmouche vs Valentina Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shevcval01.html" target="_blank">Valentina Shevchenko</a></td>
 <td>8/10/2019</td>

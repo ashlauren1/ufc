@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259FNI.html" target="_blank">UFC Fight Night: Thompson vs. Neal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">Fight Night: Thompson vs Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5879UFC.html" target="_blank">Tafon Nchukwi vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nchuktaf01.html" target="_blank">Tafon Nchukwi</a></td>
 <td>12/19/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs. Chandler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs Chandler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6071UFC.html" target="_blank">Jamie Pickett vs Jordan Wright</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wrighjor01.html" target="_blank">Jordan Wright</a></td>
 <td>5/15/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286FNI.html" target="_blank">Fight Night: Costa vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6296UFC.html" target="_blank">Jamie Pickett vs Laureano Staropoli</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/starolau01.html" target="_blank">Laureano Staropoli</a></td>
 <td>10/23/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">UFC Fight Night: Kattar vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">Fight Night: Kattar vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6397UFC.html" target="_blank">Joseph Holmes vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holmejos01.html" target="_blank">Joseph Holmes</a></td>
 <td>1/15/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">UFC Fight Night: Walker vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">Fight Night: Walker vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6440UFC.html" target="_blank">Kyle Daukaus vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/daukakyl01.html" target="_blank">Kyle Daukaus</a></td>
 <td>2/19/2022</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6763UFC.html" target="_blank">Jamie Pickett vs Denis Tiuliulin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tiuliden01.html" target="_blank">Denis Tiuliulin</a></td>
 <td>9/10/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6977UFC.html" target="_blank">Bo Nickal vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nickabo01.html" target="_blank">Bo Nickal</a></td>
 <td>3/4/2023</td>
@@ -613,7 +615,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7238UFC.html" target="_blank">Josh Fremd vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fremdjos01.html" target="_blank">Josh Fremd</a></td>
 <td>8/12/2023</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0352FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gaziev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">Fight Night: Rozenstruik vs Gaziev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7501UFC.html" target="_blank">Eryk Anders vs Jamie Pickett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anderery01.html" target="_blank">Eryk Anders</a></td>
 <td>3/2/2024</td>

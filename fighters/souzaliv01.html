@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">Fight Night: Marreta vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4773UFC.html" target="_blank">Alex Chambers vs Livinha Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chambale01.html" target="_blank">Alex Chambers</a></td>
 <td>9/22/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4928UFC.html" target="_blank">Sarah Frota vs Livinha Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/frotasar01.html" target="_blank">Sarah Frota</a></td>
 <td>2/2/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0215FNI.html" target="_blank">UFC Fight Night: De Randamie vs. Ladd</a></td>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">Fight Night: De Randamie vs Ladd</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5178UFC.html" target="_blank">Brianna Van Buren vs Livinha Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burenbri01.html" target="_blank">Brianna Van Buren</a></td>
 <td>7/13/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs. Cormier 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs Cormier 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5687UFC.html" target="_blank">Livinha Souza vs Ashley Yoder</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yoderash01.html" target="_blank">Ashley Yoder</a></td>
 <td>8/15/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5972UFC.html" target="_blank">Amanda Lemos vs Livinha Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lemosama01.html" target="_blank">Amanda Lemos</a></td>
 <td>3/6/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286FNI.html" target="_blank">Fight Night: Costa vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6299UFC.html" target="_blank">Randa Markos vs Livinha Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/markoran01.html" target="_blank">Randa Markos</a></td>
 <td>10/23/2021</td>

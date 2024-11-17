@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">UFC Fight Night: Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0064FNI.html" target="_blank">Fight Night: Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2455UFC.html" target="_blank">Liz Carmouche vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carmoliz01.html" target="_blank">Liz Carmouche</a></td>
 <td>11/6/2013</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">The Ultimate Fighter 24 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">TUF 24 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3924UFC.html" target="_blank">Alexis Davis vs Sara McMann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcmansar01.html" target="_blank">Sara McMann</a></td>
 <td>12/3/2016</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4106UFC.html" target="_blank">Cindy Dandois vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dandocin01.html" target="_blank">Cindy Dandois</a></td>
 <td>4/22/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4408UFC.html" target="_blank">Liz Carmouche vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carmoliz01.html" target="_blank">Liz Carmouche</a></td>
 <td>12/9/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">UFC Fight Night: Alvarez vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC on Fox 30: Alvarez vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4707UFC.html" target="_blank">Katlyn Chookagian vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chookkat01.html" target="_blank">Katlyn Chookagian</a></td>
 <td>7/28/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206FNI.html" target="_blank">UFC Fight Night: Thompson vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">Fight Night: Thompson vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5017UFC.html" target="_blank">Alexis Davis vs Jennifer Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiajen01.html" target="_blank">Jennifer Maia</a></td>
 <td>3/23/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5198UFC.html" target="_blank">Viviane Araujo vs Alexis Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/araujviv01.html" target="_blank">Viviane Araujo</a></td>
 <td>7/27/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">Fight Night: Rozenstruik vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5957UFC.html" target="_blank">Alexis Davis vs Sabina Mazo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mazosab01.html" target="_blank">Sabina Mazo</a></td>
 <td>2/27/2021</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs. Vettori 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs Vettori 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6110UFC.html" target="_blank">Alexis Davis vs Pannie Kianzad</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
 <td>6/12/2021</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">Fight Night: Hermansson vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6421UFC.html" target="_blank">Alexis Davis vs Julija Stoliarenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stolijul01.html" target="_blank">Julija Stoliarenko</a></td>
 <td>2/5/2022</td>

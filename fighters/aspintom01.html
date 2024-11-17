@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">Fight Night: Whittaker vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5653UFC.html" target="_blank">Tom Aspinall vs Jake Collier</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/collijak01.html" target="_blank">Jake Collier</a></td>
 <td>7/25/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">UFC Fight Night: Moraes vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">Fight Night: Moraes vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5768UFC.html" target="_blank">Tom Aspinall vs Alan Baudot</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baudoala01.html" target="_blank">Alan Baudot</a></td>
 <td>10/10/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">Fight Night: Blaydes vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5944UFC.html" target="_blank">Andrei Arlovski vs Tom Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/arlovand01.html" target="_blank">Andrei Arlovski</a></td>
 <td>2/20/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">UFC Fight Night: Brunson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281FNI.html" target="_blank">Fight Night: Brunson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6221UFC.html" target="_blank">Tom Aspinall vs Serghei Spivac</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spivaser01.html" target="_blank">Serghei Spivac</a></td>
 <td>9/4/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295FNI.html" target="_blank">UFC Fight Night: Volkov vs. Aspinall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0296FNI.html" target="_blank">Fight Night: Volkov vs Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6489UFC.html" target="_blank">Tom Aspinall vs Alexander Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/volkoale01.html" target="_blank">Alexander Volkov</a></td>
 <td>3/19/2022</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Aspinall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">Fight Night: Blaydes vs Aspinall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6682UFC.html" target="_blank">Tom Aspinall vs Curtis Blaydes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blaydcur01.html" target="_blank">Curtis Blaydes</a></td>
 <td>7/23/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">UFC Fight Night: Aspinall vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">Fight Night: Aspinall vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7195UFC.html" target="_blank">Tom Aspinall vs Marcin Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tyburmar01.html" target="_blank">Marcin Tybura</a></td>
 <td>7/22/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7361UFC.html" target="_blank">Tom Aspinall vs Sergei Pavlovich</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pavloser01.html" target="_blank">Sergei Pavlovich</a></td>
 <td>11/11/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs. Muhammad 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0306PPV.html" target="_blank">UFC 304: Edwards vs Muhammad 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7720UFC.html" target="_blank">Tom Aspinall vs Curtis Blaydes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blaydcur01.html" target="_blank">Curtis Blaydes</a></td>
 <td>7/27/2024</td>

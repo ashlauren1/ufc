@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0321FNI.html" target="_blank">UFC Fight Night: Andrade vs. Blanchfield</a></td>
+<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">Fight Night: Andrade vs Blanchfield</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6961UFC.html" target="_blank">AJ Fletcher vs Themba Gorimbo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fletcaj01.html" target="_blank">AJ Fletcher</a></td>
 <td>2/18/2023</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC Fight Night: Dern vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0330FNI.html" target="_blank">Fight Night: Dern vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7107UFC.html" target="_blank">Themba Gorimbo vs Takashi Sato</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/satotak01.html" target="_blank">Takashi Sato</a></td>
 <td>5/20/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">UFC Fight Night: Dolidze vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0350FNI.html" target="_blank">Fight Night: Dolidze vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7453UFC.html" target="_blank">Themba Gorimbo vs Pete Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodripet01.html" target="_blank">Pete Rodriguez</a></td>
 <td>2/3/2024</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0359FNI.html" target="_blank">UFC Fight Night: Barboza vs. Murphy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">Fight Night: Barboza vs Murphy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7625UFC.html" target="_blank">Ramiz Brahimaj vs Themba Gorimbo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brahiram01.html" target="_blank">Ramiz Brahimaj</a></td>
 <td>5/18/2024</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0370FNI.html" target="_blank">UFC Fight Night: Royval vs. Taira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0371FNI.html" target="_blank">Fight Night: Royval vs Taira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7834UFC.html" target="_blank">Themba Gorimbo vs Niko Price</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pricenik01.html" target="_blank">Niko Price</a></td>
 <td>10/12/2024</td>

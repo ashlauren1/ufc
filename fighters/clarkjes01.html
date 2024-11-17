@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">Fight Night: Werdum vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4354UFC.html" target="_blank">Jessica-Rose Clark vs Bec Rawlings</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rawlibec01.html" target="_blank">Bec Rawlings</a></td>
 <td>11/18/2017</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC Fight Night: Stephens vs. Choi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0177FNI.html" target="_blank">Fight Night: Stephens vs Choi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4437UFC.html" target="_blank">Jessica-Rose Clark vs Paige VanZant</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vanzapai01.html" target="_blank">Paige VanZant</a></td>
 <td>1/14/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4637UFC.html" target="_blank">Jessica-Rose Clark vs Jessica Eye</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eyejes01.html" target="_blank">Jessica Eye</a></td>
 <td>6/23/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">Fight Night: Zabit vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5374UFC.html" target="_blank">Jessica-Rose Clark vs Pannie Kianzad</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kianzpan01.html" target="_blank">Pannie Kianzad</a></td>
 <td>11/9/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">Fight Night: Covington vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5737UFC.html" target="_blank">Sarah Alpar vs Jessica-Rose Clark</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alparsar01.html" target="_blank">Sarah Alpar</a></td>
 <td>9/19/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">UFC Fight Night: Costa vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286FNI.html" target="_blank">Fight Night: Costa vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6289UFC.html" target="_blank">Jessica-Rose Clark vs Joselyne Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edwarjos01.html" target="_blank">Joselyne Edwards</a></td>
 <td>10/23/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">UFC Fight Night: Walker vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">Fight Night: Walker vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6445UFC.html" target="_blank">Jessica-Rose Clark vs Stephanie Egger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eggerste01.html" target="_blank">Stephanie Egger</a></td>
 <td>2/19/2022</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6658UFC.html" target="_blank">Jessica-Rose Clark vs Julija Stoliarenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stolijul01.html" target="_blank">Julija Stoliarenko</a></td>
 <td>7/2/2022</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC on ABC 4: Rozenstruik vs Almeida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7095UFC.html" target="_blank">Jessica-Rose Clark vs Tainara Lisboa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lisbotai01.html" target="_blank">Tainara Lisboa</a></td>
 <td>5/13/2023</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("nealgeo01", [{'date': '2018-02-18', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 7, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-09-08', 'SigStr': 59, 'knockdowns': 2, 'SigStrAtt': 102, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-01-19', 'SigStr': 71, 'knockdowns': 2, 'SigStrAtt': 190, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 204, 'TDAg': 0, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2019-07-27', 'SigStr': 41, 'knockdowns': 0, 'SigStrAtt': 61, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-12-14', 'SigStr': 15, 'knockdowns': 1, 'SigStrAtt': 23, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 10, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-12-19', 'SigStr': 85, 'knockdowns': 0, 'SigStrAtt': 179, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 171, 'SigStrAttAg': 406, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-05-08', 'SigStr': 35, 'knockdowns': 0, 'SigStrAtt': 73, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 55, 'SigStrAttAg': 174, 'TDAg': 2, 'TDAttAg': 10, 'SubAttAg': 0}, {'date': '2021-12-11', 'SigStr': 85, 'knockdowns': 0, 'SigStrAtt': 161, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 91, 'SigStrAttAg': 229, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-08-06', 'SigStr': 121, 'knockdowns': 2, 'SigStrAtt': 211, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 97, 'SigStrAttAg': 203, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-03-04', 'SigStr': 69, 'knockdowns': 0, 'SigStrAtt': 145, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 113, 'SigStrAttAg': 179, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 1}, {'date': '2024-02-17', 'SigStr': 46, 'knockdowns': 0, 'SigStrAtt': 89, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 67, 'SigStrAttAg': 135, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("nealgeo01", [{'date': '2018-02-18', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 31, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 7, 'SigStrAttAg': 29, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2018-09-08', 'SigStr': 59, 'knockdowns': 2, 'SigStrAtt': 102, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-01-19', 'SigStr': 71, 'knockdowns': 2, 'SigStrAtt': 190, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 204, 'TDAg': 0, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2019-07-27', 'SigStr': 41, 'knockdowns': 0, 'SigStrAtt': 61, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 57, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2019-12-14', 'SigStr': 15, 'knockdowns': 1, 'SigStrAtt': 23, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 10, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-12-19', 'SigStr': 85, 'knockdowns': 0, 'SigStrAtt': 179, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 171, 'SigStrAttAg': 406, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-05-08', 'SigStr': 35, 'knockdowns': 0, 'SigStrAtt': 73, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 55, 'SigStrAttAg': 174, 'TDAg': 2, 'TDAttAg': 10, 'SubAttAg': 0}, {'date': '2021-12-11', 'SigStr': 85, 'knockdowns': 0, 'SigStrAtt': 161, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 91, 'SigStrAttAg': 229, 'TDAg': 1, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-08-06', 'SigStr': 121, 'knockdowns': 2, 'SigStrAtt': 211, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 97, 'SigStrAttAg': 203, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-03-04', 'SigStr': 69, 'knockdowns': 0, 'SigStrAtt': 145, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 113, 'SigStrAttAg': 179, 'TDAg': 0, 'TDAttAg': 4, 'SubAttAg': 1}, {'date': '2024-02-17', 'SigStr': 46, 'knockdowns': 0, 'SigStrAtt': 89, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 67, 'SigStrAttAg': 135, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-10-26', 'SigStr': 18, 'knockdowns': 1, 'SigStrAtt': 30, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 13, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0179FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Medeiros</a></td>
+<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">Fight Night: Cerrone vs Medeiros</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4500UFC.html" target="_blank">Brian Camozzi vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camozbri01.html" target="_blank">Brian Camozzi</a></td>
 <td>2/18/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4742UFC.html" target="_blank">Frank Camacho vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camacfra01.html" target="_blank">Frank Camacho</a></td>
 <td>9/8/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC Fight Night: Cejudo vs. Dillashaw</a></td>
+<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">Fight Night: Cejudo vs Dillashaw</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4921UFC.html" target="_blank">Belal Muhammad vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muhambel01.html" target="_blank">Belal Muhammad</a></td>
 <td>1/19/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5195UFC.html" target="_blank">Geoff Neal vs Niko Price</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pricenik01.html" target="_blank">Niko Price</a></td>
 <td>7/27/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5405UFC.html" target="_blank">Geoff Neal vs Mike Perry</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perrymik01.html" target="_blank">Mike Perry</a></td>
 <td>12/14/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259FNI.html" target="_blank">UFC Fight Night: Thompson vs. Neal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">Fight Night: Thompson vs Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5870UFC.html" target="_blank">Geoff Neal vs Stephen Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thompste01.html" target="_blank">Stephen Thompson</a></td>
 <td>12/19/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0271FNI.html" target="_blank">Fight Night: Rodriguez vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6057UFC.html" target="_blank">Neil Magny vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
 <td>5/8/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6366UFC.html" target="_blank">Geoff Neal vs Santiago Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ponzisan01.html" target="_blank">Santiago Ponzinibbio</a></td>
 <td>12/11/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">UFC Fight Night: Santos vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">Fight Night: Santos vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6710UFC.html" target="_blank">Vicente Luque vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/luquevic01.html" target="_blank">Vicente Luque</a></td>
 <td>8/6/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6975UFC.html" target="_blank">Geoff Neal vs Shavkat Rakhmonov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rakhmsha01.html" target="_blank">Shavkat Rakhmonov</a></td>
 <td>3/4/2023</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7474UFC.html" target="_blank">Ian Machado Garry vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garryian01.html" target="_blank">Ian Machado Garry</a></td>
 <td>2/17/2024</td>
@@ -779,6 +781,49 @@
 <td>50.37%</td>
 <td>80</td>
 <td>148</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0310PPV.html" target="_blank">UFC 308: Topuria vs Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7879UFC.html" target="_blank">Geoff Neal vs Rafael Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
+<td>10/26/2024</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>1.5</td>
+<td>1</td>
+<td>18</td>
+<td>30</td>
+<td>60.00%</td>
+<td>12.00</td>
+<td>21</td>
+<td>34</td>
+<td>12</td>
+<td>24</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>13</td>
+<td>69.23%</td>
+<td>4</td>
+<td>13</td>
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>

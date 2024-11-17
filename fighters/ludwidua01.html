@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">UFC Fight Night 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003FNI.html" target="_blank">Fight Night 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0513UFC.html" target="_blank">Jonathan Goulet vs Duane Ludwig</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goulejon01.html" target="_blank">Jonathan Goulet</a></td>
 <td>1/16/2006</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022FNI.html" target="_blank">UFC on Versus: Vera vs Jones</a></td>
+<td style="text-align:left"><a href="/ufc/events/0022FNI.html" target="_blank">UFC on Versus 1: Vera vs Jones</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1300UFC.html" target="_blank">Darren Elkins vs Duane Ludwig</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/elkindar01.html" target="_blank">Darren Elkins</a></td>
 <td>3/21/2010</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0030FNI.html" target="_blank">UFC LIVE 5: Hardy vs Lytle</a></td>
+<td style="text-align:left"><a href="/ufc/events/0030FNI.html" target="_blank">UFC on Versus 5: Hardy vs Lytle</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1667UFC.html" target="_blank">Duane Ludwig vs Amir Sadollah</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sadolami01.html" target="_blank">Amir Sadollah</a></td>
 <td>8/14/2011</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0034FNI.html" target="_blank">UFC on FX: Guillard vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0034FNI.html" target="_blank">UFC on FX 1: Guillard vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1817UFC.html" target="_blank">Duane Ludwig vs Josh Neer</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/neerjosh01.html" target="_blank">Josh Neer</a></td>
 <td>1/20/2012</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0045FNI.html" target="_blank">UFC on FUEL TV: Struve vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0045FNI.html" target="_blank">UFC on Fuel TV 5: Struve vs Miocic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2054UFC.html" target="_blank">Duane Ludwig vs Che Mills</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millsche01.html" target="_blank">Che Mills</a></td>
 <td>9/29/2012</td>

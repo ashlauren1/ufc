@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4054UFC.html" target="_blank">Sergio Moraes vs Davi Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraeser01.html" target="_blank">Sergio Moraes</a></td>
 <td>3/11/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4413UFC.html" target="_blank">Chris Gruetzemacher vs Davi Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gruetchr01.html" target="_blank">Chris Gruetzemacher</a></td>
 <td>12/9/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4580UFC.html" target="_blank">Nick Hein vs Davi Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heinnic01.html" target="_blank">Nick Hein</a></td>
 <td>5/12/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">UFC Fight Night: Korean Zombie vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">Fight Night: Korean Zombie vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4819UFC.html" target="_blank">John Gunther vs Davi Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gunthjoh01.html" target="_blank">John Gunther</a></td>
 <td>11/10/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">Fight Night: Dos Anjos vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5099UFC.html" target="_blank">Austin Hubbard vs Davi Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hubbaaus01.html" target="_blank">Austin Hubbard</a></td>
 <td>5/18/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5254UFC.html" target="_blank">Islam Makhachev vs Davi Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>9/7/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">UFC Fight Night: Figueiredo vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">Fight Night: Figueiredo vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5642UFC.html" target="_blank">Davi Ramos vs Arman Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tsaruarm01.html" target="_blank">Arman Tsarukyan</a></td>
 <td>7/18/2020</td>

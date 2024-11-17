@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5507UFC.html" target="_blank">Giga Chikadze vs Jamall Emmers</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chikagig01.html" target="_blank">Giga Chikadze</a></td>
 <td>3/7/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">UFC Fight Night: Brunson vs. Shahbazyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">Fight Night: Brunson vs Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5665UFC.html" target="_blank">Vince Cachero vs Jamall Emmers</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cachevin01.html" target="_blank">Vince Cachero</a></td>
 <td>8/1/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">UFC Fight Night: Barboza vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">Fight Night: Barboza vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6218UFC.html" target="_blank">Jamall Emmers vs Pat Sabatini</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sabatpat01.html" target="_blank">Pat Sabatini</a></td>
 <td>8/28/2021</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0321FNI.html" target="_blank">UFC Fight Night: Andrade vs. Blanchfield</a></td>
+<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">Fight Night: Andrade vs Blanchfield</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6959UFC.html" target="_blank">Khusein Askhabov vs Jamall Emmers</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askhakhu01.html" target="_blank">Khusein Askhabov</a></td>
 <td>2/18/2023</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC on ABC 5: Emmett vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7155UFC.html" target="_blank">Jamall Emmers vs Jack Jenkins</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jenkijac01.html" target="_blank">Jack Jenkins</a></td>
 <td>6/24/2023</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7372UFC.html" target="_blank">Dennis Buzukja vs Jamall Emmers</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/buzukden01.html" target="_blank">Dennis Buzukja</a></td>
 <td>11/11/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">UFC Fight Night: Blanchfield vs. Fiorot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0356FNI.html" target="_blank">Fight Night: Blanchfield vs Fiorot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7553UFC.html" target="_blank">Jamall Emmers vs Nate Landwehr</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/landwnat01.html" target="_blank">Nate Landwehr</a></td>
 <td>3/30/2024</td>

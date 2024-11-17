@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox 11: Werdum vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2674UFC.html" target="_blank">Mirsad Bektic vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bektimir01.html" target="_blank">Mirsad Bektic</a></td>
 <td>4/19/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">Fight Night: Henderson vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2845UFC.html" target="_blank">Tom Niinimaki vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/niinitom01.html" target="_blank">Tom Niinimaki</a></td>
 <td>8/23/2014</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">UFC Fight Night: Souza vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">Fight Night: Souza vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2877UFC.html" target="_blank">Chas Skelly vs Sean Soriano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/soriasea01.html" target="_blank">Sean Soriano</a></td>
 <td>9/5/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0101FNI.html" target="_blank">UFC Fight Night: Henderson vs Thatch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">Fight Night: Henderson vs Thatch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3076UFC.html" target="_blank">Jim Alers vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alersjim01.html" target="_blank">Jim Alers</a></td>
 <td>2/14/2015</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">Fight Night: Belfort vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3409UFC.html" target="_blank">Chas Skelly vs Kevin Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/souzakev01.html" target="_blank">Kevin Souza</a></td>
 <td>11/7/2015</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">UFC Fight Night: Poirier vs. Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">Fight Night: Poirier vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3815UFC.html" target="_blank">Maximo Blanco vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blancmax01.html" target="_blank">Maximo Blanco</a></td>
 <td>9/17/2016</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC Fight Night: Bermudez vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">Fight Night: Bermudez vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4010UFC.html" target="_blank">Chris Gruetzemacher vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gruetchr01.html" target="_blank">Chris Gruetzemacher</a></td>
 <td>2/4/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4115UFC.html" target="_blank">Jason Knight vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/knighjas01.html" target="_blank">Jason Knight</a></td>
 <td>5/13/2017</td>
@@ -699,7 +701,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">UFC Fight Night: Korean Zombie vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">Fight Night: Korean Zombie vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4818UFC.html" target="_blank">Bobby Moffett vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moffebob01.html" target="_blank">Bobby Moffett</a></td>
 <td>11/10/2018</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0221FNI.html" target="_blank">Fight Night: Cowboy vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5274UFC.html" target="_blank">Jordan Griffin vs Chas Skelly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/griffjor01.html" target="_blank">Jordan Griffin</a></td>
 <td>9/14/2019</td>
@@ -785,7 +787,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">UFC Fight Night: Walker vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">Fight Night: Walker vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6446UFC.html" target="_blank">Chas Skelly vs Mark Striegl</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/striemar01.html" target="_blank">Mark Striegl</a></td>
 <td>2/19/2022</td>

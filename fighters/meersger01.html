@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("meersger01", [{'date': '2016-12-09', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 5, 'SigStrAttAg': 20, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-02-19', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 6, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 8, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-07-08', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 29, 'takedown': 3, 'takedownAtt': 8, 'subAtt': 0, 'SigStrAg': 60, 'SigStrAttAg': 115, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-01', 'SigStr': 36, 'knockdowns': 1, 'SigStrAtt': 85, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 31, 'TDAg': 1, 'TDAttAg': 5, 'SubAttAg': 1}, {'date': '2018-07-06', 'SigStr': 51, 'knockdowns': 0, 'SigStrAtt': 104, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 2, 'SigStrAg': 23, 'SigStrAttAg': 53, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 2}, {'date': '2018-12-15', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 2, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 59, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2019-03-30', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 6, 'takedownAtt': 11, 'subAtt': 4, 'SigStrAg': 27, 'SigStrAttAg': 43, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 2}, {'date': '2019-08-03', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 1, 'SigStrAg': 8, 'SigStrAttAg': 15, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2019-10-12', 'SigStr': 72, 'knockdowns': 0, 'SigStrAtt': 202, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 64, 'SigStrAttAg': 178, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-03-07', 'SigStr': 86, 'knockdowns': 1, 'SigStrAtt': 187, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 53, 'SigStrAttAg': 111, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2020-06-06', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 25, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-09-19', 'SigStr': 0, 'knockdowns': 0, 'SigStrAtt': 1, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 6, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-04-17', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 6, 'SigStrAttAg': 13, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-08-28', 'SigStr': 32, 'knockdowns': 0, 'SigStrAtt': 56, 'takedown': 3, 'takedownAtt': 10, 'subAtt': 1, 'SigStrAg': 40, 'SigStrAttAg': 99, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-12-18', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 3, 'SigStrAg': 12, 'SigStrAttAg': 32, 'TDAg': 4, 'TDAttAg': 4, 'SubAttAg': 1}, {'date': '2022-04-30', 'SigStr': 37, 'knockdowns': 0, 'SigStrAtt': 91, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 65, 'SigStrAttAg': 124, 'TDAg': 4, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-08-13', 'SigStr': 46, 'knockdowns': 1, 'SigStrAtt': 114, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 1, 'SigStrAg': 29, 'SigStrAttAg': 81, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-04-08', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-08-19', 'SigStr': 76, 'knockdowns': 0, 'SigStrAtt': 149, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 57, 'SigStrAttAg': 132, 'TDAg': 2, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2024-03-16', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 3, 'takedownAtt': 7, 'subAtt': 2, 'SigStrAg': 12, 'SigStrAttAg': 37, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-08-24', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 1, 'SigStrAg': 48, 'SigStrAttAg': 113, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("meersger01", [{'date': '2016-12-09', 'SigStr': 14, 'knockdowns': 0, 'SigStrAtt': 34, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 1, 'SigStrAg': 5, 'SigStrAttAg': 20, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-02-19', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 6, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 3, 'SigStrAttAg': 8, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2017-07-08', 'SigStr': 15, 'knockdowns': 0, 'SigStrAtt': 29, 'takedown': 3, 'takedownAtt': 8, 'subAtt': 0, 'SigStrAg': 60, 'SigStrAttAg': 115, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2017-12-01', 'SigStr': 36, 'knockdowns': 1, 'SigStrAtt': 85, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 17, 'SigStrAttAg': 31, 'TDAg': 1, 'TDAttAg': 5, 'SubAttAg': 1}, {'date': '2018-07-06', 'SigStr': 51, 'knockdowns': 0, 'SigStrAtt': 104, 'takedown': 3, 'takedownAtt': 4, 'subAtt': 2, 'SigStrAg': 23, 'SigStrAttAg': 53, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 2}, {'date': '2018-12-15', 'SigStr': 1, 'knockdowns': 0, 'SigStrAtt': 2, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 59, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2019-03-30', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 13, 'takedown': 6, 'takedownAtt': 11, 'subAtt': 4, 'SigStrAg': 27, 'SigStrAttAg': 43, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 2}, {'date': '2019-08-03', 'SigStr': 6, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 1, 'SigStrAg': 8, 'SigStrAttAg': 15, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2019-10-12', 'SigStr': 72, 'knockdowns': 0, 'SigStrAtt': 202, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 64, 'SigStrAttAg': 178, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-03-07', 'SigStr': 86, 'knockdowns': 1, 'SigStrAtt': 187, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 1, 'SigStrAg': 53, 'SigStrAttAg': 111, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2020-06-06', 'SigStr': 3, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 20, 'SigStrAttAg': 25, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-09-19', 'SigStr': 0, 'knockdowns': 0, 'SigStrAtt': 1, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 4, 'SigStrAttAg': 6, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-04-17', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 10, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 1, 'SigStrAg': 6, 'SigStrAttAg': 13, 'TDAg': 1, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2021-08-28', 'SigStr': 32, 'knockdowns': 0, 'SigStrAtt': 56, 'takedown': 3, 'takedownAtt': 10, 'subAtt': 1, 'SigStrAg': 40, 'SigStrAttAg': 99, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-12-18', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 22, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 3, 'SigStrAg': 12, 'SigStrAttAg': 32, 'TDAg': 4, 'TDAttAg': 4, 'SubAttAg': 1}, {'date': '2022-04-30', 'SigStr': 37, 'knockdowns': 0, 'SigStrAtt': 91, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 65, 'SigStrAttAg': 124, 'TDAg': 4, 'TDAttAg': 4, 'SubAttAg': 0}, {'date': '2022-08-13', 'SigStr': 46, 'knockdowns': 1, 'SigStrAtt': 114, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 1, 'SigStrAg': 29, 'SigStrAttAg': 81, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-04-08', 'SigStr': 10, 'knockdowns': 0, 'SigStrAtt': 21, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 24, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-08-19', 'SigStr': 76, 'knockdowns': 0, 'SigStrAtt': 149, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 57, 'SigStrAttAg': 132, 'TDAg': 2, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2024-03-16', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 17, 'takedown': 3, 'takedownAtt': 7, 'subAtt': 2, 'SigStrAg': 12, 'SigStrAttAg': 37, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-08-24', 'SigStr': 21, 'knockdowns': 0, 'SigStrAtt': 44, 'takedown': 1, 'takedownAtt': 6, 'subAtt': 1, 'SigStrAg': 48, 'SigStrAttAg': 113, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-11-09', 'SigStr': 30, 'knockdowns': 0, 'SigStrAtt': 54, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 38, 'SigStrAttAg': 66, 'TDAg': 5, 'TDAttAg': 13, 'SubAttAg': 1}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0149FNI.html" target="_blank">UFC Fight Night: Lewis vs. Abdurakhimov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">Fight Night: Lewis vs Abdurakhimov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3937UFC.html" target="_blank">Joe Gigliotti vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/giglijoe01.html" target="_blank">Joe Gigliotti</a></td>
 <td>12/9/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">UFC Fight Night: Lewis vs. Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">Fight Night: Lewis vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4035UFC.html" target="_blank">Ryan Janes vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/janesrya01.html" target="_blank">Ryan Janes</a></td>
 <td>2/19/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0216PPV.html" target="_blank">UFC 213: Romero vs. Whittaker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0216PPV.html" target="_blank">UFC 213: Romero vs Whittaker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4199UFC.html" target="_blank">Gerald Meerschaert vs Thiago Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santothi01.html" target="_blank">Thiago Santos</a></td>
 <td>7/8/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">The Ultimate Fighter 26 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026TUF.html" target="_blank">TUF 26 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4381UFC.html" target="_blank">Gerald Meerschaert vs Eric Spicely</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spiceeri01.html" target="_blank">Eric Spicely</a></td>
 <td>12/1/2017</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028TUF.html" target="_blank">UFC - TUF 27 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0027TUF.html" target="_blank">TUF 27 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4659UFC.html" target="_blank">Gerald Meerschaert vs Oskar Piechota</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/piechosk01.html" target="_blank">Oskar Piechota</a></td>
 <td>7/6/2018</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">UFC Fight Night: Lee vs. Iaquinta</a></td>
+<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC on Fox 31: Lee vs Iaquinta 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4892UFC.html" target="_blank">Jack Hermansson vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hermajac01.html" target="_blank">Jack Hermansson</a></td>
 <td>12/15/2018</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207FNI.html" target="_blank">UFC Fight Night: Barboza vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">Fight Night: Barboza vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5030UFC.html" target="_blank">Kevin Holland vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollakev01.html" target="_blank">Kevin Holland</a></td>
 <td>3/30/2019</td>
@@ -613,7 +615,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0217FNI.html" target="_blank">UFC Fight Night: Covington vs. Lawler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">Fight Night: Covington vs Lawler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5207UFC.html" target="_blank">Trevin Giles vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gilestre01.html" target="_blank">Trevin Giles</a></td>
 <td>8/3/2019</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">UFC Fight Night: Joanna vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224FNI.html" target="_blank">Fight Night: Joanna vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5318UFC.html" target="_blank">Eryk Anders vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anderery01.html" target="_blank">Eryk Anders</a></td>
 <td>10/12/2019</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5506UFC.html" target="_blank">Gerald Meerschaert vs Deron Winn</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/winnder01.html" target="_blank">Deron Winn</a></td>
 <td>3/7/2020</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs. Spencer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5570UFC.html" target="_blank">Ian Heinisch vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heiniian01.html" target="_blank">Ian Heinisch</a></td>
 <td>6/6/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">Fight Night: Covington vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5730UFC.html" target="_blank">Khamzat Chimaev vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chimakha01.html" target="_blank">Khamzat Chimaev</a></td>
 <td>9/19/2020</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">Fight Night: Whittaker vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6028UFC.html" target="_blank">Bartosz Fabinski vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fabinbar01.html" target="_blank">Bartosz Fabinski</a></td>
 <td>4/17/2021</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">UFC Fight Night: Barboza vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280FNI.html" target="_blank">Fight Night: Barboza vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6213UFC.html" target="_blank">Gerald Meerschaert vs Makhmud Muradov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muradmak01.html" target="_blank">Makhmud Muradov</a></td>
 <td>8/28/2021</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">UFC Fight Night: Lewis vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">Fight Night: Lewis vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6384UFC.html" target="_blank">Gerald Meerschaert vs Dustin Stoltzfus</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stoltdus01.html" target="_blank">Dustin Stoltzfus</a></td>
 <td>12/18/2021</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">UFC Fight Night: Font vs. Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">Fight Night: Font vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6555UFC.html" target="_blank">Krzysztof Jotko vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jotkokrz01.html" target="_blank">Krzysztof Jotko</a></td>
 <td>4/30/2022</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">UFC Fight Night: Vera vs. Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">Fight Night: Vera vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6724UFC.html" target="_blank">Gerald Meerschaert vs Bruno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvabru01.html" target="_blank">Bruno Silva</a></td>
 <td>8/13/2022</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs. Adesanya 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0289PPV.html" target="_blank">UFC 287: Pereira vs Adesanya 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7032UFC.html" target="_blank">Gerald Meerschaert vs Joe Pyfer</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pyferjoe01.html" target="_blank">Joe Pyfer</a></td>
 <td>4/8/2023</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs. O'Malley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7255UFC.html" target="_blank">Gerald Meerschaert vs Andre Petroski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/petroand01.html" target="_blank">Andre Petroski</a></td>
 <td>8/19/2023</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">UFC Fight Night: Tuivasa vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">Fight Night: Tuivasa vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7526UFC.html" target="_blank">Bryan Barberena vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbebry01.html" target="_blank">Bryan Barberena</a></td>
 <td>3/16/2024</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0367FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Borralho</a></td>
+<td style="text-align:left"><a href="/ufc/events/0368FNI.html" target="_blank">Fight Night: Cannonier vs Borralho</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7773UFC.html" target="_blank">Gerald Meerschaert vs Edmen Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shahbedm01.html" target="_blank">Edmen Shahbazyan</a></td>
 <td>8/24/2024</td>
@@ -1213,6 +1215,49 @@
 <td>0</td>
 <td>0.00%</td>
 <td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0373FNI.html" target="_blank">Fight Night: Magny vs Prates</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7895UFC.html" target="_blank">Reinier de Ridder vs Gerald Meerschaert</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/riddere01.html" target="_blank">Reinier de Ridder</a></td>
+<td>11/9/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Middleweight</td>
+<td>Submission</td>
+<td>L</td>
+<td>3</td>
+<td>11.73333333</td>
+<td>0</td>
+<td>30</td>
+<td>54</td>
+<td>55.56%</td>
+<td>0.85</td>
+<td>44</td>
+<td>72</td>
+<td>27</td>
+<td>49</td>
+<td>3</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>7</td>
+<td>0</td>
+<td>2</td>
+<td>0.00%</td>
+<td>0</td>
+<td>1</td>
+<td>38</td>
+<td>66</td>
+<td>42.42%</td>
+<td>82</td>
+<td>114</td>
+<td>5</td>
+<td>13</td>
+<td>61.54%</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>

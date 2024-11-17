@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">UFC Fight Night: Maynard vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021FNI.html" target="_blank">Fight Night: Maynard vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1269UFC.html" target="_blank">Nik Lentz vs Thiago Tavares</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tavarthi01.html" target="_blank">Thiago Tavares</a></td>
 <td>1/11/2010</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">UFC Fight Night: Florian vs Gomi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">Fight Night: Florian vs Gomi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1322UFC.html" target="_blank">Rob Emerson vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/emersrob01.html" target="_blank">Rob Emerson</a></td>
 <td>3/31/2010</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">UFC Fight Night Live: Nogueira vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0028FNI.html" target="_blank">Fight Night: Nogueira vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1585UFC.html" target="_blank">Nik Lentz vs Waylon Lowe</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lowewayl01.html" target="_blank">Waylon Lowe</a></td>
 <td>3/26/2011</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC Live on Versus: Kongo vs Barry</a></td>
+<td style="text-align:left"><a href="/ufc/events/0029FNI.html" target="_blank">UFC on Versus 4: Kongo vs Barry</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1639UFC.html" target="_blank">Nik Lentz vs Charles Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/olivecha01.html" target="_blank">Charles Oliveira</a></td>
 <td>6/26/2011</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on FOX: Evans vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on Fox 2: Evans vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1829UFC.html" target="_blank">Evan Dunham vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dunhaeva01.html" target="_blank">Evan Dunham</a></td>
 <td>1/28/2012</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0050FNI.html" target="_blank">UFC on FX: Belfort vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0050FNI.html" target="_blank">UFC on FX 7: Belfort vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2153UFC.html" target="_blank">Nik Lentz vs Diego Nunes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nunesdie01.html" target="_blank">Diego Nunes</a></td>
 <td>1/19/2013</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX 8: Belfort vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2279UFC.html" target="_blank">Hacran Dias vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diashac01.html" target="_blank">Hacran Dias</a></td>
 <td>5/18/2013</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox: Johnson vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox 9: Johnson vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2513UFC.html" target="_blank">Nik Lentz vs Chad Mendes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mendecha01.html" target="_blank">Chad Mendes</a></td>
 <td>12/14/2013</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0078FNI.html" target="_blank">UFC Fight Night: Brown vs Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0078FNI.html" target="_blank">Fight Night: Brown vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2696UFC.html" target="_blank">Manvel Gamburyan vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gambuman01.html" target="_blank">Manvel Gamburyan</a></td>
 <td>5/10/2014</td>
@@ -914,7 +916,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3207UFC.html" target="_blank">Nik Lentz vs Charles Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/olivecha01.html" target="_blank">Charles Oliveira</a></td>
 <td>5/30/2015</td>
@@ -957,7 +959,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">UFC on FOX: Dos Anjos vs. Cowboy 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC on Fox 17: Dos Anjos vs Cowboy 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3492UFC.html" target="_blank">Danny Castillo vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/castidan01.html" target="_blank">Danny Castillo</a></td>
 <td>12/19/2015</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3807UFC.html" target="_blank">Nik Lentz vs Michael McBride</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcbrimic01.html" target="_blank">Michael McBride</a></td>
 <td>9/10/2016</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs. De Randamie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs De Randamie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4022UFC.html" target="_blank">Nik Lentz vs Islam Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>2/11/2017</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">Fight Night: Werdum vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4360UFC.html" target="_blank">Will Brooks vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brookwil01.html" target="_blank">Will Brooks</a></td>
 <td>11/18/2017</td>
@@ -1129,7 +1131,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">UFC Fight Night: Rivera vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">Fight Night: Rivera vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4617UFC.html" target="_blank">Nik Lentz vs David Teymur</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/teymudav01.html" target="_blank">David Teymur</a></td>
 <td>6/1/2018</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4783UFC.html" target="_blank">Nik Lentz vs Gray Maynard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maynagra01.html" target="_blank">Gray Maynard</a></td>
 <td>10/6/2018</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Velasquez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">Fight Night: Ngannou vs Velasquez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4956UFC.html" target="_blank">Scott Holtzman vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holtzsco01.html" target="_blank">Scott Holtzman</a></td>
 <td>2/17/2019</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">Fight Night: Dos Anjos vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5098UFC.html" target="_blank">Nik Lentz vs Charles Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/olivecha01.html" target="_blank">Charles Oliveira</a></td>
 <td>5/18/2019</td>
@@ -1301,7 +1303,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">Fight Night: Blaydes vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5443UFC.html" target="_blank">Arnold Allen vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allenarn01.html" target="_blank">Arnold Allen</a></td>
 <td>1/25/2020</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5915UFC.html" target="_blank">Movsar Evloev vs Nik Lentz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/evloemov01.html" target="_blank">Movsar Evloev</a></td>
 <td>1/23/2021</td>

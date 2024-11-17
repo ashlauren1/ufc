@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">UFC Fight Night: Diaz vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">Fight Night: Diaz vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1179UFC.html" target="_blank">Carlos Condit vs Jake Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/condicar01.html" target="_blank">Carlos Condit</a></td>
 <td>9/16/2009</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC LIVE: Jones vs Matyushenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024FNI.html" target="_blank">UFC on Versus 2: Jones vs Matyushenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1392UFC.html" target="_blank">Jake Ellenberger vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/howarjoh01.html" target="_blank">John Howard</a></td>
 <td>8/1/2010</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0031FNI.html" target="_blank">UFC Fight Night Live: Shields vs Ellenberger</a></td>
+<td style="text-align:left"><a href="/ufc/events/0031FNI.html" target="_blank">Fight Night: Shields vs Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1689UFC.html" target="_blank">Jake Ellenberger vs Jake Shields</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shieljak01.html" target="_blank">Jake Shields</a></td>
 <td>9/17/2011</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0036FNI.html" target="_blank">UFC on FUEL TV: Sanchez vs Ellenberger</a></td>
+<td style="text-align:left"><a href="/ufc/events/0036FNI.html" target="_blank">UFC on Fuel TV 1: Sanchez vs Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1847UFC.html" target="_blank">Jake Ellenberger vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchdie01.html" target="_blank">Diego Sanchez</a></td>
 <td>2/15/2012</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">The Ultimate Fighter LIVE Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">TUF 15 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1939UFC.html" target="_blank">Jake Ellenberger vs Martin Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kampmmar01.html" target="_blank">Martin Kampmann</a></td>
 <td>6/1/2012</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0046FNI.html" target="_blank">UFC on FX: Browne vs Bigfoot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0046FNI.html" target="_blank">UFC on FX 5: Browne vs Bigfoot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2061UFC.html" target="_blank">Jake Ellenberger vs Jay Hieron</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hierojay01.html" target="_blank">Jay Hieron</a></td>
 <td>10/5/2012</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2335UFC.html" target="_blank">Jake Ellenberger vs Rory MacDonald</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/macdoror01.html" target="_blank">Rory MacDonald</a></td>
 <td>7/27/2013</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">The Ultimate Fighter 21 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">TUF 21 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3272UFC.html" target="_blank">Jake Ellenberger vs Stephen Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thompste01.html" target="_blank">Stephen Thompson</a></td>
 <td>7/12/2015</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">UFC Fight Night: Johnson vs. Bader</a></td>
+<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC on Fox 18: Johnson vs Bader</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3526UFC.html" target="_blank">Jake Ellenberger vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/saffitar01.html" target="_blank">Tarec Saffiedine</a></td>
 <td>1/30/2016</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3746UFC.html" target="_blank">Matt Brown vs Jake Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownmat01.html" target="_blank">Matt Brown</a></td>
 <td>7/30/2016</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025TUF.html" target="_blank">The Ultimate Fighter 24 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">TUF 24 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3922UFC.html" target="_blank">Jake Ellenberger vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>12/3/2016</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4101UFC.html" target="_blank">Jake Ellenberger vs Mike Perry</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perrymik01.html" target="_blank">Mike Perry</a></td>
 <td>4/22/2017</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">UFC Fight Night: Rivera vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">Fight Night: Rivera vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4613UFC.html" target="_blank">Jake Ellenberger vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/saundben01.html" target="_blank">Ben Saunders</a></td>
 <td>6/1/2018</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC Fight Night: Gaethje vs. Vick</a></td>
+<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">Fight Night: Gaethje vs Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4725UFC.html" target="_blank">Bryan Barberena vs Jake Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbebry01.html" target="_blank">Bryan Barberena</a></td>
 <td>8/25/2018</td>

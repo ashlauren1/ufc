@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs. Nunes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs Nunes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6707UFC.html" target="_blank">Nicolae Negumereanu vs Ihor Potieria</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/negumnic01.html" target="_blank">Nicolae Negumereanu</a></td>
 <td>7/30/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6918UFC.html" target="_blank">Ihor Potieria vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ruamau01.html" target="_blank">Mauricio Rua</a></td>
 <td>1/21/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Almeida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0329FNI.html" target="_blank">UFC on ABC 4: Rozenstruik vs Almeida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7088UFC.html" target="_blank">Ihor Potieria vs Carlos Ulberg</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ulbercar01.html" target="_blank">Carlos Ulberg</a></td>
 <td>5/13/2023</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">UFC Fight Night: Dariush vs. Tsarukyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">Fight Night: Dariush vs Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7396UFC.html" target="_blank">Rodolfo Bellato vs Ihor Potieria</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bellarod01.html" target="_blank">Rodolfo Bellato</a></td>
 <td>12/2/2023</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0350FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Pyfer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0351FNI.html" target="_blank">Fight Night: Hermansson vs Pyfer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7460UFC.html" target="_blank">Robert Bryczek vs Ihor Potieria</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bryczrob01.html" target="_blank">Robert Bryczek</a></td>
 <td>2/10/2024</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs. Erceg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs Erceg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7601UFC.html" target="_blank">Michel Pereira vs Ihor Potieria</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pereimic01.html" target="_blank">Michel Pereira</a></td>
 <td>5/4/2024</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs Rountree Jr.</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7823UFC.html" target="_blank">Cesar Almeida vs Ihor Potieria</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/almeices01.html" target="_blank">Cesar Almeida</a></td>
 <td>10/5/2024</td>

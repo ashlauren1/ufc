@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">UFC Fight Night: Saint Preux vs. Okami</a></td>
+<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">Fight Night: Saint Preux vs Okami</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4292UFC.html" target="_blank">Chanmi Jeon vs Syuri Kondo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jeonchan01.html" target="_blank">Chanmi Jeon</a></td>
 <td>9/22/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4594UFC.html" target="_blank">Poliana Botelho vs Syuri Kondo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/botelpol01.html" target="_blank">Poliana Botelho</a></td>
 <td>5/19/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Ngannou 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">Fight Night: Blaydes vs Ngannou 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4844UFC.html" target="_blank">Syuri Kondo vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/xiaonyan01.html" target="_blank">Yan Xiaonan</a></td>
 <td>11/24/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">UFC Fight Night: Moicano vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">Fight Night: Moicano vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5139UFC.html" target="_blank">Syuri Kondo vs Ashley Yoder</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yoderash01.html" target="_blank">Ashley Yoder</a></td>
 <td>6/22/2019</td>

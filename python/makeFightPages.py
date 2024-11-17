@@ -51,13 +51,15 @@ def create_fight_boxscores(fight_data, output_dir):
 
         
         def calculate_totals(data):
-            totals = data[['round_duration', 'knockdowns', 'SigStr', 'SigStrAtt', 'totalStrikesLanded', 'totalStrikesAttempted', 'takedown', 'takedownAtt', 'subAtt', 'reversals', 'sigHeadStr', 'sigHeadStrAtt', 'sigBodyStr', 'sigBodyStrAtt', 'sigLegStr', 'sigLegStrAtt', 'clinchStrikes', 'clinchAttStr', 'groundStr', 'groundAttStr', 'SigStrAg', 'SigStrAttAg', 'TotStrAg', 'TotStrAttAg', 'TDAg', 'TDAttAg', 'SubAttAg']].sum()
+            totals = data[['round_duration', 'knockdowns', 'SigStr', 'SigStrAtt', 'totalStrikesLanded', 'totalStrikesAttempted', 'takedown', 'takedownAtt', 'subAtt', 'reversals', 'sigHeadStr', 'sigHeadStrAtt', 'sigBodyStr', 'sigBodyStrAtt', 'sigLegStr', 'sigLegStrAtt', 'clinchStrikes', 'clinchAttStr', 'groundStr', 'groundAttStr', 'SigStrAg', 'SigStrAttAg', 'TotStrAg', 'TotStrAttAg', 'TDAg', 'TDAttAg', 'SubAttAg', 'round_fantasy']].sum()
 
             totals['StrAccuracy'] = (totals['SigStr'] / totals['SigStrAtt'] * 100) if totals['SigStrAtt'] > 0 else 0.0
             totals['SLPM'] = round((totals['SigStr'] / totals['round_duration']), 2) if totals['round_duration'] > 0 else 0.0
             totals['takedownAcc'] = (totals['takedown'] / totals['takedownAtt'] * 100) if totals['takedownAtt'] > 0 else 0.0
             totals['SigStrDef'] = (100-(totals['SigStrAg'] / totals['SigStrAttAg'] * 100)) if totals['SigStrAttAg'] > 0 else 0.0
             totals['TDDef'] = (100-(totals['TDAg'] / totals['TDAttAg'] * 100)) if totals['TDAttAg'] > 0 else 0.0
+            totals['win_fantasy_bonus'] = data['win_fantasy_bonus'].iloc[0] if 'win_fantasy_bonus' in data.columns else 0
+            totals['fantasy_total'] = totals['round_fantasy'] + totals['win_fantasy_bonus']
             
             return totals
         
@@ -91,11 +93,13 @@ def create_fight_boxscores(fight_data, output_dir):
 
         let fighterLinks = {{}};
         let eventLinks = {{}};
+        let fightLinks = {{}};
 
         // Load JSON files
         async function loadLinks() {{
             fighterLinks = await fetch('fighters.json').then(response => response.json());
             eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
         }}
 
         await loadLinks();
@@ -107,7 +111,7 @@ def create_fight_boxscores(fight_data, output_dir):
 
             if (query === "") return;
 
-            const combinedLinks = {{ ...fighterLinks, ...eventLinks }};
+            const combinedLinks = {{ ...fighterLinks, ...eventLinks, ...fightLinks }};
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))
                 .slice(0, 5); // Limit to top 5
@@ -151,15 +155,15 @@ def create_fight_boxscores(fight_data, output_dir):
 </head>
 <body>
     <div class="topnav">
-        <a href="/ufc/">Projections</a>
+        <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/fights/">Fights and Results</a>
         <a href="/ufc/stats/">Stats</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for a fighter or event...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
@@ -221,6 +225,7 @@ def create_fight_boxscores(fight_data, output_dir):
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -267,6 +272,7 @@ def create_fight_boxscores(fight_data, output_dir):
                 <td>{rates['takedownAcc']:.2f}%</td>
                 <td>{int(row['subAtt'])}</td>
                 <td>{int(row['reversals'])}</td>
+                <td>{row['round_fantasy']}</td>
                 <td>{int(row['SigStrAg'])}</td>
                 <td>{int(row['SigStrAttAg'])}</td>
                 <td>{rates['SigStrDef']:.2f}%</td>
@@ -306,6 +312,7 @@ def create_fight_boxscores(fight_data, output_dir):
                 <td>{totals['takedownAcc']:.2f}%</td>
                 <td>{int(totals['subAtt'])}</td>
                 <td>{int(totals['reversals'])}</td>
+                <td>{totals['fantasy_total']} ({totals['round_fantasy']} pts + {totals['win_fantasy_bonus']} pts for winning)</td>
                 <td>{int(totals['SigStrAg'])}</td>
                 <td>{int(totals['SigStrAttAg'])}</td>
                 <td>{totals['SigStrDef']:.2f}%</td>

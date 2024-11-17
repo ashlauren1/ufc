@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2961UFC.html" target="_blank">Nina Ansaroff vs Juliana Lima</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/limajul01.html" target="_blank">Juliana Lima</a></td>
 <td>11/8/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Penn</a></td>
+<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">Fight Night: Rodriguez vs Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3987UFC.html" target="_blank">Nina Ansaroff vs Jocelyn Jones-Lybarger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jonesjoc01.html" target="_blank">Jocelyn Jones-Lybarger</a></td>
 <td>1/15/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">UFC Fight Night: Poirier vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">Fight Night: Poirier vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4349UFC.html" target="_blank">Nina Ansaroff vs Angela Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>11/11/2017</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">UFC Fight Night: Alvarez vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC on Fox 30: Alvarez vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4706UFC.html" target="_blank">Nina Ansaroff vs Randa Markos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/markoran01.html" target="_blank">Randa Markos</a></td>
 <td>7/28/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234PPV.html" target="_blank">UFC 231: Holloway vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0234PPV.html" target="_blank">UFC 231: Holloway vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4876UFC.html" target="_blank">Nina Ansaroff vs Claudia Gadelha</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gadelcla01.html" target="_blank">Claudia Gadelha</a></td>
 <td>12/8/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0240PPV.html" target="_blank">UFC 238: Cejudo vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240PPV.html" target="_blank">UFC 238: Cejudo vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5125UFC.html" target="_blank">Nina Ansaroff vs Tatiana Suarez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/suaretat01.html" target="_blank">Tatiana Suarez</a></td>
 <td>6/8/2019</td>

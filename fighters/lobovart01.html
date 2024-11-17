@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023TUF.html" target="_blank">The Ultimate Fighter 22 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">TUF 22 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3463UFC.html" target="_blank">Ryan Hall vs Artem Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hallrya01.html" target="_blank">Ryan Hall</a></td>
 <td>12/11/2015</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC Fight Night: Hendricks vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">Fight Night: Hendricks vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3546UFC.html" target="_blank">Artem Lobov vs Alex White</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/whiteale01.html" target="_blank">Alex White</a></td>
 <td>2/6/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0205PPV.html" target="_blank">UFC 202: Diaz vs. McGregor 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205PPV.html" target="_blank">UFC 202: Diaz vs McGregor 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3774UFC.html" target="_blank">Chris Avila vs Artem Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/avilachr01.html" target="_blank">Chris Avila</a></td>
 <td>8/20/2016</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">UFC Fight Night: Mousasi vs. Hall 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">Fight Night: Mousasi vs Hall 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3897UFC.html" target="_blank">Teruto Ishihara vs Artem Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ishihter01.html" target="_blank">Teruto Ishihara</a></td>
 <td>11/19/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4096UFC.html" target="_blank">Artem Lobov vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swanscub01.html" target="_blank">Cub Swanson</a></td>
 <td>4/22/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">Fight Night: Cerrone vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4313UFC.html" target="_blank">Andre Fili vs Artem Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/filiand01.html" target="_blank">Andre Fili</a></td>
 <td>10/21/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">UFC Fight Night: Oezdemir vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">Fight Night: Oezdemir vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4787UFC.html" target="_blank">Michael Johnson vs Artem Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmic01.html" target="_blank">Michael Johnson</a></td>
 <td>10/27/2018</td>

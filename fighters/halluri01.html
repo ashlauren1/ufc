@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">The Ultimate Fighter 17 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">TUF 17 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2240UFC.html" target="_blank">Kelvin Gastelum vs Uriah Hall</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gastekel01.html" target="_blank">Kelvin Gastelum</a></td>
 <td>4/13/2013</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2362UFC.html" target="_blank">Uriah Hall vs John Howard</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/howarjoh01.html" target="_blank">John Howard</a></td>
 <td>8/17/2013</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0099FNI.html" target="_blank">UFC Fight Night: McGregor vs Siver</a></td>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">Fight Night: McGregor vs Siver</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3037UFC.html" target="_blank">Uriah Hall vs Ron Stallings</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stallron01.html" target="_blank">Ron Stallings</a></td>
 <td>1/18/2015</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC Fight Night: Teixeira vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">Fight Night: Teixeira vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3338UFC.html" target="_blank">Oluwale Bamgbose vs Uriah Hall</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bamgbolu01.html" target="_blank">Oluwale Bamgbose</a></td>
 <td>8/8/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">UFC Fight Night: Barnett vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">Fight Night: Barnett vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3369UFC.html" target="_blank">Uriah Hall vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mousageg01.html" target="_blank">Gegard Mousasi</a></td>
 <td>9/26/2015</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">UFC Fight Night: Poirier vs. Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">Fight Night: Poirier vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3811UFC.html" target="_blank">Derek Brunson vs Uriah Hall</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brunsder01.html" target="_blank">Derek Brunson</a></td>
 <td>9/17/2016</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">UFC Fight Night: Mousasi vs. Hall 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">Fight Night: Mousasi vs Hall 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3894UFC.html" target="_blank">Uriah Hall vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mousageg01.html" target="_blank">Gegard Mousasi</a></td>
 <td>11/19/2016</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">UFC Fight Night: Rockhold vs. Branch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">Fight Night: Rockhold vs Branch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4283UFC.html" target="_blank">Uriah Hall vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jotkokrz01.html" target="_blank">Krzysztof Jotko</a></td>
 <td>9/16/2017</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229PPV.html" target="_blank">UFC 226: Miocic vs. Cormier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229PPV.html" target="_blank">UFC 226: Miocic vs Cormier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4665UFC.html" target="_blank">Paulo Costa vs Uriah Hall</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costapau01.html" target="_blank">Paulo Costa</a></td>
 <td>7/7/2018</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs Gustafsson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4907UFC.html" target="_blank">Uriah Hall vs Bevon Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lewisbev01.html" target="_blank">Bevon Lewis</a></td>
 <td>12/29/2018</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0221FNI.html" target="_blank">Fight Night: Cowboy vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5269UFC.html" target="_blank">Antonio Carlos Junior vs Uriah Hall</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carloant01.html" target="_blank">Antonio Carlos Junior</a></td>
 <td>9/14/2019</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">UFC Fight Night: Hall vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">Fight Night: Hall vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5800UFC.html" target="_blank">Uriah Hall vs Anderson Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaand01.html" target="_blank">Anderson Silva</a></td>
 <td>10/31/2020</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0263PPV.html" target="_blank">UFC 261: Usman vs. Masvidal 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263PPV.html" target="_blank">UFC 261: Usman vs Masvidal 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6034UFC.html" target="_blank">Uriah Hall vs Chris Weidman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weidmchr01.html" target="_blank">Chris Weidman</a></td>
 <td>4/24/2021</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0277FNI.html" target="_blank">UFC Fight Night: Hall vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278FNI.html" target="_blank">Fight Night: Hall vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6173UFC.html" target="_blank">Uriah Hall vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>7/31/2021</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6656UFC.html" target="_blank">Uriah Hall vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munizand01.html" target="_blank">Andre Muniz</a></td>
 <td>7/2/2022</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("horthjam01", [{'date': '2023-04-29', 'SigStr': 76, 'knockdowns': 0, 'SigStrAtt': 104, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 150, 'TDAg': 2, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2023-12-02', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 87, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 43, 'SigStrAttAg': 101, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("horthjam01", [{'date': '2023-04-29', 'SigStr': 76, 'knockdowns': 0, 'SigStrAtt': 104, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 150, 'TDAg': 2, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2023-12-02', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 87, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 43, 'SigStrAttAg': 101, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-11-02', 'SigStr': 29, 'knockdowns': 0, 'SigStrAtt': 70, 'takedown': 2, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 25, 'SigStrAttAg': 75, 'TDAg': 2, 'TDAttAg': 6, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">UFC Fight Night: Song vs. Simon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">Fight Night: Song vs Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7072UFC.html" target="_blank">Hailey Cowan vs Jamey-Lyn Horth</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cowanhai01.html" target="_blank">Hailey Cowan</a></td>
 <td>4/29/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">UFC Fight Night: Dariush vs. Tsarukyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">Fight Night: Dariush vs Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7398UFC.html" target="_blank">Veronica Hardy vs Jamey-Lyn Horth</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hardyver01.html" target="_blank">Veronica Hardy</a></td>
 <td>12/2/2023</td>
@@ -395,6 +397,49 @@
 <td>1</td>
 <td>2</td>
 <td>50.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0374FNI.html" target="_blank">Fight Night: Moreno vs Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7897UFC.html" target="_blank">Jamey-Lyn Horth vs Ivana Petrovic</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/petroiva01.html" target="_blank">Ivana Petrovic</a></td>
+<td>11/2/2024</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Women's Flyweight</td>
+<td>Decision - Split</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>29</td>
+<td>70</td>
+<td>41.43%</td>
+<td>0.64</td>
+<td>50</td>
+<td>94</td>
+<td>17</td>
+<td>52</td>
+<td>11</td>
+<td>17</td>
+<td>1</td>
+<td>1</td>
+<td>8</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>4</td>
+<td>50.00%</td>
+<td>0</td>
+<td>0</td>
+<td>25</td>
+<td>75</td>
+<td>66.67%</td>
+<td>67</td>
+<td>128</td>
+<td>2</td>
+<td>6</td>
+<td>66.67%</td>
 <td>0</td>
 </tr>
 </tbody>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0092FNI.html" target="_blank">UFC Fight Night: MacDonald vs Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/events/0093FNI.html" target="_blank">Fight Night: MacDonald vs Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2916UFC.html" target="_blank">Li Jingliang vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/talebnor01.html" target="_blank">Nordine Taleb</a></td>
 <td>10/4/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">Fight Night: Edgar vs Faber</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3191UFC.html" target="_blank">Li Jingliang vs Dhiego Lima</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/limadhi01.html" target="_blank">Dhiego Lima</a></td>
 <td>5/16/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">UFC Fight Night: Barnett vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">Fight Night: Barnett vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3374UFC.html" target="_blank">Li Jingliang vs Keita Nakamura</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nakamkei01.html" target="_blank">Keita Nakamura</a></td>
 <td>9/26/2015</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0024TUF.html" target="_blank">The Ultimate Fighter 23 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0023TUF.html" target="_blank">TUF 23 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3708UFC.html" target="_blank">Li Jingliang vs Anton Zafir</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zafirant01.html" target="_blank">Anton Zafir</a></td>
 <td>7/8/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3997UFC.html" target="_blank">Li Jingliang vs Bobby Nash</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nashbob01.html" target="_blank">Bobby Nash</a></td>
 <td>1/28/2017</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4164UFC.html" target="_blank">Frank Camacho vs Li Jingliang</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camacfra01.html" target="_blank">Frank Camacho</a></td>
 <td>6/17/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">UFC Fight Night: Bisping vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">Fight Night: Bisping vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4367UFC.html" target="_blank">Li Jingliang vs Zak Ottow</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ottowzak01.html" target="_blank">Zak Ottow</a></td>
 <td>11/25/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4484UFC.html" target="_blank">Li Jingliang vs Jake Matthews</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/matthjak01.html" target="_blank">Jake Matthews</a></td>
 <td>2/10/2018</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4638UFC.html" target="_blank">Daichi Abe vs Li Jingliang</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/abedaic01.html" target="_blank">Daichi Abe</a></td>
 <td>6/23/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Ngannou 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">Fight Night: Blaydes vs Ngannou 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4838UFC.html" target="_blank">Li Jingliang vs David Zawada</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zawaddav01.html" target="_blank">David Zawada</a></td>
 <td>11/24/2018</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">Fight Night: Andrade vs Zhang</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5242UFC.html" target="_blank">Li Jingliang vs Elizeu Zaleski dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoeli01.html" target="_blank">Elizeu Zaleski dos Santos</a></td>
 <td>8/31/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs. Romero</a></td>
+<td style="text-align:left"><a href="/ufc/events/0250PPV.html" target="_blank">UFC 248: Adesanya vs Romero</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5501UFC.html" target="_blank">Li Jingliang vs Neil Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
 <td>3/7/2020</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">UFC Fight Night: Holloway vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC on ABC 1: Holloway vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5884UFC.html" target="_blank">Li Jingliang vs Santiago Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ponzisan01.html" target="_blank">Santiago Ponzinibbio</a></td>
 <td>1/16/2021</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6305UFC.html" target="_blank">Khamzat Chimaev vs Li Jingliang</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chimakha01.html" target="_blank">Khamzat Chimaev</a></td>
 <td>10/30/2021</td>
@@ -957,7 +959,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6672UFC.html" target="_blank">Li Jingliang vs Muslim Salikhov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/salikmus01.html" target="_blank">Muslim Salikhov</a></td>
 <td>7/16/2022</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6758UFC.html" target="_blank">Li Jingliang vs Daniel Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodridan01.html" target="_blank">Daniel Rodriguez</a></td>
 <td>9/10/2022</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7760UFC.html" target="_blank">Li Jingliang vs Carlos Prates</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pratecar01.html" target="_blank">Carlos Prates</a></td>
 <td>8/17/2024</td>

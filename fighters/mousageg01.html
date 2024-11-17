@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0054FNI.html" target="_blank">UFC on FUEL TV 9: Mousasi vs Latifi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0054FNI.html" target="_blank">UFC on Fuel TV 9: Mousasi vs Latifi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2228UFC.html" target="_blank">Ilir Latifi vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/latifili01.html" target="_blank">Ilir Latifi</a></td>
 <td>4/6/2013</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0071FNI.html" target="_blank">UFC Fight Night: Machida vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0071FNI.html" target="_blank">Fight Night: Machida vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2578UFC.html" target="_blank">Lyoto Machida vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/machilyo01.html" target="_blank">Lyoto Machida</a></td>
 <td>2/15/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0079FNI.html" target="_blank">UFC Fight Night: Munoz vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">Fight Night: Munoz vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2723UFC.html" target="_blank">Gegard Mousasi vs Mark Munoz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/munozmar01.html" target="_blank">Mark Munoz</a></td>
 <td>5/31/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">UFC Fight Night: Souza vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">Fight Night: Souza vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2869UFC.html" target="_blank">Gegard Mousasi vs Jacare Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/souzajac01.html" target="_blank">Jacare Souza</a></td>
 <td>9/5/2014</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0101FNI.html" target="_blank">UFC on Fox 14: Gustafsson vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3048UFC.html" target="_blank">Dan Henderson vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hendedan01.html" target="_blank">Dan Henderson</a></td>
 <td>1/24/2015</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0108FNI.html" target="_blank">UFC Fight Night: Edgar vs Faber</a></td>
+<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">Fight Night: Edgar vs Faber</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3184UFC.html" target="_blank">Gegard Mousasi vs Costas Philippou</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/philicos01.html" target="_blank">Costas Philippou</a></td>
 <td>5/16/2015</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0118FNI.html" target="_blank">UFC Fight Night: Barnett vs Nelson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">Fight Night: Barnett vs Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3369UFC.html" target="_blank">Uriah Hall vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/halluri01.html" target="_blank">Uriah Hall</a></td>
 <td>9/26/2015</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">UFC Fight Night: Silva vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">Fight Night: Silva vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3561UFC.html" target="_blank">Thales Leites vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leitetha01.html" target="_blank">Thales Leites</a></td>
 <td>2/27/2016</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs. Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3848UFC.html" target="_blank">Vitor Belfort vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/belfovit01.html" target="_blank">Vitor Belfort</a></td>
 <td>10/8/2016</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">UFC Fight Night: Mousasi vs. Hall 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">Fight Night: Mousasi vs Hall 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3894UFC.html" target="_blank">Uriah Hall vs Gegard Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/halluri01.html" target="_blank">Uriah Hall</a></td>
 <td>11/19/2016</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs. Johnson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs Johnson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4071UFC.html" target="_blank">Gegard Mousasi vs Chris Weidman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weidmchr01.html" target="_blank">Chris Weidman</a></td>
 <td>4/8/2017</td>

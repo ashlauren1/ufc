@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC Fight Night: Bader vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">Fight Night: Bader vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2833UFC.html" target="_blank">Seth Baczynski vs Alan Jouban</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baczyset01.html" target="_blank">Seth Baczynski</a></td>
 <td>8/16/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2958UFC.html" target="_blank">Warlley Alves vs Alan Jouban</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alveswar01.html" target="_blank">Warlley Alves</a></td>
 <td>11/8/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0113FNI.html" target="_blank">UFC Fight Night: Mir vs Duffee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">Fight Night: Mir vs Duffee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3288UFC.html" target="_blank">Matt Dwyer vs Alan Jouban</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dwyermat01.html" target="_blank">Matt Dwyer</a></td>
 <td>7/15/2015</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">UFC Fight Night: Hunt vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">Fight Night: Hunt vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3591UFC.html" target="_blank">Alan Jouban vs Brendan O'Reilly</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oreilbre01.html" target="_blank">Brendan O'Reilly</a></td>
 <td>3/19/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Alvarez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0137FNI.html" target="_blank">Fight Night: Dos Anjos vs Alvarez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3687UFC.html" target="_blank">Alan Jouban vs Belal Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muhambel01.html" target="_blank">Belal Muhammad</a></td>
 <td>7/7/2016</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC on Fox 22: VanZant vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3959UFC.html" target="_blank">Alan Jouban vs Mike Perry</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perrymik01.html" target="_blank">Mike Perry</a></td>
 <td>12/17/2016</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">UFC Fight Night: Manuwa vs. Anderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0157FNI.html" target="_blank">Fight Night: Manuwa vs Anderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4060UFC.html" target="_blank">Alan Jouban vs Gunnar Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nelsogun01.html" target="_blank">Gunnar Nelson</a></td>
 <td>3/18/2017</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC Fight Night: Pettis vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">Fight Night: Pettis vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4242UFC.html" target="_blank">Alan Jouban vs Niko Price</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pricenik01.html" target="_blank">Niko Price</a></td>
 <td>8/5/2017</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4512UFC.html" target="_blank">Alan Jouban vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/saundben01.html" target="_blank">Ben Saunders</a></td>
 <td>2/24/2018</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5037UFC.html" target="_blank">Dwight Grant vs Alan Jouban</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grantdwi01.html" target="_blank">Dwight Grant</a></td>
 <td>4/13/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs. Perez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0257PPV.html" target="_blank">UFC 255: Figueiredo vs Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5835UFC.html" target="_blank">Jared Gooden vs Alan Jouban</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goodejar01.html" target="_blank">Jared Gooden</a></td>
 <td>11/21/2020</td>

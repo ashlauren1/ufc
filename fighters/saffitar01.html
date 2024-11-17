@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0068FNI.html" target="_blank">UFC Fight Night: Saffiedine vs Lim</a></td>
+<td style="text-align:left"><a href="/ufc/events/0068FNI.html" target="_blank">Fight Night: Saffiedine vs Lim</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2533UFC.html" target="_blank">Hyun Gyu Lim vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/limhyu01.html" target="_blank">Hyun Gyu Lim</a></td>
 <td>1/4/2014</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0092FNI.html" target="_blank">UFC Fight Night: MacDonald vs Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/events/0093FNI.html" target="_blank">Fight Night: MacDonald vs Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2912UFC.html" target="_blank">Rory MacDonald vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/macdoror01.html" target="_blank">Rory MacDonald</a></td>
 <td>10/4/2014</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">UFC Fight Night: Johnson vs. Bader</a></td>
+<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC on Fox 18: Johnson vs Bader</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3526UFC.html" target="_blank">Jake Ellenberger vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>1/30/2016</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">UFC Fight Night: Almeida vs Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">Fight Night: Almeida vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3649UFC.html" target="_blank">Tarec Saffiedine vs Rick Story</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/storyric01.html" target="_blank">Rick Story</a></td>
 <td>5/29/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210PPV.html" target="_blank">UFC 207: Nunes vs. Rousey</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210PPV.html" target="_blank">UFC 207: Nunes vs Rousey</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3972UFC.html" target="_blank">Dong Hyun Kim vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kimdon01.html" target="_blank">Dong Hyun Kim</a></td>
 <td>12/30/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4159UFC.html" target="_blank">Rafael Dos Anjos vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>6/17/2017</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("ankalmag01", [{'date': '2018-03-17', 'SigStr': 59, 'knockdowns': 0, 'SigStrAtt': 96, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 50, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 1}, {'date': '2018-09-15', 'SigStr': 12, 'knockdowns': 1, 'SigStrAtt': 27, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-02-23', 'SigStr': 30, 'knockdowns': 1, 'SigStrAtt': 67, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 62, 'TDAg': 0, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2019-11-09', 'SigStr': 44, 'knockdowns': 1, 'SigStrAtt': 67, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2020-02-29', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 12, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 11, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-10-24', 'SigStr': 21, 'knockdowns': 2, 'SigStrAtt': 41, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-02-27', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 92, 'takedown': 3, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 47, 'SigStrAttAg': 120, 'TDAg': 1, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2021-10-30', 'SigStr': 66, 'knockdowns': 1, 'SigStrAtt': 108, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 48, 'SigStrAttAg': 102, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-03-12', 'SigStr': 78, 'knockdowns': 0, 'SigStrAtt': 155, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 60, 'SigStrAttAg': 138, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-07-30', 'SigStr': 46, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-12-10', 'SigStr': 78, 'knockdowns': 0, 'SigStrAtt': 184, 'takedown': 2, 'takedownAtt': 10, 'subAtt': 0, 'SigStrAg': 55, 'SigStrAttAg': 117, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-10-21', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-01-13', 'SigStr': 39, 'knockdowns': 1, 'SigStrAtt': 58, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("ankalmag01", [{'date': '2018-03-17', 'SigStr': 59, 'knockdowns': 0, 'SigStrAtt': 96, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 50, 'TDAg': 2, 'TDAttAg': 7, 'SubAttAg': 1}, {'date': '2018-09-15', 'SigStr': 12, 'knockdowns': 1, 'SigStrAtt': 27, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 3, 'SigStrAttAg': 22, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2019-02-23', 'SigStr': 30, 'knockdowns': 1, 'SigStrAtt': 67, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 23, 'SigStrAttAg': 62, 'TDAg': 0, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2019-11-09', 'SigStr': 44, 'knockdowns': 1, 'SigStrAtt': 67, 'takedown': 1, 'takedownAtt': 3, 'subAtt': 0, 'SigStrAg': 6, 'SigStrAttAg': 26, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2020-02-29', 'SigStr': 8, 'knockdowns': 0, 'SigStrAtt': 12, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 11, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2020-10-24', 'SigStr': 21, 'knockdowns': 2, 'SigStrAtt': 41, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 11, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2021-02-27', 'SigStr': 43, 'knockdowns': 0, 'SigStrAtt': 92, 'takedown': 3, 'takedownAtt': 9, 'subAtt': 0, 'SigStrAg': 47, 'SigStrAttAg': 120, 'TDAg': 1, 'TDAttAg': 6, 'SubAttAg': 0}, {'date': '2021-10-30', 'SigStr': 66, 'knockdowns': 1, 'SigStrAtt': 108, 'takedown': 1, 'takedownAtt': 4, 'subAtt': 0, 'SigStrAg': 48, 'SigStrAttAg': 102, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-03-12', 'SigStr': 78, 'knockdowns': 0, 'SigStrAtt': 155, 'takedown': 1, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 60, 'SigStrAttAg': 138, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2022-07-30', 'SigStr': 46, 'knockdowns': 0, 'SigStrAtt': 79, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 18, 'SigStrAttAg': 36, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}, {'date': '2022-12-10', 'SigStr': 78, 'knockdowns': 0, 'SigStrAtt': 184, 'takedown': 2, 'takedownAtt': 10, 'subAtt': 0, 'SigStrAg': 55, 'SigStrAttAg': 117, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2023-10-21', 'SigStr': 13, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-01-13', 'SigStr': 39, 'knockdowns': 1, 'SigStrAtt': 58, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 24, 'SigStrAttAg': 71, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-10-26', 'SigStr': 55, 'knockdowns': 0, 'SigStrAtt': 114, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 53, 'SigStrAttAg': 117, 'TDAg': 0, 'TDAttAg': 1, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC Fight Night: Werdum vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">Fight Night: Werdum vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4535UFC.html" target="_blank">Magomed Ankalaev vs Paul Craig</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/craigpau01.html" target="_blank">Paul Craig</a></td>
 <td>3/17/2018</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">UFC Fight Night: Hunt vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">Fight Night: Hunt vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4756UFC.html" target="_blank">Magomed Ankalaev vs Marcin Prachnio</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/prachmar01.html" target="_blank">Marcin Prachnio</a></td>
 <td>9/15/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">Fight Night: Blachowicz vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4964UFC.html" target="_blank">Klidson Abreu vs Magomed Ankalaev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/abreukli01.html" target="_blank">Klidson Abreu</a></td>
 <td>2/23/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">Fight Night: Zabit vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5369UFC.html" target="_blank">Magomed Ankalaev vs Dalcha Lungiambula</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lungidal01.html" target="_blank">Dalcha Lungiambula</a></td>
 <td>11/9/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233FNI.html" target="_blank">UFC Fight Night: Benavidez vs. Figueiredo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">Fight Night: Benavidez vs Figueiredo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5486UFC.html" target="_blank">Magomed Ankalaev vs Ion Cutelaba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cutelion01.html" target="_blank">Ion Cutelaba</a></td>
 <td>2/29/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0256PPV.html" target="_blank">UFC 254: Khabib vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0256PPV.html" target="_blank">UFC 254: Khabib vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5793UFC.html" target="_blank">Magomed Ankalaev vs Ion Cutelaba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cutelion01.html" target="_blank">Ion Cutelaba</a></td>
 <td>10/24/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">Fight Night: Rozenstruik vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5952UFC.html" target="_blank">Magomed Ankalaev vs Nikita Krylov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krylonik01.html" target="_blank">Nikita Krylov</a></td>
 <td>2/27/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0269PPV.html" target="_blank">UFC 267: Blachowicz vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6306UFC.html" target="_blank">Magomed Ankalaev vs Volkan Oezdemir</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oezdevol01.html" target="_blank">Volkan Oezdemir</a></td>
 <td>10/30/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294FNI.html" target="_blank">UFC Fight Night: Santos vs. Ankalaev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295FNI.html" target="_blank">Fight Night: Santos vs Ankalaev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6475UFC.html" target="_blank">Magomed Ankalaev vs Thiago Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santothi01.html" target="_blank">Thiago Santos</a></td>
 <td>3/12/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs. Nunes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs Nunes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6700UFC.html" target="_blank">Magomed Ankalaev vs Anthony Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smithant01.html" target="_blank">Anthony Smith</a></td>
 <td>7/30/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0284PPV.html" target="_blank">UFC 282: Blachowicz vs. Ankalaev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0284PPV.html" target="_blank">UFC 282: Blachowicz vs Ankalaev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6877UFC.html" target="_blank">Magomed Ankalaev vs Jan Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blachjan01.html" target="_blank">Jan Blachowicz</a></td>
 <td>12/10/2022</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0296PPV.html" target="_blank">UFC 294: Makhachev vs. Volkanovski 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0296PPV.html" target="_blank">UFC 294: Makhachev vs Volkanovski 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7339UFC.html" target="_blank">Magomed Ankalaev vs Johnny Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/walkejoh01.html" target="_blank">Johnny Walker</a></td>
 <td>10/21/2023</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">UFC Fight Night: Ankalaev vs. Walker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">Fight Night: Ankalaev vs Walker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7422UFC.html" target="_blank">Magomed Ankalaev vs Johnny Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/walkejoh01.html" target="_blank">Johnny Walker</a></td>
 <td>1/13/2024</td>
@@ -868,6 +870,49 @@
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0310PPV.html" target="_blank">UFC 308: Topuria vs Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7883UFC.html" target="_blank">Magomed Ankalaev vs Aleksandar Rakic</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/rakicale01.html" target="_blank">Aleksandar Rakic</a></td>
+<td>10/26/2024</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Light Heavyweight</td>
+<td>Decision - Unanimous</td>
+<td>W</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>55</td>
+<td>114</td>
+<td>48.25%</td>
+<td>1.22</td>
+<td>75</td>
+<td>142</td>
+<td>20</td>
+<td>72</td>
+<td>22</td>
+<td>29</td>
+<td>13</td>
+<td>13</td>
+<td>5</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>53</td>
+<td>117</td>
+<td>54.70%</td>
+<td>59</td>
+<td>123</td>
+<td>0</td>
+<td>1</td>
+<td>100.00%</td>
 <td>0</td>
 </tr>
 </tbody>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0030FNI.html" target="_blank">UFC LIVE 5: Hardy vs Lytle</a></td>
+<td style="text-align:left"><a href="/ufc/events/0030FNI.html" target="_blank">UFC on Versus 5: Hardy vs Lytle</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1665UFC.html" target="_blank">Benson Henderson vs Jim Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>8/14/2011</td>
@@ -398,7 +400,7 @@
 <td>6</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0033FNI.html" target="_blank">UFC on Fox: Velasquez vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0033FNI.html" target="_blank">UFC on Fox 1: Velasquez vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1753UFC.html" target="_blank">Clay Guida vs Benson Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guidacla01.html" target="_blank">Clay Guida</a></td>
 <td>11/12/2011</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox: Henderson vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox 5: Henderson vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2103UFC.html" target="_blank">Nate Diaz vs Benson Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diaznat01.html" target="_blank">Nate Diaz</a></td>
 <td>12/8/2012</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on FOX: Henderson vs Melendez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0055FNI.html" target="_blank">UFC on Fox 7: Henderson vs Melendez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2252UFC.html" target="_blank">Benson Henderson vs Gilbert Melendez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/melengil01.html" target="_blank">Gilbert Melendez</a></td>
 <td>4/20/2013</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0070FNI.html" target="_blank">UFC on Fox: Henderson vs Thomson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0070FNI.html" target="_blank">UFC on Fox 10: Henderson vs Thomson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2555UFC.html" target="_blank">Benson Henderson vs Josh Thomson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thomsjos01.html" target="_blank">Josh Thomson</a></td>
 <td>1/25/2014</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">UFC Fight Night: Henderson vs Khabilov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0081FNI.html" target="_blank">Fight Night: Henderson vs Khabilov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2743UFC.html" target="_blank">Benson Henderson vs Rustam Khabilov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/khabirus01.html" target="_blank">Rustam Khabilov</a></td>
 <td>6/7/2014</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">Fight Night: Henderson vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2840UFC.html" target="_blank">Rafael Dos Anjos vs Benson Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>8/23/2014</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0099FNI.html" target="_blank">UFC Fight Night: McGregor vs Siver</a></td>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">Fight Night: McGregor vs Siver</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3036UFC.html" target="_blank">Donald Cerrone vs Benson Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cerrodon01.html" target="_blank">Donald Cerrone</a></td>
 <td>1/18/2015</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0101FNI.html" target="_blank">UFC Fight Night: Henderson vs Thatch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">Fight Night: Henderson vs Thatch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3079UFC.html" target="_blank">Benson Henderson vs Brandon Thatch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thatcbra01.html" target="_blank">Brandon Thatch</a></td>
 <td>2/14/2015</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">UFC Fight Night: Henderson vs Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">Fight Night: Henderson vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3439UFC.html" target="_blank">Benson Henderson vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>11/28/2015</td>

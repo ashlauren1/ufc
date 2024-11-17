@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0149FNI.html" target="_blank">UFC Fight Night: Lewis vs. Abdurakhimov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">Fight Night: Lewis vs Abdurakhimov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3939UFC.html" target="_blank">Shane Burgos vs Tiago Trator</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tratotia01.html" target="_blank">Tiago Trator</a></td>
 <td>12/9/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs. Johnson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs Johnson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4077UFC.html" target="_blank">Shane Burgos vs Charles Rosa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rosacha01.html" target="_blank">Charles Rosa</a></td>
 <td>4/8/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0164FNI.html" target="_blank">UFC Fight Night: Weidman vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC on Fox 25: Weidman vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4226UFC.html" target="_blank">Shane Burgos vs Godofredo Pepey</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pepeygod01.html" target="_blank">Godofredo Pepey</a></td>
 <td>7/22/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4449UFC.html" target="_blank">Shane Burgos vs Calvin Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kattacal01.html" target="_blank">Calvin Kattar</a></td>
 <td>1/20/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4809UFC.html" target="_blank">Shane Burgos vs Kurt Holobaugh</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holobkur01.html" target="_blank">Kurt Holobaugh</a></td>
 <td>11/3/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">UFC Fight Night: Iaquinta vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">Fight Night: Iaquinta vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5073UFC.html" target="_blank">Shane Burgos vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/swanscub01.html" target="_blank">Cub Swanson</a></td>
 <td>5/4/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs. Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5357UFC.html" target="_blank">Makwan Amirkhani vs Shane Burgos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/amirkmak01.html" target="_blank">Makwan Amirkhani</a></td>
 <td>11/2/2019</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240FNI.html" target="_blank">Fight Night: Blaydes vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5587UFC.html" target="_blank">Shane Burgos vs Josh Emmett</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/emmetjos01.html" target="_blank">Josh Emmett</a></td>
 <td>6/20/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs. Chandler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs Chandler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6068UFC.html" target="_blank">Edson Barboza vs Shane Burgos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barboeds01.html" target="_blank">Edson Barboza</a></td>
 <td>5/15/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6318UFC.html" target="_blank">Shane Burgos vs Billy Quarantillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/quarabil01.html" target="_blank">Billy Quarantillo</a></td>
 <td>11/6/2021</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6674UFC.html" target="_blank">Shane Burgos vs Charles Jourdain</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jourdcha01.html" target="_blank">Charles Jourdain</a></td>
 <td>7/16/2022</td>

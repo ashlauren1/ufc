@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Cheyanne Buys</title>
+<title>Cortavious Romious</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="stylesheet.css" rel="stylesheet"/>
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,12 +192,12 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
 <div class="header">
-<h1>Cheyanne Buys</h1>
+<h1>Cortavious Romious</h1>
 </div>
 <div class="info-box">
 </div>
@@ -206,8 +208,8 @@
 <!-- Stat Selection Dropdown -->
 <div class="barChart-filters">
 <div class="barChartFilter">
-<label for="statSelector_buyschey01">Stat:</label>
-<select id="statSelector_buyschey01" onchange="updateStat('buyschey01', this.value)">
+<label for="statSelector_romioco01">Stat:</label>
+<select id="statSelector_romioco01" onchange="updateStat('romioco01', this.value)">
 <option value="SigStr">Significant Strikes</option>
 <option value="knockdowns">Knockdowns</option>
 <option value="SigStrAtt">Significant Strike Attempts</option>
@@ -222,31 +224,31 @@
 </select>
 </div>
 <div class="barChartFilter">
-<label for="startDate_buyschey01">Start:</label>
-<input id="startDate_buyschey01" onchange="applyFilters('buyschey01')" type="date"/>
+<label for="startDate_romioco01">Start:</label>
+<input id="startDate_romioco01" onchange="applyFilters('romioco01')" type="date"/>
 </div>
 <div class="barChartFilter">
-<label for="endDate_buyschey01">End:</label>
-<input id="endDate_buyschey01" onchange="applyFilters('buyschey01')" type="date"/>
+<label for="endDate_romioco01">End:</label>
+<input id="endDate_romioco01" onchange="applyFilters('romioco01')" type="date"/>
 </div>
 </div>
-<canvas class="player-barChart" id="chart_buyschey01"></canvas>
+<canvas class="player-barChart" id="chart_romioco01"></canvas>
 <div class="filter-buttons">
-<button id="L5_buyschey01" onclick="showRecentGames('buyschey01', 5)">L5</button>
-<button id="L10_buyschey01" onclick="showRecentGames('buyschey01', 10)">L10</button>
-<button id="L20_buyschey01" onclick="showRecentGames('buyschey01', 20)">L20</button>
-<button id="showAll_buyschey01" onclick="showAllGames('buyschey01')">All</button>
-<button id="fight_duration_buyschey01" onclick="toggleFightDurationOverlay('buyschey01')">Toggle Fight Duration</button>
-<button class="clear-chart-filters" id="clearFiltersBtn_buyschey01" onclick="clearFilters('buyschey01')">Clear Filters</button>
+<button id="L5_romioco01" onclick="showRecentGames('romioco01', 5)">L5</button>
+<button id="L10_romioco01" onclick="showRecentGames('romioco01', 10)">L10</button>
+<button id="L20_romioco01" onclick="showRecentGames('romioco01', 20)">L20</button>
+<button id="showAll_romioco01" onclick="showAllGames('romioco01')">All</button>
+<button id="fight_duration_romioco01" onclick="toggleFightDurationOverlay('romioco01')">Toggle Fight Duration</button>
+<button class="clear-chart-filters" id="clearFiltersBtn_romioco01" onclick="clearFilters('romioco01')">Clear Filters</button>
 </div>
 <div class="slider-container">
 <div id="line-slider">
-<label for="lineSlider_buyschey01">Change Line:</label>
-<input id="lineSlider_buyschey01" max="250" min="0" oninput="updateLine('buyschey01', this.value)" step="0.5" type="range" value="25.5"/>
-<span id="lineValue_buyschey01">25.5</span>
+<label for="lineSlider_romioco01">Change Line:</label>
+<input id="lineSlider_romioco01" max="250" min="0" oninput="updateLine('romioco01', this.value)" step="0.5" type="range" value="25.5"/>
+<span id="lineValue_romioco01">25.5</span>
 </div>
 <div class="chartButtons">
-<button class="reset-line-btn" id="reset-line-btn_buyschey01" onclick="resetLine('buyschey01', 25.5)">Reset Line</button>
+<button class="reset-line-btn" id="reset-line-btn_romioco01" onclick="resetLine('romioco01', 25.5)">Reset Line</button>
 </div>
 </div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("buyschey01", [{'date': '2021-03-20', 'SigStr': 31, 'knockdowns': 0, 'SigStrAtt': 65, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 15, 'SigStrAttAg': 41, 'TDAg': 4, 'TDAttAg': 5, 'SubAttAg': 2}, {'date': '2021-07-31', 'SigStr': 11, 'knockdowns': 1, 'SigStrAtt': 16, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 5, 'SigStrAttAg': 8, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("romioco01", [{'date': '2024-11-09', 'SigStr': 17, 'knockdowns': 0, 'SigStrAtt': 45, 'takedown': 4, 'takedownAtt': 6, 'subAtt': 0, 'SigStrAg': 53, 'SigStrAttAg': 75, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,88 +314,45 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">UFC Fight Night: Brunson vs. Holland</a></td>
-<td style="text-align:left"><a href="/ufc/fights/5990UFC.html" target="_blank">Cheyanne Buys vs Montserrat Conejo</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/conejmon01.html" target="_blank">Montserrat Conejo</a></td>
-<td>3/20/2021</td>
+<td style="text-align:left"><a href="/ufc/events/0373FNI.html" target="_blank">Fight Night: Magny vs Prates</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7894UFC.html" target="_blank">Gaston Bolanos vs Cortavious Romious</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/bolangas01.html" target="_blank">Gaston Bolanos</a></td>
+<td>11/9/2024</td>
 <td>Las Vegas, Nevada, USA</td>
-<td>Women's Strawweight</td>
+<td>Bantamweight</td>
 <td>Decision - Unanimous</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
 <td>0</td>
-<td>31</td>
-<td>65</td>
-<td>47.69%</td>
-<td>0.69</td>
-<td>49</td>
-<td>87</td>
-<td>26</td>
-<td>60</td>
+<td>17</td>
+<td>45</td>
+<td>37.78%</td>
+<td>0.38</td>
+<td>30</td>
+<td>61</td>
+<td>12</td>
+<td>37</td>
+<td>3</td>
 <td>5</td>
-<td>5</td>
-<td>0</td>
-<td>0</td>
-<td>2</td>
 <td>2</td>
 <td>3</td>
-<td>7</td>
 <td>0</td>
-<td>0</td>
-<td>0.00%</td>
 <td>0</td>
 <td>3</td>
-<td>15</td>
-<td>41</td>
-<td>63.41%</td>
-<td>136</td>
-<td>168</td>
 <td>4</td>
-<td>5</td>
-<td>20.00%</td>
+<td>4</td>
+<td>6</td>
+<td>66.67%</td>
+<td>0</td>
+<td>0</td>
+<td>53</td>
+<td>75</td>
+<td>29.33%</td>
+<td>80</td>
+<td>104</td>
 <td>2</td>
-</tr>
-<tr>
-<td style="text-align:left"><a href="/ufc/events/0277FNI.html" target="_blank">UFC Fight Night: Hall vs. Strickland</a></td>
-<td style="text-align:left"><a href="/ufc/fights/6174UFC.html" target="_blank">Cheyanne Buys vs Gloria de Paula</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/paulaglo01.html" target="_blank">Gloria de Paula</a></td>
-<td>7/31/2021</td>
-<td>Las Vegas, Nevada, USA</td>
-<td>Women's Strawweight</td>
-<td>KO/TKO</td>
-<td>W</td>
-<td>3</td>
-<td>1.0</td>
-<td>1</td>
-<td>11</td>
-<td>16</td>
-<td>68.75%</td>
-<td>11.00</td>
-<td>11</td>
-<td>16</td>
-<td>11</td>
-<td>15</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>7</td>
-<td>8</td>
-<td>1</td>
-<td>1</td>
-<td>100.00%</td>
-<td>0</td>
-<td>0</td>
-<td>5</td>
-<td>8</td>
-<td>37.50%</td>
-<td>8</td>
-<td>11</td>
-<td>0</td>
-<td>0</td>
+<td>2</td>
 <td>0.00%</td>
 <td>0</td>
 </tr>

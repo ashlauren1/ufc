@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Caceres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">Fight Night: Rodriguez vs Caceres</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3766UFC.html" target="_blank">Justin Ledet vs Chase Sherman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shermcha01.html" target="_blank">Chase Sherman</a></td>
 <td>8/6/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">UFC Fight Night: Mousasi vs. Hall 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">Fight Night: Mousasi vs Hall 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3902UFC.html" target="_blank">Mark Godbeer vs Justin Ledet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/godbemar01.html" target="_blank">Mark Godbeer</a></td>
 <td>11/19/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">UFC Fight Night: Rockhold vs. Branch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">Fight Night: Rockhold vs Branch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4280UFC.html" target="_blank">Zu Anyanwu vs Justin Ledet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anyanzu01.html" target="_blank">Zu Anyanwu</a></td>
 <td>9/16/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4693UFC.html" target="_blank">Justin Ledet vs Aleksandar Rakic</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rakicale01.html" target="_blank">Aleksandar Rakic</a></td>
 <td>7/22/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4927UFC.html" target="_blank">Justin Ledet vs Johnny Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/walkejoh01.html" target="_blank">Johnny Walker</a></td>
 <td>2/2/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5435UFC.html" target="_blank">Aleksa Camur vs Justin Ledet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/camurale01.html" target="_blank">Aleksa Camur</a></td>
 <td>1/18/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">UFC Fight Night: Hall vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255FNI.html" target="_blank">Fight Night: Hall vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5809UFC.html" target="_blank">Dustin Jacoby vs Justin Ledet</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jacobdus01.html" target="_blank">Dustin Jacoby</a></td>
 <td>10/31/2020</td>

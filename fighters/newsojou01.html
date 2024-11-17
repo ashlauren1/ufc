@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0215FNI.html" target="_blank">Fight Night: Ngannou vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5150UFC.html" target="_blank">Journey Newson vs Ricardo Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ramosric01.html" target="_blank">Ricardo Ramos</a></td>
 <td>6/29/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0249PPV.html" target="_blank">UFC 247: Jones vs. Reyes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249PPV.html" target="_blank">UFC 247: Jones vs Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5458UFC.html" target="_blank">Journey Newson vs Domingo Pilarte</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pilardom01.html" target="_blank">Domingo Pilarte</a></td>
 <td>2/8/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">Fight Night: Covington vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5739UFC.html" target="_blank">Randy Costa vs Journey Newson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/costaran01.html" target="_blank">Randy Costa</a></td>
 <td>9/19/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6574UFC.html" target="_blank">Fernie Garcia vs Journey Newson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garcifer01.html" target="_blank">Fernie Garcia</a></td>
 <td>5/7/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6901UFC.html" target="_blank">Sergey Morozov vs Journey Newson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morozser01.html" target="_blank">Sergey Morozov</a></td>
 <td>12/17/2022</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">UFC Fight Night: Song vs. Simon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">Fight Night: Song vs Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7071UFC.html" target="_blank">Marcus McGhee vs Journey Newson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcghemar01.html" target="_blank">Marcus McGhee</a></td>
 <td>4/29/2023</td>

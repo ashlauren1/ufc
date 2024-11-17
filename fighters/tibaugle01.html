@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0011FNI.html" target="_blank">UFC Fight Night: Stout vs Fisher</a></td>
+<td style="text-align:left"><a href="/ufc/events/0011FNI.html" target="_blank">Fight Night: Stout vs Fisher</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0735UFC.html" target="_blank">Jeff Cox vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/coxjeff01.html" target="_blank">Jeff Cox</a></td>
 <td>6/12/2007</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0018FNI.html" target="_blank">UFC Fight Night: Lauzon vs Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0018FNI.html" target="_blank">Fight Night: Lauzon vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1065UFC.html" target="_blank">Rich Clementi vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/clemeric01.html" target="_blank">Rich Clementi</a></td>
 <td>2/7/2009</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">Fight Night: Condit vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1092UFC.html" target="_blank">Jeremy Stephens vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
 <td>4/1/2009</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">The Ultimate Fighter: Team US vs Team UK Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0009TUF.html" target="_blank">TUF 9 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1139UFC.html" target="_blank">Melvin Guillard vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/guillmel01.html" target="_blank">Melvin Guillard</a></td>
 <td>6/20/2009</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">UFC Fight Night: Florian vs Gomi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">Fight Night: Florian vs Gomi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1323UFC.html" target="_blank">Gleison Tibau vs Caol Uno</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/unocaol01.html" target="_blank">Caol Uno</a></td>
 <td>3/31/2010</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025FNI.html" target="_blank">UFC Fight Night: Marquardt vs Palhares</a></td>
+<td style="text-align:left"><a href="/ufc/events/0025FNI.html" target="_blank">Fight Night: Marquardt vs Palhares</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1423UFC.html" target="_blank">Jim Miller vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millejim01.html" target="_blank">Jim Miller</a></td>
 <td>9/15/2010</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX 8: Belfort vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2281UFC.html" target="_blank">John Cholish vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cholijoh01.html" target="_blank">John Cholish</a></td>
 <td>5/18/2013</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0083FNI.html" target="_blank">UFC Fight Night: Cerrone vs Miller</a></td>
+<td style="text-align:left"><a href="/ufc/events/0084FNI.html" target="_blank">Fight Night: Cerrone vs Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2803UFC.html" target="_blank">Pat Healy vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/healypat01.html" target="_blank">Pat Healy</a></td>
 <td>7/16/2014</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">UFC Fight Night: Silva vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0091FNI.html" target="_blank">Fight Night: Silva vs Arlovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2879UFC.html" target="_blank">Piotr Hallmann vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hallmpio01.html" target="_blank">Piotr Hallmann</a></td>
 <td>9/13/2014</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0099FNI.html" target="_blank">UFC Fight Night: McGregor vs Siver</a></td>
+<td style="text-align:left"><a href="/ufc/events/0100FNI.html" target="_blank">Fight Night: McGregor vs Siver</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3038UFC.html" target="_blank">Norman Parke vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/parkenor01.html" target="_blank">Norman Parke</a></td>
 <td>1/18/2015</td>
@@ -1387,7 +1389,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">Fight Night: Belfort vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3406UFC.html" target="_blank">Gleison Tibau vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/trujiabe01.html" target="_blank">Abel Trujillo</a></td>
 <td>11/7/2015</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4457UFC.html" target="_blank">Islam Makhachev vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>1/20/2018</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">UFC Fight Night: Rivera vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">Fight Night: Rivera vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4619UFC.html" target="_blank">Desmond Green vs Gleison Tibau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greendes01.html" target="_blank">Desmond Green</a></td>
 <td>6/1/2018</td>

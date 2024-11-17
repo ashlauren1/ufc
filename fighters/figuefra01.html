@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5902UFC.html" target="_blank">Francisco Figueiredo vs Jerome Rivera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riverjer01.html" target="_blank">Jerome Rivera</a></td>
 <td>1/20/2021</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6160UFC.html" target="_blank">Francisco Figueiredo vs Malcolm Gordon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gordomal01.html" target="_blank">Malcolm Gordon</a></td>
 <td>7/17/2021</td>
@@ -398,9 +400,9 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">UFC Fight Night: Font vs. Vera</a></td>
-<td style="text-align:left"><a href="/ufc/fights/6557UFC.html" target="_blank">Francisco Figueiredo vs Daniel Da Silva</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/silvadan02.html" target="_blank">Daniel Da Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">Fight Night: Font vs Vera</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6557UFC.html" target="_blank">Francisco Figueiredo vs Daniel Lacerda</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/lacerdan01.html" target="_blank">Daniel Lacerda</a></td>
 <td>4/30/2022</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Flyweight</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6741UFC.html" target="_blank">Amir Albazi vs Francisco Figueiredo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/albazami01.html" target="_blank">Amir Albazi</a></td>
 <td>8/20/2022</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">Fight Night: Marreta vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4770UFC.html" target="_blank">Gillian Robertson vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/robergil01.html" target="_blank">Gillian Robertson</a></td>
 <td>9/22/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0234FNI.html" target="_blank">UFC Fight Night: Lee vs. Oliveira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">Fight Night: Lee vs Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5518UFC.html" target="_blank">Maryna Moroz vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morozmar01.html" target="_blank">Maryna Moroz</a></td>
 <td>3/14/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0250FNI.html" target="_blank">UFC Fight Night: Covington vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">Fight Night: Covington vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5736UFC.html" target="_blank">Mara Romero Borella vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/borelmar01.html" target="_blank">Mara Romero Borella</a></td>
 <td>9/19/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264FNI.html" target="_blank">UFC Fight Night: Rozenstruik vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">Fight Night: Rozenstruik vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5953UFC.html" target="_blank">Montana De La Rosa vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rosamon01.html" target="_blank">Montana De La Rosa</a></td>
 <td>2/27/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0284FNI.html" target="_blank">UFC Fight Night: Ladd vs. Dumont</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285FNI.html" target="_blank">Fight Night: Ladd vs Dumont</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6280UFC.html" target="_blank">Manon Fiorot vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fioroman01.html" target="_blank">Manon Fiorot</a></td>
 <td>10/16/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297FNI.html" target="_blank">UFC Fight Night: Luque vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">Fight Night: Luque vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6528UFC.html" target="_blank">Mayra Bueno Silva vs Wu Yanan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yananwu01.html" target="_blank">Wu Yanan</a></td>
 <td>4/16/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">UFC Fight Night: Santos vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">Fight Night: Santos vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6718UFC.html" target="_blank">Stephanie Egger vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eggerste01.html" target="_blank">Stephanie Egger</a></td>
 <td>8/6/2022</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0321FNI.html" target="_blank">UFC Fight Night: Andrade vs. Blanchfield</a></td>
+<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">Fight Night: Andrade vs Blanchfield</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6958UFC.html" target="_blank">Lina Lansberg vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lansblin01.html" target="_blank">Lina Lansberg</a></td>
 <td>2/18/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0334FNI.html" target="_blank">UFC Fight Night: Holm vs. Bueno Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">Fight Night: Holm vs Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7182UFC.html" target="_blank">Holly Holm vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holmhol01.html" target="_blank">Holly Holm</a></td>
 <td>7/15/2023</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs. Du Plessis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7434UFC.html" target="_blank">Raquel Pennington vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penniraq01.html" target="_blank">Raquel Pennington</a></td>
 <td>1/20/2024</td>
@@ -742,7 +744,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs. Prochazka 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs Prochazka 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7686UFC.html" target="_blank">Macy Chiasson vs Mayra Bueno Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiasmac01.html" target="_blank">Macy Chiasson</a></td>
 <td>6/29/2024</td>

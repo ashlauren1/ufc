@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0105FNI.html" target="_blank">UFC Fight Night: Gonzaga vs Cro Cop 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">Fight Night: Gonzaga vs Cro Cop 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3146UFC.html" target="_blank">Marcin Bandel vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bandemar01.html" target="_blank">Marcin Bandel</a></td>
 <td>4/11/2015</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">UFC Fight Night: Bisping vs Leites</a></td>
+<td style="text-align:left"><a href="/ufc/events/0115FNI.html" target="_blank">Fight Night: Bisping vs Leites</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3300UFC.html" target="_blank">Leonardo Mafra vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mafraleo01.html" target="_blank">Leonardo Mafra</a></td>
 <td>7/18/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">Fight Night: Holohan vs Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3394UFC.html" target="_blank">Mickael Lebout vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leboumic01.html" target="_blank">Mickael Lebout</a></td>
 <td>10/24/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3832UFC.html" target="_blank">Alan Patrick vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/patriala01.html" target="_blank">Alan Patrick</a></td>
 <td>9/24/2016</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">UFC Fight Night: Mousasi vs. Hall 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">Fight Night: Mousasi vs Hall 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3895UFC.html" target="_blank">Ross Pearson vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>11/19/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4100UFC.html" target="_blank">Joe Lauzon vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lauzojoe01.html" target="_blank">Joe Lauzon</a></td>
 <td>4/22/2017</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0164FNI.html" target="_blank">Fight Night: Nelson vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4205UFC.html" target="_blank">Paul Felder vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/feldepau01.html" target="_blank">Paul Felder</a></td>
 <td>7/16/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC Fight Night: Werdum vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">Fight Night: Werdum vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4536UFC.html" target="_blank">Kajan Johnson vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnskaj01.html" target="_blank">Kajan Johnson</a></td>
 <td>3/17/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">UFC Fight Night: Oezdemir vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">Fight Night: Oezdemir vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4798UFC.html" target="_blank">Jessin Ayari vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ayarijes01.html" target="_blank">Jessin Ayari</a></td>
 <td>10/27/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213FNI.html" target="_blank">Fight Night: Gustafsson vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5114UFC.html" target="_blank">Stevie Ray vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoleo01.html" target="_blank">Leonardo Santos</a></td>
 <td>6/1/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225FNI.html" target="_blank">UFC Fight Night: Maia vs. Askren</a></td>
+<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">Fight Night: Maia vs Askren</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5346UFC.html" target="_blank">Michael Johnson vs Stevie Ray</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsmic01.html" target="_blank">Michael Johnson</a></td>
 <td>10/26/2019</td>

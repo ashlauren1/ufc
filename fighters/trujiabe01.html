@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox: Henderson vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox 5: Henderson vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2111UFC.html" target="_blank">Marcus LeVesseur vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/levesmar01.html" target="_blank">Marcus LeVesseur</a></td>
 <td>12/8/2012</td>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">Fight Night: Condit vs Kampmann 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2381UFC.html" target="_blank">Roger Bowling vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bowlirog01.html" target="_blank">Roger Bowling</a></td>
 <td>8/28/2013</td>
@@ -441,7 +443,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox: Johnson vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0067FNI.html" target="_blank">UFC on Fox 9: Johnson vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2520UFC.html" target="_blank">Roger Bowling vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bowlirog01.html" target="_blank">Roger Bowling</a></td>
 <td>12/14/2013</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">Fight Night: Belfort vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3406UFC.html" target="_blank">Gleison Tibau vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tibaugle01.html" target="_blank">Gleison Tibau</a></td>
 <td>11/7/2015</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">UFC Fight Night: Almeida vs Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">Fight Night: Almeida vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3654UFC.html" target="_blank">Jordan Rinaldi vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rinaljor01.html" target="_blank">Jordan Rinaldi</a></td>
 <td>5/29/2016</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC Fight Night: Bermudez vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">Fight Night: Bermudez vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4005UFC.html" target="_blank">Abel Trujillo vs James Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vickjam01.html" target="_blank">James Vick</a></td>
 <td>2/4/2017</td>
@@ -742,7 +744,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC on Fox 26: Lawler vs dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4423UFC.html" target="_blank">John Makdessi vs Abel Trujillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makdejoh01.html" target="_blank">John Makdessi</a></td>
 <td>12/16/2017</td>

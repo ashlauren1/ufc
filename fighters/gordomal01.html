@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">UFC Fight Night: Figueiredo vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">Fight Night: Figueiredo vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5641UFC.html" target="_blank">Amir Albazi vs Malcolm Gordon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/albazami01.html" target="_blank">Amir Albazi</a></td>
 <td>7/18/2020</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257FNI.html" target="_blank">UFC Fight Night: Smith vs. Clark</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258FNI.html" target="_blank">Fight Night: Smith vs Clark</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5846UFC.html" target="_blank">Malcolm Gordon vs Su Mudaerji</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mudaesu01.html" target="_blank">Su Mudaerji</a></td>
 <td>11/28/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6160UFC.html" target="_blank">Francisco Figueiredo vs Malcolm Gordon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/figuefra01.html" target="_blank">Francisco Figueiredo</a></td>
 <td>7/17/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">Fight Night: Hermansson vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6424UFC.html" target="_blank">Denys Bondar vs Malcolm Gordon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bondaden01.html" target="_blank">Denys Bondar</a></td>
 <td>2/5/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6814UFC.html" target="_blank">Malcolm Gordon vs Muhammad Mokaev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mokaemuh01.html" target="_blank">Muhammad Mokaev</a></td>
 <td>10/22/2022</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0288PPV.html" target="_blank">UFC 286: Edwards vs. Usman 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0288PPV.html" target="_blank">UFC 286: Edwards vs Usman 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7011UFC.html" target="_blank">Malcolm Gordon vs Jake Hadley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hadlejak01.html" target="_blank">Jake Hadley</a></td>
 <td>3/18/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs. Du Plessis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299PPV.html" target="_blank">UFC 297: Strickland vs Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7444UFC.html" target="_blank">Jimmy Flick vs Malcolm Gordon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/flickjim01.html" target="_blank">Jimmy Flick</a></td>
 <td>1/20/2024</td>

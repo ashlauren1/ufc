@@ -13,11 +13,13 @@
 
         let fighterLinks = {};
         let eventLinks = {};
+        let fightLinks = {};
 
         // Load JSON files
         async function loadLinks() {
             fighterLinks = await fetch('fighters.json').then(response => response.json());
             eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
         }
 
         await loadLinks();
@@ -29,7 +31,7 @@
 
             if (query === "") return;
 
-            const combinedLinks = { ...fighterLinks, ...eventLinks };
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
             const matchingEntries = Object.entries(combinedLinks)
                 .filter(([name]) => name.includes(query))
                 .slice(0, 5); // Limit to top 5
@@ -73,21 +75,21 @@
 </head>
 <body>
     <div class="topnav">
-        <a href="/ufc/">Projections</a>
+        <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fight Results</a>
+        <a href="/ufc/fights/">Fights and Results</a>
         <a href="/ufc/stats/">Stats</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
     </div>
     <div id="search-container">
-        <input type="text" id="search-bar" placeholder="Search for a fighter or event...">
+        <input type="text" id="search-bar" placeholder="Search for events, fights, or fighters...">
         <button id="search-button">Search</button>
         <div id="search-results"></div>
     </div>
     <div class="header">
         <h1>Wang Cong vs Victoria Leonardo</h1>
-        <h2>UFC Fight Night: Cannonier vs. Borralho - 8/24/2024</h2>
+        <h2>Fight Night: Cannonier vs Borralho - 8/24/2024</h2>
         <h2>Las Vegas, Nevada, USA</h2>
     </div>
     <button class="arrowUp" onclick="window.scrollTo({top: 0})">Top</button>
@@ -140,6 +142,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -182,6 +185,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>18.0</td>
                 <td>1</td>
                 <td>9</td>
                 <td>88.89%</td>
@@ -219,6 +223,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>118.0 (18.0 pts + 100.0 pts for winning)</td>
                 <td>1</td>
                 <td>9</td>
                 <td>88.89%</td>
@@ -271,6 +276,7 @@
                 <th>TD Acc.</th>
                 <th>Sub. Att.</th>
                 <th>Reversal</th>
+                <th>Fantasy Score</th>
                 <th>Sig. Str. Agst</th>
                 <th>Sig. Str. Att. Agst</th>
                 <th>Sig. Str. Def</th>
@@ -313,6 +319,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>0.6</td>
                 <td>10</td>
                 <td>26</td>
                 <td>61.54%</td>
@@ -350,6 +357,7 @@
                 <td>0.00%</td>
                 <td>0</td>
                 <td>0</td>
+                <td>0.6 (0.6 pts + 0.0 pts for winning)</td>
                 <td>10</td>
                 <td>26</td>
                 <td>61.54%</td>

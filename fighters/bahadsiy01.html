@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0038FNI.html" target="_blank">UFC on FUEL TV: Gustafsson vs Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0038FNI.html" target="_blank">UFC on Fuel TV 2: Gustafsson vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1881UFC.html" target="_blank">Siyar Bahadurzada vs Paulo Thiago</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thiagpau01.html" target="_blank">Paulo Thiago</a></td>
 <td>4/14/2012</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on FUEL TV: Japan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on Fuel TV 8: Silva vs Stann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2209UFC.html" target="_blank">Siyar Bahadurzada vs Dong Hyun Kim</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kimdon01.html" target="_blank">Dong Hyun Kim</a></td>
 <td>3/2/2013</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">UFC Fight Night: Volkov vs. Struve</a></td>
+<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">Fight Night: Volkov vs Struve</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4253UFC.html" target="_blank">Siyar Bahadurzada vs Rob Wilkinson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wilkirob01.html" target="_blank">Rob Wilkinson</a></td>
 <td>9/2/2017</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4570UFC.html" target="_blank">Siyar Bahadurzada vs Luan Chagas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chagalua01.html" target="_blank">Luan Chagas</a></td>
 <td>4/21/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs Gustafsson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4908UFC.html" target="_blank">Siyar Bahadurzada vs Curtis Millender</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millecur01.html" target="_blank">Curtis Millender</a></td>
 <td>12/29/2018</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5297UFC.html" target="_blank">Siyar Bahadurzada vs Ismail Naurdiev</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/naurdism01.html" target="_blank">Ismail Naurdiev</a></td>
 <td>9/28/2019</td>

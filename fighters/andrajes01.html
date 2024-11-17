@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2337UFC.html" target="_blank">Jessica Andrade vs Liz Carmouche</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carmoliz01.html" target="_blank">Liz Carmouche</a></td>
 <td>7/27/2013</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">UFC Fight Night: Machida vs Munoz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">Fight Night: Machida vs Munoz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2450UFC.html" target="_blank">Jessica Andrade vs Rosi Sexton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sextoros01.html" target="_blank">Rosi Sexton</a></td>
 <td>10/26/2013</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">UFC Fight Night: Silva vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0091FNI.html" target="_blank">Fight Night: Silva vs Arlovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2883UFC.html" target="_blank">Jessica Andrade vs Larissa Pacheco</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pachelar01.html" target="_blank">Larissa Pacheco</a></td>
 <td>9/13/2014</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">UFC Fight Night: Bigfoot vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">Fight Night: Bigfoot vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3086UFC.html" target="_blank">Jessica Andrade vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reneamar01.html" target="_blank">Marion Reneau</a></td>
 <td>2/22/2015</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0113FNI.html" target="_blank">UFC Fight Night: Mir vs Duffee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">Fight Night: Mir vs Duffee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3290UFC.html" target="_blank">Jessica Andrade vs Sarah Moras</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morassar01.html" target="_blank">Sarah Moras</a></td>
 <td>7/15/2015</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3666UFC.html" target="_blank">Jessica Andrade vs Jessica Penne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pennejes01.html" target="_blank">Jessica Penne</a></td>
 <td>6/4/2016</td>
@@ -656,9 +658,9 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
-<td style="text-align:left"><a href="/ufc/fights/3804UFC.html" target="_blank">Jessica Andrade vs Joanne Calderwood</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/caldejoa01.html" target="_blank">Joanne Calderwood</a></td>
+<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/fights/3804UFC.html" target="_blank">Jessica Andrade vs Joanne Wood</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/woodjoa01.html" target="_blank">Joanne Wood</a></td>
 <td>9/10/2016</td>
 <td>Cleveland, Ohio, USA</td>
 <td>Women's Strawweight</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC Fight Night: Bermudez vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">Fight Night: Bermudez vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4008UFC.html" target="_blank">Jessica Andrade vs Angela Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>2/4/2017</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4110UFC.html" target="_blank">Jessica Andrade vs Joanna Jedrzejczyk</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jedrzjoa01.html" target="_blank">Joanna Jedrzejczyk</a></td>
 <td>5/13/2017</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">UFC Fight Night: Saint Preux vs. Okami</a></td>
+<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">Fight Night: Saint Preux vs Okami</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4286UFC.html" target="_blank">Jessica Andrade vs Claudia Gadelha</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gadelcla01.html" target="_blank">Claudia Gadelha</a></td>
 <td>9/22/2017</td>
@@ -828,9 +830,9 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
-<td style="text-align:left"><a href="/ufc/fights/4506UFC.html" target="_blank">Jessica Andrade vs Tecia Torres</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/torretec01.html" target="_blank">Tecia Torres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4506UFC.html" target="_blank">Jessica Andrade vs Tecia Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/pennitec01.html" target="_blank">Tecia Pennington</a></td>
 <td>2/24/2018</td>
 <td>Orlando, Florida, USA</td>
 <td>Women's Strawweight</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4736UFC.html" target="_blank">Jessica Andrade vs Karolina Kowalkiewicz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kowalkar01.html" target="_blank">Karolina Kowalkiewicz</a></td>
 <td>9/8/2018</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5083UFC.html" target="_blank">Jessica Andrade vs Rose Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
 <td>5/11/2019</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">UFC Fight Night: Andrade vs. Zhang</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">Fight Night: Andrade vs Zhang</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5241UFC.html" target="_blank">Jessica Andrade vs Zhang Weili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zhangwei01.html" target="_blank">Zhang Weili</a></td>
 <td>8/31/2019</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5611UFC.html" target="_blank">Jessica Andrade vs Rose Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
 <td>7/11/2020</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">UFC Fight Night: Ortega vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0254FNI.html" target="_blank">Fight Night: Ortega vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5778UFC.html" target="_blank">Jessica Andrade vs Katlyn Chookagian</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chookkat01.html" target="_blank">Katlyn Chookagian</a></td>
 <td>10/17/2020</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0263PPV.html" target="_blank">UFC 261: Usman vs. Masvidal 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263PPV.html" target="_blank">UFC 261: Usman vs Masvidal 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6033UFC.html" target="_blank">Jessica Andrade vs Valentina Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shevcval01.html" target="_blank">Valentina Shevchenko</a></td>
 <td>4/24/2021</td>
@@ -1129,7 +1131,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6247UFC.html" target="_blank">Jessica Andrade vs Cynthia Calvillo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/calvicyn01.html" target="_blank">Cynthia Calvillo</a></td>
 <td>9/25/2021</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">UFC Fight Night: Lemos vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">Fight Night: Lemos vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6539UFC.html" target="_blank">Jessica Andrade vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lemosama01.html" target="_blank">Amanda Lemos</a></td>
 <td>4/23/2022</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6916UFC.html" target="_blank">Jessica Andrade vs Lauren Murphy</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/murphlau01.html" target="_blank">Lauren Murphy</a></td>
 <td>1/21/2023</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0321FNI.html" target="_blank">UFC Fight Night: Andrade vs. Blanchfield</a></td>
+<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">Fight Night: Andrade vs Blanchfield</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6952UFC.html" target="_blank">Jessica Andrade vs Erin Blanchfield</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blanceri01.html" target="_blank">Erin Blanchfield</a></td>
 <td>2/18/2023</td>
@@ -1301,7 +1303,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7075UFC.html" target="_blank">Jessica Andrade vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/xiaonyan01.html" target="_blank">Yan Xiaonan</a></td>
 <td>5/6/2023</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Font</a></td>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">Fight Night: Sandhagen vs Font</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7222UFC.html" target="_blank">Jessica Andrade vs Tatiana Suarez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/suaretat01.html" target="_blank">Tatiana Suarez</a></td>
 <td>8/5/2023</td>
@@ -1387,7 +1389,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7362UFC.html" target="_blank">Jessica Andrade vs Mackenzie Dern</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dernmac01.html" target="_blank">Mackenzie Dern</a></td>
 <td>11/11/2023</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7582UFC.html" target="_blank">Jessica Andrade vs Marina Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
 <td>4/13/2024</td>
@@ -1473,7 +1475,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0368FNI.html" target="_blank">UFC Fight Night: Burns vs. Brady</a></td>
+<td style="text-align:left"><a href="/ufc/events/0369FNI.html" target="_blank">Fight Night: Burns vs Brady</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7780UFC.html" target="_blank">Jessica Andrade vs Natalia Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvanat01.html" target="_blank">Natalia Silva</a></td>
 <td>9/7/2024</td>

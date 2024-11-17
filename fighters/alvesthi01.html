@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002FNI.html" target="_blank">UFC Fight Night 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002FNI.html" target="_blank">Fight Night 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0482UFC.html" target="_blank">Thiago Alves vs Spencer Fisher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fishespe01.html" target="_blank">Spencer Fisher</a></td>
 <td>10/3/2005</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0005FNI.html" target="_blank">UFC Fight Night 5</a></td>
+<td style="text-align:left"><a href="/ufc/events/0005FNI.html" target="_blank">Fight Night 5</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0575UFC.html" target="_blank">Thiago Alves vs Jon Fitch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fitchjon01.html" target="_blank">Jon Fitch</a></td>
 <td>6/28/2006</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0007FNI.html" target="_blank">Ortiz vs Shamrock 3: The Final Chapter</a></td>
+<td style="text-align:left"><a href="/ufc/events/0007FNI.html" target="_blank">Fight Night: Ortiz vs Shamrock 3: The Final Chapter</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0621UFC.html" target="_blank">John Alessio vs Thiago Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alessjoh01.html" target="_blank">John Alessio</a></td>
 <td>10/10/2006</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">UFC Fight Night: Thomas vs Florian</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">Fight Night: Thomas vs Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0789UFC.html" target="_blank">Thiago Alves vs Kuniyoshi Hironaka</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hironkun01.html" target="_blank">Kuniyoshi Hironaka</a></td>
 <td>9/19/2007</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">UFC Fight Night: Florian vs Lauzon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">Fight Night: Florian vs Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0876UFC.html" target="_blank">Thiago Alves vs Karo Parisyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pariskar01.html" target="_blank">Karo Parisyan</a></td>
 <td>4/2/2008</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0037FNI.html" target="_blank">UFC on FX: Alves vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0037FNI.html" target="_blank">UFC on FX 2: Alves vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1868UFC.html" target="_blank">Thiago Alves vs Martin Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kampmmar01.html" target="_blank">Martin Kampmann</a></td>
 <td>3/2/2012</td>
@@ -1043,7 +1045,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox 11: Werdum vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2668UFC.html" target="_blank">Thiago Alves vs Seth Baczynski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baczyset01.html" target="_blank">Seth Baczynski</a></td>
 <td>4/19/2014</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3206UFC.html" target="_blank">Thiago Alves vs Carlos Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/condicar01.html" target="_blank">Carlos Condit</a></td>
 <td>5/30/2015</td>
@@ -1215,7 +1217,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs. Johnson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0213PPV.html" target="_blank">UFC 210: Cormier vs Johnson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4073UFC.html" target="_blank">Thiago Alves vs Patrick Cote</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cotepat01.html" target="_blank">Patrick Cote</a></td>
 <td>4/8/2017</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0179FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Medeiros</a></td>
+<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">Fight Night: Cerrone vs Medeiros</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4496UFC.html" target="_blank">Thiago Alves vs Curtis Millender</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/millecur01.html" target="_blank">Curtis Millender</a></td>
 <td>2/18/2018</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">UFC Fight Night: Hunt vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">Fight Night: Hunt vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4751UFC.html" target="_blank">Thiago Alves vs Aleksei Kunchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kunchale01.html" target="_blank">Aleksei Kunchenko</a></td>
 <td>9/15/2018</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4931UFC.html" target="_blank">Thiago Alves vs Max Griffin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/griffmax01.html" target="_blank">Max Griffin</a></td>
 <td>2/2/2019</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5086UFC.html" target="_blank">Thiago Alves vs Laureano Staropoli</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/starolau01.html" target="_blank">Laureano Staropoli</a></td>
 <td>5/11/2019</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">UFC Fight Night: Overeem vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">Fight Night: Overeem vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5394UFC.html" target="_blank">Thiago Alves vs Tim Means</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meanstim01.html" target="_blank">Tim Means</a></td>
 <td>12/7/2019</td>

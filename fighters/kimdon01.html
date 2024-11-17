@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0047FNI.html" target="_blank">UFC Macao: Franklin vs Le</a></td>
+<td style="text-align:left"><a href="/ufc/events/0047FNI.html" target="_blank">UFC on Fuel TV 6: Franklin vs Le</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2084UFC.html" target="_blank">Dong Hyun Kim vs Paulo Thiago</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thiagpau01.html" target="_blank">Paulo Thiago</a></td>
 <td>11/10/2012</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on FUEL TV: Japan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0053FNI.html" target="_blank">UFC on Fuel TV 8: Silva vs Stann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2209UFC.html" target="_blank">Siyar Bahadurzada vs Dong Hyun Kim</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bahadsiy01.html" target="_blank">Siyar Bahadurzada</a></td>
 <td>3/2/2013</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0062FNI.html" target="_blank">UFC Fight Night: Maia vs Shields</a></td>
+<td style="text-align:left"><a href="/ufc/events/0062FNI.html" target="_blank">Fight Night: Maia vs Shields</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2420UFC.html" target="_blank">Dong Hyun Kim vs Erick Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvaeri01.html" target="_blank">Erick Silva</a></td>
 <td>10/9/2013</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0072FNI.html" target="_blank">UFC Fight Night: Kim vs Hathaway</a></td>
+<td style="text-align:left"><a href="/ufc/events/0072FNI.html" target="_blank">Fight Night: Kim vs Hathaway</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2601UFC.html" target="_blank">John Hathaway vs Dong Hyun Kim</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hathajoh01.html" target="_blank">John Hathaway</a></td>
 <td>3/1/2014</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">UFC Fight Night: Bisping vs Le</a></td>
+<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">Fight Night: Bisping vs Le</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2851UFC.html" target="_blank">Dong Hyun Kim vs Tyron Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodltyr01.html" target="_blank">Tyron Woodley</a></td>
 <td>8/23/2014</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">UFC Fight Night: Henderson vs Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">Fight Night: Henderson vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3440UFC.html" target="_blank">Dong Hyun Kim vs Dominic Waters</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/waterdom01.html" target="_blank">Dominic Waters</a></td>
 <td>11/28/2015</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210PPV.html" target="_blank">UFC 207: Nunes vs. Rousey</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210PPV.html" target="_blank">UFC 207: Nunes vs Rousey</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3972UFC.html" target="_blank">Dong Hyun Kim vs Tarec Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/saffitar01.html" target="_blank">Tarec Saffiedine</a></td>
 <td>12/30/2016</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">UFC Fight Night: Holm vs. Correia</a></td>
+<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">Fight Night: Holm vs Correia</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4158UFC.html" target="_blank">Colby Covington vs Dong Hyun Kim</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/covincol01.html" target="_blank">Colby Covington</a></td>
 <td>6/17/2017</td>

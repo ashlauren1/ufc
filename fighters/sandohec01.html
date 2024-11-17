@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs. Woodley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204PPV.html" target="_blank">UFC 201: Lawler vs Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3752UFC.html" target="_blank">Wilson Reis vs Hector Sandoval</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reiswil01.html" target="_blank">Wilson Reis</a></td>
 <td>7/30/2016</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC on Fox 22: VanZant vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3967UFC.html" target="_blank">Hector Sandoval vs Fredy Serrano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/serrafre01.html" target="_blank">Fredy Serrano</a></td>
 <td>12/17/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4108UFC.html" target="_blank">Hector Sandoval vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/schnemat01.html" target="_blank">Matt Schnell</a></td>
 <td>4/22/2017</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC Fight Night: Pettis vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">Fight Night: Pettis vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4247UFC.html" target="_blank">Dustin Ortiz vs Hector Sandoval</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortizdus01.html" target="_blank">Dustin Ortiz</a></td>
 <td>8/5/2017</td>

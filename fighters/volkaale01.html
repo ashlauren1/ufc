@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Brunson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0149FNI.html" target="_blank">Fight Night: Whittaker vs Brunson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3910UFC.html" target="_blank">Yusuke Kasuya vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kasuyyus01.html" target="_blank">Yusuke Kasuya</a></td>
 <td>11/26/2016</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">UFC Fight Night: Lewis vs. Hunt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0161FNI.html" target="_blank">Fight Night: Lewis vs Hunt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4149UFC.html" target="_blank">Mizuto Hirota vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hirotmiz01.html" target="_blank">Mizuto Hirota</a></td>
 <td>6/10/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">Fight Night: Werdum vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4358UFC.html" target="_blank">Alexander Volkanovski vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/youngsha01.html" target="_blank">Shane Young</a></td>
 <td>11/18/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224PPV.html" target="_blank">UFC 221: Romero vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4488UFC.html" target="_blank">Jeremy Kennedy vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kennejer01.html" target="_blank">Jeremy Kennedy</a></td>
 <td>2/10/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Ivanov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">Fight Night: Dos Santos vs Ivanov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4678UFC.html" target="_blank">Darren Elkins vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/elkindar01.html" target="_blank">Darren Elkins</a></td>
 <td>7/14/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs Gustafsson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4901UFC.html" target="_blank">Chad Mendes vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mendecha01.html" target="_blank">Chad Mendes</a></td>
 <td>12/29/2018</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5085UFC.html" target="_blank">Jose Aldo vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldojos01.html" target="_blank">Jose Aldo</a></td>
 <td>5/11/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5401UFC.html" target="_blank">Max Holloway vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>12/14/2019</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5609UFC.html" target="_blank">Max Holloway vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>7/11/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6243UFC.html" target="_blank">Brian Ortega vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortegbri01.html" target="_blank">Brian Ortega</a></td>
 <td>9/25/2021</td>
@@ -742,7 +744,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275PPV.html" target="_blank">UFC 273: Volkanovski vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6513UFC.html" target="_blank">Chan Sung Jung vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jungcha01.html" target="_blank">Chan Sung Jung</a></td>
 <td>4/9/2022</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6648UFC.html" target="_blank">Max Holloway vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>7/2/2022</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0286PPV.html" target="_blank">UFC 284: Makhachev vs. Volkanovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286PPV.html" target="_blank">UFC 284: Makhachev vs Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6939UFC.html" target="_blank">Islam Makhachev vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>2/11/2023</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7169UFC.html" target="_blank">Yair Rodriguez vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodriyai01.html" target="_blank">Yair Rodriguez</a></td>
 <td>7/8/2023</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0296PPV.html" target="_blank">UFC 294: Makhachev vs. Volkanovski 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0296PPV.html" target="_blank">UFC 294: Makhachev vs Volkanovski 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7337UFC.html" target="_blank">Islam Makhachev vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makhaisl01.html" target="_blank">Islam Makhachev</a></td>
 <td>10/21/2023</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7472UFC.html" target="_blank">Ilia Topuria vs Alexander Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/topurili01.html" target="_blank">Ilia Topuria</a></td>
 <td>2/17/2024</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0005TUF.html" target="_blank">The Ultimate Fighter 5 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0005TUF.html" target="_blank">TUF 5 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0751UFC.html" target="_blank">Cole Miller vs Andy Wang</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wangandy01.html" target="_blank">Andy Wang</a></td>
 <td>6/23/2007</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">UFC Fight Night: Thomas vs Florian</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">Fight Night: Thomas vs Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0787UFC.html" target="_blank">Leonard Garcia vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garcileo01.html" target="_blank">Leonard Garcia</a></td>
 <td>9/19/2007</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0013FNI.html" target="_blank">UFC Fight Night: Swick vs Burkman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0013FNI.html" target="_blank">Fight Night: Swick vs Burkman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0852UFC.html" target="_blank">Cole Miller vs Jeremy Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
 <td>1/23/2008</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">Fight Night: Condit vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1091UFC.html" target="_blank">Junie Browning vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownjun01.html" target="_blank">Junie Browning</a></td>
 <td>4/1/2009</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0025FNI.html" target="_blank">UFC Fight Night: Marquardt vs Palhares</a></td>
+<td style="text-align:left"><a href="/ufc/events/0025FNI.html" target="_blank">Fight Night: Marquardt vs Palhares</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1424UFC.html" target="_blank">Cole Miller vs Ross Pearson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>9/15/2010</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">UFC Fight Night: Fight for the Troops 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0026FNI.html" target="_blank">Fight Night: Fight for the Troops 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1521UFC.html" target="_blank">Cole Miller vs Matt Wiman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wimanmat01.html" target="_blank">Matt Wiman</a></td>
 <td>1/22/2011</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0030FNI.html" target="_blank">UFC LIVE 5: Hardy vs Lytle</a></td>
+<td style="text-align:left"><a href="/ufc/events/0030FNI.html" target="_blank">UFC on Versus 5: Hardy vs Lytle</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1673UFC.html" target="_blank">Cole Miller vs TJ O'Brien</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/obrietj01.html" target="_blank">TJ O'Brien</a></td>
 <td>8/14/2011</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0037FNI.html" target="_blank">UFC on FX: Alves vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0037FNI.html" target="_blank">UFC on FX 2: Alves vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1874UFC.html" target="_blank">Cole Miller vs Steven Siler</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silerste01.html" target="_blank">Steven Siler</a></td>
 <td>3/2/2012</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0044FNI.html" target="_blank">UFC on FOX: Shogun vs Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0044FNI.html" target="_blank">UFC on Fox 4: Shogun vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2020UFC.html" target="_blank">Cole Miller vs Nam Phan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/phannam01.html" target="_blank">Nam Phan</a></td>
 <td>8/4/2012</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">The Ultimate Fighter 17 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0017TUF.html" target="_blank">TUF 17 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2248UFC.html" target="_blank">Cole Miller vs Bart Palaszewski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/palasbar01.html" target="_blank">Bart Palaszewski</a></td>
 <td>4/13/2013</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2368UFC.html" target="_blank">Manvel Gamburyan vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gambuman01.html" target="_blank">Manvel Gamburyan</a></td>
 <td>8/17/2013</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">UFC Fight Night: Machida vs Munoz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0063FNI.html" target="_blank">Fight Night: Machida vs Munoz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2451UFC.html" target="_blank">Cole Miller vs Andy Ogle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ogleand01.html" target="_blank">Andy Ogle</a></td>
 <td>10/26/2013</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">UFC Fight Night: Rockhold vs Philippou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">Fight Night: Rockhold vs Philippou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2548UFC.html" target="_blank">Cole Miller vs Sam Sicilia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sicilsam01.html" target="_blank">Sam Sicilia</a></td>
 <td>1/15/2014</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0101FNI.html" target="_blank">UFC Fight Night: Henderson vs Thatch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">Fight Night: Henderson vs Thatch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3070UFC.html" target="_blank">Max Holloway vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>2/14/2015</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">UFC on FOX: Dos Anjos vs. Cowboy 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC on Fox 17: Dos Anjos vs Cowboy 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3493UFC.html" target="_blank">Jim Alers vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alersjim01.html" target="_blank">Jim Alers</a></td>
 <td>12/19/2015</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs. Bisping 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202PPV.html" target="_blank">UFC 199: Rockhold vs Bisping 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3667UFC.html" target="_blank">Alex Caceres vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cacerale01.html" target="_blank">Alex Caceres</a></td>
 <td>6/4/2016</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0150FNI.html" target="_blank">UFC Fight Night: VanZant vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC on Fox 22: VanZant vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3961UFC.html" target="_blank">Mizuto Hirota vs Cole Miller</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hirotmiz01.html" target="_blank">Mizuto Hirota</a></td>
 <td>12/17/2016</td>

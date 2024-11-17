@@ -19,9 +19,13 @@
 	box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    max-width: 100%;
+}
+
 /* ALL PAGES */
 body {
-	max-width: 100%;
 	font-family: var(--font-family);
 	background-color: var(--background-color);
 	color: var(--text-color);
@@ -178,7 +182,11 @@ a:visited {
 
 
 
-
+.title-fight-icon {
+	font-size: 16px;
+	color: gold;
+	margin-left: 5px;
+}
 	
 
 .arrowUp {
@@ -341,7 +349,6 @@ a:visited {
 #fighter-container, #H2H-container {
 	 width: 100%;
 }
-
 
 
 
@@ -878,39 +885,44 @@ a:visited {
 
 
 /* INDEX TABLES */
+
+
 #index-container {
+	max-width: 95%;
 	width: 95%;
 	margin: 12px auto 24px auto;
-	overflow-x: auto;
+	display: block;
 }
 
 #event-index, #fighter-index, #fight-index {
-	width: 80%;
+	max-width: 100%;
+	width: 100%;
 	border-collapse: collapse;
 	border: .5pt solid #D9D9D9;
 	background-color: #ffffff;
 	margin-left: auto;
 	margin-right:auto;
 	padding-bottom: 28px;
-	word-wrap: break-word;
 	overflow-x: scroll;
+	box-sizing: border-box;
 }
 
 #event-index th, #fighter-index th, #fight-index th {
 	background-color: #f2f2f2;
-	font-weight: 500;
+	font-weight: 600;
 	cursor: pointer;
-	padding: 4px 6px;
+	padding: 4px;
 	text-align: center;
 	border: 1px solid #e0e0e0;
-	font-size: 12px;
+	font-size: 11px;
+	height: 32px;
 }
 	
 #event-index td, #fighter-index td, #fight-index td {
-	padding: 4px 6px;
+	padding: 4px;
 	text-align: center;
 	border: 1px solid #e0e0e0;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 #event-index tbody tr:hover, #fighter-index tbody tr:hover, #fight-index tbody tr:hover {
@@ -924,6 +936,32 @@ a:visited {
 
 #event-index tbody tr.selected-row:hover, #fighter-index tbody tr.selected-row:hover, #fight-index tbody tr.selected-row:hover {
 	background-color: #c4dfe8;
+}
+
+
+#fight-index td:nth-child(1) {
+	max-width: 4%;
+	text-align: left;
+}
+
+
+#fight-index td:nth-child(2), #fight-index td:nth-child(4) {
+	text-align: left;
+	width: 16%;
+}
+
+#fight-index td:nth-child(3) {
+	text-align: left;
+	max-width: 6%;
+}
+
+
+ #fight-index td:nth-child(5) {
+	 width: 4%;
+ }
+ 
+ , #fight-index td:nth-child(6), #fight-index td:nth-child(7), #fight-index td:nth-child(8), #fight-index td:nth-child(9), #fight-index td:nth-child(10), #fight-index td:nth-child(11) {
+	
 }
 
 

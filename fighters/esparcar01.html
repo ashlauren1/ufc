@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">The Ultimate Fighter 20 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020TUF.html" target="_blank">TUF 20 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3001UFC.html" target="_blank">Carla Esparza vs Rose Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
 <td>12/12/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">UFC Fight Night: Lewis vs. Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">Fight Night: Lewis vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4032UFC.html" target="_blank">Carla Esparza vs Randa Markos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/markoran01.html" target="_blank">Randa Markos</a></td>
 <td>2/19/2017</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">Fight Night: Chiesa vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4176UFC.html" target="_blank">Carla Esparza vs Maryna Moroz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morozmar01.html" target="_blank">Maryna Moroz</a></td>
 <td>6/25/2017</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs. Holm</a></td>
+<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4429UFC.html" target="_blank">Cynthia Calvillo vs Carla Esparza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/calvicyn01.html" target="_blank">Cynthia Calvillo</a></td>
 <td>12/30/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs Romero 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4628UFC.html" target="_blank">Carla Esparza vs Claudia Gadelha</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gadelcla01.html" target="_blank">Claudia Gadelha</a></td>
 <td>6/9/2018</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0231PPV.html" target="_blank">UFC 228: Woodley vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4740UFC.html" target="_blank">Carla Esparza vs Tatiana Suarez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/suaretat01.html" target="_blank">Tatiana Suarez</a></td>
 <td>9/8/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">UFC Fight Night: Jacare vs. Hermansson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">Fight Night: Jacare vs Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5066UFC.html" target="_blank">Carla Esparza vs Virna Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jandivir01.html" target="_blank">Virna Jandiroba</a></td>
 <td>4/27/2019</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0221FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">Fight Night: Rodriguez vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5278UFC.html" target="_blank">Carla Esparza vs Alexa Grasso</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grassale01.html" target="_blank">Alexa Grasso</a></td>
 <td>9/21/2019</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0251PPV.html" target="_blank">UFC 249: Ferguson vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251PPV.html" target="_blank">UFC 249: Ferguson vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5528UFC.html" target="_blank">Carla Esparza vs Michelle Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/watermic01.html" target="_blank">Michelle Waterson</a></td>
 <td>5/9/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">Fight Night: Whittaker vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5647UFC.html" target="_blank">Carla Esparza vs Marina Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
 <td>7/25/2020</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271FNI.html" target="_blank">UFC Fight Night: Font vs. Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">Fight Night: Font vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6077UFC.html" target="_blank">Carla Esparza vs Yan Xiaonan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/xiaonyan01.html" target="_blank">Yan Xiaonan</a></td>
 <td>5/22/2021</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6562UFC.html" target="_blank">Carla Esparza vs Rose Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namajros01.html" target="_blank">Rose Namajunas</a></td>
 <td>5/7/2022</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6839UFC.html" target="_blank">Carla Esparza vs Zhang Weili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weilizha01.html" target="_blank">Zhang Weili</a></td>
 <td>11/12/2022</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs Rountree Jr.</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7825UFC.html" target="_blank">Carla Esparza vs Tecia Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pennitec01.html" target="_blank">Tecia Pennington</a></td>
 <td>10/5/2024</td>

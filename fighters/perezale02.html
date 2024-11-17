@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">UFC Fight Night: Magny vs Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">Fight Night: Magny vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3434UFC.html" target="_blank">Scott Jorgensen vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jorgesco01.html" target="_blank">Scott Jorgensen</a></td>
 <td>11/21/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0131FNI.html" target="_blank">UFC Fight Night: Rothwell vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">Fight Night: Rothwell vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3604UFC.html" target="_blank">Ian Entwistle vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/entwiian01.html" target="_blank">Ian Entwistle</a></td>
 <td>4/10/2016</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">UFC Fight Night: Poirier vs. Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">Fight Night: Poirier vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3821UFC.html" target="_blank">Albert Morales vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moralalb01.html" target="_blank">Albert Morales</a></td>
 <td>9/17/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC Fight Night: Pettis vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">Fight Night: Pettis vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4245UFC.html" target="_blank">Alejandro Perez vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/soukhand01.html" target="_blank">Andre Soukhamthath</a></td>
 <td>8/5/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4412UFC.html" target="_blank">Iuri Alcantara vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
 <td>12/9/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">UFC Fight Night: Poirier vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC on Fox 29: Poirier vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4559UFC.html" target="_blank">Matthew Lopez vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lopezmat01.html" target="_blank">Matthew Lopez</a></td>
 <td>4/14/2018</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Ivanov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">Fight Night: Dos Santos vs Ivanov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4677UFC.html" target="_blank">Alejandro Perez vs Eddie Wineland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wineledd01.html" target="_blank">Eddie Wineland</a></td>
 <td>7/14/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0237PPV.html" target="_blank">UFC 235: Jones vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237PPV.html" target="_blank">UFC 235: Jones vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4979UFC.html" target="_blank">Alejandro Perez vs Cody Stamann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stamacod01.html" target="_blank">Cody Stamann</a></td>
 <td>3/2/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0241PPV.html" target="_blank">UFC 239: Jones vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5164UFC.html" target="_blank">Alejandro Perez vs Song Yadong</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yadonson01.html" target="_blank">Song Yadong</a></td>
 <td>7/6/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283FNI.html" target="_blank">Fight Night: Santos vs Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6267UFC.html" target="_blank">Johnny Eduardo vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eduarjoh01.html" target="_blank">Johnny Eduardo</a></td>
 <td>10/2/2021</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Green</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294FNI.html" target="_blank">Fight Night: Makhachev vs Green</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6459UFC.html" target="_blank">Jonathan Martinez vs Alejandro Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martijon01.html" target="_blank">Jonathan Martinez</a></td>
 <td>2/26/2022</td>

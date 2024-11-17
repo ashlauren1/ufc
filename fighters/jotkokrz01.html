@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">UFC Fight Night: Hunt vs Bigfoot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0066FNI.html" target="_blank">Fight Night: Hunt vs Bigfoot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2509UFC.html" target="_blank">Krzysztof Jotko vs Bruno Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santobru01.html" target="_blank">Bruno Santos</a></td>
 <td>12/6/2013</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0079FNI.html" target="_blank">UFC Fight Night: Munoz vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0080FNI.html" target="_blank">Fight Night: Munoz vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2728UFC.html" target="_blank">Magnus Cedenblad vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cedenmag01.html" target="_blank">Magnus Cedenblad</a></td>
 <td>5/31/2014</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0093FNI.html" target="_blank">UFC Fight Night: Nelson vs Story</a></td>
+<td style="text-align:left"><a href="/ufc/events/0094FNI.html" target="_blank">Fight Night: Nelson vs Story</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2932UFC.html" target="_blank">Krzysztof Jotko vs Tor Troeng</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/troentor01.html" target="_blank">Tor Troeng</a></td>
 <td>10/4/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0119FNI.html" target="_blank">UFC Fight Night: Holohan vs Smolka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0120FNI.html" target="_blank">Fight Night: Holohan vs Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3396UFC.html" target="_blank">Scott Askham vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askhasco01.html" target="_blank">Scott Askham</a></td>
 <td>10/24/2015</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">UFC Fight Night: Silva vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">Fight Night: Silva vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3568UFC.html" target="_blank">Krzysztof Jotko vs Bradley Scott</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/scottbra01.html" target="_blank">Bradley Scott</a></td>
 <td>2/27/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0135FNI.html" target="_blank">UFC Fight Night: MacDonald vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">Fight Night: MacDonald vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3679UFC.html" target="_blank">Krzysztof Jotko vs Tamdan McCrory</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mccrotam01.html" target="_blank">Tamdan McCrory</a></td>
 <td>6/18/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">Fight Night: Bader vs Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3885UFC.html" target="_blank">Krzysztof Jotko vs Thales Leites</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leitetha01.html" target="_blank">Thales Leites</a></td>
 <td>11/19/2016</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0214PPV.html" target="_blank">UFC 211: Miocic vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4113UFC.html" target="_blank">David Branch vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brancdav01.html" target="_blank">David Branch</a></td>
 <td>5/13/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">UFC Fight Night: Rockhold vs. Branch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">Fight Night: Rockhold vs Branch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4283UFC.html" target="_blank">Uriah Hall vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/halluri01.html" target="_blank">Uriah Hall</a></td>
 <td>9/16/2017</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">UFC Fight Night: Poirier vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC on Fox 29: Poirier vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4554UFC.html" target="_blank">Krzysztof Jotko vs Brad Tavares</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tavarbra01.html" target="_blank">Brad Tavares</a></td>
 <td>4/14/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">UFC Fight Night: Overeem vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">Fight Night: Overeem vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5051UFC.html" target="_blank">Alen Amedovski vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/amedoale01.html" target="_blank">Alen Amedovski</a></td>
 <td>4/20/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5197UFC.html" target="_blank">Marc-Andre Barriault vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barrimar01.html" target="_blank">Marc-Andre Barriault</a></td>
 <td>7/27/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">UFC Fight Night: Overeem vs. Harris</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">Fight Night: Overeem vs Harris</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5545UFC.html" target="_blank">Eryk Anders vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anderery01.html" target="_blank">Eryk Anders</a></td>
 <td>5/16/2020</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6047UFC.html" target="_blank">Krzysztof Jotko vs Sean Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>5/1/2021</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283FNI.html" target="_blank">Fight Night: Santos vs Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6259UFC.html" target="_blank">Misha Cirkunov vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cirkumis01.html" target="_blank">Misha Cirkunov</a></td>
 <td>10/2/2021</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">UFC Fight Night: Font vs. Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">Fight Night: Font vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6555UFC.html" target="_blank">Krzysztof Jotko vs Gerald Meerschaert</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meersger01.html" target="_blank">Gerald Meerschaert</a></td>
 <td>4/30/2022</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0312FNI.html" target="_blank">UFC Fight Night: Dern vs. Yan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0313FNI.html" target="_blank">Fight Night: Dern vs Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6790UFC.html" target="_blank">Brendan Allen vs Krzysztof Jotko</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allenbre01.html" target="_blank">Brendan Allen</a></td>
 <td>10/1/2022</td>

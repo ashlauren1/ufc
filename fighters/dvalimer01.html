@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4411UFC.html" target="_blank">Merab Dvalishvili vs Frankie Saenz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/saenzfra01.html" target="_blank">Frankie Saenz</a></td>
 <td>12/9/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4569UFC.html" target="_blank">Merab Dvalishvili vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/simonric01.html" target="_blank">Ricky Simon</a></td>
 <td>4/21/2018</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">UFC Fight Night: Hunt vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">Fight Night: Hunt vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4759UFC.html" target="_blank">Merab Dvalishvili vs Terrion Ware</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wareter01.html" target="_blank">Terrion Ware</a></td>
 <td>9/15/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">UFC Fight Night: Iaquinta vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">Fight Night: Iaquinta vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5074UFC.html" target="_blank">Merab Dvalishvili vs Brad Katona</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/katonbra01.html" target="_blank">Brad Katona</a></td>
 <td>5/4/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">UFC Fight Night: Anderson vs. Blachowicz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">Fight Night: Anderson vs Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5471UFC.html" target="_blank">Merab Dvalishvili vs Casey Kenney</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kennecas01.html" target="_blank">Casey Kenney</a></td>
 <td>2/15/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238FNI.html" target="_blank">UFC Fight Night: Eye vs. Calvillo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">Fight Night: Eye vs Calvillo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5582UFC.html" target="_blank">Merab Dvalishvili vs Gustavo Lopez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lopezgus01.html" target="_blank">Gustavo Lopez</a></td>
 <td>6/13/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs. Cormier 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0254PPV.html" target="_blank">UFC 252: Miocic vs Cormier 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5683UFC.html" target="_blank">John Dodson vs Merab Dvalishvili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dodsojoh01.html" target="_blank">John Dodson</a></td>
 <td>8/15/2020</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6048UFC.html" target="_blank">Merab Dvalishvili vs Cody Stamann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stamacod01.html" target="_blank">Cody Stamann</a></td>
 <td>5/1/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6248UFC.html" target="_blank">Merab Dvalishvili vs Marlon Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraemar01.html" target="_blank">Marlon Moraes</a></td>
 <td>9/25/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0280PPV.html" target="_blank">UFC 278: Usman vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6734UFC.html" target="_blank">Jose Aldo vs Merab Dvalishvili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aldojos01.html" target="_blank">Jose Aldo</a></td>
 <td>8/20/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">UFC Fight Night: Yan vs. Dvalishvili</a></td>
+<td style="text-align:left"><a href="/ufc/events/0324FNI.html" target="_blank">Fight Night: Yan vs Dvalishvili</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6987UFC.html" target="_blank">Merab Dvalishvili vs Petr Yan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yanpet01.html" target="_blank">Petr Yan</a></td>
 <td>3/11/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7475UFC.html" target="_blank">Henry Cejudo vs Merab Dvalishvili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cejudhen01.html" target="_blank">Henry Cejudo</a></td>
 <td>2/17/2024</td>

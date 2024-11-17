@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">UFC Fight Night: Diaz vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">Fight Night: Diaz vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1182UFC.html" target="_blank">Mike Pyle vs Chris Wilson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wilsochr01.html" target="_blank">Chris Wilson</a></td>
 <td>9/16/2009</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0041FNI.html" target="_blank">UFC on FX: Johnson vs McCall</a></td>
+<td style="text-align:left"><a href="/ufc/events/0041FNI.html" target="_blank">UFC on FX 3: Johnson vs McCall</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1951UFC.html" target="_blank">Josh Neer vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/neerjosh01.html" target="_blank">Josh Neer</a></td>
 <td>6/8/2012</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0016TUF.html" target="_blank">The Ultimate Fighter 16 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0016TUF.html" target="_blank">TUF 16 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2128UFC.html" target="_blank">James Head vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/headjame01.html" target="_blank">James Head</a></td>
 <td>12/15/2012</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2361UFC.html" target="_blank">Matt Brown vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownmat01.html" target="_blank">Matt Brown</a></td>
 <td>8/17/2013</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">Fight Night: Henderson vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2841UFC.html" target="_blank">Jordan Mein vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/meinjor01.html" target="_blank">Jordan Mein</a></td>
 <td>8/23/2014</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC Fight Night: Hendricks vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">Fight Night: Hendricks vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3540UFC.html" target="_blank">Mike Pyle vs Sean Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spencsea01.html" target="_blank">Sean Spencer</a></td>
 <td>2/6/2016</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Alvarez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0137FNI.html" target="_blank">Fight Night: Dos Anjos vs Alvarez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3689UFC.html" target="_blank">Alberto Mina vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/minaalbe01.html" target="_blank">Alberto Mina</a></td>
 <td>7/7/2016</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210PPV.html" target="_blank">UFC 207: Nunes vs. Rousey</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210PPV.html" target="_blank">UFC 207: Nunes vs Rousey</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3976UFC.html" target="_blank">Alex Garcia vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garciale01.html" target="_blank">Alex Garcia</a></td>
 <td>12/30/2016</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs. Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0225PPV.html" target="_blank">UFC 222: Cyborg vs Kunitskaya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4526UFC.html" target="_blank">Zak Ottow vs Mike Pyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ottowzak01.html" target="_blank">Zak Ottow</a></td>
 <td>3/3/2018</td>

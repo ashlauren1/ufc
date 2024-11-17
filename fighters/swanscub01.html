@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0033FNI.html" target="_blank">UFC on Fox: Velasquez vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0033FNI.html" target="_blank">UFC on Fox 1: Velasquez vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1755UFC.html" target="_blank">Ricardo Lamas vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lamasric01.html" target="_blank">Ricardo Lamas</a></td>
 <td>11/12/2011</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on FOX: Evans vs Davis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0035FNI.html" target="_blank">UFC on Fox 2: Evans vs Davis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1831UFC.html" target="_blank">George Roop vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roopgeo01.html" target="_blank">George Roop</a></td>
 <td>1/28/2012</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0042FNI.html" target="_blank">UFC on FX: Maynard vs Guida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0042FNI.html" target="_blank">UFC on FX 4: Maynard vs Guida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1964UFC.html" target="_blank">Ross Pearson vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearsros01.html" target="_blank">Ross Pearson</a></td>
 <td>6/22/2012</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0052FNI.html" target="_blank">UFC on FUEL TV: Barao vs McDonald</a></td>
+<td style="text-align:left"><a href="/ufc/events/0052FNI.html" target="_blank">UFC on Fuel TV 7: Barao vs McDonald</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2180UFC.html" target="_blank">Dustin Poirier vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/poiridus01.html" target="_blank">Dustin Poirier</a></td>
 <td>2/16/2013</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0081FNI.html" target="_blank">UFC Fight Night: Swanson vs Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0082FNI.html" target="_blank">Fight Night: Swanson vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2755UFC.html" target="_blank">Jeremy Stephens vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stephjer01.html" target="_blank">Jeremy Stephens</a></td>
 <td>6/28/2014</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">UFC Fight Night: Edgar vs Swanson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">Fight Night: Edgar vs Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2978UFC.html" target="_blank">Frankie Edgar vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
 <td>11/22/2014</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">UFC Fight Night: Machida vs Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0107FNI.html" target="_blank">UFC on Fox 15: Machida vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3150UFC.html" target="_blank">Max Holloway vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hollomax01.html" target="_blank">Max Holloway</a></td>
 <td>4/18/2015</td>
@@ -699,7 +701,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Caceres</a></td>
+<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">Fight Night: Rodriguez vs Caceres</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3765UFC.html" target="_blank">Tatsuya Kawajiri vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kawajtat01.html" target="_blank">Tatsuya Kawajiri</a></td>
 <td>8/6/2016</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3946UFC.html" target="_blank">Dooho Choi vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/choidoo01.html" target="_blank">Dooho Choi</a></td>
 <td>12/10/2016</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4096UFC.html" target="_blank">Artem Lobov vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lobovart01.html" target="_blank">Artem Lobov</a></td>
 <td>4/22/2017</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4402UFC.html" target="_blank">Brian Ortega vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortegbri01.html" target="_blank">Brian Ortega</a></td>
 <td>12/9/2017</td>
@@ -871,7 +873,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4563UFC.html" target="_blank">Frankie Edgar vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edgarfra01.html" target="_blank">Frankie Edgar</a></td>
 <td>4/21/2018</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230PPV.html" target="_blank">UFC 227: Dillashaw vs. Garbrandt 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230PPV.html" target="_blank">UFC 227: Dillashaw vs Garbrandt 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4712UFC.html" target="_blank">Renato Moicano vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moicaren01.html" target="_blank">Renato Moicano</a></td>
 <td>8/4/2018</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">UFC Fight Night: Iaquinta vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">Fight Night: Iaquinta vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5073UFC.html" target="_blank">Shane Burgos vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burgosha01.html" target="_blank">Shane Burgos</a></td>
 <td>5/4/2019</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">UFC Fight Night: Joanna vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224FNI.html" target="_blank">Fight Night: Joanna vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5314UFC.html" target="_blank">Kron Gracie vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gracikro01.html" target="_blank">Kron Gracie</a></td>
 <td>10/12/2019</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258PPV.html" target="_blank">UFC 256: Figueiredo vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5867UFC.html" target="_blank">Daniel Pineda vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pineddan01.html" target="_blank">Daniel Pineda</a></td>
 <td>12/12/2020</td>
@@ -1086,7 +1088,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6045UFC.html" target="_blank">Giga Chikadze vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chikagig01.html" target="_blank">Giga Chikadze</a></td>
 <td>5/1/2021</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">UFC Fight Night: Lewis vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">Fight Night: Lewis vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6383UFC.html" target="_blank">Darren Elkins vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/elkindar01.html" target="_blank">Darren Elkins</a></td>
 <td>12/18/2021</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0313FNI.html" target="_blank">UFC Fight Night: Grasso vs. Araujo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0314FNI.html" target="_blank">Fight Night: Grasso vs Araujo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6794UFC.html" target="_blank">Jonathan Martinez vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martijon01.html" target="_blank">Jonathan Martinez</a></td>
 <td>10/15/2022</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7234UFC.html" target="_blank">Hakeem Dawodu vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dawodhak01.html" target="_blank">Hakeem Dawodu</a></td>
 <td>8/12/2023</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs. Prochazka 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs Prochazka 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7689UFC.html" target="_blank">Andre Fili vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/filiand01.html" target="_blank">Andre Fili</a></td>
 <td>6/29/2024</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">UFC Fight Night: Teixeira vs Evans</a></td>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC on Fox 19: Teixeira vs Evans</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7853UFC.html" target="_blank">Hacran Dias vs Cub Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/diashac01.html" target="_blank">Hacran Dias</a></td>
 <td>4/16/2016</td>

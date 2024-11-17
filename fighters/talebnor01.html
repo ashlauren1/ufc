@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0076FNI.html" target="_blank">UFC Fight Night: Bisping vs Kennedy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0076FNI.html" target="_blank">Fight Night: Bisping vs Kennedy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2660UFC.html" target="_blank">Vik Grujic vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grujivik01.html" target="_blank">Vik Grujic</a></td>
 <td>4/16/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0092FNI.html" target="_blank">UFC Fight Night: MacDonald vs Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/events/0093FNI.html" target="_blank">Fight Night: MacDonald vs Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2916UFC.html" target="_blank">Li Jingliang vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jinglli01.html" target="_blank">Li Jingliang</a></td>
 <td>10/4/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">UFC Fight Night: Lewis vs. Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">Fight Night: Lewis vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4031UFC.html" target="_blank">Santiago Ponzinibbio vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ponzisan01.html" target="_blank">Santiago Ponzinibbio</a></td>
 <td>2/19/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">Fight Night: Gustafsson vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4125UFC.html" target="_blank">Oliver Enkamp vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/enkamoli01.html" target="_blank">Oliver Enkamp</a></td>
 <td>5/28/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">UFC Fight Night: Lawler vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC on Fox 26: Lawler vs dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4422UFC.html" target="_blank">Danny Roberts vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberdan01.html" target="_blank">Danny Roberts</a></td>
 <td>12/16/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">UFC Fight Night: Thompson vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">Fight Night: Thompson vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4603UFC.html" target="_blank">Claudio Silva vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/silvacla01.html" target="_blank">Claudio Silva</a></td>
 <td>5/27/2018</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">UFC Fight Night: Oezdemir vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0195FNI.html" target="_blank">Fight Night: Oezdemir vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4792UFC.html" target="_blank">Sean Strickland vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stricsea01.html" target="_blank">Sean Strickland</a></td>
 <td>10/27/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">UFC Fight Night: Iaquinta vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">Fight Night: Iaquinta vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5079UFC.html" target="_blank">Kyle Prepolec vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/prepokyl01.html" target="_blank">Kyle Prepolec</a></td>
 <td>5/4/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5262UFC.html" target="_blank">Muslim Salikhov vs Nordine Taleb</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/salikmus01.html" target="_blank">Muslim Salikhov</a></td>
 <td>9/7/2019</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0018TUF.html" target="_blank">The Ultimate Fighter 18 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0018TUF.html" target="_blank">TUF 18 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2492UFC.html" target="_blank">Davey Grant vs Chris Holdsworth</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holdschr01.html" target="_blank">Chris Holdsworth</a></td>
 <td>11/30/2013</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">UFC Fight Night: Silva vs Bisping</a></td>
+<td style="text-align:left"><a href="/ufc/events/0130FNI.html" target="_blank">Fight Night: Silva vs Bisping</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3565UFC.html" target="_blank">Davey Grant vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>2/27/2016</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs. Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3853UFC.html" target="_blank">Davey Grant vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stasidam01.html" target="_blank">Damian Stasiak</a></td>
 <td>10/8/2016</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4694UFC.html" target="_blank">Manny Bermudez vs Davey Grant</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bermuman01.html" target="_blank">Manny Bermudez</a></td>
 <td>7/22/2018</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">Fight Night: Zabit vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5375UFC.html" target="_blank">Davey Grant vs Grigorii Popov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/popovgri01.html" target="_blank">Grigorii Popov</a></td>
 <td>11/9/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253PPV.html" target="_blank">UFC 251: Usman vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5620UFC.html" target="_blank">Martin Day vs Davey Grant</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/daymar01.html" target="_blank">Martin Day</a></td>
 <td>7/11/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265FNI.html" target="_blank">UFC Fight Night: Edwards vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">Fight Night: Edwards vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5978UFC.html" target="_blank">Davey Grant vs Jonathan Martinez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martijon01.html" target="_blank">Jonathan Martinez</a></td>
 <td>3/13/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273FNI.html" target="_blank">UFC Fight Night: Jung vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">Fight Night: Jung vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6117UFC.html" target="_blank">Davey Grant vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>6/19/2021</td>
@@ -656,7 +658,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287FNI.html" target="_blank">UFC Fight Night: Vieira vs. Tate</a></td>
+<td style="text-align:left"><a href="/ufc/events/0288FNI.html" target="_blank">Fight Night: Vieira vs Tate</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6344UFC.html" target="_blank">Davey Grant vs Adrian Yanez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yanezadr01.html" target="_blank">Adrian Yanez</a></td>
 <td>11/20/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Rakic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">Fight Night: Blachowicz vs Rakic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6577UFC.html" target="_blank">Davey Grant vs Louis Smolka</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smolklou01.html" target="_blank">Louis Smolka</a></td>
 <td>5/14/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">UFC Fight Night: Yan vs. Dvalishvili</a></td>
+<td style="text-align:left"><a href="/ufc/events/0324FNI.html" target="_blank">Fight Night: Yan vs Dvalishvili</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6994UFC.html" target="_blank">Raphael Assuncao vs Davey Grant</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/assunrap01.html" target="_blank">Raphael Assuncao</a></td>
 <td>3/11/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">UFC Fight Night: Aspinall vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">Fight Night: Aspinall vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7201UFC.html" target="_blank">Davey Grant vs Daniel Marcos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/marcodan01.html" target="_blank">Daniel Marcos</a></td>
 <td>7/22/2023</td>

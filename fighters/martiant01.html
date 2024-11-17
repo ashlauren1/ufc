@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">Fight Night: Henderson vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2847UFC.html" target="_blank">Beneil Dariush vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dariuben01.html" target="_blank">Beneil Dariush</a></td>
 <td>8/23/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">UFC Fight Night: Maia vs LaFlare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0104FNI.html" target="_blank">Fight Night: Maia vs LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3116UFC.html" target="_blank">Anthony Rocco Martin vs Leonardo Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoleo01.html" target="_blank">Leonardo Santos</a></td>
 <td>3/21/2015</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">UFC Fight Night: Johnson vs. Bader</a></td>
+<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC on Fox 18: Johnson vs Bader</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3534UFC.html" target="_blank">Anthony Rocco Martin vs Felipe Olivieri</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/olivifel01.html" target="_blank">Felipe Olivieri</a></td>
 <td>1/30/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Penn</a></td>
+<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">Fight Night: Rodriguez vs Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3986UFC.html" target="_blank">Anthony Rocco Martin vs Alex White</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/whiteale01.html" target="_blank">Alex White</a></td>
 <td>1/15/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">Fight Night: Chiesa vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4179UFC.html" target="_blank">Johnny Case vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/casejoh01.html" target="_blank">Johnny Case</a></td>
 <td>6/25/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">UFC Fight Night: Rockhold vs. Branch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">Fight Night: Rockhold vs Branch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4281UFC.html" target="_blank">Olivier Aubin-Mercier vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aubinoli01.html" target="_blank">Olivier Aubin-Mercier</a></td>
 <td>9/16/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4572UFC.html" target="_blank">Anthony Rocco Martin vs Keita Nakamura</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nakamkei01.html" target="_blank">Keita Nakamura</a></td>
 <td>4/21/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4784UFC.html" target="_blank">Ryan LaFlare vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/laflarya01.html" target="_blank">Ryan LaFlare</a></td>
 <td>10/6/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0199FNI.html" target="_blank">Fight Night: Dos Santos vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4863UFC.html" target="_blank">Anthony Rocco Martin vs Jake Matthews</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/matthjak01.html" target="_blank">Jake Matthews</a></td>
 <td>12/1/2018</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">Fight Night: Lewis vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4990UFC.html" target="_blank">Anthony Rocco Martin vs Sergio Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraeser01.html" target="_blank">Sergio Moraes</a></td>
 <td>3/9/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0214FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0215FNI.html" target="_blank">Fight Night: Ngannou vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5146UFC.html" target="_blank">Demian Maia vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiadem01.html" target="_blank">Demian Maia</a></td>
 <td>6/29/2019</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0226FNI.html" target="_blank">UFC Fight Night: Zabit vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">Fight Night: Zabit vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5367UFC.html" target="_blank">Ramazan Emeev vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/emeevram01.html" target="_blank">Ramazan Emeev</a></td>
 <td>11/9/2019</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs. Spencer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5567UFC.html" target="_blank">Neil Magny vs Anthony Rocco Martin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
 <td>6/6/2020</td>

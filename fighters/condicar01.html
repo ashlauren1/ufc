@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann</a></td>
+<td style="text-align:left"><a href="/ufc/events/0019FNI.html" target="_blank">Fight Night: Condit vs Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1088UFC.html" target="_blank">Carlos Condit vs Martin Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kampmmar01.html" target="_blank">Martin Kampmann</a></td>
 <td>4/1/2009</td>
@@ -355,7 +357,7 @@
 <td>6</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">UFC Fight Night: Diaz vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020FNI.html" target="_blank">Fight Night: Diaz vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1179UFC.html" target="_blank">Carlos Condit vs Jake Ellenberger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>9/16/2009</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">UFC Fight Night: Condit vs Kampmann 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0060FNI.html" target="_blank">Fight Night: Condit vs Kampmann 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2382UFC.html" target="_blank">Carlos Condit vs Martin Kampmann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kampmmar01.html" target="_blank">Martin Kampmann</a></td>
 <td>8/28/2013</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0109FNI.html" target="_blank">UFC Fight Night: Condit vs Alves</a></td>
+<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">Fight Night: Condit vs Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3206UFC.html" target="_blank">Thiago Alves vs Carlos Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alvesthi01.html" target="_blank">Thiago Alves</a></td>
 <td>5/30/2015</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0140FNI.html" target="_blank">UFC Fight Night: Maia vs. Condit</a></td>
+<td style="text-align:left"><a href="/ufc/events/0141FNI.html" target="_blank">UFC on Fox 21: Maia vs Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3779UFC.html" target="_blank">Carlos Condit vs Demian Maia</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maiadem01.html" target="_blank">Demian Maia</a></td>
 <td>8/27/2016</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs. Holm</a></td>
+<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4430UFC.html" target="_blank">Carlos Condit vs Neil Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
 <td>12/30/2017</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">UFC Fight Night: Poirier vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC on Fox 29: Poirier vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4548UFC.html" target="_blank">Carlos Condit vs Alex Oliveira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oliveale01.html" target="_blank">Alex Oliveira</a></td>
 <td>4/14/2018</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs Gustafsson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4899UFC.html" target="_blank">Michael Chiesa vs Carlos Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
 <td>12/29/2018</td>
@@ -1000,7 +1002,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0251FNI.html" target="_blank">UFC Fight Night: Holm vs. Aldana</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">Fight Night: Holm vs Aldana</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5758UFC.html" target="_blank">Carlos Condit vs Court McGee</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcgeecou01.html" target="_blank">Court McGee</a></td>
 <td>10/3/2020</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">UFC Fight Night: Holloway vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC on ABC 1: Holloway vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5883UFC.html" target="_blank">Matt Brown vs Carlos Condit</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownmat01.html" target="_blank">Matt Brown</a></td>
 <td>1/16/2021</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs. McGregor 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs McGregor 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6145UFC.html" target="_blank">Carlos Condit vs Max Griffin</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/griffmax01.html" target="_blank">Max Griffin</a></td>
 <td>7/10/2021</td>

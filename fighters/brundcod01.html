@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0268PPV.html" target="_blank">UFC 266: Volkanovski vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6253UFC.html" target="_blank">Cody Brundage vs Nick Maximov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/maximnic01.html" target="_blank">Nick Maximov</a></td>
 <td>9/25/2021</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294FNI.html" target="_blank">UFC Fight Night: Santos vs. Ankalaev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295FNI.html" target="_blank">Fight Night: Santos vs Ankalaev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6486UFC.html" target="_blank">Cody Brundage vs Dalcha Lungiambula</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lungidal01.html" target="_blank">Dalcha Lungiambula</a></td>
 <td>3/12/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Fiziev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">Fight Night: Dos Anjos vs Fiziev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6665UFC.html" target="_blank">Cody Brundage vs Tresean Gore</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goretre01.html" target="_blank">Tresean Gore</a></td>
 <td>7/9/2022</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0318FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0319FNI.html" target="_blank">Fight Night: Cannonier vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6894UFC.html" target="_blank">Cody Brundage vs Michal Oleksiejczuk</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oleksmic01.html" target="_blank">Michal Oleksiejczuk</a></td>
 <td>12/17/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">UFC Fight Night: Song vs. Simon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">Fight Night: Song vs Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7064UFC.html" target="_blank">Cody Brundage vs Rodolfo Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vieirrod01.html" target="_blank">Rodolfo Vieira</a></td>
 <td>4/29/2023</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC on ABC 5: Emmett vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7156UFC.html" target="_blank">Cody Brundage vs Sedriques Dumas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dumassed01.html" target="_blank">Sedriques Dumas</a></td>
 <td>6/24/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0341FNI.html" target="_blank">UFC Fight Night: Fiziev vs. Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0342FNI.html" target="_blank">Fight Night: Fiziev vs Gamrot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7312UFC.html" target="_blank">Cody Brundage vs Jacob Malkoun</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/malkojac01.html" target="_blank">Jacob Malkoun</a></td>
 <td>9/23/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">UFC Fight Night: Dariush vs. Tsarukyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">Fight Night: Dariush vs Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7394UFC.html" target="_blank">Cody Brundage vs Zachary Reese</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reesezac01.html" target="_blank">Zachary Reese</a></td>
 <td>12/2/2023</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302PPV.html" target="_blank">UFC 300: Pereira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7576UFC.html" target="_blank">Cody Brundage vs Bo Nickal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nickabo01.html" target="_blank">Bo Nickal</a></td>
 <td>4/13/2024</td>
@@ -699,7 +701,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0363FNI.html" target="_blank">UFC Fight Night: Namajunas vs. Cortez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">Fight Night: Namajunas vs Cortez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7701UFC.html" target="_blank">Abdul Razak Alhassan vs Cody Brundage</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alhasabd01.html" target="_blank">Abdul Razak Alhassan</a></td>
 <td>7/13/2024</td>

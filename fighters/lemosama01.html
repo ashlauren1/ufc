@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0164FNI.html" target="_blank">Fight Night: Nelson vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4214UFC.html" target="_blank">Amanda Lemos vs Leslie Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/smithles01.html" target="_blank">Leslie Smith</a></td>
 <td>7/16/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">UFC Fight Night: Edgar vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">Fight Night: Edgar vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5424UFC.html" target="_blank">Miranda Granger vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grangmir01.html" target="_blank">Miranda Granger</a></td>
 <td>12/21/2019</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">UFC Fight Night: Munhoz vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">Fight Night: Munhoz vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5695UFC.html" target="_blank">Mizuki Inoue vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/inouemiz01.html" target="_blank">Mizuki Inoue</a></td>
 <td>8/22/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261PPV.html" target="_blank">UFC 259: Blachowicz vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5972UFC.html" target="_blank">Amanda Lemos vs Livinha Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/souzaliv01.html" target="_blank">Livinha Souza</a></td>
 <td>3/6/2021</td>
@@ -484,9 +486,9 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
-<td style="text-align:left"><a href="/ufc/fights/6158UFC.html" target="_blank">Montserrat Conejo vs Amanda Lemos</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/conejmon01.html" target="_blank">Montserrat Conejo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
+<td style="text-align:left"><a href="/ufc/fights/6158UFC.html" target="_blank">Montserrat Ruiz vs Amanda Lemos</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/ruizmon01.html" target="_blank">Montserrat Ruiz</a></td>
 <td>7/17/2021</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Women's Strawweight</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">UFC Fight Night: Lewis vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">Fight Night: Lewis vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6380UFC.html" target="_blank">Angela Hill vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hillang01.html" target="_blank">Angela Hill</a></td>
 <td>12/18/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">UFC Fight Night: Lemos vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">Fight Night: Lemos vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6539UFC.html" target="_blank">Jessica Andrade vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andrajes01.html" target="_blank">Jessica Andrade</a></td>
 <td>4/23/2022</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6671UFC.html" target="_blank">Amanda Lemos vs Michelle Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/watermic01.html" target="_blank">Michelle Waterson</a></td>
 <td>7/16/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0315FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Lemos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">Fight Night: Rodriguez vs Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6827UFC.html" target="_blank">Amanda Lemos vs Marina Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodrimar01.html" target="_blank">Marina Rodriguez</a></td>
 <td>11/5/2022</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs. O'Malley</a></td>
+<td style="text-align:left"><a href="/ufc/events/0294PPV.html" target="_blank">UFC 292: Sterling vs O'Malley</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7247UFC.html" target="_blank">Amanda Lemos vs Zhang Weili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weilizha01.html" target="_blank">Zhang Weili</a></td>
 <td>8/19/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300PPV.html" target="_blank">UFC 298: Volkanovski vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7477UFC.html" target="_blank">Mackenzie Dern vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dernmac01.html" target="_blank">Mackenzie Dern</a></td>
 <td>2/17/2024</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">UFC Fight Night: Lemos vs. Jandiroba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">Fight Night: Lemos vs Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7708UFC.html" target="_blank">Virna Jandiroba vs Amanda Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jandivir01.html" target="_blank">Virna Jandiroba</a></td>
 <td>7/20/2024</td>

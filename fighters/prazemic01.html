@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX: Belfort vs. Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0056FNI.html" target="_blank">UFC on FX 8: Belfort vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2282UFC.html" target="_blank">Michel Prazeres vs Paulo Thiago</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thiagpau01.html" target="_blank">Paulo Thiago</a></td>
 <td>5/18/2013</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">UFC Fight Night: Shogun vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0074FNI.html" target="_blank">Fight Night: Shogun vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2635UFC.html" target="_blank">Michel Prazeres vs Mairbek Taisumov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/taisumai01.html" target="_blank">Mairbek Taisumov</a></td>
 <td>3/23/2014</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0101FNI.html" target="_blank">UFC Fight Night: Henderson vs Thatch</a></td>
+<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">Fight Night: Henderson vs Thatch</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3073UFC.html" target="_blank">Kevin Lee vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/leekev01.html" target="_blank">Kevin Lee</a></td>
 <td>2/14/2015</td>
@@ -484,7 +486,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0121FNI.html" target="_blank">UFC Fight Night: Magny vs Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0122FNI.html" target="_blank">Fight Night: Magny vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3438UFC.html" target="_blank">Valmir Lazaro vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lazarval01.html" target="_blank">Valmir Lazaro</a></td>
 <td>11/21/2015</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0138FNI.html" target="_blank">UFC Fight Night: Holm vs. Shevchenko</a></td>
+<td style="text-align:left"><a href="/ufc/events/0139FNI.html" target="_blank">UFC on Fox 20: Holm vs Shevchenko</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3740UFC.html" target="_blank">JC Cottrell vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cottrjc01.html" target="_blank">JC Cottrell</a></td>
 <td>7/23/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3828UFC.html" target="_blank">Gilbert Burns vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burnsgil01.html" target="_blank">Gilbert Burns</a></td>
 <td>9/24/2016</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4056UFC.html" target="_blank">Joshua Burkman vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burkmjos01.html" target="_blank">Joshua Burkman</a></td>
 <td>3/11/2017</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">UFC Fight Night: Volkov vs. Struve</a></td>
+<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">Fight Night: Volkov vs Struve</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4258UFC.html" target="_blank">Mads Burnell vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burnemad01.html" target="_blank">Mads Burnell</a></td>
 <td>9/2/2017</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0178FNI.html" target="_blank">UFC Fight Night: Machida vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0179FNI.html" target="_blank">Fight Night: Machida vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4472UFC.html" target="_blank">Desmond Green vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/greendes01.html" target="_blank">Desmond Green</a></td>
 <td>2/3/2018</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4592UFC.html" target="_blank">Zak Cummings vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummizak01.html" target="_blank">Zak Cummings</a></td>
 <td>5/19/2018</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">UFC Fight Night: Magny vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">Fight Night: Magny vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4828UFC.html" target="_blank">Bartosz Fabinski vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fabinbar01.html" target="_blank">Bartosz Fabinski</a></td>
 <td>11/17/2018</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">Fight Night: Blachowicz vs Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4969UFC.html" target="_blank">Ismail Naurdiev vs Michel Prazeres</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/naurdism01.html" target="_blank">Ismail Naurdiev</a></td>
 <td>2/23/2019</td>
@@ -871,7 +873,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">UFC Fight Night: Gane vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">Fight Night: Gane vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6134UFC.html" target="_blank">Michel Prazeres vs Shavkat Rakhmonov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rakhmsha01.html" target="_blank">Shavkat Rakhmonov</a></td>
 <td>6/26/2021</td>

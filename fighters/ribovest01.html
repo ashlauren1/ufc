@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287PPV.html" target="_blank">UFC 285: Jones vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6986UFC.html" target="_blank">Loik Radzhabov vs Esteban Ribovics</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/radzhloi01.html" target="_blank">Loik Radzhabov</a></td>
 <td>3/4/2023</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7181UFC.html" target="_blank">Kamuela Kirk vs Esteban Ribovics</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kirkkam01.html" target="_blank">Kamuela Kirk</a></td>
 <td>7/8/2023</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0358FNI.html" target="_blank">UFC Fight Night: Lewis vs. Nascimento</a></td>
+<td style="text-align:left"><a href="/ufc/events/0359FNI.html" target="_blank">Fight Night: Lewis vs Nascimento</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7618UFC.html" target="_blank">Terrance McKinney vs Esteban Ribovics</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mckinter01.html" target="_blank">Terrance McKinney</a></td>
 <td>5/11/2024</td>

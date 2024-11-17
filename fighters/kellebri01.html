@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0215PPV.html" target="_blank">UFC 212: Aldo vs. Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/events/0215PPV.html" target="_blank">UFC 212: Aldo vs Holloway</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4141UFC.html" target="_blank">Iuri Alcantara vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
 <td>6/3/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0164FNI.html" target="_blank">UFC Fight Night: Weidman vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC on Fox 25: Weidman vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4224UFC.html" target="_blank">Brian Kelleher vs Marlon Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/veramar01.html" target="_blank">Marlon Vera</a></td>
 <td>7/22/2017</td>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">Fight Night: Cerrone vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4311UFC.html" target="_blank">Brian Kelleher vs Damian Stasiak</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stasidam01.html" target="_blank">Damian Stasiak</a></td>
 <td>10/21/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4509UFC.html" target="_blank">Renan Barao vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baraoren01.html" target="_blank">Renan Barao</a></td>
 <td>2/24/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4576UFC.html" target="_blank">Brian Kelleher vs John Lineker</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/linekjoh01.html" target="_blank">John Lineker</a></td>
 <td>5/12/2018</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs. Gustafsson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0235PPV.html" target="_blank">UFC 232: Jones vs Gustafsson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4909UFC.html" target="_blank">Montel Jackson vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jacksmon01.html" target="_blank">Montel Jackson</a></td>
 <td>12/29/2018</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5429UFC.html" target="_blank">Brian Kelleher vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/osbouode01.html" target="_blank">Ode Osbourne</a></td>
 <td>1/18/2020</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">UFC Fight Night: Smith vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">Fight Night: Smith vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5540UFC.html" target="_blank">Hunter Azure vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/azurehun01.html" target="_blank">Hunter Azure</a></td>
 <td>5/13/2020</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs. Spencer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0252PPV.html" target="_blank">UFC 250: Nunes vs Spencer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5571UFC.html" target="_blank">Brian Kelleher vs Cody Stamann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stamacod01.html" target="_blank">Cody Stamann</a></td>
 <td>6/6/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5713UFC.html" target="_blank">Brian Kelleher vs Ray Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rodriray01.html" target="_blank">Ray Rodriguez</a></td>
 <td>9/5/2020</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260PPV.html" target="_blank">UFC 258: Usman vs. Burns</a></td>
+<td style="text-align:left"><a href="/ufc/events/0260PPV.html" target="_blank">UFC 258: Usman vs Burns</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5932UFC.html" target="_blank">Brian Kelleher vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/simonric01.html" target="_blank">Ricky Simon</a></td>
 <td>2/13/2021</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">Fight Night: Cannonier vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6203UFC.html" target="_blank">Brian Kelleher vs Domingo Pilarte</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pilardom01.html" target="_blank">Domingo Pilarte</a></td>
 <td>8/21/2021</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">UFC Fight Night: Kattar vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">Fight Night: Kattar vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6399UFC.html" target="_blank">Kevin Croom vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/croomkev01.html" target="_blank">Kevin Croom</a></td>
 <td>1/15/2022</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs. Masvidal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0274PPV.html" target="_blank">UFC 272: Covington vs Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6471UFC.html" target="_blank">Brian Kelleher vs Umar Nurmagomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nurmauma01.html" target="_blank">Umar Nurmagomedov</a></td>
 <td>3/5/2022</td>
@@ -914,7 +916,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0304FNI.html" target="_blank">UFC Fight Night: Tsarukyan vs. Gamrot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305FNI.html" target="_blank">Fight Night: Tsarukyan vs Gamrot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6645UFC.html" target="_blank">Mario Bautista vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bautimar01.html" target="_blank">Mario Bautista</a></td>
 <td>6/25/2022</td>
@@ -957,7 +959,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7417UFC.html" target="_blank">Cody Garbrandt vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/garbrcod01.html" target="_blank">Cody Garbrandt</a></td>
 <td>12/16/2023</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">UFC Fight Night: Lemos vs. Jandiroba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">Fight Night: Lemos vs Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7714UFC.html" target="_blank">Cody Gibson vs Brian Kelleher</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gibsocod01.html" target="_blank">Cody Gibson</a></td>
 <td>7/20/2024</td>

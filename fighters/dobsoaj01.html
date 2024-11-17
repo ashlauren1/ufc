@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs. Whittaker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0273PPV.html" target="_blank">UFC 271: Adesanya vs Whittaker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6435UFC.html" target="_blank">AJ Dobson vs Jacob Malkoun</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/malkojac01.html" target="_blank">Jacob Malkoun</a></td>
 <td>2/12/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs. Makhachev</a></td>
+<td style="text-align:left"><a href="/ufc/events/0282PPV.html" target="_blank">UFC 280: Oliveira vs Makhachev</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6813UFC.html" target="_blank">AJ Dobson vs Armen Petrosyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/petroarm01.html" target="_blank">Armen Petrosyan</a></td>
 <td>10/22/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7237UFC.html" target="_blank">AJ Dobson vs Tafon Nchukwi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nchuktaf01.html" target="_blank">Tafon Nchukwi</a></td>
 <td>8/12/2023</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">UFC Fight Night: Ribas vs. Namajunas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">Fight Night: Ribas vs Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7536UFC.html" target="_blank">AJ Dobson vs Edmen Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shahbedm01.html" target="_blank">Edmen Shahbazyan</a></td>
 <td>3/23/2024</td>

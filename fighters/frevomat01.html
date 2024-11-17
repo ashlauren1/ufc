@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0176FNI.html" target="_blank">UFC Fight Night: Stephens vs. Choi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0177FNI.html" target="_blank">Fight Night: Stephens vs Choi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4441UFC.html" target="_blank">Matt Frevola vs Polo Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reyespol01.html" target="_blank">Polo Reyes</a></td>
 <td>1/14/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4808UFC.html" target="_blank">Matt Frevola vs Lando Vannata</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vannalan01.html" target="_blank">Lando Vannata</a></td>
 <td>11/3/2018</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5039UFC.html" target="_blank">Matt Frevola vs Jalin Turner</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/turnejal01.html" target="_blank">Jalin Turner</a></td>
 <td>4/13/2019</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">UFC Fight Night: Joanna vs. Waterson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0224FNI.html" target="_blank">Fight Night: Joanna vs Waterson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5317UFC.html" target="_blank">Matt Frevola vs Luis Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penalui01.html" target="_blank">Luis Pena</a></td>
 <td>10/12/2019</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259PPV.html" target="_blank">UFC 257: Poirier vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5911UFC.html" target="_blank">Matt Frevola vs Arman Tsarukyan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tsaruarm01.html" target="_blank">Arman Tsarukyan</a></td>
 <td>1/23/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs. Vettori 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0265PPV.html" target="_blank">UFC 263: Adesanya vs Vettori 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6111UFC.html" target="_blank">Matt Frevola vs Terrance McKinney</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mckinter01.html" target="_blank">Terrance McKinney</a></td>
 <td>6/12/2021</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0272PPV.html" target="_blank">UFC 270: Ngannou vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272PPV.html" target="_blank">UFC 270: Ngannou vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6409UFC.html" target="_blank">Matt Frevola vs Genaro Valdez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/valdegen01.html" target="_blank">Genaro Valdez</a></td>
 <td>1/22/2022</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283PPV.html" target="_blank">UFC 281: Adesanya vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6847UFC.html" target="_blank">Ottman Azaitar vs Matt Frevola</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/azaitott01.html" target="_blank">Ottman Azaitar</a></td>
 <td>11/12/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs. Cejudo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290PPV.html" target="_blank">UFC 288: Sterling vs Cejudo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7078UFC.html" target="_blank">Drew Dober vs Matt Frevola</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/doberdre01.html" target="_blank">Drew Dober</a></td>
 <td>5/6/2023</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0297PPV.html" target="_blank">UFC 295: Prochazka vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7363UFC.html" target="_blank">Benoit Saint Denis vs Matt Frevola</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/denisben01.html" target="_blank">Benoit Saint Denis</a></td>
 <td>11/11/2023</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0369FNI.html" target="_blank">UFC Fight Night: Moicano vs. Saint Denis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0370FNI.html" target="_blank">Fight Night: Moicano vs Saint Denis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7806UFC.html" target="_blank">Matt Frevola vs Fares Ziam</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ziamfar01.html" target="_blank">Fares Ziam</a></td>
 <td>9/28/2024</td>

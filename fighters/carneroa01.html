@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">UFC Fight Night: Stevenson vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">Fight Night: Stevenson vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0699UFC.html" target="_blank">Roan Carneiro vs Rich Clementi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/clemeric01.html" target="_blank">Rich Clementi</a></td>
 <td>4/5/2007</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0011FNI.html" target="_blank">UFC Fight Night: Stout vs Fisher</a></td>
+<td style="text-align:left"><a href="/ufc/events/0011FNI.html" target="_blank">Fight Night: Stout vs Fisher</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0730UFC.html" target="_blank">Roan Carneiro vs Jon Fitch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fitchjon01.html" target="_blank">Jon Fitch</a></td>
 <td>6/12/2007</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">UFC Fight Night: Cowboy vs Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">Fight Night: Cowboy vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3548UFC.html" target="_blank">Derek Brunson vs Roan Carneiro</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brunsder01.html" target="_blank">Derek Brunson</a></td>
 <td>2/21/2016</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0142FNI.html" target="_blank">UFC Fight Night: Poirier vs. Johnson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">Fight Night: Poirier vs Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3813UFC.html" target="_blank">Roan Carneiro vs Kenny Robertson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberken01.html" target="_blank">Kenny Robertson</a></td>
 <td>9/17/2016</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs. De Randamie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0211PPV.html" target="_blank">UFC 208: Holm vs De Randamie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4024UFC.html" target="_blank">Roan Carneiro vs Ryan LaFlare</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/laflarya01.html" target="_blank">Ryan LaFlare</a></td>
 <td>2/11/2017</td>

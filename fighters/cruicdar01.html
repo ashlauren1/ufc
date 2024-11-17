@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">The Ultimate Fighter LIVE Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0015TUF.html" target="_blank">TUF 15 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1944UFC.html" target="_blank">Daron Cruickshank vs Chris Tickle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ticklchr01.html" target="_blank">Chris Tickle</a></td>
 <td>6/1/2012</td>
@@ -355,7 +357,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox: Henderson vs Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0048FNI.html" target="_blank">UFC on Fox 5: Henderson vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2110UFC.html" target="_blank">Daron Cruickshank vs Henry Martinez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martihen01.html" target="_blank">Henry Martinez</a></td>
 <td>12/8/2012</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox: Johnson vs Moraga</a></td>
+<td style="text-align:left"><a href="/ufc/events/0058FNI.html" target="_blank">UFC on Fox 8: Johnson vs Moraga</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2341UFC.html" target="_blank">Daron Cruickshank vs Yves Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edwaryve01.html" target="_blank">Yves Edwards</a></td>
 <td>7/27/2013</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">Fight Night: Belfort vs Henderson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2476UFC.html" target="_blank">Daron Cruickshank vs Adriano Martins</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/martiadr01.html" target="_blank">Adriano Martins</a></td>
 <td>11/9/2013</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0070FNI.html" target="_blank">UFC on Fox: Henderson vs Thomson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0070FNI.html" target="_blank">UFC on Fox 10: Henderson vs Thomson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2563UFC.html" target="_blank">Daron Cruickshank vs Mike Rio</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riomike01.html" target="_blank">Mike Rio</a></td>
 <td>1/25/2014</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0078FNI.html" target="_blank">UFC Fight Night: Brown vs Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0078FNI.html" target="_blank">Fight Night: Brown vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2688UFC.html" target="_blank">Daron Cruickshank vs Erik Koch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kocheri01.html" target="_blank">Erik Koch</a></td>
 <td>5/10/2014</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0085FNI.html" target="_blank">UFC on Fox: Lawler vs Brown</a></td>
+<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC on Fox 12: Lawler vs Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2822UFC.html" target="_blank">Daron Cruickshank vs Jorge Masvidal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/masvijor01.html" target="_blank">Jorge Masvidal</a></td>
 <td>7/26/2014</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0092FNI.html" target="_blank">UFC Fight Night: MacDonald vs Saffiedine</a></td>
+<td style="text-align:left"><a href="/ufc/events/0093FNI.html" target="_blank">Fight Night: MacDonald vs Saffiedine</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2918UFC.html" target="_blank">Daron Cruickshank vs Anthony Njokuani</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/njokuant01.html" target="_blank">Anthony Njokuani</a></td>
 <td>10/4/2014</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">The Ultimate Fighter 20 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0020TUF.html" target="_blank">TUF 20 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3003UFC.html" target="_blank">Daron Cruickshank vs KJ Noons</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/noonskj01.html" target="_blank">KJ Noons</a></td>
 <td>12/12/2014</td>
@@ -785,7 +787,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0115FNI.html" target="_blank">UFC on Fox: Dillashaw vs. Barao II</a></td>
+<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC on Fox 16: Dillashaw vs Barao 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3314UFC.html" target="_blank">Daron Cruickshank vs James Krause</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krausjam01.html" target="_blank">James Krause</a></td>
 <td>7/25/2015</td>
@@ -828,7 +830,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC Fight Night: Dillashaw vs Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">Fight Night: Dillashaw vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3517UFC.html" target="_blank">Daron Cruickshank vs Paul Felder</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/feldepau01.html" target="_blank">Paul Felder</a></td>
 <td>1/17/2016</td>

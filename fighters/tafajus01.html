@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245PPV.html" target="_blank">UFC 243: Whittaker vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5306UFC.html" target="_blank">Yorgan De Castro vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/castryor01.html" target="_blank">Yorgan De Castro</a></td>
 <td>10/5/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0249PPV.html" target="_blank">UFC 247: Jones vs. Reyes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249PPV.html" target="_blank">UFC 247: Jones vs Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5450UFC.html" target="_blank">Juan Adams vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/adamsjua01.html" target="_blank">Juan Adams</a></td>
 <td>2/8/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">UFC Fight Night: Holloway vs. Kattar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC on ABC 1: Holloway vs Kattar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5888UFC.html" target="_blank">Carlos Felipe vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/felipcar01.html" target="_blank">Carlos Felipe</a></td>
 <td>1/16/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271FNI.html" target="_blank">UFC Fight Night: Font vs. Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">Fight Night: Font vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6078UFC.html" target="_blank">Justin Tafa vs Jared Vanderaa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vandejar01.html" target="_blank">Jared Vanderaa</a></td>
 <td>5/22/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">UFC Fight Night: Lewis vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">Fight Night: Lewis vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6385UFC.html" target="_blank">Harry Hunsucker vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hunsuhar01.html" target="_blank">Harry Hunsucker</a></td>
 <td>12/18/2021</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0286PPV.html" target="_blank">UFC 284: Makhachev vs. Volkanovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286PPV.html" target="_blank">UFC 284: Makhachev vs Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6942UFC.html" target="_blank">Parker Porter vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/portepar01.html" target="_blank">Parker Porter</a></td>
 <td>2/11/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0332FNI.html" target="_blank">UFC Fight Night: Emmett vs. Topuria</a></td>
+<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC on ABC 5: Emmett vs Topuria</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7146UFC.html" target="_blank">Austen Lane vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/laneaus01.html" target="_blank">Austen Lane</a></td>
 <td>6/24/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7285UFC.html" target="_blank">Austen Lane vs Justin Tafa</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/laneaus01.html" target="_blank">Austen Lane</a></td>
 <td>9/9/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">UFC Fight Night: Ribas vs. Namajunas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">Fight Night: Ribas vs Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7535UFC.html" target="_blank">Justin Tafa vs Karl Williams</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/willikar01.html" target="_blank">Karl Williams</a></td>
 <td>3/23/2024</td>

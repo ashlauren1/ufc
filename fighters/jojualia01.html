@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5259UFC.html" target="_blank">Liana Jojua vs Sarah Moras</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morassar01.html" target="_blank">Sarah Moras</a></td>
 <td>9/7/2019</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0241FNI.html" target="_blank">UFC Fight Night: Kattar vs. Ige</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">Fight Night: Kattar vs Ige</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5630UFC.html" target="_blank">Diana Belbita vs Liana Jojua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/belbidia01.html" target="_blank">Diana Belbita</a></td>
 <td>7/15/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0256PPV.html" target="_blank">UFC 254: Khabib vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0256PPV.html" target="_blank">UFC 254: Khabib vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5798UFC.html" target="_blank">Liana Jojua vs Miranda Maverick</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mavermir01.html" target="_blank">Miranda Maverick</a></td>
 <td>10/24/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0286FNI.html" target="_blank">UFC Fight Night: Holloway vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0287FNI.html" target="_blank">Fight Night: Holloway vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6337UFC.html" target="_blank">Cortney Casey vs Liana Jojua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/caseycor01.html" target="_blank">Cortney Casey</a></td>
 <td>11/13/2021</td>

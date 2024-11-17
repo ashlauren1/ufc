@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("anhelcha01", [{'date': '2022-02-19', 'SigStr': 67, 'knockdowns': 2, 'SigStrAtt': 130, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 2, 'SigStrAg': 64, 'SigStrAttAg': 126, 'TDAg': 4, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2022-09-10', 'SigStr': 39, 'knockdowns': 0, 'SigStrAtt': 143, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 49, 'SigStrAttAg': 131, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2023-11-18', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 71, 'takedown': 4, 'takedownAtt': 8, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 108, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2024-03-16', 'SigStr': 85, 'knockdowns': 0, 'SigStrAtt': 155, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 65, 'TDAg': 4, 'TDAttAg': 5, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("anhelcha01", [{'date': '2022-02-19', 'SigStr': 67, 'knockdowns': 2, 'SigStrAtt': 130, 'takedown': 0, 'takedownAtt': 1, 'subAtt': 2, 'SigStrAg': 64, 'SigStrAttAg': 126, 'TDAg': 4, 'TDAttAg': 7, 'SubAttAg': 0}, {'date': '2022-09-10', 'SigStr': 39, 'knockdowns': 0, 'SigStrAtt': 143, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 49, 'SigStrAttAg': 131, 'TDAg': 2, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2023-11-18', 'SigStr': 26, 'knockdowns': 0, 'SigStrAtt': 71, 'takedown': 4, 'takedownAtt': 8, 'subAtt': 0, 'SigStrAg': 63, 'SigStrAttAg': 108, 'TDAg': 1, 'TDAttAg': 2, 'SubAttAg': 1}, {'date': '2024-03-16', 'SigStr': 85, 'knockdowns': 0, 'SigStrAtt': 155, 'takedown': 0, 'takedownAtt': 2, 'subAtt': 0, 'SigStrAg': 21, 'SigStrAttAg': 65, 'TDAg': 4, 'TDAttAg': 5, 'SubAttAg': 0}, {'date': '2024-11-02', 'SigStr': 11, 'knockdowns': 0, 'SigStrAtt': 19, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 16, 'SigStrAttAg': 34, 'TDAg': 5, 'TDAttAg': 6, 'SubAttAg': 2}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292FNI.html" target="_blank">UFC Fight Night: Walker vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0293FNI.html" target="_blank">Fight Night: Walker vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6448UFC.html" target="_blank">Chad Anheliger vs Jesse Strader</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stradjes01.html" target="_blank">Jesse Strader</a></td>
 <td>2/19/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs. Ferguson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0281PPV.html" target="_blank">UFC 279: Diaz vs Ferguson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6766UFC.html" target="_blank">Heili Alateng vs Chad Anheliger</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alateala01.html" target="_blank">Heili Alateng</a></td>
 <td>9/10/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0345FNI.html" target="_blank">UFC Fight Night: Allen vs. Craig</a></td>
+<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">Fight Night: Allen vs Craig</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7380UFC.html" target="_blank">Chad Anheliger vs Jose Johnson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnsjos01.html" target="_blank">Jose Johnson</a></td>
 <td>11/18/2023</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">UFC Fight Night: Tuivasa vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">Fight Night: Tuivasa vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7533UFC.html" target="_blank">Chad Anheliger vs Charalampos Grigoriou</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/grigocha01.html" target="_blank">Charalampos Grigoriou</a></td>
 <td>3/16/2024</td>
@@ -482,6 +484,49 @@
 <td>5</td>
 <td>20.00%</td>
 <td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0374FNI.html" target="_blank">Fight Night: Moreno vs Albazi</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7898UFC.html" target="_blank">Cody Gibson vs Chad Anheliger</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/gibsocod01.html" target="_blank">Cody Gibson</a></td>
+<td>11/2/2024</td>
+<td>Edmonton, Alberta, Canada</td>
+<td>Bantamweight</td>
+<td>Decision - Unanimous</td>
+<td>L</td>
+<td>3</td>
+<td>15.0</td>
+<td>0</td>
+<td>11</td>
+<td>19</td>
+<td>57.89%</td>
+<td>0.24</td>
+<td>59</td>
+<td>77</td>
+<td>8</td>
+<td>16</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>16</td>
+<td>34</td>
+<td>52.94%</td>
+<td>59</td>
+<td>93</td>
+<td>5</td>
+<td>6</td>
+<td>16.67%</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>

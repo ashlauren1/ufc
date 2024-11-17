@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247FNI.html" target="_blank">UFC Fight Night: Smith vs. Rakic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">Fight Night: Smith vs Rakic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5702UFC.html" target="_blank">Bill Algeo vs Ricardo Lamas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lamasric01.html" target="_blank">Ricardo Lamas</a></td>
 <td>8/29/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257FNI.html" target="_blank">UFC Fight Night: Smith vs. Clark</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258FNI.html" target="_blank">Fight Night: Smith vs Clark</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5844UFC.html" target="_blank">Bill Algeo vs Spike Carlyle</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/carlyspi01.html" target="_blank">Spike Carlyle</a></td>
 <td>11/28/2020</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271FNI.html" target="_blank">UFC Fight Night: Font vs. Garbrandt</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272FNI.html" target="_blank">Fight Night: Font vs Garbrandt</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6080UFC.html" target="_blank">Bill Algeo vs Ricardo Ramos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ramosric01.html" target="_blank">Ricardo Ramos</a></td>
 <td>5/22/2021</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">UFC Fight Night: Kattar vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">Fight Night: Kattar vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6396UFC.html" target="_blank">Bill Algeo vs Joanderson Brito</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/britojoa01.html" target="_blank">Joanderson Brito</a></td>
 <td>1/15/2022</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6678UFC.html" target="_blank">Bill Algeo vs Herbert Burns</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/burnsher01.html" target="_blank">Herbert Burns</a></td>
 <td>7/16/2022</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Song</a></td>
+<td style="text-align:left"><a href="/ufc/events/0312FNI.html" target="_blank">Fight Night: Sandhagen vs Song</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6771UFC.html" target="_blank">Bill Algeo vs Andre Fili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/filiand01.html" target="_blank">Andre Fili</a></td>
 <td>9/17/2022</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0325FNI.html" target="_blank">UFC Fight Night: Holloway vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0326FNI.html" target="_blank">Fight Night: Holloway vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7043UFC.html" target="_blank">Bill Algeo vs TJ Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/browntj01.html" target="_blank">TJ Brown</a></td>
 <td>4/15/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0342FNI.html" target="_blank">UFC Fight Night: Dawson vs. Green</a></td>
+<td style="text-align:left"><a href="/ufc/events/0343FNI.html" target="_blank">Fight Night: Dawson vs Green</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7320UFC.html" target="_blank">Bill Algeo vs Alexander Hernandez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaale01.html" target="_blank">Alexander Hernandez</a></td>
 <td>10/7/2023</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">UFC Fight Night: Blanchfield vs. Fiorot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0356FNI.html" target="_blank">Fight Night: Blanchfield vs Fiorot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7551UFC.html" target="_blank">Bill Algeo vs Kyle Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nelsokyl01.html" target="_blank">Kyle Nelson</a></td>
 <td>3/30/2024</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0364FNI.html" target="_blank">UFC Fight Night: Lemos vs. Jandiroba</a></td>
+<td style="text-align:left"><a href="/ufc/events/0365FNI.html" target="_blank">Fight Night: Lemos vs Jandiroba</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7712UFC.html" target="_blank">Bill Algeo vs Dooho Choi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/choidoo01.html" target="_blank">Dooho Choi</a></td>
 <td>7/20/2024</td>

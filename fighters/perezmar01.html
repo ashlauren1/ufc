@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4406UFC.html" target="_blank">Eryk Anders vs Markus Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anderery01.html" target="_blank">Eryk Anders</a></td>
 <td>12/9/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4585UFC.html" target="_blank">James Bochnovic vs Markus Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bochnjam01.html" target="_blank">James Bochnovic</a></td>
 <td>5/12/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC Fight Night: Gaethje vs. Vick</a></td>
+<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">Fight Night: Gaethje vs Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4730UFC.html" target="_blank">Markus Perez vs Andrew Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchand01.html" target="_blank">Andrew Sanchez</a></td>
 <td>8/25/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">UFC Fight Night: Assuncao vs. Moraes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">Fight Night: Assuncao vs Moraes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4929UFC.html" target="_blank">Anthony Hernandez vs Markus Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaant01.html" target="_blank">Anthony Hernandez</a></td>
 <td>2/2/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">Fight Night: Blachowicz vs Jacare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5380UFC.html" target="_blank">Markus Perez vs Wellington Turman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/turmawel01.html" target="_blank">Wellington Turman</a></td>
 <td>11/16/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0252FNI.html" target="_blank">UFC Fight Night: Moraes vs. Sandhagen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0253FNI.html" target="_blank">Fight Night: Moraes vs Sandhagen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5767UFC.html" target="_blank">Markus Perez vs Dricus Du Plessis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/plessdri01.html" target="_blank">Dricus Du Plessis</a></td>
 <td>10/10/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5901UFC.html" target="_blank">Dalcha Lungiambula vs Markus Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lungidal01.html" target="_blank">Dalcha Lungiambula</a></td>
 <td>1/20/2021</td>

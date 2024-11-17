@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0022TUF.html" target="_blank">The Ultimate Fighter 21 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0021TUF.html" target="_blank">TUF 21 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3274UFC.html" target="_blank">Michael Graves vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gravemic01.html" target="_blank">Michael Graves</a></td>
 <td>7/12/2015</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">UFC on FOX: Dos Anjos vs. Cowboy 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC on Fox 17: Dos Anjos vs Cowboy 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3495UFC.html" target="_blank">Hayder Hassan vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hassahay01.html" target="_blank">Hayder Hassan</a></td>
 <td>12/19/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0136FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Alvarez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0137FNI.html" target="_blank">Fight Night: Dos Anjos vs Alvarez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3696UFC.html" target="_blank">Alvaro Herrera vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/herrealv01.html" target="_blank">Alvaro Herrera</a></td>
 <td>7/7/2016</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3833UFC.html" target="_blank">Vicente Luque vs Hector Urbina</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/urbinhec01.html" target="_blank">Hector Urbina</a></td>
 <td>9/24/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">UFC Fight Night: Manuwa vs. Anderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0157FNI.html" target="_blank">Fight Night: Manuwa vs Anderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4066UFC.html" target="_blank">Leon Edwards vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/edwarleo01.html" target="_blank">Leon Edwards</a></td>
 <td>3/18/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">UFC Fight Night: Brunson vs. Machida</a></td>
+<td style="text-align:left"><a href="/ufc/events/0171FNI.html" target="_blank">Fight Night: Brunson vs Machida</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4323UFC.html" target="_blank">Vicente Luque vs Niko Price</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pricenik01.html" target="_blank">Niko Price</a></td>
 <td>10/28/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4591UFC.html" target="_blank">Chad Laprise vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lapricha01.html" target="_blank">Chad Laprise</a></td>
 <td>5/19/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4779UFC.html" target="_blank">Vicente Luque vs Jalin Turner</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/turnejal01.html" target="_blank">Jalin Turner</a></td>
 <td>10/6/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Velasquez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">Fight Night: Ngannou vs Velasquez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4951UFC.html" target="_blank">Bryan Barberena vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barbebry01.html" target="_blank">Bryan Barberena</a></td>
 <td>2/17/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">Fight Night: Dos Anjos vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5097UFC.html" target="_blank">Derrick Krantz vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krantder01.html" target="_blank">Derrick Krantz</a></td>
 <td>5/18/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0218FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Carmouche 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0219FNI.html" target="_blank">Fight Night: Shevchenko vs Carmouche 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5217UFC.html" target="_blank">Vicente Luque vs Mike Perry</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perrymik01.html" target="_blank">Mike Perry</a></td>
 <td>8/10/2019</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs. Diaz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246PPV.html" target="_blank">UFC 244: Masvidal vs Diaz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5353UFC.html" target="_blank">Vicente Luque vs Stephen Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thompste01.html" target="_blank">Stephen Thompson</a></td>
 <td>11/2/2019</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0251PPV.html" target="_blank">UFC 249: Ferguson vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0251PPV.html" target="_blank">UFC 249: Ferguson vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5529UFC.html" target="_blank">Vicente Luque vs Niko Price</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pricenik01.html" target="_blank">Niko Price</a></td>
 <td>5/9/2020</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244FNI.html" target="_blank">UFC Fight Night: Brunson vs. Shahbazyan</a></td>
+<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">Fight Night: Brunson vs Shahbazyan</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5661UFC.html" target="_blank">Randy Brown vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownran01.html" target="_blank">Randy Brown</a></td>
 <td>8/1/2020</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262PPV.html" target="_blank">UFC 260: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262PPV.html" target="_blank">UFC 260: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5999UFC.html" target="_blank">Vicente Luque vs Tyron Woodley</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/woodltyr01.html" target="_blank">Tyron Woodley</a></td>
 <td>3/27/2021</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6185UFC.html" target="_blank">Michael Chiesa vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiesmic01.html" target="_blank">Michael Chiesa</a></td>
 <td>8/7/2021</td>
@@ -1043,7 +1045,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0297FNI.html" target="_blank">UFC Fight Night: Luque vs. Muhammad</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298FNI.html" target="_blank">Fight Night: Luque vs Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6525UFC.html" target="_blank">Vicente Luque vs Belal Muhammad</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/muhambel01.html" target="_blank">Belal Muhammad</a></td>
 <td>4/16/2022</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0308FNI.html" target="_blank">UFC Fight Night: Santos vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">Fight Night: Santos vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6710UFC.html" target="_blank">Vicente Luque vs Geoff Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nealgeo01.html" target="_blank">Geoff Neal</a></td>
 <td>8/6/2022</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">UFC Fight Night: Luque vs. Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">Fight Night: Luque vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7233UFC.html" target="_blank">Rafael Dos Anjos vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anjosraf01.html" target="_blank">Rafael Dos Anjos</a></td>
 <td>8/12/2023</td>
@@ -1172,7 +1174,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">UFC Fight Night: Blanchfield vs. Fiorot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0356FNI.html" target="_blank">Fight Night: Blanchfield vs Fiorot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7548UFC.html" target="_blank">Joaquin Buckley vs Vicente Luque</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/buckljoa01.html" target="_blank">Joaquin Buckley</a></td>
 <td>3/30/2024</td>

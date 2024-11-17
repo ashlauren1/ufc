@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4000UFC.html" target="_blank">Jeremy Kimball vs Marcos Rogerio de Lima</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/limamar01.html" target="_blank">Marcos Rogerio de Lima</a></td>
 <td>1/28/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0162FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">Fight Night: Chiesa vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4180UFC.html" target="_blank">Jeremy Kimball vs Josh Stansbury</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stansjos01.html" target="_blank">Josh Stansbury</a></td>
 <td>6/25/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0221PPV.html" target="_blank">UFC 218: Holloway vs. Aldo 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0221PPV.html" target="_blank">UFC 218: Holloway vs Aldo 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4400UFC.html" target="_blank">Jeremy Kimball vs Dominick Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reyesdom01.html" target="_blank">Dominick Reyes</a></td>
 <td>12/2/2017</td>
@@ -441,7 +443,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">UFC Fight Night: Shogun vs. Smith</a></td>
+<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">Fight Night: Shogun vs Smith</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4695UFC.html" target="_blank">Jeremy Kimball vs Darko Stosic</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stosidar01.html" target="_blank">Darko Stosic</a></td>
 <td>7/22/2018</td>

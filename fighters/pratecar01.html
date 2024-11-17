@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("pratecar01", [{'date': '2024-02-10', 'SigStr': 37, 'knockdowns': 1, 'SigStrAtt': 72, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 68, 'SigStrAttAg': 102, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-06-08', 'SigStr': 15, 'knockdowns': 1, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-08-17', 'SigStr': 55, 'knockdowns': 2, 'SigStrAtt': 84, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 111, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("pratecar01", [{'date': '2024-02-10', 'SigStr': 37, 'knockdowns': 1, 'SigStrAtt': 72, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 68, 'SigStrAttAg': 102, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-06-08', 'SigStr': 15, 'knockdowns': 1, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 14, 'SigStrAttAg': 27, 'TDAg': 0, 'TDAttAg': 2, 'SubAttAg': 0}, {'date': '2024-08-17', 'SigStr': 55, 'knockdowns': 2, 'SigStrAtt': 84, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 41, 'SigStrAttAg': 111, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}, {'date': '2024-11-09', 'SigStr': 12, 'knockdowns': 2, 'SigStrAtt': 21, 'takedown': 1, 'takedownAtt': 1, 'subAtt': 0, 'SigStrAg': 10, 'SigStrAttAg': 20, 'TDAg': 0, 'TDAttAg': 7, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0350FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Pyfer</a></td>
+<td style="text-align:left"><a href="/ufc/events/0351FNI.html" target="_blank">Fight Night: Hermansson vs Pyfer</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7464UFC.html" target="_blank">Trevin Giles vs Carlos Prates</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gilestre01.html" target="_blank">Trevin Giles</a></td>
 <td>2/10/2024</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Imavov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0361FNI.html" target="_blank">Fight Night: Cannonier vs Imavov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7654UFC.html" target="_blank">Carlos Prates vs Charles Radtke</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/radtkcha01.html" target="_blank">Charles Radtke</a></td>
 <td>6/8/2024</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs. Adesanya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307PPV.html" target="_blank">UFC 305: Du Plessis vs Adesanya</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7760UFC.html" target="_blank">Li Jingliang vs Carlos Prates</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jinglli01.html" target="_blank">Li Jingliang</a></td>
 <td>8/17/2024</td>
@@ -438,6 +440,49 @@
 <td>0</td>
 <td>0</td>
 <td>0.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0373FNI.html" target="_blank">Fight Night: Magny vs Prates</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7896UFC.html" target="_blank">Carlos Prates vs Neil Magny</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/magnynei01.html" target="_blank">Neil Magny</a></td>
+<td>11/9/2024</td>
+<td>Las Vegas, Nevada, USA</td>
+<td>Welterweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>5</td>
+<td>4.833333333</td>
+<td>2</td>
+<td>12</td>
+<td>21</td>
+<td>57.14%</td>
+<td>2.48</td>
+<td>13</td>
+<td>22</td>
+<td>9</td>
+<td>17</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>100.00%</td>
+<td>0</td>
+<td>0</td>
+<td>10</td>
+<td>20</td>
+<td>50.00%</td>
+<td>23</td>
+<td>33</td>
+<td>0</td>
+<td>7</td>
+<td>100.00%</td>
 <td>0</td>
 </tr>
 </tbody>

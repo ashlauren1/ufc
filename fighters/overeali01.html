@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2359UFC.html" target="_blank">Travis Browne vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/browntra01.html" target="_blank">Travis Browne</a></td>
 <td>8/17/2013</td>
@@ -484,7 +486,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">UFC Fight Night: Souza vs Mousasi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0090FNI.html" target="_blank">Fight Night: Souza vs Mousasi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2870UFC.html" target="_blank">Alistair Overeem vs Ben Rothwell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rothwben01.html" target="_blank">Ben Rothwell</a></td>
 <td>9/5/2014</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">UFC on FOX: Dos Anjos vs. Cowboy 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC on Fox 17: Dos Anjos vs Cowboy 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3485UFC.html" target="_blank">Alistair Overeem vs Junior Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santojun01.html" target="_blank">Junior Dos Santos</a></td>
 <td>12/19/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC Fight Night: Overeem vs Arlovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0134FNI.html" target="_blank">Fight Night: Overeem vs Arlovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3622UFC.html" target="_blank">Andrei Arlovski vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/arlovand01.html" target="_blank">Andrei Arlovski</a></td>
 <td>5/8/2016</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs. Overeem</a></td>
+<td style="text-align:left"><a href="/ufc/events/0206PPV.html" target="_blank">UFC 203: Miocic vs Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3800UFC.html" target="_blank">Stipe Miocic vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/miocisti01.html" target="_blank">Stipe Miocic</a></td>
 <td>9/10/2016</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs. Thompson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs Thompson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4040UFC.html" target="_blank">Mark Hunt vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/huntmar01.html" target="_blank">Mark Hunt</a></td>
 <td>3/4/2017</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0216PPV.html" target="_blank">UFC 213: Romero vs. Whittaker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0216PPV.html" target="_blank">UFC 213: Romero vs Whittaker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4193UFC.html" target="_blank">Alistair Overeem vs Fabricio Werdum</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/werdufab01.html" target="_blank">Fabricio Werdum</a></td>
 <td>7/8/2017</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0221PPV.html" target="_blank">UFC 218: Holloway vs. Aldo 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0221PPV.html" target="_blank">UFC 218: Holloway vs Aldo 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4390UFC.html" target="_blank">Francis Ngannou vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ngannfra01.html" target="_blank">Francis Ngannou</a></td>
 <td>12/2/2017</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs. Romero 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228PPV.html" target="_blank">UFC 225: Whittaker vs Romero 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4627UFC.html" target="_blank">Curtis Blaydes vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blaydcur01.html" target="_blank">Curtis Blaydes</a></td>
 <td>6/9/2018</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Ngannou 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0198FNI.html" target="_blank">Fight Night: Blaydes vs Ngannou 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4836UFC.html" target="_blank">Alistair Overeem vs Sergei Pavlovich</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pavloser01.html" target="_blank">Sergei Pavlovich</a></td>
 <td>11/24/2018</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0208FNI.html" target="_blank">UFC Fight Night: Overeem vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">Fight Night: Overeem vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5047UFC.html" target="_blank">Aleksei Oleinik vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oleinale01.html" target="_blank">Aleksei Oleinik</a></td>
 <td>4/20/2019</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">UFC Fight Night: Overeem vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">Fight Night: Overeem vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5388UFC.html" target="_blank">Alistair Overeem vs Jairzinho Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rozenjai01.html" target="_blank">Jairzinho Rozenstruik</a></td>
 <td>12/7/2019</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">UFC Fight Night: Overeem vs. Harris</a></td>
+<td style="text-align:left"><a href="/ufc/events/0237FNI.html" target="_blank">Fight Night: Overeem vs Harris</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5542UFC.html" target="_blank">Walt Harris vs Alistair Overeem</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/harriwal01.html" target="_blank">Walt Harris</a></td>
 <td>5/16/2020</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5709UFC.html" target="_blank">Alistair Overeem vs Augusto Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sakaiaug01.html" target="_blank">Augusto Sakai</a></td>
 <td>9/5/2020</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">Fight Night: Overeem vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5917UFC.html" target="_blank">Alistair Overeem vs Alexander Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/volkoale01.html" target="_blank">Alexander Volkov</a></td>
 <td>2/6/2021</td>
@@ -1129,7 +1131,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0098FNI.html" target="_blank">UFC on Fox 13: Dos Santos vs Miocic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7863UFC.html" target="_blank">Alistair Overeem vs Stefan Struve</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/struvste01.html" target="_blank">Stefan Struve</a></td>
 <td>12/13/2014</td>

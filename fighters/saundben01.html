@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0006TUF.html" target="_blank">The Ultimate Fighter: Team Serra vs Team Hughes Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0006TUF.html" target="_blank">TUF 6 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0822UFC.html" target="_blank">Dan Barrera vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/barredan01.html" target="_blank">Dan Barrera</a></td>
 <td>12/8/2007</td>
@@ -398,7 +400,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0017FNI.html" target="_blank">UFC Fight Night - Fight for the Troops</a></td>
+<td style="text-align:left"><a href="/ufc/events/0017FNI.html" target="_blank">Fight Night - Fight for the Troops</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1015UFC.html" target="_blank">Ben Saunders vs Brandon Wolff</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wolffbra01.html" target="_blank">Brandon Wolff</a></td>
 <td>12/10/2008</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0088FNI.html" target="_blank">UFC Fight Night: Henderson vs Dos Anjos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0089FNI.html" target="_blank">Fight Night: Henderson vs Dos Anjos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2849UFC.html" target="_blank">Chris Heatherly vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heathchr01.html" target="_blank">Chris Heatherly</a></td>
 <td>8/23/2014</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0115FNI.html" target="_blank">UFC on Fox: Dillashaw vs. Barao II</a></td>
+<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC on Fox 16: Dillashaw vs Barao 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3312UFC.html" target="_blank">Kenny Robertson vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberken01.html" target="_blank">Kenny Robertson</a></td>
 <td>7/25/2015</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC Fight Night: Dillashaw vs Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">Fight Night: Dillashaw vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3513UFC.html" target="_blank">Patrick Cote vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cotepat01.html" target="_blank">Patrick Cote</a></td>
 <td>1/17/2016</td>
@@ -742,7 +744,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0151FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Penn</a></td>
+<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">Fight Night: Rodriguez vs Penn</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3981UFC.html" target="_blank">Court McGee vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcgeecou01.html" target="_blank">Court McGee</a></td>
 <td>1/15/2017</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">Fight Night: Gustafsson vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4123UFC.html" target="_blank">Ben Saunders vs Peter Sobotta</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sobotpet01.html" target="_blank">Peter Sobotta</a></td>
 <td>5/28/2017</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4512UFC.html" target="_blank">Alan Jouban vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/joubaala01.html" target="_blank">Alan Jouban</a></td>
 <td>2/24/2018</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0186FNI.html" target="_blank">UFC Fight Night: Rivera vs. Moraes</a></td>
+<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">Fight Night: Rivera vs Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4613UFC.html" target="_blank">Jake Ellenberger vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ellenjak01.html" target="_blank">Jake Ellenberger</a></td>
 <td>6/1/2018</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0193FNI.html" target="_blank">UFC Fight Night: Marreta vs. Anders</a></td>
+<td style="text-align:left"><a href="/ufc/events/0194FNI.html" target="_blank">Fight Night: Marreta vs Anders</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4769UFC.html" target="_blank">Sergio Moraes vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraeser01.html" target="_blank">Sergio Moraes</a></td>
 <td>9/22/2018</td>
@@ -957,7 +959,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs. Lewis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0233PPV.html" target="_blank">UFC 230: Cormier vs Lewis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4807UFC.html" target="_blank">Lyman Good vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/goodlym01.html" target="_blank">Lyman Good</a></td>
 <td>11/3/2018</td>
@@ -1000,7 +1002,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209FNI.html" target="_blank">UFC Fight Night: Jacare vs. Hermansson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0210FNI.html" target="_blank">Fight Night: Jacare vs Hermansson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5064UFC.html" target="_blank">Takashi Sato vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/satotak01.html" target="_blank">Takashi Sato</a></td>
 <td>4/27/2019</td>
@@ -1043,7 +1045,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5408UFC.html" target="_blank">Matt Brown vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownmat01.html" target="_blank">Matt Brown</a></td>
 <td>12/14/2019</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">UFC Fight Night: Dos Santos vs Miocic</a></td>
+<td style="text-align:left"><a href="/ufc/events/0098FNI.html" target="_blank">UFC on Fox 13: Dos Santos vs Miocic</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7867UFC.html" target="_blank">Joe Riggs vs Ben Saunders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riggsjoe01.html" target="_blank">Joe Riggs</a></td>
 <td>12/13/2014</td>

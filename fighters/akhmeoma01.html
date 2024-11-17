@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">Fight Night: Belfort vs Henderson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2474UFC.html" target="_blank">Omari Akhmedov vs Thiago Perpetuo</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perpethi01.html" target="_blank">Thiago Perpetuo</a></td>
 <td>11/9/2013</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">UFC Fight Night: Gustafsson vs Manuwa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0073FNI.html" target="_blank">Fight Night: Gustafsson vs Manuwa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2612UFC.html" target="_blank">Omari Akhmedov vs Gunnar Nelson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nelsogun01.html" target="_blank">Gunnar Nelson</a></td>
 <td>3/8/2014</td>
@@ -441,7 +443,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0110FNI.html" target="_blank">UFC Fight Night: Boetsch vs Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0111FNI.html" target="_blank">Fight Night: Boetsch vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3225UFC.html" target="_blank">Omari Akhmedov vs Brian Ebersole</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ebersbri01.html" target="_blank">Brian Ebersole</a></td>
 <td>6/6/2015</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0123FNI.html" target="_blank">UFC Fight Night: Namajunas vs. VanZant</a></td>
+<td style="text-align:left"><a href="/ufc/events/0124FNI.html" target="_blank">Fight Night: Namajunas vs VanZant</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3455UFC.html" target="_blank">Omari Akhmedov vs Sergio Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraeser01.html" target="_blank">Sergio Moraes</a></td>
 <td>12/10/2015</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">UFC Fight Night: Whittaker vs. Brunson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0149FNI.html" target="_blank">Fight Night: Whittaker vs Brunson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3909UFC.html" target="_blank">Omari Akhmedov vs Kyle Noke</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nokekyl01.html" target="_blank">Kyle Noke</a></td>
 <td>11/26/2016</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">UFC Fight Night: Gustafsson vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0160FNI.html" target="_blank">Fight Night: Gustafsson vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4124UFC.html" target="_blank">Omari Akhmedov vs Abdul Razak Alhassan</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alhasabd01.html" target="_blank">Abdul Razak Alhassan</a></td>
 <td>5/28/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs. Holm</a></td>
+<td style="text-align:left"><a href="/ufc/events/0222PPV.html" target="_blank">UFC 219: Cyborg vs Holm</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4433UFC.html" target="_blank">Omari Akhmedov vs Marvin Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vettomar01.html" target="_blank">Marvin Vettori</a></td>
 <td>12/30/2017</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">Fight Night: Lewis vs Dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4989UFC.html" target="_blank">Omari Akhmedov vs Tim Boetsch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/boetstim01.html" target="_blank">Tim Boetsch</a></td>
 <td>3/9/2019</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0244PPV.html" target="_blank">UFC 242: Khabib vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5263UFC.html" target="_blank">Omari Akhmedov vs Zak Cummings</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummizak01.html" target="_blank">Zak Cummings</a></td>
 <td>9/7/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0247PPV.html" target="_blank">UFC 245: Usman vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5407UFC.html" target="_blank">Omari Akhmedov vs Ian Heinisch</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/heiniian01.html" target="_blank">Ian Heinisch</a></td>
 <td>12/14/2019</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0245FNI.html" target="_blank">UFC Fight Night: Lewis vs. Oleinik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0246FNI.html" target="_blank">Fight Night: Lewis vs Oleinik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5668UFC.html" target="_blank">Omari Akhmedov vs Chris Weidman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/weidmchr01.html" target="_blank">Chris Weidman</a></td>
 <td>8/8/2020</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5898UFC.html" target="_blank">Omari Akhmedov vs Tom Breese</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/breestom01.html" target="_blank">Tom Breese</a></td>
 <td>1/20/2021</td>
@@ -871,7 +873,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs. McGregor 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs McGregor 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6150UFC.html" target="_blank">Omari Akhmedov vs Brad Tavares</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tavarbra01.html" target="_blank">Brad Tavares</a></td>
 <td>7/10/2021</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0132FNI.html" target="_blank">UFC Fight Night: Teixeira vs Evans</a></td>
+<td style="text-align:left"><a href="/ufc/events/0133FNI.html" target="_blank">UFC on Fox 19: Teixeira vs Evans</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7860UFC.html" target="_blank">Omari Akhmedov vs Elizeu Zaleski dos Santos</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/santoeli01.html" target="_blank">Elizeu Zaleski dos Santos</a></td>
 <td>4/16/2016</td>

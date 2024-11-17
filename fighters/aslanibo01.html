@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -255,7 +257,7 @@
 <script src="chartScript.js"></script>
 <script>
     // Initialize the chart with player-specific data by calling a function from chart_logic.js
-    initializeChart("aslanibo01", [{'date': '2024-03-30', 'SigStr': 74, 'knockdowns': 1, 'SigStrAtt': 180, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 55, 'SigStrAttAg': 157, 'TDAg': 0, 'TDAttAg': 8, 'SubAttAg': 0}], 25.5, "SigStr");
+    initializeChart("aslanibo01", [{'date': '2024-03-30', 'SigStr': 74, 'knockdowns': 1, 'SigStrAtt': 180, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 55, 'SigStrAttAg': 157, 'TDAg': 0, 'TDAttAg': 8, 'SubAttAg': 0}, {'date': '2024-10-26', 'SigStr': 28, 'knockdowns': 0, 'SigStrAtt': 36, 'takedown': 0, 'takedownAtt': 0, 'subAtt': 0, 'SigStrAg': 1, 'SigStrAttAg': 1, 'TDAg': 0, 'TDAttAg': 0, 'SubAttAg': 0}], 25.5, "SigStr");
 </script>
 <div id="table-container">
 <span class="table-button-container">
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">UFC Fight Night: Blanchfield vs. Fiorot</a></td>
+<td style="text-align:left"><a href="/ufc/events/0356FNI.html" target="_blank">Fight Night: Blanchfield vs Fiorot</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7557UFC.html" target="_blank">Ibo Aslan vs Anton Turkalj</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/turkaant01.html" target="_blank">Anton Turkalj</a></td>
 <td>3/30/2024</td>
@@ -352,6 +354,49 @@
 <td>0</td>
 <td>8</td>
 <td>100.00%</td>
+<td>0</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="/ufc/events/0310PPV.html" target="_blank">UFC 308: Topuria vs Holloway</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7880UFC.html" target="_blank">Ibo Aslan vs Rafael Cerqueira</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/cerqura01.html" target="_blank">Rafael Cerqueira</a></td>
+<td>10/26/2024</td>
+<td>Abu Dhabi, United Arab Emirates</td>
+<td>Light Heavyweight</td>
+<td>KO/TKO</td>
+<td>W</td>
+<td>3</td>
+<td>0.85</td>
+<td>0</td>
+<td>28</td>
+<td>36</td>
+<td>77.78%</td>
+<td>32.94</td>
+<td>28</td>
+<td>36</td>
+<td>26</td>
+<td>33</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0.00%</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.00%</td>
 <td>0</td>
 </tr>
 </tbody>

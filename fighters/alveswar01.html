@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0019TUF.html" target="_blank">TUF Brazil Finale: Miocic vs Maldonado</a></td>
+<td style="text-align:left"><a href="/ufc/events/0079FNI.html" target="_blank">Fight Night: Miocic vs Maldonado</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2713UFC.html" target="_blank">Marcio Alexandre Junior vs Warlley Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alexamar01.html" target="_blank">Marcio Alexandre Junior</a></td>
 <td>5/31/2014</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2958UFC.html" target="_blank">Warlley Alves vs Alan Jouban</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/joubaala01.html" target="_blank">Alan Jouban</a></td>
 <td>11/8/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0146FNI.html" target="_blank">UFC Fight Night: Bader vs. Nogueira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">Fight Night: Bader vs Nogueira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3886UFC.html" target="_blank">Warlley Alves vs Kamaru Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/usmankam01.html" target="_blank">Kamaru Usman</a></td>
 <td>11/19/2016</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">UFC Fight Night: Cerrone vs. Till</a></td>
+<td style="text-align:left"><a href="/ufc/events/0170FNI.html" target="_blank">Fight Night: Cerrone vs Till</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4314UFC.html" target="_blank">Warlley Alves vs Salim Touahri</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/touahsal01.html" target="_blank">Salim Touahri</a></td>
 <td>10/21/2017</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs. Pennington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0227PPV.html" target="_blank">UFC 224: Nunes vs Pennington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4582UFC.html" target="_blank">Sultan Aliev vs Warlley Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alievsul01.html" target="_blank">Sultan Aliev</a></td>
 <td>5/12/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC Fight Night: Gaethje vs. Vick</a></td>
+<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">Fight Night: Gaethje vs Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4728UFC.html" target="_blank">Warlley Alves vs James Krause</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krausjam01.html" target="_blank">James Krause</a></td>
 <td>8/25/2018</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs. Andrade</a></td>
+<td style="text-align:left"><a href="/ufc/events/0239PPV.html" target="_blank">UFC 237: Namajunas vs Andrade</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5090UFC.html" target="_blank">Warlley Alves vs Sergio Moraes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraeser01.html" target="_blank">Sergio Moraes</a></td>
 <td>5/11/2019</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">Fight Night: Blachowicz vs Jacare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5384UFC.html" target="_blank">Warlley Alves vs Randy Brown</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/brownran01.html" target="_blank">Randy Brown</a></td>
 <td>11/16/2019</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5893UFC.html" target="_blank">Warlley Alves vs Mounir Lazzez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lazzemou01.html" target="_blank">Mounir Lazzez</a></td>
 <td>1/20/2021</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">UFC Fight Night: Gane vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">Fight Night: Gane vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6135UFC.html" target="_blank">Warlley Alves vs Jeremiah Wells</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wellsjer01.html" target="_blank">Jeremiah Wells</a></td>
 <td>6/26/2021</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs. Hill</a></td>
+<td style="text-align:left"><a href="/ufc/events/0285PPV.html" target="_blank">UFC 283: Teixeira vs Hill</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6925UFC.html" target="_blank">Warlley Alves vs Nicolas Dalby</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dalbynic01.html" target="_blank">Nicolas Dalby</a></td>
 <td>1/21/2023</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0296PPV.html" target="_blank">UFC 294: Makhachev vs. Volkanovski 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0296PPV.html" target="_blank">UFC 294: Makhachev vs Volkanovski 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7340UFC.html" target="_blank">Ikram Aliskerov vs Warlley Alves</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/aliskikr01.html" target="_blank">Ikram Aliskerov</a></td>
 <td>10/21/2023</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0359FNI.html" target="_blank">UFC Fight Night: Barboza vs. Murphy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0360FNI.html" target="_blank">Fight Night: Barboza vs Murphy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7631UFC.html" target="_blank">Warlley Alves vs Abus Magomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/magomabu01.html" target="_blank">Abus Magomedov</a></td>
 <td>5/18/2024</td>

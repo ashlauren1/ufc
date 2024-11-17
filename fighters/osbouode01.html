@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs. Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0248PPV.html" target="_blank">UFC 246: McGregor vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5429UFC.html" target="_blank">Brian Kelleher vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kellebri01.html" target="_blank">Brian Kelleher</a></td>
 <td>1/18/2020</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">Fight Night: Overeem vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5928UFC.html" target="_blank">Ode Osbourne vs Jerome Rivera</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/riverjer01.html" target="_blank">Jerome Rivera</a></td>
 <td>2/6/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267PPV.html" target="_blank">UFC 265: Lewis vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6192UFC.html" target="_blank">Manel Kape vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kapeman01.html" target="_blank">Manel Kape</a></td>
 <td>8/7/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs. Covington 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270PPV.html" target="_blank">UFC 268: Usman vs Covington 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6328UFC.html" target="_blank">Ode Osbourne vs CJ Vergara</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/vergacj01.html" target="_blank">CJ Vergara</a></td>
 <td>11/6/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">UFC Fight Night: Volkov vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303FNI.html" target="_blank">Fight Night: Volkov vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6601UFC.html" target="_blank">Zarrukh Adashev vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/adashzar01.html" target="_blank">Zarrukh Adashev</a></td>
 <td>6/4/2022</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309FNI.html" target="_blank">UFC Fight Night: Vera vs. Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">Fight Night: Vera vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6729UFC.html" target="_blank">Tyson Nam vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/namtys01.html" target="_blank">Tyson Nam</a></td>
 <td>8/13/2022</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">UFC Fight Night: Muniz vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">Fight Night: Muniz vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6970UFC.html" target="_blank">Charles Johnson vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/johnscha01.html" target="_blank">Charles Johnson</a></td>
 <td>2/25/2023</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">UFC Fight Night: Sandhagen vs. Font</a></td>
+<td style="text-align:left"><a href="/ufc/events/0337FNI.html" target="_blank">Fight Night: Sandhagen vs Font</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7232UFC.html" target="_blank">Asu Almabayev vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/almabasu01.html" target="_blank">Asu Almabayev</a></td>
 <td>8/5/2023</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">UFC Fight Night: Tuivasa vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">Fight Night: Tuivasa vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7529UFC.html" target="_blank">Jafel Filho vs Ode Osbourne</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/filhojaf01.html" target="_blank">Jafel Filho</a></td>
 <td>3/16/2024</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0227FNI.html" target="_blank">UFC Fight Night: Blachowicz vs. Jacare</a></td>
+<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">Fight Night: Blachowicz vs Jacare</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5379UFC.html" target="_blank">Antonio Arroyo vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/arroyant01.html" target="_blank">Antonio Arroyo</a></td>
 <td>11/16/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5712UFC.html" target="_blank">Bartosz Fabinski vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fabinbar01.html" target="_blank">Bartosz Fabinski</a></td>
 <td>9/5/2020</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs. Chandler</a></td>
+<td style="text-align:left"><a href="/ufc/events/0264PPV.html" target="_blank">UFC 262: Oliveira vs Chandler</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6069UFC.html" target="_blank">Andre Muniz vs Jacare Souza</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/souzajac01.html" target="_blank">Jacare Souza</a></td>
 <td>5/15/2021</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs. Poirier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0271PPV.html" target="_blank">UFC 269: Oliveira vs Poirier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6373UFC.html" target="_blank">Eryk Anders vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/anderery01.html" target="_blank">Eryk Anders</a></td>
 <td>12/11/2021</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0278PPV.html" target="_blank">UFC 276: Adesanya vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6656UFC.html" target="_blank">Uriah Hall vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/halluri01.html" target="_blank">Uriah Hall</a></td>
 <td>7/2/2022</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">UFC Fight Night: Muniz vs. Allen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0323FNI.html" target="_blank">Fight Night: Muniz vs Allen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6963UFC.html" target="_blank">Brendan Allen vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/allenbre01.html" target="_blank">Brendan Allen</a></td>
 <td>2/25/2023</td>
@@ -570,7 +572,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0335FNI.html" target="_blank">UFC Fight Night: Aspinall vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0336FNI.html" target="_blank">Fight Night: Aspinall vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7198UFC.html" target="_blank">Paul Craig vs Andre Muniz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/craigpau01.html" target="_blank">Paul Craig</a></td>
 <td>7/22/2023</td>
@@ -613,9 +615,9 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0347FNI.html" target="_blank">UFC Fight Night: Song vs. Gutierrez</a></td>
-<td style="text-align:left"><a href="/ufc/fights/7403UFC.html" target="_blank">Andre Muniz vs JunYong Park</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/parkjun01.html" target="_blank">JunYong Park</a></td>
+<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">Fight Night: Song vs Gutierrez</a></td>
+<td style="text-align:left"><a href="/ufc/fights/7403UFC.html" target="_blank">Andre Muniz vs Jun Yong Park</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/parkjun01.html" target="_blank">Jun Yong Park</a></td>
 <td>12/9/2023</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Middleweight</td>

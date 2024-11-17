@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">UFC Fight Night: Anderson vs. Blachowicz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">Fight Night: Anderson vs Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5464UFC.html" target="_blank">Macy Chiasson vs Shanna Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiasmac01.html" target="_blank">Macy Chiasson</a></td>
 <td>2/15/2020</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0282FNI.html" target="_blank">UFC Fight Night: Santos vs. Walker</a></td>
+<td style="text-align:left"><a href="/ufc/events/0283FNI.html" target="_blank">Fight Night: Santos vs Walker</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6266UFC.html" target="_blank">Stephanie Egger vs Shanna Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/eggerste01.html" target="_blank">Stephanie Egger</a></td>
 <td>10/2/2021</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">UFC Fight Night: Font vs. Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">Fight Night: Font vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6560UFC.html" target="_blank">Gina Mazany vs Shanna Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mazangin01.html" target="_blank">Gina Mazany</a></td>
 <td>4/30/2022</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0315FNI.html" target="_blank">UFC Fight Night: Rodriguez vs. Lemos</a></td>
+<td style="text-align:left"><a href="/ufc/events/0316FNI.html" target="_blank">Fight Night: Rodriguez vs Lemos</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6832UFC.html" target="_blank">Miranda Maverick vs Shanna Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mavermir01.html" target="_blank">Miranda Maverick</a></td>
 <td>11/5/2022</td>

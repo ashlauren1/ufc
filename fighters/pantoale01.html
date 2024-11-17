@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0152FNI.html" target="_blank">UFC Fight Night: Shevchenko vs. Pena</a></td>
+<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC on Fox 23: Shevchenko vs Pena</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4001UFC.html" target="_blank">Alexandre Pantoja vs Eric Shelton</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shelteri01.html" target="_blank">Eric Shelton</a></td>
 <td>1/28/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0163FNI.html" target="_blank">UFC Fight Night: Nelson vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0164FNI.html" target="_blank">Fight Night: Nelson vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4210UFC.html" target="_blank">Alexandre Pantoja vs Neil Seery</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/seerynei01.html" target="_blank">Neil Seery</a></td>
 <td>7/16/2017</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4454UFC.html" target="_blank">Dustin Ortiz vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ortizdus01.html" target="_blank">Dustin Ortiz</a></td>
 <td>1/20/2018</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">UFC Fight Night: Maia vs. Usman</a></td>
+<td style="text-align:left"><a href="/ufc/events/0185FNI.html" target="_blank">Fight Night: Maia vs Usman</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4593UFC.html" target="_blank">Brandon Moreno vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morenbra01.html" target="_blank">Brandon Moreno</a></td>
 <td>5/19/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0196FNI.html" target="_blank">UFC Fight Night: Magny vs. Ponzinibbio</a></td>
+<td style="text-align:left"><a href="/ufc/events/0197FNI.html" target="_blank">Fight Night: Magny vs Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4829UFC.html" target="_blank">Alexandre Pantoja vs Ulka Sasaki</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sasakulk01.html" target="_blank">Ulka Sasaki</a></td>
 <td>11/17/2018</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5040UFC.html" target="_blank">Alexandre Pantoja vs Wilson Reis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reiswil01.html" target="_blank">Wilson Reis</a></td>
 <td>4/13/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs. Edgar</a></td>
+<td style="text-align:left"><a href="/ufc/events/0242PPV.html" target="_blank">UFC 240: Holloway vs Edgar</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5201UFC.html" target="_blank">Deiveson Figueiredo vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/figuedei01.html" target="_blank">Deiveson Figueiredo</a></td>
 <td>7/27/2019</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">UFC Fight Night: Edgar vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230FNI.html" target="_blank">Fight Night: Edgar vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5422UFC.html" target="_blank">Alexandre Pantoja vs Matt Schnell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/schnemat01.html" target="_blank">Matt Schnell</a></td>
 <td>12/21/2019</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0242FNI.html" target="_blank">UFC Fight Night: Figueiredo vs. Benavidez 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0243FNI.html" target="_blank">Fight Night: Figueiredo vs Benavidez 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5636UFC.html" target="_blank">Askar Askarov vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/askarask01.html" target="_blank">Askar Askarov</a></td>
 <td>7/18/2020</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">UFC Fight Night: Overeem vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0263FNI.html" target="_blank">Fight Night: Overeem vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5920UFC.html" target="_blank">Manel Kape vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kapeman01.html" target="_blank">Manel Kape</a></td>
 <td>2/6/2021</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0278FNI.html" target="_blank">UFC Fight Night: Cannonier vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279FNI.html" target="_blank">Fight Night: Cannonier vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6201UFC.html" target="_blank">Alexandre Pantoja vs Brandon Royval</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/royvabra01.html" target="_blank">Brandon Royval</a></td>
 <td>8/21/2021</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs. Nunes 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0279PPV.html" target="_blank">UFC 277: Pena vs Nunes 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6699UFC.html" target="_blank">Alexandre Pantoja vs Alex Perez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/perezale01.html" target="_blank">Alex Perez</a></td>
 <td>7/30/2022</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0292PPV.html" target="_blank">UFC 290: Volkanovski vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7170UFC.html" target="_blank">Brandon Moreno vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morenbra01.html" target="_blank">Brandon Moreno</a></td>
 <td>7/8/2023</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs. Covington</a></td>
+<td style="text-align:left"><a href="/ufc/events/0298PPV.html" target="_blank">UFC 296: Edwards vs Covington</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7411UFC.html" target="_blank">Alexandre Pantoja vs Brandon Royval</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/royvabra01.html" target="_blank">Brandon Royval</a></td>
 <td>12/16/2023</td>
@@ -914,7 +916,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs. Erceg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs Erceg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7598UFC.html" target="_blank">Steve Erceg vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ercegste01.html" target="_blank">Steve Erceg</a></td>
 <td>5/4/2024</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">UFC Fight Night: Belfort vs Henderson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0065FNI.html" target="_blank">Fight Night: Belfort vs Henderson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2477UFC.html" target="_blank">Jose Maria vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mariajos01.html" target="_blank">Jose Maria</a></td>
 <td>11/9/2013</td>
@@ -355,7 +357,7 @@
 <td>4</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">UFC Fight Night: Rockhold vs Philippou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0069FNI.html" target="_blank">Fight Night: Rockhold vs Philippou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2547UFC.html" target="_blank">John Moraga vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moragjoh01.html" target="_blank">John Moraga</a></td>
 <td>1/15/2014</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox: Werdum vs Browne</a></td>
+<td style="text-align:left"><a href="/ufc/events/0077FNI.html" target="_blank">UFC on Fox 11: Werdum vs Browne</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2673UFC.html" target="_blank">Ray Borg vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/borgray01.html" target="_blank">Ray Borg</a></td>
 <td>4/19/2014</td>
@@ -441,7 +443,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0020TUF.html" target="_blank">The Ultimate Fighter 19 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0019TUF.html" target="_blank">TUF 19 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2790UFC.html" target="_blank">Dustin Ortiz vs Justin Scoggins</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/scoggjus01.html" target="_blank">Justin Scoggins</a></td>
 <td>7/6/2014</td>
@@ -484,7 +486,7 @@
 <td>3</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">UFC Fight Night: Edgar vs Swanson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0097FNI.html" target="_blank">Fight Night: Edgar vs Swanson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2982UFC.html" target="_blank">Joseph Benavidez vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/benavjos01.html" target="_blank">Joseph Benavidez</a></td>
 <td>11/22/2014</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC Fight Night: Teixeira vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">Fight Night: Teixeira vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3340UFC.html" target="_blank">Willie Gates vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gateswil01.html" target="_blank">Willie Gates</a></td>
 <td>8/8/2015</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">UFC Fight Night: Johnson vs. Bader</a></td>
+<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC on Fox 18: Johnson vs Bader</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3529UFC.html" target="_blank">Dustin Ortiz vs Wilson Reis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reiswil01.html" target="_blank">Wilson Reis</a></td>
 <td>1/30/2016</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0143FNI.html" target="_blank">UFC Fight Night: Cyborg vs. Lansberg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0144FNI.html" target="_blank">Fight Night: Cyborg vs Lansberg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3830UFC.html" target="_blank">Jussier Formiga vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/formijus01.html" target="_blank">Jussier Formiga</a></td>
 <td>9/24/2016</td>
@@ -656,7 +658,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs. Pettis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0209PPV.html" target="_blank">UFC 206: Holloway vs Pettis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3955UFC.html" target="_blank">Zach Makovsky vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/makovzac01.html" target="_blank">Zach Makovsky</a></td>
 <td>12/10/2016</td>
@@ -699,7 +701,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4103UFC.html" target="_blank">Brandon Moreno vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/morenbra01.html" target="_blank">Brandon Moreno</a></td>
 <td>4/22/2017</td>
@@ -742,7 +744,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0165FNI.html" target="_blank">UFC Fight Night: Pettis vs. Moreno</a></td>
+<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">Fight Night: Pettis vs Moreno</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4247UFC.html" target="_blank">Dustin Ortiz vs Hector Sandoval</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sandohec01.html" target="_blank">Hector Sandoval</a></td>
 <td>8/5/2017</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223PPV.html" target="_blank">UFC 220: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4454UFC.html" target="_blank">Dustin Ortiz vs Alexandre Pantoja</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pantoale01.html" target="_blank">Alexandre Pantoja</a></td>
 <td>1/20/2018</td>
@@ -828,7 +830,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0190FNI.html" target="_blank">UFC Fight Night: Alvarez vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC on Fox 30: Alvarez vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4708UFC.html" target="_blank">Matheus Nicolau vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nicolmat01.html" target="_blank">Matheus Nicolau</a></td>
 <td>7/28/2018</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0200FNI.html" target="_blank">UFC Fight Night: Cejudo vs. Dillashaw</a></td>
+<td style="text-align:left"><a href="/ufc/events/0201FNI.html" target="_blank">Fight Night: Cejudo vs Dillashaw</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4913UFC.html" target="_blank">Joseph Benavidez vs Dustin Ortiz</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/benavjos01.html" target="_blank">Joseph Benavidez</a></td>
 <td>1/19/2019</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0125FNI.html" target="_blank">UFC Fight Night: Dillashaw vs Cruz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0126FNI.html" target="_blank">Fight Night: Dillashaw vs Cruz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3516UFC.html" target="_blank">Maximo Blanco vs Luke Sanders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/blancmax01.html" target="_blank">Maximo Blanco</a></td>
 <td>1/17/2016</td>
@@ -355,7 +357,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs. Thompson 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212PPV.html" target="_blank">UFC 209: Woodley vs Thompson 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4043UFC.html" target="_blank">Iuri Alcantara vs Luke Sanders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alcaniur01.html" target="_blank">Iuri Alcantara</a></td>
 <td>3/4/2017</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0174FNI.html" target="_blank">UFC Fight Night: Swanson vs. Ortega</a></td>
+<td style="text-align:left"><a href="/ufc/events/0175FNI.html" target="_blank">Fight Night: Swanson vs Ortega</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4409UFC.html" target="_blank">Luke Sanders vs Andre Soukhamthath</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/soukhand01.html" target="_blank">Andre Soukhamthath</a></td>
 <td>12/9/2017</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0182FNI.html" target="_blank">UFC Fight Night: Poirier vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC on Fox 29: Poirier vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4560UFC.html" target="_blank">Luke Sanders vs Patrick Williams</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/willipat01.html" target="_blank">Patrick Williams</a></td>
 <td>4/14/2018</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0191FNI.html" target="_blank">UFC Fight Night: Gaethje vs. Vick</a></td>
+<td style="text-align:left"><a href="/ufc/events/0192FNI.html" target="_blank">Fight Night: Gaethje vs Vick</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4734UFC.html" target="_blank">Luke Sanders vs Rani Yahya</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yahyaran01.html" target="_blank">Rani Yahya</a></td>
 <td>8/25/2018</td>
@@ -527,7 +529,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0202FNI.html" target="_blank">UFC Fight Night: Ngannou vs. Velasquez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0203FNI.html" target="_blank">Fight Night: Ngannou vs Velasquez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4957UFC.html" target="_blank">Renan Barao vs Luke Sanders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baraoren01.html" target="_blank">Renan Barao</a></td>
 <td>2/17/2019</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0257FNI.html" target="_blank">UFC Fight Night: Smith vs. Clark</a></td>
+<td style="text-align:left"><a href="/ufc/events/0258FNI.html" target="_blank">Fight Night: Smith vs Clark</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5847UFC.html" target="_blank">Nate Maness vs Luke Sanders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/manesnat01.html" target="_blank">Nate Maness</a></td>
 <td>11/28/2020</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0269FNI.html" target="_blank">UFC Fight Night: Reyes vs. Prochazka</a></td>
+<td style="text-align:left"><a href="/ufc/events/0270FNI.html" target="_blank">Fight Night: Reyes vs Prochazka</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6054UFC.html" target="_blank">Felipe Colares vs Luke Sanders</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/colarfel01.html" target="_blank">Felipe Colares</a></td>
 <td>5/1/2021</td>

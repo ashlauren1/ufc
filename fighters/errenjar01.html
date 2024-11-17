@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0310FNI.html" target="_blank">UFC Fight Night: Gane vs. Tuivasa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0311FNI.html" target="_blank">Fight Night: Gane vs Tuivasa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6748UFC.html" target="_blank">Jarno Errens vs William Gomis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gomiswil01.html" target="_blank">William Gomis</a></td>
 <td>9/3/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0338FNI.html" target="_blank">UFC Fight Night: Holloway vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0339FNI.html" target="_blank">Fight Night: Holloway vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7270UFC.html" target="_blank">SeungWoo Choi vs Jarno Errens</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/choiseu01.html" target="_blank">SeungWoo Choi</a></td>
 <td>8/26/2023</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">UFC Fight Night: Ribas vs. Namajunas</a></td>
+<td style="text-align:left"><a href="/ufc/events/0355FNI.html" target="_blank">Fight Night: Ribas vs Namajunas</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7543UFC.html" target="_blank">Jarno Errens vs Steven Nguyen</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nguyeste01.html" target="_blank">Steven Nguyen</a></td>
 <td>3/23/2024</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0366FNI.html" target="_blank">UFC Fight Night: Tybura vs. Spivac 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0367FNI.html" target="_blank">Fight Night: Tybura vs Spivac 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7754UFC.html" target="_blank">Jarno Errens vs Youssef Zalal</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zalalyou01.html" target="_blank">Youssef Zalal</a></td>
 <td>8/10/2024</td>

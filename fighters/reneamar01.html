@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0102FNI.html" target="_blank">UFC Fight Night: Bigfoot vs Mir</a></td>
+<td style="text-align:left"><a href="/ufc/events/0103FNI.html" target="_blank">Fight Night: Bigfoot vs Mir</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3086UFC.html" target="_blank">Jessica Andrade vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andrajes01.html" target="_blank">Jessica Andrade</a></td>
 <td>2/22/2015</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0113FNI.html" target="_blank">UFC Fight Night: Mir vs Duffee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0114FNI.html" target="_blank">Fight Night: Mir vs Duffee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3285UFC.html" target="_blank">Holly Holm vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/holmhol01.html" target="_blank">Holly Holm</a></td>
 <td>7/15/2015</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">UFC Fight Night: Cowboy vs Cowboy</a></td>
+<td style="text-align:left"><a href="/ufc/events/0129FNI.html" target="_blank">Fight Night: Cowboy vs Cowboy</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3557UFC.html" target="_blank">Ashlee Evans-Smith vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/evansash01.html" target="_blank">Ashlee Evans-Smith</a></td>
 <td>2/21/2016</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0147FNI.html" target="_blank">UFC Fight Night: Mousasi vs. Hall 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0148FNI.html" target="_blank">Fight Night: Mousasi vs Hall 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3904UFC.html" target="_blank">Milana Dudieva vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dudiemil01.html" target="_blank">Milana Dudieva</a></td>
 <td>11/19/2016</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0155FNI.html" target="_blank">UFC Fight Night: Belfort vs. Gastelum</a></td>
+<td style="text-align:left"><a href="/ufc/events/0156FNI.html" target="_blank">Fight Night: Belfort vs Gastelum</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4051UFC.html" target="_blank">Bethe Correia vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/correbet01.html" target="_blank">Bethe Correia</a></td>
 <td>3/11/2017</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0166FNI.html" target="_blank">UFC Fight Night: Volkov vs. Struve</a></td>
+<td style="text-align:left"><a href="/ufc/events/0167FNI.html" target="_blank">Fight Night: Volkov vs Struve</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4254UFC.html" target="_blank">Talita Bernardo vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bernatal01.html" target="_blank">Talita Bernardo</a></td>
 <td>9/2/2017</td>
@@ -613,7 +615,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4510UFC.html" target="_blank">Sara McMann vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mcmansar01.html" target="_blank">Sara McMann</a></td>
 <td>2/24/2018</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">UFC Fight Night: Dos Santos vs. Ivanov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0189FNI.html" target="_blank">Fight Night: Dos Santos vs Ivanov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4676UFC.html" target="_blank">Marion Reneau vs Cat Zingano</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/zingacat01.html" target="_blank">Cat Zingano</a></td>
 <td>7/14/2018</td>
@@ -699,9 +701,9 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0204FNI.html" target="_blank">UFC Fight Night: Lewis vs. Dos Santos</a></td>
-<td style="text-align:left"><a href="/ufc/fights/4991UFC.html" target="_blank">Yana Kunitskaya vs Marion Reneau</a></td>
-<td style="text-align:left"><a href="/ufc/fighters/kunityan01.html" target="_blank">Yana Kunitskaya</a></td>
+<td style="text-align:left"><a href="/ufc/events/0205FNI.html" target="_blank">Fight Night: Lewis vs Dos Santos</a></td>
+<td style="text-align:left"><a href="/ufc/fights/4991UFC.html" target="_blank">Yana Santos vs Marion Reneau</a></td>
+<td style="text-align:left"><a href="/ufc/fighters/santoyan01.html" target="_blank">Yana Santos</a></td>
 <td>3/9/2019</td>
 <td>Wichita, Kansas, USA</td>
 <td>Women's Bantamweight</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0239FNI.html" target="_blank">UFC Fight Night: Blaydes vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0240FNI.html" target="_blank">Fight Night: Blaydes vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5588UFC.html" target="_blank">Raquel Pennington vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/penniraq01.html" target="_blank">Raquel Pennington</a></td>
 <td>6/20/2020</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266FNI.html" target="_blank">UFC Fight Night: Brunson vs. Holland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0267FNI.html" target="_blank">Fight Night: Brunson vs Holland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5993UFC.html" target="_blank">Macy Chiasson vs Marion Reneau</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/chiasmac01.html" target="_blank">Macy Chiasson</a></td>
 <td>3/20/2021</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">UFC Fight Night: Makhachev vs. Moises</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276FNI.html" target="_blank">Fight Night: Makhachev vs Moises</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6153UFC.html" target="_blank">Marion Reneau vs Miesha Tate</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/tatemie01.html" target="_blank">Miesha Tate</a></td>
 <td>7/17/2021</td>

@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">UFC Fight Night: Shogun vs Sonnen</a></td>
+<td style="text-align:left"><a href="/ufc/events/0059FNI.html" target="_blank">Fight Night: Shogun vs Sonnen</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2369UFC.html" target="_blank">Cody Donovan vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/donovcod01.html" target="_blank">Cody Donovan</a></td>
 <td>8/17/2013</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0086FNI.html" target="_blank">UFC Fight Night: Bader vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0087FNI.html" target="_blank">Fight Night: Bader vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2830UFC.html" target="_blank">Ryan Bader vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/baderrya01.html" target="_blank">Ryan Bader</a></td>
 <td>8/16/2014</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0095FNI.html" target="_blank">UFC Fight Night 56: Shogun vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0096FNI.html" target="_blank">Fight Night: Shogun vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/2957UFC.html" target="_blank">Ovince Saint Preux vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ruamau01.html" target="_blank">Mauricio Rua</a></td>
 <td>11/8/2014</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0106FNI.html" target="_blank">UFC Fight Night: Machida vs Rockhold</a></td>
+<td style="text-align:left"><a href="/ufc/events/0107FNI.html" target="_blank">UFC on Fox 15: Machida vs Rockhold</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3153UFC.html" target="_blank">Patrick Cummins vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/cummipat01.html" target="_blank">Patrick Cummins</a></td>
 <td>4/18/2015</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0116FNI.html" target="_blank">UFC Fight Night: Teixeira vs Saint Preux</a></td>
+<td style="text-align:left"><a href="/ufc/events/0117FNI.html" target="_blank">Fight Night: Teixeira vs Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3332UFC.html" target="_blank">Ovince Saint Preux vs Glover Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/teixeglo01.html" target="_blank">Glover Teixeira</a></td>
 <td>8/8/2015</td>
@@ -656,7 +658,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0127FNI.html" target="_blank">UFC Fight Night: Hendricks vs Thompson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0128FNI.html" target="_blank">Fight Night: Hendricks vs Thompson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3537UFC.html" target="_blank">Rafael Feijao vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/feijaraf01.html" target="_blank">Rafael Feijao</a></td>
 <td>2/6/2016</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs. Henderson</a></td>
+<td style="text-align:left"><a href="/ufc/events/0207PPV.html" target="_blank">UFC 204: Bisping vs Henderson</a></td>
 <td style="text-align:left"><a href="/ufc/fights/3849UFC.html" target="_blank">Jimi Manuwa vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/manuwjim01.html" target="_blank">Jimi Manuwa</a></td>
 <td>10/8/2016</td>
@@ -785,7 +787,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0153FNI.html" target="_blank">UFC Fight Night: Bermudez vs. The Korean Zombie</a></td>
+<td style="text-align:left"><a href="/ufc/events/0154FNI.html" target="_blank">Fight Night: Bermudez vs The Korean Zombie</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4006UFC.html" target="_blank">Volkan Oezdemir vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oezdevol01.html" target="_blank">Volkan Oezdemir</a></td>
 <td>2/4/2017</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0158FNI.html" target="_blank">UFC Fight Night: Swanson vs. Lobov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0159FNI.html" target="_blank">Fight Night: Swanson vs Lobov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4098UFC.html" target="_blank">Marcos Rogerio de Lima vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/limamar01.html" target="_blank">Marcos Rogerio de Lima</a></td>
 <td>4/22/2017</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0168FNI.html" target="_blank">UFC Fight Night: Saint Preux vs. Okami</a></td>
+<td style="text-align:left"><a href="/ufc/events/0169FNI.html" target="_blank">Fight Night: Saint Preux vs Okami</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4285UFC.html" target="_blank">Yushin Okami vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/okamiyus01.html" target="_blank">Yushin Okami</a></td>
 <td>9/22/2017</td>
@@ -914,7 +916,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0220PPV.html" target="_blank">UFC 217: Bisping vs. St-Pierre</a></td>
+<td style="text-align:left"><a href="/ufc/events/0220PPV.html" target="_blank">UFC 217: Bisping vs St-Pierre</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4336UFC.html" target="_blank">Corey Anderson vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/andercor01.html" target="_blank">Corey Anderson</a></td>
 <td>11/4/2017</td>
@@ -957,7 +959,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0180FNI.html" target="_blank">UFC Fight Night: Emmett vs. Stephens</a></td>
+<td style="text-align:left"><a href="/ufc/events/0181FNI.html" target="_blank">UFC on Fox 28: Emmett vs Stephens</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4507UFC.html" target="_blank">Ilir Latifi vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/latifili01.html" target="_blank">Ilir Latifi</a></td>
 <td>2/24/2018</td>
@@ -1000,7 +1002,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4636UFC.html" target="_blank">Tyson Pedro vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pedrotys01.html" target="_blank">Tyson Pedro</a></td>
 <td>6/23/2018</td>
@@ -1043,7 +1045,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs. McGregor</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232PPV.html" target="_blank">UFC 229: Khabib vs McGregor</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4775UFC.html" target="_blank">Ovince Saint Preux vs Dominick Reyes</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/reyesdom01.html" target="_blank">Dominick Reyes</a></td>
 <td>10/6/2018</td>
@@ -1086,7 +1088,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs. Poirier 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0238PPV.html" target="_blank">UFC 236: Holloway vs Poirier 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5038UFC.html" target="_blank">Nikita Krylov vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/krylonik01.html" target="_blank">Nikita Krylov</a></td>
 <td>4/13/2019</td>
@@ -1129,7 +1131,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0222FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Cannonier</a></td>
+<td style="text-align:left"><a href="/ufc/events/0223FNI.html" target="_blank">Fight Night: Hermansson vs Cannonier</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5293UFC.html" target="_blank">Michal Oleksiejczuk vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oleksmic01.html" target="_blank">Michal Oleksiejczuk</a></td>
 <td>9/28/2019</td>
@@ -1172,7 +1174,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">UFC Fight Night: Smith vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">Fight Night: Smith vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5533UFC.html" target="_blank">Ovince Saint Preux vs Ben Rothwell</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/rothwben01.html" target="_blank">Ben Rothwell</a></td>
 <td>5/13/2020</td>
@@ -1215,7 +1217,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5710UFC.html" target="_blank">Alonzo Menifield vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/menifalo01.html" target="_blank">Alonzo Menifield</a></td>
 <td>9/5/2020</td>
@@ -1258,7 +1260,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0258FNI.html" target="_blank">UFC Fight Night: Hermansson vs. Vettori</a></td>
+<td style="text-align:left"><a href="/ufc/events/0259FNI.html" target="_blank">Fight Night: Hermansson vs Vettori</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5853UFC.html" target="_blank">Jamahal Hill vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hilljam01.html" target="_blank">Jamahal Hill</a></td>
 <td>12/5/2020</td>
@@ -1301,7 +1303,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0274FNI.html" target="_blank">UFC Fight Night: Gane vs. Volkov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0275FNI.html" target="_blank">Fight Night: Gane vs Volkov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6128UFC.html" target="_blank">Tanner Boser vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bosertan01.html" target="_blank">Tanner Boser</a></td>
 <td>6/26/2021</td>
@@ -1344,7 +1346,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0276PPV.html" target="_blank">UFC 274: Oliveira vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6564UFC.html" target="_blank">Ovince Saint Preux vs Mauricio Rua</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ruamau01.html" target="_blank">Mauricio Rua</a></td>
 <td>5/7/2022</td>
@@ -1387,7 +1389,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0321FNI.html" target="_blank">UFC Fight Night: Andrade vs. Blanchfield</a></td>
+<td style="text-align:left"><a href="/ufc/events/0322FNI.html" target="_blank">Fight Night: Andrade vs Blanchfield</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6960UFC.html" target="_blank">Philipe Lins vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/linsphi01.html" target="_blank">Philipe Lins</a></td>
 <td>2/18/2023</td>
@@ -1430,7 +1432,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0353FNI.html" target="_blank">UFC Fight Night: Tuivasa vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0354FNI.html" target="_blank">Fight Night: Tuivasa vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7523UFC.html" target="_blank">Kennedy Nzechukwu vs Ovince Saint Preux</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/nzechken01.html" target="_blank">Kennedy Nzechukwu</a></td>
 <td>3/16/2024</td>
@@ -1473,7 +1475,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs. Rountree Jr.</a></td>
+<td style="text-align:left"><a href="/ufc/events/0309PPV.html" target="_blank">UFC 307: Pereira vs Rountree Jr.</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7824UFC.html" target="_blank">Ovince Saint Preux vs Ryan Spann</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/spannrya01.html" target="_blank">Ryan Spann</a></td>
 <td>10/5/2024</td>

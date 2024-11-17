@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0172FNI.html" target="_blank">UFC Fight Night: Werdum vs. Tybura</a></td>
+<td style="text-align:left"><a href="/ufc/events/0173FNI.html" target="_blank">Fight Night: Werdum vs Tybura</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4358UFC.html" target="_blank">Alexander Volkanovski vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/volkaale01.html" target="_blank">Alexander Volkanovski</a></td>
 <td>11/18/2017</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0187FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Edwards</a></td>
+<td style="text-align:left"><a href="/ufc/events/0188FNI.html" target="_blank">Fight Night: Cowboy vs Edwards</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4641UFC.html" target="_blank">Rolando Dy vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dyrol01.html" target="_blank">Rolando Dy</a></td>
 <td>6/23/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4942UFC.html" target="_blank">Austin Arnett vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/arnetaus01.html" target="_blank">Austin Arnett</a></td>
 <td>2/9/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs. Costa</a></td>
+<td style="text-align:left"><a href="/ufc/events/0255PPV.html" target="_blank">UFC 253: Adesanya vs Costa</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5749UFC.html" target="_blank">Ludovit Klein vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kleinlud01.html" target="_blank">Ludovit Klein</a></td>
 <td>9/26/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0262PPV.html" target="_blank">UFC 260: Miocic vs. Ngannou</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262PPV.html" target="_blank">UFC 260: Miocic vs Ngannou</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6006UFC.html" target="_blank">Omar Morales vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/moraloma01.html" target="_blank">Omar Morales</a></td>
 <td>3/27/2021</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0286PPV.html" target="_blank">UFC 284: Makhachev vs. Volkanovski</a></td>
+<td style="text-align:left"><a href="/ufc/events/0286PPV.html" target="_blank">UFC 284: Makhachev vs Volkanovski</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6950UFC.html" target="_blank">Blake Bilder vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bildebla01.html" target="_blank">Blake Bilder</a></td>
 <td>2/11/2023</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs. Strickland</a></td>
+<td style="text-align:left"><a href="/ufc/events/0295PPV.html" target="_blank">UFC 293: Adesanya vs Strickland</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7292UFC.html" target="_blank">Gabriel Miranda vs Shane Young</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mirangab01.html" target="_blank">Gabriel Miranda</a></td>
 <td>9/9/2023</td>

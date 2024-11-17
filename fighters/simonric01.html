@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0183FNI.html" target="_blank">UFC Fight Night: Barboza vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0184FNI.html" target="_blank">Fight Night: Barboza vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4569UFC.html" target="_blank">Merab Dvalishvili vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/dvalimer01.html" target="_blank">Merab Dvalishvili</a></td>
 <td>4/21/2018</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0230PPV.html" target="_blank">UFC 227: Dillashaw vs. Garbrandt 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0230PPV.html" target="_blank">UFC 227: Dillashaw vs Garbrandt 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4716UFC.html" target="_blank">Montel Jackson vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/jacksmon01.html" target="_blank">Montel Jackson</a></td>
 <td>8/4/2018</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs. Silva</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236PPV.html" target="_blank">UFC 234: Adesanya vs Silva</a></td>
 <td style="text-align:left"><a href="/ufc/fights/4938UFC.html" target="_blank">Ricky Simon vs Rani Yahya</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yahyaran01.html" target="_blank">Rani Yahya</a></td>
 <td>2/9/2019</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0215FNI.html" target="_blank">UFC Fight Night: De Randamie vs. Ladd</a></td>
+<td style="text-align:left"><a href="/ufc/events/0216FNI.html" target="_blank">Fight Night: De Randamie vs Ladd</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5169UFC.html" target="_blank">Urijah Faber vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/faberuri01.html" target="_blank">Urijah Faber</a></td>
 <td>7/13/2019</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0228FNI.html" target="_blank">UFC Fight Night: Overeem vs. Rozenstruik</a></td>
+<td style="text-align:left"><a href="/ufc/events/0229FNI.html" target="_blank">Fight Night: Overeem vs Rozenstruik</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5393UFC.html" target="_blank">Rob Font vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fontrob01.html" target="_blank">Rob Font</a></td>
 <td>12/7/2019</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0235FNI.html" target="_blank">UFC Fight Night: Smith vs. Teixeira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0236FNI.html" target="_blank">Fight Night: Smith vs Teixeira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5535UFC.html" target="_blank">Ray Borg vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/borgray01.html" target="_blank">Ray Borg</a></td>
 <td>5/13/2020</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0261FNI.html" target="_blank">UFC Fight Night: Chiesa vs. Magny</a></td>
+<td style="text-align:left"><a href="/ufc/events/0262FNI.html" target="_blank">Fight Night: Chiesa vs Magny</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5899UFC.html" target="_blank">Gaetano Pirrello vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pirregae01.html" target="_blank">Gaetano Pirrello</a></td>
 <td>1/20/2021</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0260PPV.html" target="_blank">UFC 258: Usman vs. Burns</a></td>
+<td style="text-align:left"><a href="/ufc/events/0260PPV.html" target="_blank">UFC 258: Usman vs Burns</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5932UFC.html" target="_blank">Brian Kelleher vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/kellebri01.html" target="_blank">Brian Kelleher</a></td>
 <td>2/13/2021</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0289FNI.html" target="_blank">UFC Fight Night: Lewis vs. Daukaus</a></td>
+<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">Fight Night: Lewis vs Daukaus</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6381UFC.html" target="_blank">Raphael Assuncao vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/assunrap01.html" target="_blank">Raphael Assuncao</a></td>
 <td>12/18/2021</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0306FNI.html" target="_blank">UFC Fight Night: Ortega vs. Rodriguez</a></td>
+<td style="text-align:left"><a href="/ufc/events/0307FNI.html" target="_blank">UFC on ABC 3: Ortega vs Rodriguez</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6677UFC.html" target="_blank">Jack Shore vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shorejac01.html" target="_blank">Jack Shore</a></td>
 <td>7/16/2022</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0327FNI.html" target="_blank">UFC Fight Night: Song vs. Simon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0328FNI.html" target="_blank">Fight Night: Song vs Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7062UFC.html" target="_blank">Ricky Simon vs Song Yadong</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/yadonson01.html" target="_blank">Song Yadong</a></td>
 <td>4/29/2023</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0348FNI.html" target="_blank">UFC Fight Night: Ankalaev vs. Walker 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0349FNI.html" target="_blank">Fight Night: Ankalaev vs Walker 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7424UFC.html" target="_blank">Mario Bautista vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/bautimar01.html" target="_blank">Mario Bautista</a></td>
 <td>1/13/2024</td>
@@ -828,7 +830,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs. Prochazka 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0305PPV.html" target="_blank">UFC 303: Pereira vs Prochazka 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7695UFC.html" target="_blank">Vinicius Oliveira vs Ricky Simon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/olivevin01.html" target="_blank">Vinicius Oliveira</a></td>
 <td>6/29/2024</td>

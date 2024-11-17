@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0211FNI.html" target="_blank">UFC Fight Night: Dos Anjos vs. Lee</a></td>
+<td style="text-align:left"><a href="/ufc/events/0212FNI.html" target="_blank">Fight Night: Dos Anjos vs Lee</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5102UFC.html" target="_blank">Michel Pereira vs Danny Roberts</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/roberdan01.html" target="_blank">Danny Roberts</a></td>
 <td>5/18/2019</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0220FNI.html" target="_blank">UFC Fight Night: Cowboy vs. Gaethje</a></td>
+<td style="text-align:left"><a href="/ufc/events/0221FNI.html" target="_blank">Fight Night: Cowboy vs Gaethje</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5268UFC.html" target="_blank">Tristan Connelly vs Michel Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/connetri01.html" target="_blank">Tristan Connelly</a></td>
 <td>9/14/2019</td>
@@ -398,7 +400,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0231FNI.html" target="_blank">UFC Fight Night: Anderson vs. Blachowicz</a></td>
+<td style="text-align:left"><a href="/ufc/events/0232FNI.html" target="_blank">Fight Night: Anderson vs Blachowicz</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5467UFC.html" target="_blank">Michel Pereira vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchdie01.html" target="_blank">Diego Sanchez</a></td>
 <td>2/15/2020</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0248FNI.html" target="_blank">UFC Fight Night: Overeem vs. Sakai</a></td>
+<td style="text-align:left"><a href="/ufc/events/0249FNI.html" target="_blank">Fight Night: Overeem vs Sakai</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5711UFC.html" target="_blank">Zelim Imadaev vs Michel Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/imadazel01.html" target="_blank">Zelim Imadaev</a></td>
 <td>9/5/2020</td>
@@ -484,7 +486,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0259FNI.html" target="_blank">UFC Fight Night: Thompson vs. Neal</a></td>
+<td style="text-align:left"><a href="/ufc/events/0260FNI.html" target="_blank">Fight Night: Thompson vs Neal</a></td>
 <td style="text-align:left"><a href="/ufc/fights/5872UFC.html" target="_blank">Michel Pereira vs Khaos Williams</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/willikha01.html" target="_blank">Khaos Williams</a></td>
 <td>12/19/2020</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs. McGregor 3</a></td>
+<td style="text-align:left"><a href="/ufc/events/0266PPV.html" target="_blank">UFC 264: Poirier vs McGregor 3</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6146UFC.html" target="_blank">Michel Pereira vs Niko Price</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pricenik01.html" target="_blank">Niko Price</a></td>
 <td>7/10/2021</td>
@@ -570,7 +572,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0272PPV.html" target="_blank">UFC 270: Ngannou vs. Gane</a></td>
+<td style="text-align:left"><a href="/ufc/events/0272PPV.html" target="_blank">UFC 270: Ngannou vs Gane</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6403UFC.html" target="_blank">Andre Fialho vs Michel Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/fialhand01.html" target="_blank">Andre Fialho</a></td>
 <td>1/22/2022</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301FNI.html" target="_blank">UFC Fight Night: Holm vs. Vieira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0302FNI.html" target="_blank">Fight Night: Holm vs Vieira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6587UFC.html" target="_blank">Michel Pereira vs Santiago Ponzinibbio</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/ponzisan01.html" target="_blank">Santiago Ponzinibbio</a></td>
 <td>5/21/2022</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0343FNI.html" target="_blank">UFC Fight Night: Yusuff vs. Barboza</a></td>
+<td style="text-align:left"><a href="/ufc/events/0344FNI.html" target="_blank">Fight Night: Yusuff vs Barboza</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7329UFC.html" target="_blank">Michel Pereira vs Andre Petroski</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/petroand01.html" target="_blank">Andre Petroski</a></td>
 <td>10/14/2023</td>
@@ -699,7 +701,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0301PPV.html" target="_blank">UFC 299: O'Malley vs. Vera 2</a></td>
+<td style="text-align:left"><a href="/ufc/events/0301PPV.html" target="_blank">UFC 299: O'Malley vs Vera 2</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7517UFC.html" target="_blank">Michal Oleksiejczuk vs Michel Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/oleksmic01.html" target="_blank">Michal Oleksiejczuk</a></td>
 <td>3/9/2024</td>
@@ -742,7 +744,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs. Erceg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs Erceg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7601UFC.html" target="_blank">Michel Pereira vs Ihor Potieria</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/potieiho01.html" target="_blank">Ihor Potieria</a></td>
 <td>5/4/2024</td>
@@ -785,7 +787,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0371FNI.html" target="_blank">UFC Fight Night: Hernandez vs. Pereira</a></td>
+<td style="text-align:left"><a href="/ufc/events/0372FNI.html" target="_blank">Fight Night: Hernandez vs Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7839UFC.html" target="_blank">Anthony Hernandez vs Michel Pereira</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/hernaant01.html" target="_blank">Anthony Hernandez</a></td>
 <td>10/19/2024</td>

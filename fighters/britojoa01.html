@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0290FNI.html" target="_blank">UFC Fight Night: Kattar vs. Chikadze</a></td>
+<td style="text-align:left"><a href="/ufc/events/0291FNI.html" target="_blank">Fight Night: Kattar vs Chikadze</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6396UFC.html" target="_blank">Bill Algeo vs Joanderson Brito</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/algeobil01.html" target="_blank">Bill Algeo</a></td>
 <td>1/15/2022</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0299FNI.html" target="_blank">UFC Fight Night: Font vs. Vera</a></td>
+<td style="text-align:left"><a href="/ufc/events/0300FNI.html" target="_blank">Fight Night: Font vs Vera</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6552UFC.html" target="_blank">Joanderson Brito vs Andre Fili</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/filiand01.html" target="_blank">Andre Fili</a></td>
 <td>4/30/2022</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0313FNI.html" target="_blank">UFC Fight Night: Grasso vs. Araujo</a></td>
+<td style="text-align:left"><a href="/ufc/events/0314FNI.html" target="_blank">Fight Night: Grasso vs Araujo</a></td>
 <td style="text-align:left"><a href="/ufc/fights/6800UFC.html" target="_blank">Lucas Alexander vs Joanderson Brito</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/alexaluc01.html" target="_blank">Lucas Alexander</a></td>
 <td>10/15/2022</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0333FNI.html" target="_blank">UFC Fight Night: Strickland vs. Magomedov</a></td>
+<td style="text-align:left"><a href="/ufc/events/0334FNI.html" target="_blank">Fight Night: Strickland vs Magomedov</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7164UFC.html" target="_blank">Joanderson Brito vs Westin Wilson</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/wilsowes01.html" target="_blank">Westin Wilson</a></td>
 <td>7/1/2023</td>
@@ -484,7 +486,7 @@
 <td>2</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0345FNI.html" target="_blank">UFC Fight Night: Allen vs. Craig</a></td>
+<td style="text-align:left"><a href="/ufc/events/0346FNI.html" target="_blank">Fight Night: Allen vs Craig</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7379UFC.html" target="_blank">Joanderson Brito vs Jonathan Pearce</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/pearcjon01.html" target="_blank">Jonathan Pearce</a></td>
 <td>11/18/2023</td>
@@ -527,7 +529,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs. Erceg</a></td>
+<td style="text-align:left"><a href="/ufc/events/0303PPV.html" target="_blank">UFC 301: Pantoja vs Erceg</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7603UFC.html" target="_blank">Joanderson Brito vs Jack Shore</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/shorejac01.html" target="_blank">Jack Shore</a></td>
 <td>5/4/2024</td>
@@ -570,7 +572,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0369FNI.html" target="_blank">UFC Fight Night: Moicano vs. Saint Denis</a></td>
+<td style="text-align:left"><a href="/ufc/events/0370FNI.html" target="_blank">Fight Night: Moicano vs Saint Denis</a></td>
 <td style="text-align:left"><a href="/ufc/fights/7803UFC.html" target="_blank">Joanderson Brito vs William Gomis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gomiswil01.html" target="_blank">William Gomis</a></td>
 <td>9/28/2024</td>

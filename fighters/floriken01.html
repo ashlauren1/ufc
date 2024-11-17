@@ -121,11 +121,13 @@
 
     let fighterLinks = {};
     let eventLinks = {};
+    let fightLinks = {};
 
     // Load players and teams data from JSON files
     async function loadLinks() {
         fighterLinks = await fetch('fighters.json').then(response => response.json());
         eventLinks = await fetch('events.json').then(response => response.json());
+        fightLinks = await fetch('fights.json').then(response => response.json());
     }
 
     await loadLinks();  // Ensure links are loaded before searching
@@ -138,7 +140,7 @@
         if (query === "") return;
 
         // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks };
+        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
         const matchingEntries = Object.entries(combinedLinks)
             .filter(([name]) => name.includes(query))  // Matches on both name and ID
             .slice(0, 5); // Limit to top 5
@@ -190,7 +192,7 @@
 <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
 </div>
 <div id="search-container">
-<input id="search-bar" placeholder="Search for fighters or events..." type="text"/>
+<input id="search-bar" placeholder="Search for events, fights, or fighters..." type="text"/>
 <button id="search-button">Search</button>
 <div id="search-results"></div>
 </div>
@@ -312,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">The Ultimate Fighter 1 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001TUF.html" target="_blank">TUF 1 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0439UFC.html" target="_blank">Kenny Florian vs Diego Sanchez</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/sanchdie01.html" target="_blank">Diego Sanchez</a></td>
 <td>4/9/2005</td>
@@ -355,7 +357,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0001FNI.html" target="_blank">UFC Fight Night 1</a></td>
+<td style="text-align:left"><a href="/ufc/events/0001FNI.html" target="_blank">Fight Night 1</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0468UFC.html" target="_blank">Kenny Florian vs Alex Karalexis</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/karalale01.html" target="_blank">Alex Karalexis</a></td>
 <td>8/6/2005</td>
@@ -398,7 +400,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">The Ultimate Fighter 2 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0002TUF.html" target="_blank">TUF 2 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0496UFC.html" target="_blank">Kit Cope vs Kenny Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/copekit01.html" target="_blank">Kit Cope</a></td>
 <td>11/5/2005</td>
@@ -441,7 +443,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0003TUF.html" target="_blank">The Ultimate Fighter 3 Finale</a></td>
+<td style="text-align:left"><a href="/ufc/events/0003TUF.html" target="_blank">TUF 3 Finale</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0560UFC.html" target="_blank">Kenny Florian vs Sam Stout</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/stoutsam01.html" target="_blank">Sam Stout</a></td>
 <td>6/24/2006</td>
@@ -527,7 +529,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">UFC Fight Night: Stevenson vs Guillard</a></td>
+<td style="text-align:left"><a href="/ufc/events/0010FNI.html" target="_blank">Fight Night: Stevenson vs Guillard</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0694UFC.html" target="_blank">Kenny Florian vs Dokonjonosuke Mishima</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/mishidok01.html" target="_blank">Dokonjonosuke Mishima</a></td>
 <td>4/5/2007</td>
@@ -613,7 +615,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">UFC Fight Night: Thomas vs Florian</a></td>
+<td style="text-align:left"><a href="/ufc/events/0012FNI.html" target="_blank">Fight Night: Thomas vs Florian</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0782UFC.html" target="_blank">Kenny Florian vs Din Thomas</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/thomadin01.html" target="_blank">Din Thomas</a></td>
 <td>9/19/2007</td>
@@ -656,7 +658,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">UFC Fight Night: Florian vs Lauzon</a></td>
+<td style="text-align:left"><a href="/ufc/events/0014FNI.html" target="_blank">Fight Night: Florian vs Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fights/0874UFC.html" target="_blank">Kenny Florian vs Joe Lauzon</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/lauzojoe01.html" target="_blank">Joe Lauzon</a></td>
 <td>4/2/2008</td>
@@ -871,7 +873,7 @@
 <td>0</td>
 </tr>
 <tr>
-<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">UFC Fight Night: Florian vs Gomi</a></td>
+<td style="text-align:left"><a href="/ufc/events/0023FNI.html" target="_blank">Fight Night: Florian vs Gomi</a></td>
 <td style="text-align:left"><a href="/ufc/fights/1315UFC.html" target="_blank">Kenny Florian vs Takanori Gomi</a></td>
 <td style="text-align:left"><a href="/ufc/fighters/gomitak01.html" target="_blank">Takanori Gomi</a></td>
 <td>3/31/2010</td>
