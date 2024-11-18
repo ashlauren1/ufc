@@ -115,44 +115,43 @@
             rows.forEach(row => tbody.appendChild(row));
         }
     });
-    document.addEventListener("DOMContentLoaded", async function () {
-    const searchBar = document.getElementById("search-bar");
-    const searchResults = document.getElementById("search-results");
+        document.addEventListener("DOMContentLoaded", async function () {
+            const searchBar = document.getElementById("search-bar");
+            const searchResults = document.getElementById("search-results");
+            const searchButton = document.getElementById("search-button");
 
-    let fighterLinks = {};
-    let eventLinks = {};
-    let fightLinks = {};
+            let fighterLinks = {};
+            let eventLinks = {};
+            let fightLinks = {};
 
-    // Load players and teams data from JSON files
-    async function loadLinks() {
-        fighterLinks = await fetch('fighters.json').then(response => response.json());
-        eventLinks = await fetch('events.json').then(response => response.json());
-        fightLinks = await fetch('fights.json').then(response => response.json());
-    }
+        // Load players and teams data from JSON files
+        async function loadLinks() {
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
+        }
 
-    await loadLinks();  // Ensure links are loaded before searching
+        await loadLinks();  // Ensure links are loaded before searching
 
-    // Filter data and show suggestions based on input
-    function updateSuggestions() {
-        const query = searchBar.value.trim().toLowerCase();
-        searchResults.innerHTML = ""; // Clear previous results
+        // Filter data and show suggestions based on input
+        function updateSuggestions() {
+            const query = searchBar.value.trim().toLowerCase();
+            searchResults.innerHTML = ""; // Clear previous results
 
-        if (query === "") return;
+            if (query === "") return;
 
-        // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
-        const matchingEntries = Object.entries(combinedLinks)
-            .filter(([name]) => name.includes(query))  // Matches on both name and ID
-            .slice(0, 5); // Limit to top 5
+            // Combine players and teams for search
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
+            const matchingEntries = Object.entries(combinedLinks)
+                .filter(([name]) => name.toLowerCase().includes(query))  // Matches on both name and ID
+                .slice(0, 10); // Limit to top 10
 
-        matchingEntries.forEach(([name, url]) => {
-            const resultItem = document.createElement("div");
-            resultItem.classList.add("suggestion");
+            matchingEntries.forEach(([name, url]) => {
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("suggestion");
 
             // Proper case for names
-            resultItem.textContent = name.split(" ")
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ");
+            resultItem.textContent = name;
 
             resultItem.addEventListener("click", () => {
                 window.open(url, "_self");
@@ -172,15 +171,32 @@
     }
     
     document.addEventListener("click", function(event) {
-        if (!searchContainer.contains(event.target)) {
+        if (!searchResults.contains(event.target) && event.target !== searchBar) {
             searchResults.style.display = "none";
         }
     });
 
     // Add event listener to search bar
     searchBar.addEventListener("input", updateSuggestions);
-});
-    </script>
+    
+    function redirectToSearchResults() {
+        const query = searchBar.value.trim().toLowerCase();;
+        if (query) {
+            window.location.href = `/ufc/search_results.html?query=${encodeURIComponent(query)}`;
+        }
+    }
+
+    // Add event listeners for search
+    searchBar.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            redirectToSearchResults();
+        }
+    });
+
+    searchButton.addEventListener("click", redirectToSearchResults);
+});    
+
+</script>
 </head>
 <body>
 <div class="topnav">
@@ -363,7 +379,7 @@
 <td>6/28/2014</td>
 <td>Auckland, New Zealand</td>
 <td>Flyweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -449,7 +465,7 @@
 <td>11/14/2015</td>
 <td>Melbourne, Victoria, Australia</td>
 <td>Flyweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>

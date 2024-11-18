@@ -285,6 +285,7 @@ def create_event_pages(fight_data, output_dir):
         
         event_filename = os.path.join(output_dir, f"{event_id}.html")
         
+        
         def calculate_rates(row):
             rates = {}
             
@@ -501,8 +502,8 @@ def create_event_pages(fight_data, output_dir):
     </div>
     <div class="header">
         <h1>{event_name}</h1>
-        <h2>{event_type}</h2>
-        <h2>{location} - {date}</h2>
+        <h2>{location}</h2>
+        <h2>{date}</h2>
     </div>
     <button class="arrowUp" onclick="window.scrollTo({{top: 0}})">Top</button>
     
@@ -512,27 +513,26 @@ def create_event_pages(fight_data, output_dir):
             <tr>
                 <th>Fight</th>
                 <th>Weight Class</th>
-                <th>Fight Duration</th>
-                <th>Scheduled Rounds</th>
+                <th>Duration</th>
                 <th>Result</th>
                 <th>Fighter</th>
                 <th></th>
-                <th>Significant Strikes</th>
-                <th>Strike Accuracy</th>
-                <th>SSLPM</th>
-                <th>Strike Defense</th>
-                <th>Takedowns</th>
-                <th>Takedown Accuracy</th>
-                <th>Takedown Defense</th>
+                <th>Sig. Str.</th>
+                <th>Str. Acc.</th>
+                <th>SLPM</th>
+                <th>Str. Def.</th>
+                <th>TD</th>
+                <th>TD Acc.</th>
+                <th>TD Def.</th>
                 <th>Fighter</th>
                 <th></th>
-                <th>Significant Strikes</th>
-                <th>Strike Accuracy</th>
-                <th>SSLPM</th>
-                <th>Strike Defense</th>
-                <th>Takedowns</th>
-                <th>Takedown Accuracy</th>
-                <th>Takedown Defense</th>
+                <th>Sig. Str.</th>
+                <th>Str. Acc.</th>
+                <th>SLPM</th>
+                <th>Str. Def.</th>
+                <th>TD</th>
+                <th>TD Acc.</th>
+                <th>TD Def.</th>
             </tr>
         </thead>
         <tbody>
@@ -541,12 +541,13 @@ def create_event_pages(fight_data, output_dir):
         # Add rows for each game in the team's gamelog
         for _, row in event_data.iterrows():
             rates = calculate_rates(row)
+            title_fight = row.get('title_fight', 0)
+            title_icon = '<div class="title-fight-icon">🏆</div>' if title_fight == 1 else ''
             html_content += f'''
             <tr>
-                <td style="text-align:left"><a href="/ufc/fights/{row['fightID']}.html" target="_blank">{row['fight']}</a></td>
+                <td style="text-align:left"><a href="/ufc/fights/{row['fightID']}.html" target="_blank">{row['fight']}</a>{title_icon}</td>
                 <td style="text-align:left">{row['weight_class']}</td>
-                <td style="text-align:left">{row['fight_duration']}</td>
-                <td style="text-align:left">{int(scheduled_rounds) if str(scheduled_rounds).isdigit() else scheduled_rounds}</td>
+                <td style="text-align:left">{row['fight_duration']:.2f}</td>
                 <td style="text-align:left">{row['result']}</td>
                 <td style="text-align:left"><a href="/ufc/fighters/{row['fighterID']}.html" target="_blank">{row['fighter']}</a></td>
                 <td>{row['outcome']}</td>
@@ -557,7 +558,6 @@ def create_event_pages(fight_data, output_dir):
                 <td>{int(row['takedown'])}</td>
                 <td>{rates['takedownAcc']:.2f}%</td>
                 <td>{rates['takedownDef']:.2f}%</td>
-                
                 <td style="text-align:left"><a href="/ufc/fighters/{row['oppID']}.html" target="_blank">{row['opp']}</a></td>
                 <td>{row['oppOutcome']}</td>
                 <td>{int(row['opp_SigStr'])}</td>

@@ -9,8 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-    <script src="fighters.json"></script>
-    <script src="events.json"></script>
+
     
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -105,43 +104,42 @@
     });
     
     document.addEventListener("DOMContentLoaded", async function () {
-    const searchBar = document.getElementById("search-bar");
-    const searchResults = document.getElementById("search-results");
+        const searchBar = document.getElementById("search-bar");
+        const searchResults = document.getElementById("search-results");
+        const searchButton = document.getElementById("search-button");
 
-    let fighterLinks = {};
-    let eventLinks = {};
-    let fightLinks = {};
+        let fighterLinks = {};
+        let eventLinks = {};
+        let fightLinks = {};
 
-    // Load players and teams data from JSON files
-    async function loadLinks() {
-        fighterLinks = await fetch('fighters.json').then(response => response.json());
-        eventLinks = await fetch('events.json').then(response => response.json());
-        fightLinks = await fetch('fights.json').then(response => response.json());
-    }
+        // Load players and teams data from JSON files
+        async function loadLinks() {
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
+        }
 
-    await loadLinks();  // Ensure links are loaded before searching
+        await loadLinks();  // Ensure links are loaded before searching
 
-    // Filter data and show suggestions based on input
-    function updateSuggestions() {
-        const query = searchBar.value.trim().toLowerCase();
-        searchResults.innerHTML = ""; // Clear previous results
+        // Filter data and show suggestions based on input
+        function updateSuggestions() {
+            const query = searchBar.value.trim().toLowerCase();
+            searchResults.innerHTML = ""; // Clear previous results
 
-        if (query === "") return;
+            if (query === "") return;
 
-        // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
-        const matchingEntries = Object.entries(combinedLinks)
-            .filter(([name]) => name.includes(query))  // Matches on both name and ID
-            .slice(0, 5); // Limit to top 5
+            // Combine players and teams for search
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
+            const matchingEntries = Object.entries(combinedLinks)
+                .filter(([name]) => name.toLowerCase().includes(query))  // Matches on both name and ID
+                .slice(0, 10); // Limit to top 10
 
-        matchingEntries.forEach(([name, url]) => {
-            const resultItem = document.createElement("div");
-            resultItem.classList.add("suggestion");
+            matchingEntries.forEach(([name, url]) => {
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("suggestion");
 
             // Proper case for names
-            resultItem.textContent = name.split(" ")
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ");
+            resultItem.textContent = name;
 
             resultItem.addEventListener("click", () => {
                 window.open(url, "_self");
@@ -161,14 +159,31 @@
     }
     
     document.addEventListener("click", function(event) {
-        if (!searchContainer.contains(event.target)) {
+        if (!searchResults.contains(event.target) && event.target !== searchBar) {
             searchResults.style.display = "none";
         }
     });
 
     // Add event listener to search bar
     searchBar.addEventListener("input", updateSuggestions);
-});
+    
+    function redirectToSearchResults() {
+        const query = searchBar.value.trim().toLowerCase();;
+        if (query) {
+            window.location.href = `/ufc/search_results.html?query=${encodeURIComponent(query)}`;
+        }
+    }
+
+    // Add event listeners for search
+    searchBar.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            redirectToSearchResults();
+        }
+    });
+
+    searchButton.addEventListener("click", redirectToSearchResults);
+});    
+
     </script>
 </head>
 <body>
@@ -176,7 +191,7 @@
     <div class="topnav">
         <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fights and Results</a>
+        <a href="/ufc/fights/">Fight Results</a>
         <a href="/ufc/events/">Events</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
@@ -194,7 +209,7 @@
     <div id="rank-page-container">
     <div id="grouped-ranking-container">
 <div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Men's PFP</h3>
                 <table id="mens_pfp" class="weight-class-rankings">
                     <thead>
@@ -301,7 +316,7 @@
                 </table>
             </div>
             
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Women's PFP</h3>
                 <table id="womens_pfp" class="weight-class-rankings">
                     <thead>
@@ -408,7 +423,7 @@
                 </table>
             </div>
             </div><div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Flyweight</h3>
                 <table id="flyweight" class="weight-class-rankings">
                     <thead>
@@ -521,7 +536,7 @@
                 </table>
             </div>
             
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Bantamweight</h3>
                 <table id="bantamweight" class="weight-class-rankings">
                     <thead>
@@ -634,7 +649,7 @@
                 </table>
             </div>
             </div><div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Featherweight</h3>
                 <table id="featherweight" class="weight-class-rankings">
                     <thead>
@@ -747,7 +762,7 @@
                 </table>
             </div>
             
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Lightweight</h3>
                 <table id="lightweight" class="weight-class-rankings">
                     <thead>
@@ -860,7 +875,7 @@
                 </table>
             </div>
             </div><div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Welterweight</h3>
                 <table id="welterweight" class="weight-class-rankings">
                     <thead>
@@ -973,7 +988,7 @@
                 </table>
             </div>
             
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Middleweight</h3>
                 <table id="middleweight" class="weight-class-rankings">
                     <thead>
@@ -1086,7 +1101,7 @@
                 </table>
             </div>
             </div><div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Light Heavyweight</h3>
                 <table id="light_heavyweight" class="weight-class-rankings">
                     <thead>
@@ -1199,7 +1214,7 @@
                 </table>
             </div>
             
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Heavyweight</h3>
                 <table id="heavyweight" class="weight-class-rankings">
                     <thead>
@@ -1312,7 +1327,7 @@
                 </table>
             </div>
             </div><div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Women's Strawweight</h3>
                 <table id="womens_strawweight" class="weight-class-rankings">
                     <thead>
@@ -1425,7 +1440,7 @@
                 </table>
             </div>
             
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Women's Flyweight</h3>
                 <table id="womens_flyweight" class="weight-class-rankings">
                     <thead>
@@ -1538,7 +1553,7 @@
                 </table>
             </div>
             </div><div class="row" style="display: flex; justify-content: space-between;">
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>Women's Bantamweight</h3>
                 <table id="womens_bantamweight" class="weight-class-rankings">
                     <thead>

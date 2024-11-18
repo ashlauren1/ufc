@@ -151,6 +151,24 @@ a:visited {
     z-index: 1;
 }
 
+#results-container {
+	width: 95%;
+	margin: 12px auto 24px auto;
+	overflow-x: auto;
+	box-sizing: border-box;
+}
+
+#results-list {
+	font-size: 12px;
+	font-family: Verdana;
+}
+
+#results-list li {
+	font-size: 12px;
+	font-family: Verdana;
+	padding: 8px;
+}
+
 .suggestion, .no-result {
     padding: 8px;
     cursor: pointer;
@@ -242,7 +260,7 @@ Women's Bantamweight
 }
 
 .ranking-table {
-    flex: 0 0 50%;
+    flex: 0 0 48%;
     border: 2px solid #ccc;
     padding: 10px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);

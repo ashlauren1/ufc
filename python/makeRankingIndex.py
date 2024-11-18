@@ -15,26 +15,24 @@ rosters_data = pd.read_csv(rosters_file_path)
 metrics_data = pd.read_csv(metrics_file_path,  parse_dates=["date"], low_memory=False)
 rankings_data = pd.read_csv(rankings_file_path, low_memory=False)
 
-fighter_links = {f"{row['fighter']} ({row['fighterID']})".lower(): f"/ufc/fighters/{row['fighterID']}.html" 
+fighter_links = {f"{row['fighter']} ({row['fighterID']})": f"/ufc/fighters/{row['fighterID']}.html" 
                 for _, row in rosters_data.iterrows()}
 
-
-event_links = {row['event'].lower(): f"/ufc/events/{row['eventID']}.html" 
+event_links = {row['event']: f"/ufc/events/{row['eventID']}.html" 
               for _, row in metrics_data.drop_duplicates('eventID').iterrows()}
-              
-fight_links = {row['fight'].lower(): f"/ufc/fights/{row['fightID']}.html" 
-              for _, row in metrics_data.drop_duplicates('fightID').iterrows()}
 
+fight_links = {row['fight']: f"/ufc/fights/{row['fightID']}.html" 
+              for _, row in metrics_data.drop_duplicates('fightID').iterrows()}
 
 # Write out to JSON with proper formatting
 with open("fighters.json", "w") as f:
     json.dump(fighter_links, f, indent=4)
 
 with open("events.json", "w") as f:
-    json.dump(event_links, f)
-    
+    json.dump(event_links, f, indent=4)
+
 with open("fights.json", "w") as f:
-    json.dump(fight_links, f)
+    json.dump(fight_links, f, indent=4)
 
 
 print("fighters.json and events.json created successfully!")
@@ -54,8 +52,7 @@ def create_rank_directory(rankings_data, output_file_path):
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-    <script src="fighters.json"></script>
-    <script src="events.json"></script>
+
     
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -150,43 +147,42 @@ def create_rank_directory(rankings_data, output_file_path):
     });
     
     document.addEventListener("DOMContentLoaded", async function () {
-    const searchBar = document.getElementById("search-bar");
-    const searchResults = document.getElementById("search-results");
+        const searchBar = document.getElementById("search-bar");
+        const searchResults = document.getElementById("search-results");
+        const searchButton = document.getElementById("search-button");
 
-    let fighterLinks = {};
-    let eventLinks = {};
-    let fightLinks = {};
+        let fighterLinks = {};
+        let eventLinks = {};
+        let fightLinks = {};
 
-    // Load players and teams data from JSON files
-    async function loadLinks() {
-        fighterLinks = await fetch('fighters.json').then(response => response.json());
-        eventLinks = await fetch('events.json').then(response => response.json());
-        fightLinks = await fetch('fights.json').then(response => response.json());
-    }
+        // Load players and teams data from JSON files
+        async function loadLinks() {
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
+        }
 
-    await loadLinks();  // Ensure links are loaded before searching
+        await loadLinks();  // Ensure links are loaded before searching
 
-    // Filter data and show suggestions based on input
-    function updateSuggestions() {
-        const query = searchBar.value.trim().toLowerCase();
-        searchResults.innerHTML = ""; // Clear previous results
+        // Filter data and show suggestions based on input
+        function updateSuggestions() {
+            const query = searchBar.value.trim().toLowerCase();
+            searchResults.innerHTML = ""; // Clear previous results
 
-        if (query === "") return;
+            if (query === "") return;
 
-        // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
-        const matchingEntries = Object.entries(combinedLinks)
-            .filter(([name]) => name.includes(query))  // Matches on both name and ID
-            .slice(0, 5); // Limit to top 5
+            // Combine players and teams for search
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
+            const matchingEntries = Object.entries(combinedLinks)
+                .filter(([name]) => name.toLowerCase().includes(query))  // Matches on both name and ID
+                .slice(0, 10); // Limit to top 10
 
-        matchingEntries.forEach(([name, url]) => {
-            const resultItem = document.createElement("div");
-            resultItem.classList.add("suggestion");
+            matchingEntries.forEach(([name, url]) => {
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("suggestion");
 
             // Proper case for names
-            resultItem.textContent = name.split(" ")
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ");
+            resultItem.textContent = name;
 
             resultItem.addEventListener("click", () => {
                 window.open(url, "_self");
@@ -206,14 +202,31 @@ def create_rank_directory(rankings_data, output_file_path):
     }
     
     document.addEventListener("click", function(event) {
-        if (!searchContainer.contains(event.target)) {
+        if (!searchResults.contains(event.target) && event.target !== searchBar) {
             searchResults.style.display = "none";
         }
     });
 
     // Add event listener to search bar
     searchBar.addEventListener("input", updateSuggestions);
-});
+    
+    function redirectToSearchResults() {
+        const query = searchBar.value.trim().toLowerCase();;
+        if (query) {
+            window.location.href = `/ufc/search_results.html?query=${encodeURIComponent(query)}`;
+        }
+    }
+
+    // Add event listeners for search
+    searchBar.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            redirectToSearchResults();
+        }
+    });
+
+    searchButton.addEventListener("click", redirectToSearchResults);
+});    
+
     </script>
 </head>
 <body>
@@ -221,7 +234,7 @@ def create_rank_directory(rankings_data, output_file_path):
     <div class="topnav">
         <a href="/ufc/">Rankings</a>
         <a href="/ufc/fighters/">Fighters</a>
-        <a href="/ufc/fights/">Fights and Results</a>
+        <a href="/ufc/fights/">Fight Results</a>
         <a href="/ufc/events/">Events</a>
         <a href="https://ashlauren1.github.io/hockey/" target="_blank">Hockey</a>
         <a href="https://ashlauren1.github.io/basketball/" target="_blank">Basketball</a>
@@ -257,7 +270,7 @@ def create_rank_directory(rankings_data, output_file_path):
         # Process the next two tables (or fewer if at the end)
         for weight_class, group in weight_classes_in_order[i:i+2]:
             html_content += f"""
-            <div class="ranking-table" style="flex: 0 0 48%; margin: 0 10px;">
+            <div class="ranking-table">
                 <h3>{weight_class}</h3>
                 <table id="{weight_class.replace(' ', '_').replace("'", "").lower()}" class="weight-class-rankings">
                     <thead>
@@ -275,6 +288,7 @@ def create_rank_directory(rankings_data, output_file_path):
                     rk_cell = '<tr class="champ-row"><td class="champ-cell">C</td>'
                 else:
                     rk_cell = f'<tr><td>{row["rk"]}</td>'
+                
                 
                 html_content += f"""
                     {rk_cell}

@@ -115,44 +115,43 @@
             rows.forEach(row => tbody.appendChild(row));
         }
     });
-    document.addEventListener("DOMContentLoaded", async function () {
-    const searchBar = document.getElementById("search-bar");
-    const searchResults = document.getElementById("search-results");
+        document.addEventListener("DOMContentLoaded", async function () {
+            const searchBar = document.getElementById("search-bar");
+            const searchResults = document.getElementById("search-results");
+            const searchButton = document.getElementById("search-button");
 
-    let fighterLinks = {};
-    let eventLinks = {};
-    let fightLinks = {};
+            let fighterLinks = {};
+            let eventLinks = {};
+            let fightLinks = {};
 
-    // Load players and teams data from JSON files
-    async function loadLinks() {
-        fighterLinks = await fetch('fighters.json').then(response => response.json());
-        eventLinks = await fetch('events.json').then(response => response.json());
-        fightLinks = await fetch('fights.json').then(response => response.json());
-    }
+        // Load players and teams data from JSON files
+        async function loadLinks() {
+            fighterLinks = await fetch('fighters.json').then(response => response.json());
+            eventLinks = await fetch('events.json').then(response => response.json());
+            fightLinks = await fetch('fights.json').then(response => response.json());
+        }
 
-    await loadLinks();  // Ensure links are loaded before searching
+        await loadLinks();  // Ensure links are loaded before searching
 
-    // Filter data and show suggestions based on input
-    function updateSuggestions() {
-        const query = searchBar.value.trim().toLowerCase();
-        searchResults.innerHTML = ""; // Clear previous results
+        // Filter data and show suggestions based on input
+        function updateSuggestions() {
+            const query = searchBar.value.trim().toLowerCase();
+            searchResults.innerHTML = ""; // Clear previous results
 
-        if (query === "") return;
+            if (query === "") return;
 
-        // Combine players and teams for search
-        const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
-        const matchingEntries = Object.entries(combinedLinks)
-            .filter(([name]) => name.includes(query))  // Matches on both name and ID
-            .slice(0, 5); // Limit to top 5
+            // Combine players and teams for search
+            const combinedLinks = { ...fighterLinks, ...eventLinks, ...fightLinks };
+            const matchingEntries = Object.entries(combinedLinks)
+                .filter(([name]) => name.toLowerCase().includes(query))  // Matches on both name and ID
+                .slice(0, 10); // Limit to top 10
 
-        matchingEntries.forEach(([name, url]) => {
-            const resultItem = document.createElement("div");
-            resultItem.classList.add("suggestion");
+            matchingEntries.forEach(([name, url]) => {
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("suggestion");
 
             // Proper case for names
-            resultItem.textContent = name.split(" ")
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ");
+            resultItem.textContent = name;
 
             resultItem.addEventListener("click", () => {
                 window.open(url, "_self");
@@ -172,15 +171,32 @@
     }
     
     document.addEventListener("click", function(event) {
-        if (!searchContainer.contains(event.target)) {
+        if (!searchResults.contains(event.target) && event.target !== searchBar) {
             searchResults.style.display = "none";
         }
     });
 
     // Add event listener to search bar
     searchBar.addEventListener("input", updateSuggestions);
-});
-    </script>
+    
+    function redirectToSearchResults() {
+        const query = searchBar.value.trim().toLowerCase();;
+        if (query) {
+            window.location.href = `/ufc/search_results.html?query=${encodeURIComponent(query)}`;
+        }
+    }
+
+    // Add event listeners for search
+    searchBar.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            redirectToSearchResults();
+        }
+    });
+
+    searchButton.addEventListener("click", redirectToSearchResults);
+});    
+
+</script>
 </head>
 <body>
 <div class="topnav">
@@ -363,7 +379,7 @@
 <td>8/1/2010</td>
 <td>San Diego, California, USA</td>
 <td>Lightweight</td>
-<td>Submission</td>
+<td>SUB</td>
 <td>L</td>
 <td>3</td>
 <td>0.68</td>
@@ -406,7 +422,7 @@
 <td>6/11/2011</td>
 <td>Vancouver, British Columbia, Canada</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -449,7 +465,7 @@
 <td>10/8/2011</td>
 <td>Houston, Texas, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -492,7 +508,7 @@
 <td>5/26/2012</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -535,7 +551,7 @@
 <td>11/17/2012</td>
 <td>Montreal, Quebec, Canada</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -664,7 +680,7 @@
 <td>8/28/2013</td>
 <td>Indianapolis, Indiana, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -707,7 +723,7 @@
 <td>1/25/2014</td>
 <td>Chicago, Illinois, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
@@ -750,7 +766,7 @@
 <td>10/25/2014</td>
 <td>Rio de Janeiro, Brazil</td>
 <td>Featherweight</td>
-<td>Decision - Split</td>
+<td>DEC - S</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -793,7 +809,7 @@
 <td>12/20/2014</td>
 <td>Barueri, Sao Paulo, Brazil</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
@@ -836,7 +852,7 @@
 <td>10/24/2015</td>
 <td>Dublin, Leinster, Ireland</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -879,7 +895,7 @@
 <td>3/5/2016</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -922,7 +938,7 @@
 <td>7/23/2016</td>
 <td>Chicago, Illinois, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -1008,7 +1024,7 @@
 <td>7/22/2017</td>
 <td>Uniondale, New York, USA</td>
 <td>Featherweight</td>
-<td>Decision - Split</td>
+<td>DEC - S</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -1051,7 +1067,7 @@
 <td>1/14/2018</td>
 <td>St. Louis, Missouri, USA</td>
 <td>Featherweight</td>
-<td>Submission</td>
+<td>SUB</td>
 <td>W</td>
 <td>3</td>
 <td>7.37</td>
@@ -1094,7 +1110,7 @@
 <td>7/14/2018</td>
 <td>Boise, Idaho, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
@@ -1180,7 +1196,7 @@
 <td>7/13/2019</td>
 <td>Sacramento, California, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
@@ -1223,7 +1239,7 @@
 <td>5/16/2020</td>
 <td>Jacksonville, Florida, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
@@ -1266,7 +1282,7 @@
 <td>11/7/2020</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Featherweight</td>
-<td>Submission</td>
+<td>SUB</td>
 <td>W</td>
 <td>3</td>
 <td>12.37</td>
@@ -1395,7 +1411,7 @@
 <td>4/30/2022</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
@@ -1438,7 +1454,7 @@
 <td>12/3/2022</td>
 <td>Orlando, Florida, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>L</td>
 <td>3</td>
 <td>15.0</td>
@@ -1481,7 +1497,7 @@
 <td>10/14/2023</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Featherweight</td>
-<td>Submission</td>
+<td>SUB</td>
 <td>W</td>
 <td>3</td>
 <td>12.38</td>
@@ -1524,7 +1540,7 @@
 <td>10/19/2024</td>
 <td>Las Vegas, Nevada, USA</td>
 <td>Featherweight</td>
-<td>Decision - Unanimous</td>
+<td>DEC - U</td>
 <td>W</td>
 <td>3</td>
 <td>15.0</td>
